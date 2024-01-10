@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="login">
+
+	<select id="loginChk" parameterType="evalLoginVO" resultType="int">
+	/*loginChk*/
+		SELECT
+		    COUNT(1)
+		FROM CUST_EPIS.DJ_EVAL_COMMISSIONER
+		WHERE EVAL_ID = #{id}
+		  AND EVAL_PW = HEX(AES_ENCRYPT(#{pw}, 'EVAL'))
+		  AND EVAL_BIRTH = #{birth}
+          AND EVAL_AVOID = "N"
+          AND ATTEND_YN = "Y"
+          AND ACTIVE = "Y"
+	</select>
+</mapper>

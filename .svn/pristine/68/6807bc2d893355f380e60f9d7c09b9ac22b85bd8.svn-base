@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+ 
+<!-- Author:  Crunchify.com  -->
+	<properties>
+        <property name="name">custEPIS</property>
+        <property name="pattern">[%5p] [%d{yyyy-MM-dd HH:mm:ss}] (%F:%L) -> %m%n</property>
+    </properties>
+	<Appenders>
+		<Console name="console" target="SYSTEM_OUT">
+            <PatternLayout pattern="${pattern}" />
+        </Console>
+        <RollingFile name="file" fileName="../logs/${name}.log" filePattern="../logs/$${date:yyyy}$${date:MM}$${date:dd}/${name}_%d{yyyyMMdd}.log">
+            <PatternLayout>
+                <pattern>${pattern}</pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy /><!-- Rotated everyday -->
+            </Policies>
+        </RollingFile>
+	</Appenders>
+	<Loggers>
+		<Logger name="jdbc.sqlonly" level="info" />
+
+		<Logger name="jdbc.sqltiming" level="info" />
+		
+		<Logger name="jdbc.audit" level="off" />
+		
+		<Logger name="jdbc.resultset" level="info" />
+		
+		<Logger name="jdbc.resultsettable" level="info" />
+		
+		<Logger name="jdbc.connection" level="off" />
+	
+		<Root level="info">
+			<AppenderRef ref="console" />
+			<AppenderRef ref="file" />
+		</Root>
+	</Loggers>
+</Configuration>

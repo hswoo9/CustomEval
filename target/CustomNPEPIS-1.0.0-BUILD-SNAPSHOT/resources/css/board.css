@@ -1,0 +1,303 @@
+@charset "utf-8";
+
+/**************************************************
+  Board style
+**************************************************/
+
+/*일반게시판(더존)*/
+.bd_dl_add td dl{display:block;overflow:hidden;padding:5px 0;height:24px;line-height:24px;}
+.bd_dl_add td dl dt{width:80px; float:left;}
+.bd_dl_add td dl dd{float:left;}
+.bd_dl_add td dl dd .txt{font-size:11px;color:#8d8d8d;}
+.bd_view_pn th .prev_btn{padding:0 15px 0 0;background: url("/edms/html/aw_img/duzon/ico/bd_prev_ico.png") no-repeat right;}
+.bd_view_pn th .next_btn{padding:0 15px 0 0;background: url("/edms/html/aw_img/duzon/ico/bd_next_ico.png") no-repeat right;}
+.bd_view_pn .dotdotdot{/*display:block;*/overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:250px;}/*aw*/
+.txtbox_info{margin:0 20px 0 0;}
+.txtbox_info .info_list{display:inline-block;color:#8d8d8d;font-size:11px;line-height: 22px;padding:0 2px;}
+.txtbox_info .info_list.like{padding:0 2px 0 15px;background: url("/edms/html/aw_img/duzon/ico/like_ico.png") no-repeat 0 5px;}
+.text_view_box{padding:0 0 0 0px;} /*.text_view_box{padding:0 0 0 30px;}*/
+.file_down_btn{display:inline-block;width:17px;height:17px;margin:0 0 0 5px;vertical-align:bottom;background: url("/edms/html/aw_img/duzon/btn/btn_download01.png") no-repeat left;}
+
+/* 웹진형 */
+.board_option {height:44px;overflow:hidden;}
+.board_option .tot {float:left;line-height:44px;margin-left:7px; font-weight:bold;}
+.board_option .bo_right {float:right;}
+.board_option .controll_btn{padding:0px;}
+.board_option .bo_right .btn_div {float:left;}
+.board_option .bo_right .radi_div {float:left;margin:0 13px;}
+.board_option .bo_right .sel_div {float:left; margin-left:4px;}
+.board_option .bo_right .sel_div .line_sel_div {float:left;margin-right:3px;}
+.board_option .bo_right .sel_div .controll_btn {float:left;}
+.board_option .div_radi {float:left; line-height:42px;margin-left:13px;}
+
+.board_ta table tr:hover td{background:none; }
+.board_ta table tr:hover td .web_div {/*text-decoration:underline;cursor:pointer;*/}  /*aw*/
+.board_ta .web_div {margin:10px 0;overflow:hidden;  } /*aw*/
+.board_ta .web_div .tit {color:#010101; font-weight:normal;margin-bottom:9px;}
+.board_ta .web_div .tit a:hover{text-decoration:underline;}/*aw*/
+.board_ta .web_div .read {font-weight:bold; letter-spacing:-1px;}
+.board_ta .web_div .tit img{  vertical-align: baseline;}
+.board_ta .web_div .txt_con {/*color:#010101; */line-height:16px;text-overflow: ellipsis;  display: -webkit-box;  -webkit-line-clamp: 2;  -webkit-box-orient: vertical;  word-wrap: break-word;max-height:30px; overflow:hidden;}
+.board_ta .web_div ul {margin-top:14px;}
+.board_ta .web_div ul li {float:left;padding:0 7px 0 8px; background:url('/edms/html/aw_img/duzon/ico/ico_bar_board01.png') no-repeat left center;font-size:11px;color:#8d8d8d;}
+.board_ta .web_div ul li:first-child {padding:0 7px 0 0px; background:none;}
+
+/*일반게시판 목록*/
+.board_ta.com_ta2 table .tit_td {text-align:left;padding-left:10px;}
+.board_ta.com_ta2 table tr td.tit_td a:hover  {text-decoration:underline;}
+.board_ta.com_ta2 table .reply {padding-left:28px; background:url("/edms/html/aw_img/duzon/ico/ico_reply01.png") no-repeat 10px center;}
+.board_ta.com_ta2 table .read {font-weight:bold;}
+.board_ta.com_ta2 table tr:hover .reply {background:url("/edms/html/aw_img/duzon/ico/ico_reply01.png") no-repeat 10px center;}
+
+.board_ta.com_ta2 table tr th,.board_ta.com_ta2 table tr td{border:solid #eaeaea;border-width: 0 0 1px 1px;}
+.board_ta.com_ta2 table tr th:first-child,.board_ta.com_ta2 table tr td:first-child{border:solid #eaeaea;border-width: 0 0 1px 0px;}
+.board_ta.com_ta2 table  td  select {border:1px solid #c3c3c3;}/*aw*/
+
+.board_ta.com_ta2 table tr .mx_td .mx {text-overflow:ellipsis;white-space:nowrap;overflow:hidden;float:left;}
+.board_ta.com_ta2 table tr .mx_td img {float:left;margin-left:4px;}
+.board_ta.com_ta2 table tr .mx_td img:last-child {margin-top:2px;}
+
+
+/*게시판 헤더화살표 추가건 20151127*/
+.board_ta.com_ta2 table tr th .k-i-arrow-d{display:inline-block;width:16px;height:16px;overflow:hidden;background-repeat:no-repeat;font-size:0;line-height:0;text-align:center;margin:-2px 0 0 0;background:url("/edms/html/aw_img/duzon/btn/grid_sort_normal.png") no-repeat center center;vertical-align:middle;margin:0;}
+.board_ta.com_ta2 table tr th .k-i-arrow-n{display:inline-block;width:16px;height:16px;overflow:hidden;background-repeat:no-repeat;font-size:0;line-height:0;text-align:center;margin:-2px 0 0 0;background:url("/edms/html/aw_img/duzon/btn/grid_sort_up.png") no-repeat center center;vertical-align:middle;margin:0;}
+.board_ta.com_ta2 table tr th .k-i-arrow-s{display:inline-block;width:16px;height:16px;overflow:hidden;background-repeat:no-repeat;font-size:0;line-height:0;text-align:center;margin:-2px 0 0 0;background:url("/edms/html/aw_img/duzon/btn/grid_sort_down.png") no-repeat center center;vertical-align:middle;margin:0;}
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+.board_ta.com_ta2 table tr th .k-i-arrow-d{display:inline-block;width:16px;height:16px;overflow:hidden;background-repeat:no-repeat;font-size:0;line-height:0;text-align:center;background:url("/edms/html/aw_img/duzon/btn/grid_sort_normal.png") no-repeat center center;vertical-align:middle;margin:0;}
+.board_ta.com_ta2 table tr th .k-i-arrow-n{display:inline-block;width:16px;height:16px;overflow:hidden;background-repeat:no-repeat;font-size:0;line-height:0;text-align:center;background:url("/edms/html/aw_img/duzon/btn/grid_sort_up.png") no-repeat center center;vertical-align:middle;margin:0;}
+.board_ta.com_ta2 table tr th .k-i-arrow-s{display:inline-block;width:16px;height:16px;overflow:hidden;background-repeat:no-repeat;font-size:0;line-height:0;text-align:center;background:url("/edms/html/aw_img/duzon/btn/grid_sort_down.png") no-repeat center center;vertical-align:middle;margin:0;}
+}
+
+/*일반게시판 - 댓글보기  */
+.board_comment{min-height:96px; background:#f9f9f9; border-bottom:1px solid #dcdcdc; padding:8px 12px 8px 15px;  !important /*aw*/}
+.sign_textarea {width:100%;}
+.sign_textarea td textarea {width:100%; height:56px; border:1px solid #c3c4c4; padding:5px;}
+.sign_textarea .btn_comment {height:66px; width:65px !important; border:1px solid #c9cac9; background:#fff;}
+.sign_textarea .btn_comment:hover {border:1px solid #1088e3;}
+.sign_textarea .k-button.k-upload-button{float:left;}
+.listAddfileName{clear:both;border:none;background:transparent;padding:8px 0 0 0;} 
+
+
+/* 메모게시판 */
+.board_comment_memo{min-height:126px; background:#f9f9f9; border-bottom:1px solid #dcdcdc; border-top:1px solid #dcdcdc; padding:8px 12px 8px 15px;}
+.sign_textarea_memo {width:100%;}
+.sign_textarea_memo td textarea {width:100%; height:86px; border:1px solid #c3c4c4; padding:5px;}
+.sign_textarea_memo .btn_comment {height:96px; width:65px; border:1px solid #c9cac9; background:#fff;}
+.sign_textarea_memo .btn_comment:hover {border:1px solid #1088e3;}
+
+.total_comment{height:28px; padding:16px 0 0 0;}
+/*.view_comment{border:1px solid #dcdcdc; border-top:none; padding:12px 13px 8px 14px;} */
+.view_comment{padding:12px 13px 8px 14px; border-top:1px solid #dcdcdc; border-left:1px solid #fff; border-right:1px solid #fff; border-bottom:1px solid #fff; !important  }/*aw*/
+
+.write_comment{border:1px solid #dcdcdc; border-top:none; padding:12px 13px 8px 14px; !important }	
+.write_comment div.memo{border-bottom:1px solid #dcdcdc; margin-top:12px;}
+.write_comment div.memo:last-child{border-bottom:none;}
+
+/*.list_comment{border-top:1px solid #ff0000;}*//*aw*/
+.list_comment{border-left:1px solid #dcdcdc; border-right:1px solid #dcdcdc;border-bottom:1px solid #dcdcdc; border-top:1px solid #fff; !important } /*aw*/
+.list_comment .name{font-size:12px; height:12px; padding:0 0 16px 0; !important }
+.list_comment .name li em{font-weight:bold; border-right:1px solid #d3d3d3; margin:0 3px 0 0; padding:0 8px 0 0;}
+.list_comment .name li a{border-right:1px solid #dcdcdc; padding:0 7px 0 3px; font-size:12px;}
+.list_comment .name li a:hover{font-weight:bold;}
+.list_comment .name li a:last-child{border-right:none; padding:0 0px 0 10px;}/*수정*/
+.list_comment .text{font-size:12px; line-height:16px; padding:0 0 11px 0; color:#4a4a4a; !important }
+.list_comment .file_list{font-size:11px;}
+.list_comment .file_list .file_list_info{margin:0 0 6px 0;}
+.list_comment .file_list .file_list_info .file_cnt{font-weight:bold;color:#058df5;}
+.list_comment .file_list .file_list_info .all_download{color:#058df5;}
+.list_comment .file_list .file_list_box{margin:0 0 20px 0;padding:7px 10px;border:1px solid #dcdcdc;overflow:hidden;}
+.list_comment .file_list .file_list_box li{font-size:12px;padding:1px 0;  !important} /*aw*/
+.list_comment .file_list2{padding:0 0 0 26px; background:url("/edms/html/aw_img/duzon/ico/ico_reply01.png") no-repeat 8px -1px;}
+.list_comment .re_replylist {padding:12px 12px 10px 26px; background:url("/edms/html/aw_img/duzon/ico/ico_reply01.png") no-repeat 8px 11px; border-top:none; } /*aw추가*/
+
+.comment_file_box .k-button.k-upload-button{float:left;}
+.comment_file_box .k-upload-files{clear:both;border:none;background:transparent;margin:8px 0 0 0;}
+.comment_file_box .k-filename{max-width:650px;}
+.comment_file_box .k-file > .k-icon{margin-left:0px;}
+
+/*게시판_자료관리시스템_글보기*/
+.etc_folder {overflow:hidden; clear:both;position:absolute; bottom:0px; left:0px;}
+.etc_folder ul {margin:50px 15px 15px 15px;}
+.etc_folder ul li a {padding-left:25px; line-height:22px;display:inline-block;}
+.etc_folder ul li a:hover {text-decoration:underline;}
+.etc_folder ul li a.on {font-weight:bold;}
+.etc_folder ul li.fold1 a {background:url("/edms/html/aw_img/duzon/ico/ico_folder_st01.png") no-repeat 1px 3px;}
+.etc_folder ul li.fold2 a {background:url("/edms/html/aw_img/duzon/ico/ico_folder_st02.png") no-repeat 1px 3px;}
+.etc_folder ul li.book1 a {background:url("/edms/html/aw_img/duzon/ico/ico_folder_st03.png") no-repeat 1px 3px;}
+
+.com_ta .update_td .ut_tit{  overflow: hidden; height:36px; line-height:36px;}
+.com_ta .update_td .ut_tit p {float:left;}
+.com_ta .update_td .ut_tit ul {float:right;  overflow: hidden;}
+.com_ta .update_td .ut_tit ul li {float:left;background:url("/edms/html/aw_img/duzon/ico/ico_bar_board01.png") no-repeat left center; padding-left:7px;clear:inherit;}
+.com_ta .update_td .ut_tit ul li:first-child {padding:0 7px 0 0; background:none;}
+.com_ta .update_td .ut_tit ul li span {color:#8d8d8d;font-size:11px;}
+.com_ta .update_td .down_div {border:1px solid #dcdcdc;padding-left:10px;margin-bottom:4px;}
+.com_ta .update_td .down_div ul.down_ul {margin:2px 0;}
+.com_ta .update_td .down_div ul.down_ul li {line-height:21px;}
+.com_ta .update_td .texta2 {padding:10px 0;margin-bottom:4px;}
+
+/*게시판_자료관리시스템_업데이트*/
+.com_ta table .com_dl {}
+.com_ta table .com_dl dt{color:#058df5;width:100px;}
+.com_ta table .com_dl dd{padding-left:12px; margin-right:5px;background:url("/edms/html/aw_img/duzon/ico/ico_txt_arr01.png") no-repeat left 1px;}
+.com_ta table .com_dl dd.first_dd{padding-left:0px;background:none;}
+.com_ta table .add_ul {margin-bottom:4px;}
+.com_ta table .add_ul li {margin-top:6px;}
+.com_ta table .add_ul li dt {width:90px;}
+.com_ta table .add_ul li dd {}
+.com_ta table .add_ul2 {margin-top:4px;margin-bottom:3px;}
+.com_ta table .add_ul2 li {line-height:30px;}
+.com_ta table .red {color:#ff0000;font-weight:bold;}
+
+/*게시판_전체관리자_업무카테고리*/
+.bot_box{position:absolute;left:0;right:0;bottom:0;padding:15px;border-top:1px solid #dcdcdc;}
+.bot_box .first_up_btn{display:block;float:left;width:18px;height:18px;margin:2px 4px 0 0;background:url("/edms/html/aw_img/duzon/btn/first_up_btn.png") no-repeat center;}
+.bot_box .up_btn{display:block;float:left;width:18px;height:18px;margin:2px 4px 0 0;background:url("/edms/html/aw_img/duzon/btn/up_btn.png") no-repeat center;}
+.bot_box .down_btn{display:block;float:left;width:18px;height:18px;margin:2px 4px 0 0;background:url("/edms/html/aw_img/duzon/btn/down_btn.png") no-repeat center;}
+.bot_box .last_down_btn{display:block;float:left;width:18px;height:18px;margin:2px 4px 0 0;background:url("/edms/html/aw_img/duzon/btn/last_down_btn.png") no-repeat center;}
+.bot_box .plus_btn{display:block;float:left;width:18px;height:18px;margin:2px 4px 0 0;background:url("/edms/html/aw_img/duzon/btn/plus_btn.png") no-repeat center;}
+.bot_box .minus_btn{display:block;float:left;width:18px;height:18px;margin:2px 4px 0 0;background:url("/edms/html/aw_img/duzon/btn/minus_btn.png") no-repeat center;}
+.bot_box .first_up_btn{display:block;float:left;width:18px;height:18px;margin:2px 4px 0 0;background:url("/edms/html/aw_img/duzon/btn/first_up_btn.png") no-repeat center;}
+.bot_box .up_btn{display:block;float:left;width:18px;height:18px;margin:2px 4px 0 0;background:url("/edms/html/aw_img/duzon/btn/up_btn.png") no-repeat center;}
+.bot_box .last_down_btn{display:block;float:left;width:18px;height:18px;margin:2px 4px 0 0;background:url("/edms/html/aw_img/duzon/btn/last_down_btn.png") no-repeat center;}
+.bot_box .down_btn{display:block;float:left;width:18px;height:18px;margin:2px 4px 0 0;background:url("/edms/html/aw_img/duzon/btn/down_btn.png") no-repeat center;}
+
+.record_tabSearch .first_up_btn{display:block;float:left;width:18px;height:18px;margin:2px 4px 0 0;background:url("/edms/html/aw_img/duzon/btn/first_up_btn.png") no-repeat center;}
+.record_tabSearch .up_btn{display:block;float:left;width:18px;height:18px;margin:2px 4px 0 0;background:url("/edms/html/aw_img/duzon/btn/up_btn.png") no-repeat center;}
+.record_tabSearch .down_btn{display:block;float:left;width:18px;height:18px;margin:2px 4px 0 0;background:url("/edms/html/aw_img/duzon/btn/down_btn.png") no-repeat center;}
+.record_tabSearch .last_down_btn{display:block;float:left;width:18px;height:18px;margin:2px 4px 0 0;background:url("/edms/html/aw_img/duzon/btn/last_down_btn.png") no-repeat center;}
+.record_tabSearch .plus_btn{display:block;float:left;width:18px;height:18px;margin:2px 4px 0 0;background:url("/edms/html/aw_img/duzon/btn/plus_btn.png") no-repeat center;}
+.record_tabSearch .minus_btn{display:block;float:left;width:18px;height:18px;margin:2px 4px 0 0;background:url("/edms/html/aw_img/duzon/btn/minus_btn.png") no-repeat center;}
+.record_tabSearch .first_up_btn{display:block;float:left;width:18px;height:18px;margin:2px 4px 0 0;background:url("/edms/html/aw_img/duzon/btn/first_up_btn.png") no-repeat center;}
+.record_tabSearch .up_btn{display:block;float:left;width:18px;height:18px;margin:2px 4px 0 0;background:url("/edms/html/aw_img/duzon/btn/up_btn.png") no-repeat center;}
+.record_tabSearch .last_down_btn{display:block;float:left;width:18px;height:18px;margin:2px 4px 0 0;background:url("/edms/html/aw_img/duzon/btn/last_down_btn.png") no-repeat center;}
+.record_tabSearch .down_btn{display:block;float:left;width:18px;height:18px;margin:2px 4px 0 0;background:url("/edms/html/aw_img/duzon/btn/down_btn.png") no-repeat center;}
+
+
+
+.bd_list_box{padding:10px 0;overflow:auto;}
+.bd_list_box li{height:20px;line-height:20px;margin:0 0 5px 0;padding:0 15px;white-space:nowrap;float:left;clear:both;min-width:209px;}
+.bd_list_box li.on{background-color:#e6f3ff;}
+.bd_list_box li a{font-size:12px;font-weight:normal;color:#4a4a4a;}
+.bd_list_box li.on a{font-size:12px;font-weight:bold;color:#058df5;}
+
+/*게시판_사진게시판*/
+.photo_box{width:100%;padding:15px 0;border-top:1px solid #dcdcdc;}
+.photo_box ul{}
+.photo_box ul li.p_list{float:left;border:1px solid #dcdcdc;margin:0 20px 20px 0;}
+.photo_box ul li.p_list .pl_img{width:231px;height:153px;}
+.photo_box ul li.p_list .pl_img img{width:100%;height:100%;}
+
+.photo_box ul li.p_list .pl_info{width:201px;height:74px;padding:15px;}
+.photo_box ul li.p_list .pl_info dl dt label{padding:0.2em 0 0 1.5em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;/*width:183px;*/height:14px;/*display:block;*/font-weight:bold;}/*aw*/
+.photo_box ul li.p_list.read .pl_info dl dt label{font-weight:normal;}
+
+.photo_box ul li.p_list .pl_info dl dd{width:100%;}
+.photo_box ul li.p_list .pl_info dl dd.bot{font-weight:normal;font-size:11px;color:#8d8d8d;}
+.photo_box ul li.p_list .pl_info dl dd .info_nm{display:block;font-weight:normal;font-size:11px;color:#8d8d8d;margin:5px 0 3px 0;}
+.photo_box ul li.p_list .pl_info dl dd .info_dt{display:block;font-weight:normal;font-size:11px;color:#8d8d8d;margin:0 0 7px 0;padding:0 0 7px 0;border-bottom:1px solid #dcdcdc;}
+.photo_box ul li.p_list .pl_info dl dd.bot .info_like{padding:1px 7px 0 16px;background:url("/edms/html/aw_img/duzon/ico/like_ico.png") no-repeat left;}
+.photo_box ul li.p_list .pl_info .read {font-weight:bold; letter-spacing:-1px;}
+
+/*게시판_이벤트게시판*/
+.event_box{width:100%;padding:15px 0;border-top:1px solid #dcdcdc;}
+.event_box ul{}
+.event_box ul li.e_list{float:left;margin:0 20px 0 0;}
+.event_box ul li.e_list .el_img{width:315px;height:195px;border:1px solid #dcdcdc;}
+.event_box ul li.e_list .el_img img{width:100%;height:100%;}
+                         
+.event_box ul li.e_list .el_info{width:317px;height:42px;padding:15px 0 0 0;}
+.event_box ul li.e_list .el_info dl dt label{padding:0.1em 0 0 1.5em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;/*width:298px;*/height:14px;/*display:block;font-weight:bold;*/}
+.event_box ul li.e_list .el_info dl dd{width:100%;}
+.event_box ul li.e_list .el_info dl dd .info_dt{display:block;font-weight:normal;font-size:11px;color:#8d8d8d;padding:0px 0 0 18px;}
+.event_box ul li.e_list .el_info .read {font-weight:bold; letter-spacing:-1px;}
+
+/*포스트잇게시판*/
+.top_txt_ta {}
+.top_txt_ta table { width:100%;}
+.top_txt_ta table th {vertical-align:top;text-align:left; line-height:22px;}
+.top_txt_ta table .txt_tr td {padding-top:5px;}
+.top_txt_ta table td input[type="text"] {margin-right:4px;}
+.top_txt_ta table td textarea {width:100%; height:66px;}
+.top_txt_ta table td.regi_td {padding-left:4px;}
+.top_txt_ta table td .regi_btn {width:45px;height:66px; background:#fff;border:1px solid #c9cac9;color:#4a4a4a;}
+.top_txt_ta table td .regi_btn:hover {border:1px solid #1088e3;background:#fff;}
+.postit_box{width:100%;padding:15px 0;border-top:1px solid #dcdcdc;}
+.postit_box ul{} 
+.postit_box ul li {float:left;width:231px;border:1px solid #dcdcdc;margin:0 20px 20px 0;}
+.postit_box ul li .post_in {margin:15px;}
+.postit_box ul li .post_in .top_p {margin-bottom:12px;font-weight:bold;}
+.postit_box ul li .post_in .txta { overflow:auto; height:177px; color:#4a4a4a; line-height:15px;}
+.postit_box ul li .post_in .btm_p  {padding-top:7px; border-top:1px solid #dcdcdc; color:#8d8d8d;}
+.postit_box ul li.col_wihte {background:#fff;border:1px solid #dcdcdc;} 
+.postit_box ul li.col_wihte .post_in .btm_p  {border-top:1px solid #dcdcdc;}
+.postit_box ul li.col_red {background:#fee2e2;border:1px solid #f5c8c8;} 
+.postit_box ul li.col_red .post_in .btm_p  {border-top:1px solid #f5c8c8;}
+.postit_box ul li.col_orange {background:#ffeed9;border:1px solid #edd2b0;}
+.postit_box ul li.col_orange .post_in .btm_p  {border-top:1px solid #edd2b0;}
+.postit_box ul li.col_yellow {background:#fef7d2;border:1px solid #eddc7f;} 
+.postit_box ul li.col_yellow .post_in .btm_p  {border-top:1px solid #eddc7f;}
+.postit_box ul li.col_green {background:#e6f7df;border:1px solid #cae3bf;} 
+.postit_box ul li.col_green .post_in .btm_p  {border-top:1px solid #cae3bf;}
+.postit_box ul li.col_blue {background:#e4f7fb;border:1px solid #c1dfe5;} 
+.postit_box ul li.col_blue .post_in .btm_p  {border-top:1px solid #c1dfe5;}
+.postit_box ul li.col_navy {background:#d9e7fa;border:1px solid #c1d4ed;} 
+.postit_box ul li.col_navy .post_in .btm_p  {border-top:1px solid #c1d4ed;}
+.postit_box ul li.col_purple {background:#e6e6fb;border:1px solid #cfcff4;} 
+.postit_box ul li.col_purple .post_in .btm_p  {border-top:1px solid #cfcff4;}
+
+/*aw추가*/
+.com_ta table td input[type="textbox"] {height:22px;border:1px solid #c3c3c3;text-indent:7px;} /*aw*/
+.com_ta table td  input[type="textbox"].k-input {border:none;}/*aw*/
+.com_ta table td  select {border:1px solid #c3c3c3;}/*aw*/
+.top_box  .selectLine select {border:1px solid #c3c3c3; height:24px; padding:2px;}/*aw*/
+.top_box  dd select {border:1px solid #c3c3c3;}
+/*aw추가*/
+.com_ta6 table td input[type="textbox"] {height:22px;border:1px solid #c3c3c3;text-indent:7px;} /*aw*/
+.com_ta6 table td  input[type="textbox"].k-input {border:none;}/*aw*/
+.com_ta6 table td  select {border:1px solid #c3c3c3;}/*aw*/
+
+.treebox_line {background:url("/edms/html/aw_img/common/bizbox/line_1007.png") repeat-y 0px 0;}
+
+.sub_contents_wrap .p_ico{display:inline-block;width:8px;height:8px;background-image:url("/edms/html/aw_img/duzon/ico/ic_plus.png");background-repeat:no-repeat;margin:1px 3px 1px 0}
+.sub_contents_wrap .m_ico{display:inline-block;width:8px;height:8px;background-image:url("/edms/html/aw_img/duzon/ico/ic_minus.png");background-repeat:no-repeat;margin:1px 3px 1px 0}
+.sub_contents_wrap .folder_ico{display:inline-block;width:13px;height:11px;background-image:url("/edms/html/aw_img/duzon/ico/ic_folder.png");background-repeat:no-repeat;margin:0 5px 0 0}
+
+.txtCopyAddr{color:#8d8d8d;font-size:11px;line-height:22px;} /*aw  주소복사 css 추가*/
+
+/*aw추가*/
+.com_ta_alarm {}
+.com_ta_alarm table{width:96%;}
+.com_ta_alarm table th,.com_ta_alarm table td {height:26px;color:#4a4a4a;border:1px solid #eaeaea; padding:5px 0;}
+.com_ta_alarm table th {background:#f9fafc;font-weight:normal;text-align:center;}
+.com_ta_alarm table td {border-right:none;text-align:center;}
+.com_ta_alarm table td.le {text-align:left; padding-left:5px;}
+.com_ta_alarm table td.last {border-right:1px solid #eaeaea;}
+.com_ta_alarm table th.title {border-right:none; text-align:left; padding-left:8px; background-color:#eee;}
+.com_ta_alarm table th.btn {border-left:none;  text-align:right; padding-right:8px; background-color:#eee;}
+
+
+/*aw추가*/
+.docugroup_list {margin:0px; padding: 8px 0px 8px 0px; }
+.docugroup_list li {height:21px; line-height:21px; padding: 0 0 0 18px;}
+.docugroup_list li:hover {background-color:#efefef;}
+.docugroup_list .desc {padding: 0 0 0 8px;}
+.docugroup_list .select_item {padding: 0 0 0 8px; background:url("/edms/html/aw_img/duzon/ico/ico_more_arr.png") no-repeat 10px 4px; padding: 0 0 0 18px; font-weight:bold; color:#000;}
+.docugroup_list .over {background-color:#efefef;}
+
+.top_box_more  {position:relative; padding-top:10px;margin-bottom:10px; border-top:1px solid #dfdfdf;}
+.top_box_more dl {overflow:hidden;}
+.top_box_more dl dt {font-weight:bold; color:#4a4a4a; font-size:12px; float:left; line-height:32px;margin-right:10px;margin-left:20px; width:60px;}
+.top_box_more dl dd {float:left;margin-right:5px;margin-top:6px;}
+
+
+/*aw추가 - 프로젝트 게시판 타이틀*/
+.proj_title_div {}
+.proj_title_div2 {padding:0 0 30px 0; border-bottom:1px solid #dfdfdf; margin-bottom:15px;}
+.proj_title_div h4, .title_div2 h4 {margin:0px 0 15px 0px;font-size:24px;color:#058df5;font-family:NBG;font-weight:normal; }
+.proj_title_div .txt, .title_div2 .txt {font-size:15px;color:#4a4a4a;margin:0px 0px 18px 0px;}
+
+
+/*selectbox multiple */
+.sel_css{height:auto !important;}
+

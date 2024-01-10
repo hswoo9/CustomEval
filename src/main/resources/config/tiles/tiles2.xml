@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+					"-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+					"http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+
+	<definition name=".contents"
+		template="/WEB-INF/views/templates/defaultLayout.jsp">
+	</definition>
+
+	<definition name=".sign"
+		template="/WEB-INF/views/templates/signLayouy.jsp">
+	</definition>
+
+	<definition name="/*/*" extends=".contents">
+		<put-attribute name="body" value="/WEB-INF/views/{1}/{2}.jsp" />
+	</definition>
+
+	<definition name="/eval/sign/*" extends=".sign">
+		<put-attribute name="body" value="/WEB-INF/views/eval/sign/{1}.jsp" />
+	</definition>
+
+	<definition name="/eval/popup/*" extends=".sign">
+		<put-attribute name="body" value="/WEB-INF/views/eval/popup/{1}.jsp" />
+	</definition>
+	
+	
+</tiles-definitions>

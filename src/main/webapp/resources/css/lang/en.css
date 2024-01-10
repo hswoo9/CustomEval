@@ -1,0 +1,169 @@
+@charset "utf-8";
+
+/**************************************************
+	[수정 및 추가내역]
+	20170102 - 그룹정보관리 설정이미지 추가
+	20170217 - 넓이,높이 추가
+	20170228 - 헤더 텍스트로 변경부분 공통으로 뺌
+	20170307 - 메인포틀릿 새부분추가 전자결재
+	20170310 - 퍼센트 추가
+	   
+**************************************************/
+
+/**************************************************
+	공통
+**************************************************/
+
+/*넓이*/
+.en_w54{width:54px !important;}
+.en_w62 {width:62px !important;}
+.en_w70 {width:70px !important;}
+.en_w75 {width:75px !important;}
+.en_w77 {width:77px !important;}
+.en_w80 {width:80px !important;}
+.en_w85 {width:85px !important;}
+.en_w90 {width:90px !important;}
+.en_w96 {width:96px !important;}
+.en_w100 {width:100px !important;}
+.en_w105 {width:105px !important;}
+.en_w110 {width:110px !important;}
+.en_w115 {width:115px !important;}
+.en_w120 {width:120px !important;}
+.en_w130 {width:130px !important;}
+.en_w135 {width:135px !important;}
+.en_w138 {width:138px !important;}
+.en_w139 {width:139px !important;}
+.en_w140 {width:140px !important;}
+.en_w145 {width:145px !important;}
+.en_w148 {width:148px !important;}
+.en_w150 {width:150px !important;}
+.en_w160 {width:160px !important;}
+.en_w163 {width:163px !important;}
+.en_w165 {width:165px !important;}
+.en_w170 {width:170px !important;}
+.en_w173 {width:173px !important;}
+.en_w180 {width:180px !important;}
+.en_w185 {width:185px !important;}
+.en_w190 {width:190px !important;}
+.en_w200 {width:200px !important;}
+.en_w210 {width:210px !important;}
+.en_w215 {width:215px !important;}
+.en_w220 {width:220px !important;}
+.en_w228 {width:228px !important;}
+.en_w230 {width:230px !important;}
+.en_w232 {width:232px !important;}
+.en_w240 {width:240px !important;}
+.en_w250 {width:250px !important;}
+.en_w256 {width:256px !important;}
+.en_w290 {width:290px !important;}
+.en_w300 {width:300px !important;}
+.en_w723 {width:723px !important;}
+
+
+.en_w10p {width:10% !important;}
+.en_w12p {width:12% !important;}
+.en_w17p {width:17% !important;}
+.en_w20p {width:20% !important;}
+.en_w30p {width:30% !important;}
+.en_w40p {width:40% !important;}
+.en_w50p {width:50% !important;}
+.en_w60p {width:60% !important;}
+.en_w70p {width:70% !important;}
+.en_w80p {width:80% !important;}
+.en_w90p {width:90% !important;}
+.en_w100p {width:100% !important;}
+
+/*켄도 콤보박스 넓이*/
+.k-input.kendoComboBox.en_w54{width:52px !important;}
+.k-input.kendoComboBox.en_w62 {width:60px !important;}
+.k-input.kendoComboBox.en_w70 {width:68px !important;}
+.k-input.kendoComboBox.en_w77 {width:75px !important;}
+.k-input.kendoComboBox.en_w80 {width:78px !important;}
+.k-input.kendoComboBox.en_w90 {width:88px !important;}
+.k-input.kendoComboBox.en_w96 {width:94px !important;}
+.k-input.kendoComboBox.en_w100 {width:98px !important;}
+.k-input.kendoComboBox.en_w105 {width:103px !important;}
+.k-input.kendoComboBox.en_w115 {width:113px !important;}
+.k-input.kendoComboBox.en_w130 {width:128px !important;}
+.k-input.kendoComboBox.en_w138 {width:136px !important;}
+.k-input.kendoComboBox.en_w139 {width:137px !important;}
+.k-input.kendoComboBox.en_w140 {width:138px !important;}
+.k-input.kendoComboBox.en_w145 {width:143px !important;}
+.k-input.kendoComboBox.en_w148 {width:146px !important;}
+.k-input.kendoComboBox.en_w150 {width:148px !important;}
+.k-input.kendoComboBox.en_w160 {width:158px !important;}
+.k-input.kendoComboBox.en_w163 {width:161px !important;}
+.k-input.kendoComboBox.en_w165 {width:163px !important;}
+.k-input.kendoComboBox.en_w170 {width:168px !important;}
+.k-input.kendoComboBox.en_w173 {width:171px !important;}
+.k-input.kendoComboBox.en_w180 {width:178px !important;}
+.k-input.kendoComboBox.en_w185 {width:183px !important;}
+.k-input.kendoComboBox.en_w190 {width:188px !important;}
+.k-input.kendoComboBox.en_w200 {width:198px !important;}
+.k-input.kendoComboBox.en_w210 {width:208px !important;}
+.k-input.kendoComboBox.en_w220 {width:218px !important;}
+.k-input.kendoComboBox.en_w230 {width:228px !important;}
+.k-input.kendoComboBox.en_w232 {width:230px !important;}
+.k-input.kendoComboBox.en_w240 {width:238px !important;}
+.k-input.kendoComboBox.en_w250 {width:248px !important;}
+.k-input.kendoComboBox.en_w256 {width:254px !important;}
+.k-input.kendoComboBox.en_w723 {width:721px !important;}
+
+
+/*마진*/
+.en_mt0 {margin-top:0px !important;}
+.en_mt3 {margin-top:3px !important;}
+
+.en_ml0 {margin-left:0px !important;}
+
+
+/**************************************************
+	시스템설정
+**************************************************/
+
+/*그룹정보관리 설정이미지*/
+.com_ta table td.logo_set_box .type_a_new{height:137px;margin:0 auto;background:url('../../Images/lang/en/img_add_atype_new_en.jpg') no-repeat center;}
+.com_ta table td.logo_set_box .type_b_new{height:137px;margin:0 auto;background:url('../../Images/lang/en/img_add_btype_new_en.jpg') no-repeat center;}
+.com_ta table td.logo_set_box .type_top{height:137px;margin:0 auto;background:url('../../Images/lang/en/img_add_toplogo_en.jpg') no-repeat center;}
+.com_ta table td.logo_set_box .type_footer{height:137px;margin:0 auto;background:url('../../Images/lang/en/img_add_footer_en.jpg') no-repeat center;}
+.com_ta table td.logo_set_box .type_phone_a{height:137px;margin:0 auto;background:url('../../Images/lang/en/img_add_phone_atype_en.jpg') no-repeat center;}
+.com_ta table td.logo_set_box .type_phone_b{height:137px;margin:0 auto;background:url('../../Images/lang/en/img_add_phone_btype_en.jpg') no-repeat center;}
+.com_ta table td.logo_set_box .type_msg_new{height:137px;margin:0 auto;background:url('../../Images/lang/en/img_add_msg_new_en.jpg') no-repeat center;}
+
+/**************************************************
+	메일
+**************************************************/
+/*환경설정 - 기본환경설정*/
+.mail_setting_wrap .noti_b {display:block;margin-top:10px;}
+
+
+/**************************************************
+	메인
+**************************************************/
+/*전자결재*/
+.M_approval {}
+.M_approval .con dl {height:50px;position:relative;line-height:1; width:95%;border-bottom:1px solid #eaeaea;margin-right:10px;}
+.M_approval .con dl .sign {position:absolute; left:0px; top:0px;}
+.M_approval .con dl .title {clear:both;width:260px;margin-top:29px;;}
+.M_approval .con dl .title2 {clear:both;width:260px;margin-top:29px;}
+.M_approval .con .title img, .M_approval .con .title2 img {padding-top:2px;}
+.M_approval .con dl .file {padding: 31px 0 0 0;}
+.M_approval .con dl .date {position:absolute; right:10px; top:10px;}
+
+.app_list .title img, .app_list .title2 img{margin-top:-3px;}
+
+.app_list .title2 a{max-width:230px;}
+.app_list .title2 a{max-width:230px;}
+.app_list li {height:50px;position:relative;line-height:1; width:95%;margin-right:10px;overflow:hidden;}
+.app_list dl {overflow:hidden;}
+.app_list dl .sign {position:absolute; left:0px; top:0px;}
+.app_list dl .title {clear:both;width:260px;margin-top:23px;;}
+.app_list dl .title2 {clear:both;width:260px;margin-top:23px;}
+.app_list .title img, .app_list .title2 img {padding-top:10px;}
+.app_list dl .file {padding: 30px 0 0 0;}
+.app_list dl .date {position:absolute; right:10px; top:0px;}
+
+/**************************************************
+	전자결재
+**************************************************/
+.sign_ta_set table .sign_tr .en_box{position:absolute !important; top:73px !important; left:10px !important; right:10px !important;}

@@ -73,19 +73,20 @@
 		var ob1 = $('#num').val();
 		var ob2 = $('#dept').val();
 		var ob3 = $('#bank_name').val();
-		var ob4 = $('#bank_name option:checked').text();
+		//var ob4 = $('#bank_name option:checked').text();
 		var ob5 = $('#bank_no').val();
 		var ob6 = $('#addr').val();
 		var ob7 = $('#oName').val();
 
 		_hwpPutText("dept", ob2);
-		if($("input[name='publicOrProtected']:checked").val() == "Y"){
+		/*if($("input[name='publicOrProtected']:checked").val() == "Y"){
 			_hwpPutText("num", p1 + '-*******');
 		}else{
 			_hwpPutText("num", '******-*******');
-		}
+		}*/
 		_hwpPutText("addr", ob6);
-		_hwpPutText("bank_name", ob4);
+		//_hwpPutText("bank_name", ob4);
+		_hwpPutText("bank_name", ob3);
 		_hwpPutText("bank_no", ob5);
 
 		_pHwpCtrl.GetTextFile("HWPML2X", "", function(data) {
@@ -101,8 +102,9 @@
 		formData.append("step", "4");
 		formData.append("birth_date", $('#num').val());
 		formData.append("org_name", $('#dept').val());
-		formData.append("bank_cd", $('#bank_name').val());
-		formData.append("bank_name", $('#bank_name option:checked').text());
+		//formData.append("bank_cd", $('#bank_name').val());
+		formData.append("bank_name", $('#bank_name').val());
+		//formData.append("bank_name", $('#bank_name option:checked').text());
 		formData.append("bank_no", $('#bank_no').val());
 		formData.append("addr", $('#addr').val());
 		formData.append("signHwpFileData", signHwpFileData);
@@ -233,8 +235,35 @@
 		_pHwpCtrl.SetTextFile($('#contentsTemp')[0].innerHTML, "HTML", "insertfile");
 	}
 
-	function evalAvoidPopup(){
-		window.open(_g_contextPath_ + "/eval/evalAvoidPopup", 'evalAvoidPop', 'menubar=0,resizable=1,scrollbars=1,status=no,toolbar=no,width=1000,height=280,left=650,top=250');
+	function showModalPop(){
+
+		absentModal = $('<div id="absentModal"  style="width:650px; height:200px; margin-top:10px; margin-left:10px; line-height:35px;">' +
+				'<span>● 평가위원이 당해 평가 대상과 관련 전년도 1월 1일부터 현재까지 하도급을 포함하여 용역, 자문, 연구 등을 수행한 경우</span><br>'+
+				'<span>● 평가위원 또는 소속기관이 당해 평가 대상 용역 시행으로 인하여 이해당사자가 되는 경우(대리관계 포함)</span><br>'+
+				'<span>● 평가위원이 당해 평가대상 업체에 재직한 경우</span><br>'+
+				'<span>● 그 밖에 제1호부터 제3호까지에 준하는 경우로서 기타 공정한 평가를 수행할 수 없다고 판단하는 경우</span><br>'+
+				'</div>');
+
+		absentModal.kendoWindow({
+			title: "기피사유",
+			visible: false,
+			modal: true,
+			width : 700,
+			height : 250,
+			position : {
+				top : 200,
+				left : 470
+			},
+			close: function () {
+				absentModal.remove();
+				evalAvoidPopup();
+			}
+		});
+		absentModal.data("kendoWindow").open();
+	}
+
+	function evalAvoidPopup() {
+		window.open(_g_contextPath_ + "/eval/evalAvoidPopup", 'evalAvoidPop', 'menubar=0,resizable=1,scrollbars=1,status=no,toolbar=no,width=1000,height=280,left=650,top=350');
 	}
 
 	function publicOrProtectedRadio(e){
@@ -264,13 +293,36 @@
 			}
 		});
 	}
+
+	function agreeCheckYn(e) {
+		if ($(e).val() == "Y") {
+			$("#agree").prop("checked", true);
+			$("#disagree").prop("checked", false);
+		} else {
+			$("#disagree").prop("checked", true);
+			$("#agree").prop("checked", false);
+			alert("(동의 거부권리 안내) 본 개인정보 수집·이용에 대한 동의를\n거부할 수 있으나, 이 경우 정부 예산회계 처리가 불가하여\n수당지급이 곤란할 수 있습니다.");
+		}
+	}
+
+	function agreeCheckYn2(e) {
+		if ($(e).val() == "Y") {
+			$("#agree2").prop("checked", true);
+			$("#disagree2").prop("checked", false);
+		} else {
+			$("#disagree2").prop("checked", true);
+			$("#agree2").prop("checked", false);
+			alert("(동의 거부권리 안내) 본 개인정보 수집·이용에 대한 동의를\n거부할 수 있으나, 이 경우 정부 예산회계 처리가 불가하여\n수당지급이 곤란할 수 있습니다.");
+		}
+	}
+
 </script>
 
 
 <div style="width: 40%;margin: 0 auto;">
 	<div id="signSave" style="display: none;">
 <%--		<input type="button" onclick="OnConnectDevice();" value="서명하기">--%>
-		<input type="button" onclick="evalAvoidPopup()" value="기피신청">
+		<input type="button" onclick="showModalPop()" value="기피신청">
 		<input type="button" onclick="fileDownChk();" value="저장">
 		<input type="button" onclick="signFileDown();" value="평가자료 다운로드">
 	</div>
@@ -344,8 +396,8 @@
 		</TD>
 		<TD colspan="4" valign="middle" style='width:417px;height:22px;border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
 			<input type="text" style="width: 275px;" id="num" value="${userInfo.BIRTH_DATE }">
-			<input type="radio" id="open" name="publicOrProtected" value="Y" onchange="publicOrProtectedRadio(this)" checked>공개
-			<input type="radio" id="private" name="publicOrProtected" value="N" onchange="publicOrProtectedRadio(this)">비공개
+			<%--<input type="radio" id="open" name="publicOrProtected" value="Y" onchange="publicOrProtectedRadio(this)" checked>공개
+			<input type="radio" id="private" name="publicOrProtected" value="N" onchange="publicOrProtectedRadio(this)">비공개--%>
 		</TD>
 	</TR>
 	<TR>
@@ -361,11 +413,12 @@
 		<P CLASS=HStyle34 STYLE='margin-top:3.0pt;line-height:160%;'><SPAN STYLE='font-size:11.0pt;font-family:"휴먼명조";line-height:160%'>○ 은행명: </SPAN></P>
 		</TD>
 		<TD colspan="5" valign="middle" style='width:417px;height:22px;border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
-			<select id="bank_name">
+			<input type="text" style="width: 275px;" id="bank_name" value="${userInfo.BANK_NAME}">
+			<%--<select id="bank_name">
 				<c:forEach items="${bankList }" var="list">
 					<option value="${list.BANK_CD }" ${userInfo.BANK_NAME == list.BANK_CD ? 'selected="selected"' : '' } >${list.BANK_NM }</option>
 				</c:forEach>
-			</select>
+			</select>--%>
 		</TD>
 	</TR>
 	<TR>
@@ -428,7 +481,11 @@
 		<P CLASS=HStyle0 STYLE='margin-left:29.5pt;margin-right:5.0pt;margin-top:4.0pt;text-indent:-29.5pt;line-height:130%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:5%'>&nbsp;◈ </SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:-2%'>(보유·이용기간) 지출 증빙문서 보존기한 완료시까지</SPAN></P>
 		<P CLASS=HStyle0 STYLE='margin-left:29.5pt;margin-right:5.0pt;margin-top:4.0pt;text-indent:-29.5pt;line-height:130%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:-2%'>&nbsp;&nbsp;&nbsp; </SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:7%'>* </SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:5%'>근거: 국고금관리법, 공공기록물관리에관한법률 등</SPAN></P>
 		<P CLASS=HStyle0 STYLE='margin-left:21.6pt;margin-right:5.0pt;margin-top:4.0pt;text-indent:-21.6pt;line-height:130%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:5%'>&nbsp;◈ </SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:-5%'>(동의 거부권리 안내) </SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:-3%'>본 개인정보 수집·이용에 대한 동의를 거부할 수 있으나,</SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:-1%'> 이 경우</SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움"'> 정부 예산회계 처리가 불가하여 수당지급이 곤란할 수 있습니다.</SPAN></P>
-		<P CLASS=HStyle0 STYLE='margin-left:29.2pt;margin-right:5.0pt;margin-top:10.0pt;text-align:right;text-indent:-29.2pt;line-height:130%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움";font-weight:bold'>V 동의&nbsp; □ 동의안함</SPAN></P>
+		<P CLASS=HStyle0 STYLE='margin-left:29.2pt;margin-right:5.0pt;margin-top:10.0pt;text-align:right;text-indent:-29.2pt;line-height:130%;'>
+			<%--<SPAN STYLE='font-family:"한양중고딕,한컴돋움";font-weight:bold'>V 동의&nbsp; □ 동의안함</SPAN>--%>
+			<input type="checkbox" id="agree" name="agreeCheckYn" value="Y"  onchange="agreeCheckYn(this)" checked><span>동의</span>
+			<input type="checkbox" id="disagree" name="agreeCheckYn" value="N"  onchange="agreeCheckYn(this)"><span>동의안함</span>
+		</P>
 		<P CLASS=HStyle0 STYLE='margin-left:29.2pt;margin-right:5.0pt;margin-top:4.0pt;text-align:right;text-indent:-29.2pt;line-height:130%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>&nbsp;</SPAN></P>
 		</TD>
 	</TR>
@@ -440,7 +497,11 @@
 		<P CLASS=HStyle0 STYLE='margin-left:29.5pt;margin-right:5.0pt;margin-top:4.0pt;text-indent:-29.5pt;line-height:130%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:5%'>&nbsp;◈ </SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:-2%'>(보유·이용기간) 지출문서 보존기한 완료시까지</SPAN></P>
 		<P CLASS=HStyle0 STYLE='margin-left:29.5pt;margin-right:5.0pt;margin-top:4.0pt;text-indent:-29.5pt;line-height:130%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:-2%'>&nbsp;&nbsp; </SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:1%'>* </SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:-1%'>근거: 금융실명거래및비밀보장에관한법률, 공공기록물관리에관한법률 등</SPAN></P>
 		<P CLASS=HStyle0 STYLE='margin-left:23.1pt;margin-right:5.0pt;margin-top:4.0pt;text-indent:-23.1pt;line-height:130%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:5%'>&nbsp;◈ </SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:-2%'>(</SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:-3%'>동의 거부권리 안내) </SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:-1%'>본 고유식별정보 수집·이용에 대한 동의를 거부할 수 </SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:-3%'>있으나, 이 경우 D-brain 등 정부 예산회계 처리가</SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:-2%'> 불가하여 수당지급이 곤란</SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>할 수 있습니다.</SPAN></P>
-		<P CLASS=HStyle0 STYLE='margin-left:29.2pt;margin-right:5.0pt;margin-top:10.0pt;text-align:right;text-indent:-29.2pt;line-height:130%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움";font-weight:bold'>V 동의&nbsp; □ 동의안함</SPAN></P>
+		<P CLASS=HStyle0 STYLE='margin-left:29.2pt;margin-right:5.0pt;margin-top:10.0pt;text-align:right;text-indent:-29.2pt;line-height:130%;'>
+			<%--<SPAN STYLE='font-family:"한양중고딕,한컴돋움";font-weight:bold'>V 동의&nbsp; □ 동의안함</SPAN>--%>
+			<input type="checkbox" id="agree2" name="agreeCheckYn2" value="Y"  onchange="agreeCheckYn2(this)" checked><span>동의</span>
+			<input type="checkbox" id="disagree2" name="agreeCheckYn2" value="N"  onchange="agreeCheckYn2(this)"><span>동의안함</span>
+		</P>
 		</TD>
 	</TR>
 	</TABLE>

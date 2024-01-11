@@ -19,7 +19,6 @@
 	#listTable th{background-color: #28b4ea;}
 	.controll_btn button{width: 70px; height: 40px; font-size: 20px;}
 	.itemRadioTd{
-		display: flex;
 		justify-content: space-around;
 		font-size: 20px;
 	}
@@ -60,16 +59,19 @@
 					<dd style="line-height: 25px">
 						<input type="text" readonly="readonly" value="${nowDate }">
 					</dd>
-
 				</dl>
-
 			</div>
 		</div>
 
+
+
 	</div><!-- //sub_contents_wrap -->
+
+
 
 	<div class="right_div">
 		<div class="controll_btn p10">
+
 			<button type="button" class="evalButton" onclick="evalAvoidPopup()" style="width: 120px">기피신청</button>
 			<button type="button" class="evalButton" id="prevButton" style="display: none;" onclick="prevEvalBtn();">이전</button>
 			<button type="button" class="evalButton" id="nextButton" onclick="nextEvalBtn();">다음</button>
@@ -79,15 +81,17 @@
 		</div>
 	</div>
 
+	<div id="displayTitle" style="margin-bottom:10px; height:30px;"></div>
+
 	<div class="sub_contents_wrap" style="min-width:1500px; min-height: 0px;">
 		<div class="com_ta">
+
 			<table id="listTable" style="width: 100%;">
 				<colgroup>
 					<col width="10%"/>
 				</colgroup>
 
 				<tbody id="dataTbody"></tbody>
-
 			</table>
 		</div>
 	</div>
@@ -169,43 +173,68 @@
 				$("#compSeq").val(compResult[evalCnt].eval_company_seq);
 
 				var html = "";
+				var html2 = "";
 				$("#dataTbody").html(html);
+
+
+				$("#displayTitle").html(html2);
+				html2 += '<span style="font-size:25px; margin-bottom:10px;">' + compResult[evalCnt].display_title + '</span>';
+				$("#displayTitle").html(html2);
+
 				html += '<tr>';
-				html += '	<th rowspan="2" id="th1" style="width: 70%;">제안평가 <br> 평가항목</th>';
-				html += '	<th>평가점수</th>';
+				html += '	<th colspan="3" id="th1" style="width: 70%;">제안평가 평가항목</th>';
+				html += '	<th colspan="5">평가점수</th>';
 				html += '</tr>';
 				html += '<tr>';
-				html += '	<td id="compName">' + compResult[evalCnt].display_title + '</td>';
+				html += '	<th>대분류</th>';
+				html += '	<th>중분류</th>';
+				html += '	<th>소분류</th>';
+				html += '	<td>A</td>';
+				html += '	<td>B</td>';
+				html += '	<td>C</td>';
+				html += '	<td>D</td>';
+				html += '	<td>E</td>';
 				html += '</tr>';
+
+				console.log(result)
 				for (var i = 0; i < result.length; i++) {
+					var item = result[i];
 					if (result[i].EVAL_COMPANY_SEQ == compResult[evalCnt].eval_company_seq) {
-					html += '<tr class="itemTr">';
-					html += '	<td>' + result[i].item_name + '</td>';
-					html += '	<td class="itemRadioTd">';
+						html += '<tr class="itemTr">';
+
+						html += '	<td>' + (item.item_name ? item.item_name : "") + '</td>';
+						html += '	<td>' + (item.item_medium_name ? item.item_medium_name : "") + '</td>';
+						html += '	<td>' + (item.item_small_name ? item.item_small_name : "") + '</td>';
+
+						html += '	<td class="itemRadioTd">';
 						if (result[i].score_1 == result[i].COMMISSIONER_SCORE && result[i].COMMISSIONER_SCORE != null) {
 							html += '		<label><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" onclick="radioClickEvent(' + result.length + ');" value="' + result[i].score_1  + '" checked />' + result[i].score_1 + '</label>';
 						} else {
 							html += '		<label><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" onclick="radioClickEvent(' + result.length + ');" value="' + result[i].score_1 + '" />' + result[i].score_1 + '</label>';
 						}
-
+						html += '	</td>';
+						html += '	<td class="itemRadioTd">';
 						if (result[i].score_2 == result[i].COMMISSIONER_SCORE && result[i].COMMISSIONER_SCORE != null) {
 							html += '		<label><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" onclick="radioClickEvent(' + result.length + ');" value="' + result[i].score_2  + '" checked>' + result[i].score_2 + '</label>';
 						} else {
 							html += '		<label><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" onclick="radioClickEvent(' + result.length + ');" value="' + result[i].score_2 + '">' + result[i].score_2 + '</label>';
 						}
-
+						html += '	</td>';
+						html += '	<td class="itemRadioTd">';
 						if (result[i].score_3 == result[i].COMMISSIONER_SCORE && result[i].COMMISSIONER_SCORE != null) {
 							html += '		<label><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" onclick="radioClickEvent(' + result.length + ');" value="' + result[i].score_3  + '" checked>' + result[i].score_3 + '</label>';
 						} else {
 							html += '		<label><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" onclick="radioClickEvent(' + result.length + ');" value="' + result[i].score_3 + '">' + result[i].score_3 + '</label>';
 						}
-
+						html += '	</td>';
+						html += '	<td class="itemRadioTd">';
 						if (result[i].score_4 == result[i].COMMISSIONER_SCORE && result[i].COMMISSIONER_SCORE != null) {
 							html += '		<label><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" onclick="radioClickEvent(' + result.length + ');" value="' + result[i].score_4  + '" checked>' + result[i].score_4 + '</label>';
 						} else {
 							html += '		<label><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" onclick="radioClickEvent(' + result.length + ');" value="' + result[i].score_4 + '">' + result[i].score_4 + '</label>';
 						}
-
+						html += '	</td>';
+						html += '	<td class="itemRadioTd">';
 						if (result[i].score_5 == result[i].COMMISSIONER_SCORE && result[i].COMMISSIONER_SCORE != null) {
 							html += '		<label><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" onclick="radioClickEvent(' + result.length + ');" value="' + result[i].score_5  + '" checked>' + result[i].score_5 + '</label>';
 						} else {
@@ -216,13 +245,15 @@
 						html += '	</td>';
 						html += '</tr>';
 					}
-
 				}
-						html += '<tr>';
-						html += '	<th>합계</th>';
-						html += '	<td id="totalScore" value=""></td>';
-						html += '</tr>';
-						$("#dataTbody").html(html);
+				html += '<tr>';
+				html += '	<th colspan="3">합계</th>';
+				html += '	<td id="totalScore" value="" colspan="5"></td>';
+				html += '</tr>';
+				$("#dataTbody").html(html);
+
+
+
 			}
 
 		});
@@ -603,7 +634,7 @@
 // 		$('#prevButton').show();
 // 		$('#nextButton').show();
 // 	}else if(evalEndCnt != 1 && evalEndCnt == evalSize){
-// 	//업체가 1개는 아니고 마지막이면 
+// 	//업체가 1개는 아니고 마지막이면
 // 		$('#saveButton').show();
 // 		$('#prevButton').show();
 // 		$('#nextButton').hide();

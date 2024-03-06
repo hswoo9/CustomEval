@@ -141,7 +141,7 @@ public class EvalController {
 				//개인정보 동의서
 				return "/eval/sign/evalSign5";
 				
-			}else if(map.get("SIGN_3").equals("N")){
+			}/*else if(map.get("SIGN_3").equals("N")){
 				logger.info("pageInfo ===== /eval/sign/evalSign3");
 
 				//사전접촉여부 확인
@@ -151,7 +151,7 @@ public class EvalController {
 				
 				return "/eval/sign/evalSign3";
 			
-			}else if(map.get("SIGN_3").equals("Y") && map.get("CONTACT").equals("Y")) {
+			}*/else if(map.get("SIGN_3").equals("Y") && map.get("CONTACT").equals("Y")) {
 				//사전접촉 했으면 바로 평가수당으로 보내기
 				if(map.get("SIGN_4").equals("N")) {
 					logger.info("pageInfo ===== /eval/sign/evalSign4");
@@ -182,7 +182,7 @@ public class EvalController {
 
 				return "/eval/evalView";
 				
-			}/*else if(map.get("SIGN_9").equals("N")){
+			}else if(map.get("SIGN_9").equals("N") && map.get("SIGN_6").equals("Y")){
 
 				//사전접촉여부 확인
 				List<Map<String, Object>> companyList = evalService.getCompanyList(map);
@@ -191,7 +191,24 @@ public class EvalController {
 
 				return "/eval/sign/evalSign9";
 
-			}*/else if(map.get("SIGN_6").equals("N")){
+			}else if(map.get("SIGN_9").equals("Y")  && map.get("CONTACT").equals("Y") && map.get("SIGN_6").equals("Y")){
+				if(map.get("SIGN_4").equals("N")) {
+					logger.info("pageInfo ===== /eval/sign/evalSign4");
+					//기피자가 평가위원 수의 2/3 됐을때 평가수당확인창으로 바로 이동
+					List<Map<String, Object>> list = commonService.getBankCode();
+					model.addAttribute("bankList", list);
+					model.addAttribute("avoidFailMessage", "과반수의 평가위원이 기피신청을 하였으므로,\\n평가를 진행할 수 없습니다.");
+					return "/eval/sign/evalSign4";
+				} else {
+					//평가수당 확인했으면 종료하기
+					logger.info("pageInfo ===== /");
+					HttpSession session = request.getSession();
+					session.invalidate();
+					fm.put("message", "과반수의 평가위원이 기피신청을 하였으므로,\\n평가를 진행할 수 없습니다.");
+					return "redirect:/";
+				}
+
+			}else if(map.get("SIGN_6").equals("N")){
 				logger.info("pageInfo ===== /eval/sign/evalSign6");
 
 				//사전접속자는 제외

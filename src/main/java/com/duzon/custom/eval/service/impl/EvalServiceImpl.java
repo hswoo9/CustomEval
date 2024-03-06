@@ -234,7 +234,7 @@ public class EvalServiceImpl implements EvalService {
 		//상태값 변경
 		evalDAO.setSignSetp(map);
 
-		if(stpe.equals("3") && map.get("flag").equals("Y")){
+		if(stpe.equals("9") && map.get("flag").equals("Y")){
 			// 사전접촉이 있으면 평가비용 5만원으로 변경
 			evalDAO.setEvalPayUpdate(map);
 			

@@ -146,7 +146,15 @@
 		// _pHwpCtrl.Open(hwpPath,"HWP");
 		//_pHwpCtrl.EditMode = 1;
 
-		var hwpPath = "http://121.186.165.80:8010/upload/evalForm/step5.hwp";
+		var serverPath = "";
+		var hostname = window.location.hostname;
+		if(hostname.indexOf("localhost") > -1 || hostname.indexOf("127.0.0.1") > -1 || hostname.indexOf("121.186.165.80") > -1){
+			serverPath = "http://121.186.165.80:8010";
+		}else{
+			serverPath = "http://one.epis.or.kr/"
+		}
+
+		var hwpPath = serverPath + "/upload/evalForm/step5.hwp";
 		_hwpOpen(hwpPath, "HWP");
 
 		_pHwpCtrl.EditMode = 0;
@@ -283,7 +291,7 @@
 				if(location.host.indexOf("127.0.0.1") > -1 || location.host.indexOf("localhost") > -1 || location.host.indexOf("heco") > -1 || location.host.indexOf("121.186.165.80") > -1){
 					zipUrl  = "http://121.186.165.80:8010" + data.zipDir;
 				}else{
-					zipUrl  = "http://10.10.10.82:80" + data.zipDir;
+					zipUrl  = "http://10.10.10.114:80" + data.zipDir;
 				}
 				var downWin = window.open('','_self');
 				downWin.location.href = zipUrl;

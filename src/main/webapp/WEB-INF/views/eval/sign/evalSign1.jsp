@@ -70,8 +70,15 @@
 
 	/** TODO. 한글뷰어 수정중 */
 	function hwpView(e){
+		var serverPath = "";
+		var hostname = window.location.hostname;
+		if(hostname.indexOf("localhost") > -1 || hostname.indexOf("127.0.0.1") > -1 || hostname.indexOf("121.186.165.80") > -1){
+			serverPath = "http://121.186.165.80:8010";
+		}else{
+			serverPath = "http://one.epis.or.kr/"
+		}
 		// var hwpPath = "http://"+_g_serverName+":"+_g_serverPort+_g_contextPath_+"/common/getHwpFile?fileNm=step2";
-		var hwpPath = "http://121.186.165.80:8010/upload/evalForm/step2.hwp";
+		var hwpPath = serverPath + "/upload/evalForm/step2.hwp";
 		_hwpOpen(hwpPath, "HWP");
 
 		_pHwpCtrl.EditMode = 0;

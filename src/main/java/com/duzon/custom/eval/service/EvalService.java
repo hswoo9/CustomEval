@@ -72,4 +72,6 @@ public interface EvalService {
 	Map<String, Object> getEvalAvoidFailChk(Map<String, Object> params);
 
 	void setEvalCommissionerBlindUpd(Map<String, Object> params);
+
+	List<Map<String, Object>> getSignList(Map<String, Object> params);
 }

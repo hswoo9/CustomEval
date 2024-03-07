@@ -218,4 +218,8 @@ public class EvalDAO extends AbstractDAO{
 	public Map<String, Object> getEvalAvoidFailChk(Map<String, Object> params) { return (Map<String, Object>) selectOne("eval.getEvalAvoidFailChk", params);}
 
 	public void setEvalCommissionerBlindUpd(Map<String, Object> params){ update("eval.setEvalCommissionerBlindUpd", params);}
+
+	public List<Map<String, Object>> getSignList(Map<String, Object> params){
+		return selectList("eval.getSignList", params);
+	}
 }

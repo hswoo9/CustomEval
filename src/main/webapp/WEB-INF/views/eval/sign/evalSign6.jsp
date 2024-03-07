@@ -69,7 +69,15 @@
 		// var hwpPath = "http://"+_g_serverName+":"+_g_serverPort+_g_contextPath_+"/common/getHwpFile?fileNm=step7";
 		// _pHwpCtrl.Open(hwpPath,"HWP");
 
-		var hwpPath = "http://121.186.165.80:8010/upload/evalForm/step7.hwp";
+		var serverPath = "";
+		var hostname = window.location.hostname;
+		if(hostname.indexOf("localhost") > -1 || hostname.indexOf("127.0.0.1") > -1 || hostname.indexOf("121.186.165.80") > -1){
+			serverPath = "http://121.186.165.80:8010";
+		}else{
+			serverPath = "http://one.epis.or.kr/"
+		}
+
+		var hwpPath = serverPath + "/upload/evalForm/step7.hwp";
 		_hwpOpen(hwpPath, "HWP");
 
 		_pHwpCtrl.EditMode = 0;

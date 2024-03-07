@@ -523,4 +523,13 @@ public class EvalController {
 
 		return path;
 	}
+
+
+	@RequestMapping("/eval/getSignList")
+	@ResponseBody
+	public Map<String, Object> getSignList(@RequestParam Map<String, Object> params){
+		Map<String, Object> result = new HashMap<>();
+		result.put("signList", evalService.getSignList(params));
+		return result;
+	}
 }

@@ -55,11 +55,11 @@
 <input type="hidden" id="hidEvalPw" value=""/>
 
 
-<div style="width: 1400px; padding-left: 25%;" >
-    <div id="signSave">
+<div style="width: 1000px; padding-left: 25%;" >
+    <div id="signSave" style="width:100%;">
         <input type="button" onclick="evalAvoidPopup();" value="기피신청">
         <a href="#" onclick="nextPageBtn();" target="_self">
-            <input type="button" value="다음">
+            <input type="button" style="float:right;" value="다음">
         </a>
     </div>
 
@@ -186,7 +186,7 @@
             <TD valign="middle" style='width:632px;height:40px;border-left:solid #000000 1.1pt;border-right:solid #000000 1.1pt;border-top:solid #aeaeae 0.6pt;border-bottom:solid #aeaeae 0.6pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
                 <P CLASS=HStyle0 STYLE='margin-left:15.6pt;margin-right:3.0pt;text-indent:-12.6pt;line-height:130%;'>
                     <input type="checkbox" id="chk15" name="chk" value="Y">
-                    <SPAN STYLE='font-size:13.0pt;line-height:130%'>&#9642;</SPAN><SPAN STYLE='font-size:13.0pt;letter-spacing:-5%;line-height:130%'>제안서의 잘못된 부분은 평가로 표현하고 지적하여 고치려 하지 말아야 합니다.</SPAN></P>
+                    <SPAN STYLE='font-size:13.0pt;line-height:130%'>&#9642;제안서의 잘못된 부분은 평가로 표현하고 지적하여 고치려 하지 말아야 합니다.</SPAN></P>
             </TD>
         </TR>
         <TR>
@@ -211,5 +211,41 @@
             </TD>
         </TR>
     </TABLE>
+
+    <TABLE border="1" cellspacing="0" cellpadding="0" style='width:1000px; border-collapse:collapse;border:none; margin-top:20px;'>
+        <caption style="text-align: left; font-size:13.0pt; color: red; font-weight: bold;">기피사유</caption>
+        <TR>
+            <TD valign="middle" style='width:632px;height:40px;border-left:solid #000000 1.1pt;border-right:solid #000000 1.1pt;border-top:solid #aeaeae 0.6pt;border-bottom:solid #aeaeae 0.6pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
+                <P CLASS=HStyle0 STYLE='margin-left:3.0pt;margin-right:3.0pt;line-height:130%;'>
+                    <SPAN STYLE='font-size:13.0pt;line-height:130% ;color: red;"'>기피사유에 해당하는 평가위원께서는 기피신청을 해주시기 바랍니다.</SPAN></P>
+            </TD>
+        </TR>
+        <TR>
+            <TD valign="middle" style='width:632px;height:40px;border-left:solid #000000 1.1pt;border-right:solid #000000 1.1pt;border-top:solid #aeaeae 0.6pt;border-bottom:solid #aeaeae 0.6pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
+                <P CLASS=HStyle0 STYLE='margin-left:3.0pt;margin-right:3.0pt;line-height:130%;'>
+                    <SPAN STYLE='font-size:13.0pt;line-height:130% ;color: red;"'>&#9642;평가위원이 당해 평가 대상과 관련 전년도 1월 1일부터 현재까지 하도급을 포함하여 용역, 자문, 연구 등을 수행한 경우</SPAN></P>
+            </TD>
+        </TR>
+        <TR>
+            <TD valign="middle" style='width:632px;height:40px;border-left:solid #000000 1.1pt;border-right:solid #000000 1.1pt;border-top:solid #aeaeae 0.6pt;border-bottom:solid #aeaeae 0.6pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
+                <P CLASS=HStyle0 STYLE='margin-left:3.0pt;margin-right:3.0pt;line-height:130%;'>
+                    <SPAN STYLE='font-size:13.0pt;line-height:130%; color: red;'>&#9642;평가위원 또는 소속기관이 당해 평가 대상 용역 시행으로 인하여 이해당사자가 되는 경우(대리관계 포함)</SPAN></P>
+            </TD>
+        </TR>
+        <TR>
+            <TD valign="middle" style='width:632px;height:40px;border-left:solid #000000 1.1pt;border-right:solid #000000 1.1pt;border-top:solid #aeaeae 0.6pt;border-bottom:solid #aeaeae 0.6pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
+                <P CLASS=HStyle0 STYLE='margin-left:3.0pt;margin-right:3.0pt;line-height:130%;'>
+                    <SPAN STYLE='font-size:13.0pt;line-height:130%; color: red;'>&#9642;평가위원이 당해 평가대상 업체에 재직한 경우</SPAN></P>
+            </TD>
+        </TR>
+        <TR>
+            <TD valign="middle" style='width:632px;height:40px;border-left:solid #000000 1.1pt;border-right:solid #000000 1.1pt;border-top:solid #aeaeae 0.6pt;border-bottom:solid #aeaeae 0.6pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
+                <P CLASS=HStyle0 STYLE='margin-left:3.0pt;margin-right:3.0pt;line-height:130%;'>
+                    <SPAN STYLE='font-size:13.0pt;line-height:130%; color: red;'>&#9642;그 밖에 제1호부터 제3호까지에 준하는 경우로서 기타 공정한 평가를 수행할 수 없다고 판단하는 경우</SPAN></P>
+            </TD>
+        </TR>
+    </TABLE>
+
+
 
 </div>

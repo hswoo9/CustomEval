@@ -238,11 +238,11 @@ public class EvalServiceImpl implements EvalService {
 			// 사전접촉이 있으면 평가비용 5만원으로 변경
 			evalDAO.setEvalPayUpdate(map);
 			
-		}else if(stpe.equals("4")){
+		}else if(stpe.equals("4")) {
 			//수당 개인정보 업데이트
 			evalDAO.setCommDetailUpdate(map);
-			
-		//평가확정	
+
+		//평가확정
 		}else if(stpe.equals("8")){
 			evalDAO.setEvalJangConfirm(map);
 			

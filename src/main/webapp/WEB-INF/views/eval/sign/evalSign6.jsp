@@ -123,6 +123,14 @@
 	}
 
 	function setItem(){
+		/*for(var i = 0 ; i < 1 ; i++){
+			평가항목, 배점,
+					<tr>
+						for(기관수만큼){
+							<td></td>
+						}
+					</tr>
+		}*/
 		//채우기
 		for (var i = 0; i < getCompanyList.length; i++) {
 			_hwpPutText("company{{"+i+"}}", getCompanyList[i].display_title);
@@ -224,8 +232,8 @@
 <div style="width: 50%;margin: 0 auto;">
 	<div id="signSave" style="display: none;">
 		<input type="button" onclick="evalAvoidPopup()" value="기피신청">
-		<input type="button" onclick="evalModBtn();" value="평가 수정">
-		<input type="button" onclick="signSaveBtn();" value="저장">
+		<input type="button" onclick="signSaveBtn();" style="float:right;" value="저장">
+		<input type="button" onclick="evalModBtn();" style="float:right;" value="평가 수정">
 	</div>
 
 	<div id="_pHwpCtrl" style="height: 100%;border: 1px solid lightgray;"></div>

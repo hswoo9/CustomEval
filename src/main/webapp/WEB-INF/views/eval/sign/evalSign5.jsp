@@ -98,8 +98,10 @@
 
 <div style="width: 50%;margin: 0 auto;">
 	<div id="signSave" style="display: none;">
-		<input type="button" onclick="evalAvoidPopup()" value="기피신청">
-		<input type="button" onclick="signSaveBtn();" value="저장">
+		<div>
+			<input type="button" onclick="evalAvoidPopup()" value="기피신청">
+			<input type="button" onclick="signSaveBtn();" style="float:right;" value="저장">
+		</div>
 	</div>
 
 	<div id="_pHwpCtrl" style="height: 100%;border: 1px solid lightgray;"></div>

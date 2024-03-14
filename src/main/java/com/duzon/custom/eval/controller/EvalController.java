@@ -52,7 +52,6 @@ public class EvalController {
 	public void evalAvoid(@RequestParam Map<String, Object> params, HttpServletRequest request){
 		Map<String, Object> map = evalService.getEvalchk((Map<String, Object>) request.getSession().getAttribute("evalLoginVO"));
 		map.put("eval_avoid_txt", params.get("eval_avoid_txt"));
-
 		evalService.setEvalAvoidY(map);
 	}
 
@@ -79,7 +78,6 @@ public class EvalController {
 		FlashMap fm = RequestContextUtils.getOutputFlashMap(request);
 		
 		Map<String, Object> map = (Map<String, Object>) request.getSession().getAttribute("evalLoginVO");
-		
 		//로그인 기본 정보가져오기
 		map = evalService.getEvalchk(map);
 
@@ -112,6 +110,20 @@ public class EvalController {
 					fm.put("message", "과반수의 평가위원이 기피신청을 하였으므로,\\n평가를 진행할 수 없습니다.");
 					return "redirect:/";
 				}
+			}
+
+			if(map.get("EVAL_AVOID").equals("Y") && map.get("EVAL_AVOID_CHECK_YN").equals("N")){
+				logger.info("pageInfo ===== /eval/sign/evalAvoid11");
+				//기피신청 수당확인 페이지로 이동
+				return "/eval/sign/evalSign4";
+			}else if(map.get("EVAL_AVOID").equals("Y") && map.get("EVAL_AVOID_CHECK_YN").equals("Y")){
+				logger.info("pageInfo ===== /eval/sign/evalSign10");
+
+				HttpSession session = request.getSession();
+				session.invalidate();
+				fm.put("message", "\"평가위원님의 제안 평가가\\n정상적으로 제출 되었습니다.\"\\n수고 하셨습니다.");
+				//기피신청자 평가수당 지급 확인서 확인 후 세션 풀림
+				return "redirect:/";
 			}
 
 			if(map.get("SIGN_1").equals("N")){
@@ -279,11 +291,11 @@ public class EvalController {
 				
 				return "/eval/sign/evalSign4";
 				
-			}else if(map.get("SIGN_10").equals("N") && map.get("EVAL_JANG").equals("Y")){
+			/*}else if(map.get("SIGN_10").equals("N") && map.get("EVAL_JANG").equals("Y")){
 				logger.info("pageInfo ===== /eval/sign/evalSign10");
 
 				//평가위원장 가산금 지급 확인서
-				return "/eval/sign/evalSign10";
+				return "/eval/sign/evalSign10";*/
 			}else{
 				logger.info("pageInfo ===== /");
 
@@ -291,6 +303,7 @@ public class EvalController {
 				session.invalidate();
 				fm.put("message", "\"평가위원님의 제안 평가가\\n정상적으로 제출 되었습니다.\"\\n수고 하셨습니다.");
 				return "redirect:/";
+
 			}
 		}else{
 			logger.info("pageInfo ===== /");

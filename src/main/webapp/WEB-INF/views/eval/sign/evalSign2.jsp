@@ -290,7 +290,6 @@
 	<div id="signSave" style="display: none;display: flex;justify-content: space-between;">
 		<div>
 			<input type="button" onclick="evalAvoidPopup()" value="기피신청">
-			<input type="button" onclick="signSaveBtn();" value="저장">
 			<sapn style="padding-left: 10px;">※업체별 시간 입력 가이드</sapn>
 		</div>
 		<div>
@@ -309,6 +308,7 @@
 					<option>${minute}</option>
 				</c:forEach>
 			</select>
+			<input type="button" onclick="signSaveBtn();" style="margin-left:23px;" value="저장">
 		</div>
 	</div>
 

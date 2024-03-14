@@ -94,7 +94,15 @@
 		// _pHwpCtrl.Open(hwpPath,"HWP");
 		//_pHwpCtrl.EditMode = 1;
 
-		var hwpPath = "http://121.186.165.80:8010/upload/evalForm/step4.hwp";
+		var serverPath = "";
+		var hostname = window.location.hostname;
+		if(hostname.indexOf("localhost") > -1 || hostname.indexOf("127.0.0.1") > -1 || hostname.indexOf("121.186.165.80") > -1){
+			serverPath = "http://121.186.165.80:8010";
+		}else{
+			serverPath = "http://one.epis.or.kr/"
+		}
+
+		var hwpPath = serverPath + "/upload/evalForm/step4.hwp";
 		_hwpOpen(hwpPath, "HWP");
 
 		_pHwpCtrl.EditMode = 0;
@@ -169,10 +177,12 @@
 	table tr th,td {border: 1px; border-style: solid; text-align: center; height: 40px; }
 </style>
 
-<div class=WordSection1 style="width: 900px; height: 1000px;padding-left: 200px;">
-	<div id="signSave">
-		<input type="button" onclick="evalAvoidPopup()" value="기피신청">
-		<input type="button" onclick="signSaveBtn();" value="저장">
+<div class=WordSection1 style="width: 1400px; height: 1000px;padding-left: 200px;">
+	<div id="signSave" style="width:100%;">
+		<div>
+			<input type="button" onclick="evalAvoidPopup()" value="기피신청">
+			<input type="button" onclick="signSaveBtn();" style="float:right;" value="저장">
+		</div>
 	</div>
 
 	<div align=center style="padding-top: 30px; width: 1400px;">
@@ -202,7 +212,7 @@
 		<thead>
 			<tr>
 				<th>업체명</th>
-				<th>사전 접촉자</th>
+				<th>사전 접촉자<br/>(업체측 관계자)</th>
 				<th>일시</th>
 				<th>확인</th>
 				<th>세부내용</th>

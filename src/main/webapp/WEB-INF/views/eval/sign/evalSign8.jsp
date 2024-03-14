@@ -222,8 +222,8 @@
 	<div id="signSave" style="display: none;">
 <%--		<input type="button" onclick="OnConnectDevice();" value="서명하기">--%>
 		<input type="button" onclick="evalAvoidPopup()" value="기피신청">
-		<input type="button" onclick="reloadBtn();" value="새로고침">
-		<input type="button" onclick="signSaveBtn();" value="저장">
+		<input type="button" onclick="signSaveBtn();" style="float:right; margin-left:10px;" value="저장">
+		<input type="button" onclick="reloadBtn();" style="float:right;" value="새로고침">
 	</div>
 
 	<div id="_pHwpCtrl" style="height: 100%;border: 1px solid lightgray;"></div>

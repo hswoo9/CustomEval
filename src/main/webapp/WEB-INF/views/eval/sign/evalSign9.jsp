@@ -177,10 +177,10 @@
 	table tr th,td {border: 1px; border-style: solid; text-align: center; height: 40px; }
 </style>
 
-<div class=WordSection1 style="width: 900px; height: 1000px;padding-left: 200px;">
-	<div id="signSave">
+<div class=WordSection1 style="width: 1400px; height: 1000px;padding-left: 200px;">
+	<div id="signSave" style="width: 100%;">
 		<input type="button" onclick="evalAvoidPopup()" value="기피신청">
-		<input type="button" onclick="signSaveBtn();" value="저장">
+		<input type="button" onclick="signSaveBtn();" style="float:right;" value="저장">
 	</div>
 
 	<div align=center style="padding-top: 30px; width: 1400px;">
@@ -195,7 +195,7 @@
 
 	<p class=a align=center style='text-align:center;line-height:130%;word-break:normal'><span style='font-size:13.0pt;line-height:130%;letter-spacing:-.1pt'>&nbsp;</span></p>
 	<p class=a style='margin-top:3.0pt;margin-right:0in;margin-bottom:3.0pt;margin-left:0in'>&nbsp;</p>
-	<p class=a style='margin-top:3.0pt;margin-right:0in;margin-bottom:3.0pt;margin-left:0in'>본인은 「${userInfo.TITLE } 사업」의 기술제안서 평가와 관련하여 입찰자와의 사전접촉 여부를 아래와 같이 확인(신고)합니다.</p>
+	<p class=a style='font-size: 15px; margin-top:3.0pt;margin-right:0in;margin-bottom:3.0pt;margin-left:0in'>본인은 「${userInfo.TITLE } 사업」의 기술제안서 평가와 관련하여 입찰자와의 사전접촉 여부를 아래와 같이 확인(신고)합니다.</p>
 	<p class=a style='margin-top:3.0pt;margin-right:0in;margin-bottom:3.0pt;margin-left:0in'>&nbsp;</p>
 	<p class=a style='margin-top:30px;margin-right:0in;margin-bottom:3.0pt;margin-left:15.6pt;text-indent:-15.6pt'><b><span style='font-size:12.0pt;line-height:103%;font-family:"Arial Unicode MS",sans-serif'>□</span></b><b><span style='font-size:12.0pt;line-height:103%'> 사전접촉 사실 확인(신고)서</span></b></p>
 
@@ -210,7 +210,7 @@
 		<thead>
 		<tr>
 			<th>업체명</th>
-			<th>사전 접촉자</th>
+			<th>사전 접촉자<br/>(업체측 관계자)</th>
 			<th>일시</th>
 			<th>확인</th>
 			<th>세부내용</th>

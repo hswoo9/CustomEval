@@ -65,7 +65,15 @@
 		// _pHwpCtrl.Open(hwpPath,"HWP");
 		// _pHwpCtrl.EditMode = 0;
 
-		var hwpPath = "http://121.186.165.80:8010/upload/evalForm/step8.hwp";
+		var serverPath = "";
+		var hostname = window.location.hostname;
+		if(hostname.indexOf("localhost") > -1 || hostname.indexOf("127.0.0.1") > -1 || hostname.indexOf("121.186.165.80") > -1){
+			serverPath = "http://121.186.165.80:8010";
+		}else{
+			serverPath = "http://one.epis.or.kr/"
+		}
+
+		var hwpPath = serverPath + "/upload/evalForm/step8.hwp";
 		_hwpOpen(hwpPath, "HWP");
 
 		_pHwpCtrl.EditMode = 0;
@@ -110,8 +118,8 @@
 <div style="width: 50%;margin: 0 auto;">
 	<div id="signSave" style="display: none;">
 		<input type="button" onclick="evalAvoidPopup()" value="기피신청">
-		<input type="button" onclick="reloadBtn();" value="새로고침">
-		<input type="button" onclick="signSaveBtn();" value="저장">
+		<input type="button" onclick="signSaveBtn();" style="float:right; margin-left : 10px;" value="저장">
+		<input type="button" onclick="reloadBtn();" style="float:right;" value="새로고침">
 	</div>
 	<div style="width:100%; padding-bottom: 35px; text-align: center;">
 		<h4 style="font-size: 30px;">업체별 제안서 평가집계표</h4>
@@ -192,9 +200,21 @@
 					</TD>
 					<c:forEach items="${result[mainSt.index].list }" var="userList">
 						<TD valign="middle" style='height:33px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.9pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
-							<P CLASS=HStyle0 STYLE='text-align:center;line-height:150%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움"'><fmt:formatNumber value="${userList.scoreSum}" pattern=".####"/></SPAN></P>
+							<P CLASS=HStyle0 STYLE='text-align:center;line-height:150%;'>
+								<SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>
+								<c:choose>
+									<c:when test="${userList.scoreSum == 0}">
+										<fmt:formatNumber value="${userList.scoreSum}" pattern="0.0"/>
+									</c:when>
+									<c:otherwise>
+										<fmt:formatNumber value="${userList.scoreSum}" pattern=".####"/>
+									</c:otherwise>
+								</c:choose>
+								</SPAN>
+							</P>
 						</TD>
 					</c:forEach>
+
 <%--					<TD valign="middle" style='height:33px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.9pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>--%>
 <%--						<P CLASS=HStyle0 STYLE='text-align:center;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>&nbsp;</SPAN></P>--%>
 <%--					</TD>--%>

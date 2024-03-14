@@ -26,6 +26,7 @@
         , A.EVAL_PAY
         , A.EVAL_SAVE
 		, A.EVAL_AVOID
+		, A.EVAL_AVOID_CHECK_YN
 		, C.NAME
 		, C.BIRTH_DATE
 		, D.BIZ_TYPE_ARRAY
@@ -60,7 +61,7 @@
         WHERE A.EVAL_ID = #{evalId} AND A.EVAL_PW = HEX(AES_ENCRYPT(#{evalPw}, 'EVAL'))
 		AND A.ACTIVE = 'Y'
 		AND A.CONFIRM_YN = 'Y'
-		AND A.ATTEND_YN = 'Y'
+		/*AND A.ATTEND_YN = 'Y'*/
 	</select>
 
 	<update id="setSignDir" parameterType="map">
@@ -262,7 +263,10 @@
 			</if>
 			<if test='sign2Chk == null or "".equals(sign2Chk)'>
 				${col_nm} = 'Y',
-				${col_file} = #{attch_file_seq}
+				${col_file} = #{attch_file_seq},
+			</if>
+			<if test='col_nm == "sign_4" and col_file == "sign_4_file_seq"'>
+				EVAL_AVOID_CHECK_YN = 'Y'
 			</if>
 		WHERE COMMISSIONER_SEQ = #{commissioner_seq}
 	</update>

@@ -22,8 +22,12 @@ function cancelBtn(){
 			type : 'POST',
 			success: function(){
 				alert("처리 되었습니다.");
-				opener.parent.location.href = _g_contextPath_ + "/";
+				//opener.parent.location.href = _g_contextPath_ + "/";
+				//opener.parent.location.href = "<c:url value='/eval/goEvalAvoid'/>";
+				opener.parent.location.href = "<c:url value='/eval/evalView'/>";
+
 				window.close();
+
 			},
 			error : function(){
 				alert("처리 중 오류가 발생했습니다. 시스템관리자에게 문의 하세요.");
@@ -31,7 +35,6 @@ function cancelBtn(){
 		});
 	}
 }
-
 </script>
 
 

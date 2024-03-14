@@ -172,8 +172,25 @@
 		// var hwpPath = "http://"+_g_serverName+":"+_g_serverPort+_g_contextPath_+"/common/getHwpFile?fileNm=step3";
 		// _pHwpCtrl.Open(hwpPath,"HWP");
 		//_pHwpCtrl.EditMode = 1;
+		var serverPath = "";
+		var hostname = window.location.hostname;
+		if(hostname.indexOf("localhost") > -1 || hostname.indexOf("127.0.0.1") > -1 || hostname.indexOf("121.186.165.80") > -1){
+			serverPath = "http://121.186.165.80:8010";
+		}else{
+			serverPath = "http://one.epis.or.kr/"
+		}
 
-		var hwpPath = "http://121.186.165.80:8010/upload/evalForm/step3.hwp";
+		var hwpPath = "";
+		if('${userInfo.EVAL_JANG}' != ''){
+			if('${userInfo.EVAL_JANG}' == "Y"){
+				hwpPath = serverPath + "/upload/evalForm/step3_jang.hwp";
+			}else{
+				hwpPath = serverPath + "/upload/evalForm/step3.hwp";
+			}
+		}else{
+			hwpPath = serverPath + "/upload/evalForm/step3.hwp";
+		}
+
 		_hwpOpen(hwpPath, "HWP");
 
 		_pHwpCtrl.EditMode = 0;
@@ -192,8 +209,55 @@
 		var name = "${userInfo.NAME}";
 
 		_hwpPutText("title1", title1);
+
 		_hwpPutText("date", date);
-		_hwpPutText("name", name);
+
+		if('${userInfo.EVAL_JANG}' != ''){
+			if('${userInfo.EVAL_JANG}' == "Y"){
+				_hwpPutText("jangName", name);
+				_hwpPutText("jangSign", "(인)");
+				_hwpPutSignImg("jangSign", "${userInfo.SIGN_DIR }");
+
+				var formData = new FormData();
+				formData.append("committeeSeq", '${userInfo.COMMITTEE_SEQ}');
+				$.ajax({
+					url : "<c:url value='/eval/getSignList'/>",
+					type : "POST",
+					data : formData,
+					dataType : "json",
+					contentType: false,
+					processData: false,
+					async : false,
+					success : function(data) {
+						if(data.signList != null) {
+							if(data.signList.length > 0){
+								for(var i = 0 ; i < data.signList.length ; i++){
+									_hwpPutText("field" + i, "평가위원");
+									_hwpPutText("name" + i, data.signList[i].NAME);
+									_hwpPutText("sign" + i, "(인)");
+									_hwpPutSignImg("sign" + i, data.signList[i].SIGN_DIR);
+								}
+							}else{
+								alert("오류가 발생했습니다. 시스템관리자한테 문의 하세요.");
+								return false ;
+							}
+						}else{
+							alert("오류가 발생했습니다. 시스템관리자한테 문의 하세요.");
+							return false ;
+						}
+					}
+				})
+
+
+			}else{
+				_hwpPutText("name", name);
+				_hwpPutSignImg("sign", "${userInfo.SIGN_DIR }");
+			}
+		}else{
+			_hwpPutText("name", name);
+			_hwpPutSignImg("sign", "${userInfo.SIGN_DIR }");
+		}
+
 
 		_pHwpCtrl.Run("MoveViewUp");
 		_pHwpCtrl.Run("MoveViewUp");
@@ -201,7 +265,10 @@
 		_pHwpCtrl.Run("MoveViewUp");
 		_pHwpCtrl.Run("MoveViewUp");
 
-		_hwpPutSignImg("sign", "${userInfo.SIGN_DIR }");
+
+
+
+
 
 		$("#signSave").show();
 	}
@@ -223,7 +290,6 @@
 	<div id="signSave" style="display: none;display: flex;justify-content: space-between;">
 		<div>
 			<input type="button" onclick="evalAvoidPopup()" value="기피신청">
-			<input type="button" onclick="signSaveBtn();" value="저장">
 			<sapn style="padding-left: 10px;">※업체별 시간 입력 가이드</sapn>
 		</div>
 		<div>
@@ -242,6 +308,7 @@
 					<option>${minute}</option>
 				</c:forEach>
 			</select>
+			<input type="button" onclick="signSaveBtn();" style="margin-left:23px;" value="저장">
 		</div>
 	</div>
 

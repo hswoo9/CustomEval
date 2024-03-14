@@ -236,7 +236,6 @@
 	}
 
 	function showModalPop(){
-
 		absentModal = $('<div id="absentModal"  style="width:650px; height:200px; margin-top:10px; margin-left:10px; line-height:35px;">' +
 				'<span>● 평가위원이 당해 평가 대상과 관련 전년도 1월 1일부터 현재까지 하도급을 포함하여 용역, 자문, 연구 등을 수행한 경우</span><br>'+
 				'<span>● 평가위원 또는 소속기관이 당해 평가 대상 용역 시행으로 인하여 이해당사자가 되는 경우(대리관계 포함)</span><br>'+
@@ -320,11 +319,13 @@
 
 
 <div style="width: 40%;margin: 0 auto;">
-	<div id="signSave" style="display: none;">
+	<div id="signSave" style="display: none; width:78%;">
 <%--		<input type="button" onclick="OnConnectDevice();" value="서명하기">--%>
-		<input type="button" onclick="showModalPop()" value="기피신청">
-		<input type="button" onclick="fileDownChk();" value="저장">
-		<input type="button" onclick="signFileDown();" value="평가자료 다운로드">
+		<c:if test="${userInfo.EVAL_AVOID eq 'N'}">
+			<input type="button" onclick="showModalPop()" value="기피신청">
+		</c:if>
+		<input type="button" onclick="fileDownChk();" style="float:right; margin-left:10px;" value="저장">
+		<input type="button" onclick="signFileDown();" style="float:right;" value="평가자료 다운로드">
 	</div>
 </div>
 
@@ -355,14 +356,27 @@
 	</TR>
 	<TR>
 		<TD valign="middle" style='width:186px;height:31px;border-left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 1.1pt;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
-		<P CLASS=HStyle0 STYLE='margin-right:5.0pt;text-align:right;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움"'><fmt:formatNumber type="number" maxFractionDigits="3" value="${userInfo.EVAL_PAY }" />원</SPAN></P>
+			<P CLASS=HStyle0 STYLE='margin-right:5.0pt;text-align:right;'>
+				<SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>
+					내부 규정에 따름
+					<%--<c:choose>
+						<c:when test="${userInfo.EVAL_AVOID eq 'Y'}">
+							50,000원
+							&lt;%&ndash;<fmt:formatNumber type="number" maxFractionDigits="3" value="${userInfo.EVAL_PAY }"/>&ndash;%&gt;
+						</c:when>
+						<c:otherwise>
+							내부 규정에 따름
+						</c:otherwise>
+					</c:choose>--%>
+				</SPAN>
+			</P>
 		</TD>
 		<TD valign="middle" style='width:186px;height:31px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 1.1pt;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
 			<P CLASS=HStyle0 STYLE='margin-right:5.0pt;text-align:right;'>
-			<SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>
-				내부 규정에 따름
-<%--				<fmt:formatNumber type="number" maxFractionDigits="3" value="${userInfo.TRANS_PAY }" />원--%>
-			</SPAN>
+				<SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>
+					내부 규정에 따름
+	<%--				<fmt:formatNumber type="number" maxFractionDigits="3" value="${userInfo.TRANS_PAY }" />원--%>
+				</SPAN>
 			</P>
 		</TD>
 		<%--<TD valign="middle" style='width:186px;height:31px;border-left:solid #000000 0.4pt;border-right:solid #000000 1.1pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 1.1pt;padding:1.4pt 5.1pt 1.4pt 5.1pt'>

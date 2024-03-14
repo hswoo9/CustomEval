@@ -99,8 +99,15 @@ function hwpView(){
 	// var hwpPath = "http://"+_g_serverName+":"+_g_serverPort+_g_contextPath_+"/common/getHwpFile?fileNm=step10";
 	// _pHwpCtrl.Open(hwpPath,"HWP");
 	// _pHwpCtrl.EditMode = 0;
+	var serverPath = "";
+	var hostname = window.location.hostname;
+	if(hostname.indexOf("localhost") > -1 || hostname.indexOf("127.0.0.1") > -1 || hostname.indexOf("121.186.165.80") > -1){
+		serverPath = "http://121.186.165.80:8010";
+	}else{
+		serverPath = "http://one.epis.or.kr/"
+	}
 
-	var hwpPath = "http://121.186.165.80:8010/upload/evalForm/step10.hwp";
+	var hwpPath = serverPath + "/upload/evalForm/step10.hwp";
 	_hwpOpen(hwpPath, "HWP");
 
 	_pHwpCtrl.EditMode = 0;
@@ -134,7 +141,7 @@ function evalAvoidPopup(){
 	<div id="signSave" style="display: none;">
 		<%--<input type="button" onclick=";" value="서명하기">--%>
 		<input type="button" onclick="evalAvoidPopup()" value="기피신청">
-		<input type="button" onclick="signSaveBtn();" value="저장">
+		<input type="button" onclick="signSaveBtn();" style="float:right;" value="저장">
 	</div>
 
 	<div id="_pHwpCtrl" style="height: 100%;border: 1px solid lightgray;"></div>

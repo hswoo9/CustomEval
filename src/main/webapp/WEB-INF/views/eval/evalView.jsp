@@ -69,19 +69,19 @@
 
 
 
-	<div class="right_div">
+	<div class="right_div" style="height:70px;">
 		<div class="controll_btn p10">
 
-			<button type="button" class="evalButton" onclick="evalAvoidPopup()" style="width: 120px">기피신청</button>
+			<button type="button" class="evalButton" onclick="evalAvoidPopup()" style="width: 120px; float:left;">기피신청</button>
 			<button type="button" class="evalButton" id="prevButton" style="display: none;" onclick="prevEvalBtn();">이전</button>
 			<button type="button" class="evalButton" id="nextButton" onclick="nextEvalBtn();">다음</button>
-			<button type="button" class="evalButton" id="saveButton" style="display: none;" onclick="saveBtn();">저장</button>
+			<button type="button" class="evalButton" id="saveButton" style="display: none; float: right; margin-left:10px;" onclick="saveBtn();">저장</button>
 			<%--<button type="button" class="evalButton" id="saveButton" style="display: none;" onclick="deviationChk();">저장</button>--%>
 			<!-- 			<button type="button" class="evalButton" onclick="nextPageBtn();">다음</button> -->
 		</div>
 	</div>
 
-	<div id="displayTitle" style="margin-bottom:10px; height:30px;"></div>
+	<div id="displayTitle" style="margin-top:10px; margin-bottom:10px; height:30px;"></div>
 
 	<div class="sub_contents_wrap" style="min-width:1500px; min-height: 0px;">
 		<div class="com_ta">
@@ -107,7 +107,7 @@
 						<th style="width: 15%;">${list.DISPLAY_TITLE }</th>
 						<td style="text-align: left;">
 							<input type="hidden" id="chkTxt${st.index}" name="chkTxt">
-							<textarea class="comReMarkInput" id="${list.com_remark_seq }" style="font-size: 20px;" rows="4" cols="100" maxlength="400">${list.remark}</textarea>
+							<textarea class="comReMarkInput" id="${list.com_remark_seq }" style="font-size: 20px;" rows="4" cols="100" maxlength="400" placeholder="30자 이상 작성해주세요.">${list.remark}</textarea>
 							<span id="txtCnt">0</span>/400
 						</td>
 					</tr>

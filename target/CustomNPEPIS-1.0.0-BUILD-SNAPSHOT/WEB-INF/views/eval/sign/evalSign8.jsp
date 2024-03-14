@@ -75,7 +75,15 @@
 		// _pHwpCtrl.Open(hwpPath,"HWP");
 		// _pHwpCtrl.EditMode = 0;.
 
-		var hwpPath = "http://121.186.165.80:8010/upload/evalForm/step9.hwp";
+		var serverPath = "";
+		var hostname = window.location.hostname;
+		if(hostname.indexOf("localhost") > -1 || hostname.indexOf("127.0.0.1") > -1 || hostname.indexOf("121.186.165.80") > -1){
+			serverPath = "http://121.186.165.80:8010";
+		}else{
+			serverPath = "http://one.epis.or.kr/"
+		}
+
+		var hwpPath = serverPath + "/upload/evalForm/step9.hwp";
 		_hwpOpen(hwpPath, "HWP");
 
 		_pHwpCtrl.EditMode = 0;
@@ -214,8 +222,8 @@
 	<div id="signSave" style="display: none;">
 <%--		<input type="button" onclick="OnConnectDevice();" value="서명하기">--%>
 		<input type="button" onclick="evalAvoidPopup()" value="기피신청">
-		<input type="button" onclick="reloadBtn();" value="새로고침">
-		<input type="button" onclick="signSaveBtn();" value="저장">
+		<input type="button" onclick="signSaveBtn();" style="float:right; margin-left:10px;" value="저장">
+		<input type="button" onclick="reloadBtn();" style="float:right;" value="새로고침">
 	</div>
 
 	<div id="_pHwpCtrl" style="height: 100%;border: 1px solid lightgray;"></div>

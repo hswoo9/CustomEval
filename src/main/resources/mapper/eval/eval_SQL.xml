@@ -263,10 +263,10 @@
 			</if>
 			<if test='sign2Chk == null or "".equals(sign2Chk)'>
 				${col_nm} = 'Y',
-				${col_file} = #{attch_file_seq},
+				${col_file} = #{attch_file_seq}
 			</if>
 			<if test='col_nm == "sign_4" and col_file == "sign_4_file_seq"'>
-				EVAL_AVOID_CHECK_YN = 'Y'
+				,EVAL_AVOID_CHECK_YN = 'Y'
 			</if>
 		WHERE COMMISSIONER_SEQ = #{commissioner_seq}
 	</update>

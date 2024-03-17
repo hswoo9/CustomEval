@@ -113,6 +113,7 @@
 		_hwpPutText("name", name);
 		_hwpPutText("date", date);
 
+
 		_hwpPutSignImg("sign", "${userInfo.SIGN_DIR }");
 
 		setItem();
@@ -123,14 +124,6 @@
 	}
 
 	function setItem(){
-		/*for(var i = 0 ; i < 1 ; i++){
-			평가항목, 배점,
-					<tr>
-						for(기관수만큼){
-							<td></td>
-						}
-					</tr>
-		}*/
 		//채우기
 		for (var i = 0; i < getCompanyList.length; i++) {
 			_hwpPutText("company{{"+i+"}}", getCompanyList[i].display_title);
@@ -192,6 +185,57 @@
 			_hwpPutText("score_"+cnt+"{{"+index+"}}", String(list[i].RESULT_SCORE));
 			index++;
 		}
+
+		//셀 병합
+
+		//company
+		_pHwpCtrl.MoveToField("company{{"+(getCompanyList.length - 1)+"}}");
+		_pHwpCtrl.Run("TableCellBlock");
+		_pHwpCtrl.Run("TableCellBlockExtend");
+		for (var i = 0; i < 10 - getCompanyList.length; i++) {
+			_pHwpCtrl.Run("TableRightCellAppend");
+		}
+		_pHwpCtrl.Run("TableMergeCell");
+
+		//score
+		for (var a = 0; a < list.length + 1; a++) {
+			_pHwpCtrl.MoveToField("score_" + getCompanyRemarkList.length);
+			_pHwpCtrl.Run("TableCellBlock");
+			if (a != 0) {
+				for (var l = 1; l < list.length - (list.length - a); l++) {
+					_pHwpCtrl.Run("TableLowerCell");
+				}
+			}
+			_pHwpCtrl.Run("TableCellBlockExtend");
+			_pHwpCtrl.Run("TableColEnd");
+
+			_pHwpCtrl.Run("TableMergeCell");
+			//_pHwpCtrl.MoveToField("score_" + (parseInt(getCompanyRemarkList.length) - 1));
+			//_pHwpCtrl.Run("TableCellBlock");
+			//_pHwpCtrl.Run("TableCellBlockExtend");
+			//_pHwpCtrl.Run("TableColEnd");
+			//_pHwpCtrl.Run("TableDistributeCellWidth");
+		}
+
+		_pHwpCtrl.MoveToField("score_" + (parseInt(getCompanyRemarkList.length) - 1));
+		_pHwpCtrl.Run("TableCellBlock");
+		_pHwpCtrl.Run("TableCellBlockExtend");
+
+		for (var l = 1; l < itemList.length; l++) {
+			_pHwpCtrl.Run("TableLowerCell");
+		}
+		_pHwpCtrl.Run("TableDistributeCellWidth");
+
+
+		//total
+		_pHwpCtrl.MoveToField("total{{" + (getCompanyRemarkList.length -1 ) + "}}");
+		_pHwpCtrl.Run("TableCellBlock");
+		_pHwpCtrl.Run("TableCellBlockExtend");
+		for (var i = 0; i < 10 - getCompanyRemarkList.length; i++) {
+			_pHwpCtrl.Run("TableRightCellAppend");
+		}
+		_pHwpCtrl.Run("TableMergeCell");
+
 	}
 
 	function evalModBtn(){

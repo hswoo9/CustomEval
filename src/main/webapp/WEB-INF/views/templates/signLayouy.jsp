@@ -62,7 +62,7 @@
 			_g_contextPath_ = "${pageContext.request.contextPath}";
 
 			$(document).ready(function() {
-				_pHwpCtrl = BuildWebHwpCtrl("_pHwpCtrl", "http://1.233.95.140:5512/webhwpctrl/", function () {hwpView();});
+				_pHwpCtrl = BuildWebHwpCtrl("_pHwpCtrl", "http://218.158.231.42:8080/webhwpctrl/", function () {hwpView();});
 				window.onresize();
 			})
 

@@ -599,12 +599,24 @@
 		WHERE A.COMMISSIONER_POOL_SEQ = (SELECT COMMISSIONER_POOL_SEQ FROM DJ_EVAL_COMMISSIONER WHERE COMMISSIONER_SEQ = #{commissioner_seq})
 		AND A.ACTIVE = 'Y'
 	</update>
-	
-	<update id="setEvalPayUpdate" parameterType="map">
+
+	<!--<update id="setEvalPayUpdate" parameterType="map">
 	/*setEvalPayUpdate*/
 		UPDATE DJ_EVAL_COMMISSIONER SET
 		CONTACT = 'Y'
 		, EVAL_SAVE = 'N'
+		WHERE COMMISSIONER_SEq = #{commissioner_seq}
+	</update>-->
+
+	<update id="setEvalPayUpdate" parameterType="map">
+		/*setEvalPayUpdate*/
+		UPDATE DJ_EVAL_COMMISSIONER SET
+		CONTACT = 'Y',
+		EVAL_AVOID = 'Y',
+		EVAL_AVOID_TXT = '사전접촉',
+		EVAL_JANG = 'N' ,
+		ATTEND_YN = 'N' ,
+		EVAL_SAVE = 'N'
 		WHERE COMMISSIONER_SEq = #{commissioner_seq}
 	</update>
 	

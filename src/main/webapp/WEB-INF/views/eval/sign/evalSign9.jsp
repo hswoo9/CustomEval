@@ -29,28 +29,29 @@
 
 	var signHwpFileData = "";
 	var flag = 'N';
-	function signSaveBtn(){
-		//저장
-		for (var i = 0; i < jsonData.length; i++) {
-			var chk = $('select[name="chkData[]"] option:selected')[i].value;
+	function signSaveBtn() {
+		if (confirm("평가위원장으로 하시겠습니까?")) {
+			//저장
+			for (var i = 0; i < jsonData.length; i++) {
+				var chk = $('select[name="chkData[]"] option:selected')[i].value;
 
-			if(chk == '있다') {
-				flag = 'Y';
+				if (chk == '있다') {
+					flag = 'Y';
+				}
+
+				_hwpPutText("contactor{{" + i + "}}", $('input[name="contactor[]"]')[i].value);
+				_hwpPutText("inputDate{{" + i + "}}", $('input[name="inputDate[]"]')[i].value.replace(/-/gi, ""));
+				_hwpPutText("chk{{" + i + "}}", chk);
+				_hwpPutText("contents{{" + i + "}}", $('input[name="contents[]"]')[i].value);
 			}
 
-			_hwpPutText("contactor{{"+i+"}}", $('input[name="contactor[]"]')[i].value);
-			_hwpPutText("inputDate{{"+i+"}}", $('input[name="inputDate[]"]')[i].value.replace(/-/gi, ""));
-			_hwpPutText("chk{{"+i+"}}", chk);
-			_hwpPutText("contents{{"+i+"}}", $('input[name="contents[]"]')[i].value);
+			_pHwpCtrl.GetTextFile("HWPML2X", "", function (data) {
+				signHwpFileData = data;
+			})
+
+			setTimeout(signSave, 600);
 		}
-
-		_pHwpCtrl.GetTextFile("HWPML2X", "", function(data) {
-			signHwpFileData = data;
-		})
-
-		setTimeout(signSave, 600);
 	}
-
 	function signSave(){
 		var formData = new FormData();
 		formData.append("commissioner_seq", "${userInfo.COMMISSIONER_SEQ}");

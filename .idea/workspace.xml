@@ -2,18 +2,18 @@
 <project version="4">
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
-      <artifact name="CustomNPEPIS:war" />
+      <artifact name="CustomNPEPIS:war exploded" />
     </artifacts-to-build>
   </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fd5b28e2-34f4-4843-88d4-d80ad6fadcdd" name="Changes" comment="로그인 창 placeholder 수정">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+    <list default="true" id="fd5b28e2-34f4-4843-88d4-d80ad6fadcdd" name="Changes" comment="평가의견수 제한 변경 30자 이상 400자 이하">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/eval/evalView.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/eval/evalView.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/mapper/eval/eval_SQL.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mapper/eval/eval_SQL.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/eval/sign/evalSign9.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/eval/sign/evalSign9.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CustomNPEPIS-1.0.0-BUILD-SNAPSHOT/META-INF/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/target/CustomNPEPIS-1.0.0-BUILD-SNAPSHOT/META-INF/MANIFEST.MF" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -184,7 +184,7 @@
       <workItem from="1704783605941" duration="246000" />
       <workItem from="1704784268446" duration="1257000" />
       <workItem from="1719538859335" duration="36000" />
-      <workItem from="1719538945142" duration="515000" />
+      <workItem from="1719538945142" duration="12930000" />
     </task>
     <task id="LOCAL-00001" summary="로그인 창 placeholder 수정">
       <created>1679633456674</created>
@@ -200,16 +200,56 @@
       <option name="project" value="LOCAL" />
       <updated>1693154543582</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="평가의견수 제한 변경 30자 이상 400자 이하">
+      <option name="closed" value="true" />
+      <created>1719539493177</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1719539493177</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="로그인 창 placeholder 수정" />
     <MESSAGE value="1시에 계속 돌아가는 문제 수정" />
-    <option name="LAST_COMMIT_MESSAGE" value="1시에 계속 돌아가는 문제 수정" />
+    <MESSAGE value="로그인 창 placeholder 수정" />
+    <MESSAGE value="평가의견수 제한 변경 30자 이상 400자 이하" />
+    <option name="LAST_COMMIT_MESSAGE" value="평가의견수 제한 변경 30자 이상 400자 이하" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/duzon/custom/eval/service/impl/EvalServiceImpl.java</url>
+          <line>184</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/duzon/custom/eval/controller/EvalController.java</url>
+          <line>400</line>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/duzon/custom/eval/service/impl/EvalServiceImpl.java</url>
+          <line>220</line>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/duzon/custom/eval/service/impl/EvalServiceImpl.java</url>
+          <line>234</line>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/duzon/custom/eval/service/impl/EvalServiceImpl.java</url>
+          <line>188</line>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

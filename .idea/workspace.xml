@@ -9,11 +9,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fd5b28e2-34f4-4843-88d4-d80ad6fadcdd" name="Changes" comment="평가의견수 제한 변경 30자 이상 400자 이하">
+    <list default="true" id="fd5b28e2-34f4-4843-88d4-d80ad6fadcdd" name="Changes" comment="기피신청 / 사전접촉자 수정">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/duzon/custom/eval/controller/EvalController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/duzon/custom/eval/controller/EvalController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/duzon/custom/eval/service/EvalService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/duzon/custom/eval/service/EvalService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/mapper/eval/eval_SQL.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mapper/eval/eval_SQL.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/eval/sign/evalSign9.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/eval/sign/evalSign9.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/CustomNPEPIS-1.0.0-BUILD-SNAPSHOT/META-INF/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/target/CustomNPEPIS-1.0.0-BUILD-SNAPSHOT/META-INF/MANIFEST.MF" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CustomNPEPIS-1.0.0-BUILD-SNAPSHOT/WEB-INF/classes/config/spring/context-task.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/CustomNPEPIS-1.0.0-BUILD-SNAPSHOT/WEB-INF/classes/config/spring/context-task.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CustomNPEPIS-1.0.0-BUILD-SNAPSHOT/WEB-INF/classes/mapper/eval/eval_SQL.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/CustomNPEPIS-1.0.0-BUILD-SNAPSHOT/WEB-INF/classes/mapper/eval/eval_SQL.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CustomNPEPIS-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/eval/evalView.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/CustomNPEPIS-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/eval/evalView.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CustomNPEPIS-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/eval/sign/evalSign6.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/CustomNPEPIS-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/eval/sign/evalSign6.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CustomNPEPIS-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/eval/sign/evalSign9.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/CustomNPEPIS-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/eval/sign/evalSign9.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CustomNPEPIS-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/templates/signLayouy.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/CustomNPEPIS-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/templates/signLayouy.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CustomNPEPIS-1.0.0-BUILD-SNAPSHOT/resources/js/hancom/hwpctrlmain.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/CustomNPEPIS-1.0.0-BUILD-SNAPSHOT/resources/js/hancom/hwpctrlmain.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mapper/eval/eval_SQL.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mapper/eval/eval_SQL.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,8 +79,10 @@
 }]]></component>
   <component name="RunManager">
     <configuration name="Tomcat7Eval" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat7Eval" ALTERNATIVE_JRE_ENABLED="true" ALTERNATIVE_JRE_PATH="1.8" nameIsGenerated="true">
+      <option name="COMMON_VM_ARGUMENTS" value="-Dspring.profiles.active=dev -Dfile.encoding=UTF-8" />
       <option name="UPDATE_ON_FRAME_DEACTIVATION" value="true" />
       <option name="UPDATE_CLASSES_ON_FRAME_DEACTIVATION" value="true" />
+      <option name="UPDATING_POLICY" value="update-resources" />
       <deployment>
         <artifact name="CustomNPEPIS:war exploded">
           <settings>
@@ -184,7 +195,7 @@
       <workItem from="1704783605941" duration="246000" />
       <workItem from="1704784268446" duration="1257000" />
       <workItem from="1719538859335" duration="36000" />
-      <workItem from="1719538945142" duration="12930000" />
+      <workItem from="1719538945142" duration="19336000" />
     </task>
     <task id="LOCAL-00001" summary="로그인 창 placeholder 수정">
       <created>1679633456674</created>
@@ -208,17 +219,37 @@
       <option name="project" value="LOCAL" />
       <updated>1719539493177</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="기피신청 / 사전접촉자 수정">
+      <option name="closed" value="true" />
+      <created>1719901768731</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1719901768731</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="1시에 계속 돌아가는 문제 수정" />
     <MESSAGE value="로그인 창 placeholder 수정" />
     <MESSAGE value="평가의견수 제한 변경 30자 이상 400자 이하" />
-    <option name="LAST_COMMIT_MESSAGE" value="평가의견수 제한 변경 30자 이상 400자 이하" />
+    <MESSAGE value="기피신청 / 사전접촉자 수정" />
+    <option name="LAST_COMMIT_MESSAGE" value="기피신청 / 사전접촉자 수정" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

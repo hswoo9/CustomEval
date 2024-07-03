@@ -15,7 +15,7 @@
 	<bean id="customScheduler" class="com.duzon.custom.eval.utiles.EvalScheduler" />
 	
 	<task:scheduled-tasks scheduler="scheduler">
-		<task:scheduled ref="customScheduler" method="evalIdReset" cron="* * 1 * * *"/> 
+		<task:scheduled ref="customScheduler" method="evalIdReset" cron="0 0 1 * * *"/>
 	</task:scheduled-tasks> 
 	
 

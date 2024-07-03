@@ -107,7 +107,7 @@
 						<th style="width: 15%;">${list.DISPLAY_TITLE }</th>
 						<td style="text-align: left;">
 							<input type="hidden" id="chkTxt${st.index}" name="chkTxt">
-							<textarea class="comReMarkInput" id="${list.com_remark_seq }" style="font-size: 20px;" rows="4" cols="100" maxlength="400" placeholder="30자 이상 작성해주세요.">${list.remark}</textarea>
+							<textarea class="comReMarkInput" id="${list.com_remark_seq }" style="font-size: 20px;" rows="4" cols="100" maxlength="400" placeholder="평가의견은 30자 이상 400자 이하로 입력해주세요.">${list.remark}</textarea>
 							<span id="txtCnt">0</span>/400
 						</td>
 					</tr>
@@ -472,8 +472,8 @@
 			$(focusTarget).focus();
 			return;
 		}
-		else if ($('.evalIndex'+evalCnt+' .comReMarkInput').val().length < 30){
-			alert("평가의견은 30자 이상 입력해주세요.");
+		else if ($('.evalIndex'+evalCnt+' .comReMarkInput').val().length < 30 || $('.evalIndex'+evalCnt+' .comReMarkInput').val().length > 400){
+			alert("평가의견은 30자 이상 400자 이하로 입력해주세요.");
 			return;
 		}
 
@@ -521,8 +521,8 @@
 				alert("평가가 진행 중입니다.\n위원장은 모든 평가위원의 평가가 종료 된 후에 평가 저장이 가능합니다.");
 				return;
 			}
-			else if ($('.evalIndex'+evalCnt+' .comReMarkInput').val().length < 30){
-				alert("평가의견은 30자 이상 입력해주세요.");
+			else if ($('.evalIndex'+evalCnt+' .comReMarkInput').val().length < 30 || $('.evalIndex'+evalCnt+' .comReMarkInput').val().length > 400){
+				alert("평가의견은 30자 이상 400자 이하로 입력해주세요.");
 				return;
 			}
 

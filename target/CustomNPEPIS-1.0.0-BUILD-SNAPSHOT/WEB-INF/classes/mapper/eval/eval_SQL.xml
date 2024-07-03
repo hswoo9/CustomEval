@@ -100,31 +100,38 @@
 	
 	<select id="getCompanyList" parameterType="map" resultType="map">
 	/*getCompanyList*/
-		SELECT
-			A.*,
-			(
-				SELECT
-						SUM(EIR.SCORE)/(
-						SELECT
-							COUNT(*)
-						FROM (
-								 SELECT
-									 EIR.*
-								 FROM
-									 DJ_EVAL_ITEM_RESULT EIR
-								 WHERE
-									 EIR.EVAL_COMPANY_SEQ = (SELECT EVAL_COMPANY_SEQ FROM DJ_EVAL_COMPANY WHERE COMMITTEE_SEQ = #{COMMITTEE_SEQ} AND EVAL_COMPANY_SEQ = EIR.EVAL_COMPANY_SEQ)
-								   and
-									 score is not null
-								 group by commissioner_seq
-							 )B
-					)C
-				FROM
-                    CUST_EPIS.DJ_EVAL_ITEM_RESULT EIR
-				WHERE
-					EIR.EVAL_COMPANY_SEQ = A.EVAL_COMPANY_SEQ
-			) AS SCORE_SUM
-		FROM CUST_EPIS.DJ_EVAL_COMPANY A WHERE COMMITTEE_SEQ = #{COMMITTEE_SEQ}
+	SELECT
+		A.*,
+		(
+			SELECT
+					SUM(EIR.SCORE) / (
+					SELECT
+						COUNT(DISTINCT EIR.commissioner_seq)
+					FROM
+						DJ_EVAL_ITEM_RESULT EIR
+					WHERE
+						EIR.EVAL_COMPANY_SEQ = A.EVAL_COMPANY_SEQ
+					  AND EIR.SCORE IS NOT NULL
+				)
+			FROM
+				DJ_EVAL_ITEM_RESULT EIR
+			WHERE
+				EIR.EVAL_COMPANY_SEQ = A.EVAL_COMPANY_SEQ
+		) AS SCORE_SUM,
+		(
+			SELECT
+				EC.eval_id
+			FROM
+				DJ_EVAL_COMMISSIONER EC
+			WHERE
+				EC.eval_jang = 'Y'
+			  AND EC.COMMITTEE_SEQ = #{COMMITTEE_SEQ}
+			 LIMIT 1
+		) AS EVAL_ID
+	FROM
+		CUST_EPIS.DJ_EVAL_COMPANY A
+	WHERE
+		A.COMMITTEE_SEQ = #{COMMITTEE_SEQ};
 	</select>
 
 	<select id="getItemList" parameterType="map" resultType="map">
@@ -250,8 +257,16 @@
 	<select id="getEvalJang" parameterType="map" resultType="string">
 	/*getEvalJang*/
 		SELECT CASE WHEN COUNT(1) = 0 THEN 'N' ELSE 'Y' END FROM DJ_EVAL_COMMISSIONER WHERE COMMITTEE_SEQ = #{committee_seq} AND ACTIVE = 'Y' AND EVAL_JANG = 'Y'
-	</select>	
-	
+	</select>
+
+	<select id="getEvalId" parameterType="map" resultType="string">
+		SELECT eval_id
+		FROM DJ_EVAL_COMMISSIONER
+		WHERE COMMITTEE_SEQ = #{committee_seq}
+		  AND ACTIVE = 'Y'
+		  AND EVAL_JANG = 'Y'
+	</select>
+
 	<update id="setSignSetp" parameterType="map">
 	/*setSignSetp*/
 		UPDATE
@@ -263,10 +278,10 @@
 			</if>
 			<if test='sign2Chk == null or "".equals(sign2Chk)'>
 				${col_nm} = 'Y',
-				${col_file} = #{attch_file_seq},
+				${col_file} = #{attch_file_seq}
 			</if>
 			<if test='col_nm == "sign_4" and col_file == "sign_4_file_seq"'>
-				EVAL_AVOID_CHECK_YN = 'Y'
+				,EVAL_AVOID_CHECK_YN = 'Y'
 			</if>
 		WHERE COMMISSIONER_SEQ = #{commissioner_seq}
 	</update>
@@ -599,12 +614,24 @@
 		WHERE A.COMMISSIONER_POOL_SEQ = (SELECT COMMISSIONER_POOL_SEQ FROM DJ_EVAL_COMMISSIONER WHERE COMMISSIONER_SEQ = #{commissioner_seq})
 		AND A.ACTIVE = 'Y'
 	</update>
-	
-	<update id="setEvalPayUpdate" parameterType="map">
+
+	<!--<update id="setEvalPayUpdate" parameterType="map">
 	/*setEvalPayUpdate*/
 		UPDATE DJ_EVAL_COMMISSIONER SET
 		CONTACT = 'Y'
 		, EVAL_SAVE = 'N'
+		WHERE COMMISSIONER_SEq = #{commissioner_seq}
+	</update>-->
+
+	<update id="setEvalPayUpdate" parameterType="map">
+		/*setEvalPayUpdate*/
+		UPDATE DJ_EVAL_COMMISSIONER SET
+		CONTACT = 'Y',
+		EVAL_AVOID = 'Y',
+		EVAL_AVOID_TXT = '사전접촉',
+		EVAL_JANG = 'N' ,
+		ATTEND_YN = 'N' ,
+		EVAL_SAVE = 'N'
 		WHERE COMMISSIONER_SEq = #{commissioner_seq}
 	</update>
 	

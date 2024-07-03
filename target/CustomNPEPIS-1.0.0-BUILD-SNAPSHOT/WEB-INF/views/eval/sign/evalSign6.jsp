@@ -210,11 +210,6 @@
 			_pHwpCtrl.Run("TableColEnd");
 
 			_pHwpCtrl.Run("TableMergeCell");
-			//_pHwpCtrl.MoveToField("score_" + (parseInt(getCompanyRemarkList.length) - 1));
-			//_pHwpCtrl.Run("TableCellBlock");
-			//_pHwpCtrl.Run("TableCellBlockExtend");
-			//_pHwpCtrl.Run("TableColEnd");
-			//_pHwpCtrl.Run("TableDistributeCellWidth");
 		}
 
 		_pHwpCtrl.MoveToField("score_" + (parseInt(getCompanyRemarkList.length) - 1));

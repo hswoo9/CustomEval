@@ -11,7 +11,10 @@
 <title>사전접촉여부</title>
 
 <script type="text/javascript">
-	$(function(){
+	$(document).ready(function() {
+		var evalId = $("#evalId").val();
+		console.log("EvalId:", evalId);
+
 		window.onbeforeunload = function (event) {
 			if (typeof event == 'undefined') {
 				event = window.event;
@@ -20,38 +23,44 @@
 				OnDisconnectDevice();
 			}
 		};
+
 		$('#orgName').text('평가위원 또는 신고자 소 속 : ${userInfo.ORG_NAME }');
 		$('#name').text('성 명 : ${userInfo.NAME }');
 	});
 
-	//한글뷰어
+	// 한글뷰어
 	var jsonData = JSON.parse('${getCompanyList}');
 
 	var signHwpFileData = "";
 	var flag = 'N';
-	function signSaveBtn(){
-		//저장
-		for (var i = 0; i < jsonData.length; i++) {
-			var chk = $('select[name="chkData[]"] option:selected')[i].value;
 
-			if(chk == '있다') {
-				flag = 'Y';
+	function signSaveBtn() {
+		var evalId = $("#evalId").val();  // 여기서 다시 값을 가져옴
+
+		if (confirm("평가위원장 (" + evalId + ")으로 계속 진행하시겠습니까?")) {
+			// 저장
+			for (var i = 0; i < jsonData.length; i++) {
+				var chk = $('select[name="chkData[]"] option:selected')[i].value;
+
+				if (chk == '있다') {
+					flag = 'Y';
+				}
+
+				_hwpPutText("contactor{{" + i + "}}", $('input[name="contactor[]"]')[i].value);
+				_hwpPutText("inputDate{{" + i + "}}", $('input[name="inputDate[]"]')[i].value.replace(/-/gi, ""));
+				_hwpPutText("chk{{" + i + "}}", chk);
+				_hwpPutText("contents{{" + i + "}}", $('input[name="contents[]"]')[i].value);
 			}
 
-			_hwpPutText("contactor{{"+i+"}}", $('input[name="contactor[]"]')[i].value);
-			_hwpPutText("inputDate{{"+i+"}}", $('input[name="inputDate[]"]')[i].value.replace(/-/gi, ""));
-			_hwpPutText("chk{{"+i+"}}", chk);
-			_hwpPutText("contents{{"+i+"}}", $('input[name="contents[]"]')[i].value);
+			_pHwpCtrl.GetTextFile("HWPML2X", "", function (data) {
+				signHwpFileData = data;
+			});
+
+			setTimeout(signSave, 600);
 		}
-
-		_pHwpCtrl.GetTextFile("HWPML2X", "", function(data) {
-			signHwpFileData = data;
-		})
-
-		setTimeout(signSave, 600);
 	}
 
-	function signSave(){
+	function signSave() {
 		var formData = new FormData();
 		formData.append("commissioner_seq", "${userInfo.COMMISSIONER_SEQ}");
 		formData.append("step", "9");
@@ -59,29 +68,29 @@
 		formData.append("signHwpFileData", signHwpFileData);
 
 		$.ajax({
-			url : "<c:url value='/eval/setSignSetp'/>",
-			type : "POST",
-			data : formData,
-			dataType : "json",
+			url: "<c:url value='/eval/setSignSetp'/>",
+			type: "POST",
+			data: formData,
+			dataType: "json",
 			contentType: false,
 			processData: false,
-			async : false,
-			success : function(data) {
-				if(data.result != "success") {
+			async: false,
+			success: function(data) {
+				if (data.result != "success") {
 					alert("문서저장시 오류가 발생했습니다. 시스템관리자한테 문의 하세요.");
-					return false ;
+					return false;
 				} else {
 					location.reload();
 				}
 			},
-			error : function(request, status, error) {
+			error: function(request, status, error) {
 				alert("문서저장시 오류가 발생했습니다. 시스템관리자한테 문의 하세요.");
-				return false ;
+				return false;
 			}
-		})
+		});
 	}
 
-	function setSign(imgData){
+	function setSign(imgData) {
 		$('#sign').attr('src', 'data:image/png;base64,' + imgData);
 		_hwpPutImage("sign", "C:\\SignData\\Temp.png");
 	}
@@ -170,7 +179,7 @@
 	function evalAvoidPopup(){
 		window.open(_g_contextPath_ + "/eval/evalAvoidPopup", 'evalAvoidPop', 'menubar=0,resizable=1,scrollbars=1,status=no,toolbar=no,width=1000,height=280,left=650,top=250');
 	}
-
+	
 </script>
 
 <style>
@@ -219,6 +228,7 @@
 		<tbody>
 		<c:forEach var="item" items="${companyList}" varStatus="status">
 			<tr>
+				<input type="hidden" id="evalId" value="${item.EVAL_ID}">
 				<td>${item.company_name}</td>
 				<td>
 					<input type="text" name="contactor[]" id="contactor${status.count}" disabled>

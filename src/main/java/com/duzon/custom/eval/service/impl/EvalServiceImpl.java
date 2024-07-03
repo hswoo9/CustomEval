@@ -276,6 +276,9 @@ public class EvalServiceImpl implements EvalService {
 		evalDAO.setRankCode(map);
 		
 		List<Map<String, Object>> userList = evalDAO.getCommissionerList(map);
+		
+		String score_yn = (String) userList.get(0).get("score_yn");
+		
         int userCnt = 0;
         //실제 평가위원 수
         for (Map<String, Object> map2 : userList) {
@@ -289,7 +292,7 @@ public class EvalServiceImpl implements EvalService {
 		//평점구하기 위한 평가위원 수 
 		//5명 이하일 경우 모두 
 		//그외 최상 최하 빼기 위해 두명 제외
-		if(userCnt > 4){
+		if(userCnt > 4 || score_yn.equals("Y")){
 			map.put("userCntTotal", userCnt-2);
 		}else{
 			map.put("userCntTotal", userCnt);
@@ -321,6 +324,9 @@ public class EvalServiceImpl implements EvalService {
 //		evalDAO.setRankCode(map);
 		
 		List<Map<String, Object>> userList = evalDAO.getCommissionerList(map);
+		
+		String score_yn = (String) userList.get(0).get("score_yn");
+		
         int userCnt = 0;
         //실제 평가위원 수
         for (Map<String, Object> map2 : userList) {
@@ -334,7 +340,7 @@ public class EvalServiceImpl implements EvalService {
 		//평점구하기 위한 평가위원 수 
 		//5명 이하일 경우 모두 
 		//그외 최상 최하 빼기 위해 두명 제외
-		if(userCnt > 4){
+		if(userCnt > 4 || score_yn.equals("Y")){
 			map.put("userCntTotal", userCnt-2);
 		}else{
 			map.put("userCntTotal", userCnt);

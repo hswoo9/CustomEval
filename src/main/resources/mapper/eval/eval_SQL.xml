@@ -199,9 +199,11 @@
 
 	<select id="getCommissionerList" parameterType="map" resultType="map">
 	/*getCommissionerList*/
-		SELECT A.*, B.NAME FROM DJ_EVAL_COMMISSIONER A
+		SELECT A.*, B.NAME, C.SCORE_YN FROM DJ_EVAL_COMMISSIONER A
         JOIN DJ_COMMISSIONER_POOL B
         ON A.COMMISSIONER_POOL_SEQ = B.COMMISSIONER_POOL_SEQ
+        JOIN DJ_EVAL_COMMITTEE C
+        ON A.COMMITTEE_SEQ = C.COMMITTEE_SEQ
         AND A.COMMITTEE_SEQ = #{COMMITTEE_SEQ}
         AND A.ACTIVE = 'Y'
         AND B.ACTIVE = 'Y'

@@ -24,7 +24,7 @@
 			}
 		};
 
-		$('#orgName').text('평가위원 또는 신고자 소 속 : ${userInfo.ORG_NAME }');
+		$('#orgName').html(`평가위원 또는 신고자 소 속 : <b>${userInfo.ORG_NAME}</b>`);
 		$('#name').text('성 명 : ${userInfo.NAME }');
 	});
 

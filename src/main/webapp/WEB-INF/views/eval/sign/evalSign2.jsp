@@ -44,14 +44,7 @@
 		};
 	});
 
-	function signSaveBtn(){
-		evalApplyData = {
-			committee_seq : '${userInfo.COMMITTEE_SEQ}'
-		}
-		$('#loadingPop').data("kendoWindow").open();
-		$("#HwpCtrl_1").css("display", "none");
 
-		timeIn = setInterval(fnSetSignSetpChk, 1000);
 
 		<%--var html = $('#signBody').clone();--%>
 
@@ -90,29 +83,39 @@
 		<%--		}--%>
 		<%--	}--%>
 		<%--});--%>
-	}
-	/** TODO. 데이터, PDF 서버 저장 */
-	var signHwpFileData = "";
-	function fnSetSignSetpChk (){
-		var comboBox = _pHwpCtrl.GetFieldText("sign_2_minute1")
-		var comboBox1 = _pHwpCtrl.GetFieldText("sign_2_minute2")
+	function signSaveBtn() {
+		var comboBox = _pHwpCtrl.GetFieldText("sign_2_minute1");
+		var comboBox1 = _pHwpCtrl.GetFieldText("sign_2_minute2");
 
-		if(comboBox == ""){
+		if (comboBox === "") {
 			alert("제안업체별 제안발표 분을 선택해주세요.");
 			return;
-		}else if(comboBox1 == ""){
+		} else if (comboBox1 === "") {
 			alert("제안업체별 질의응답 분을 선택해주세요.");
 			return;
 		}
 
+		evalApplyData = {
+			committee_seq: '${userInfo.COMMITTEE_SEQ}'
+		}
+
+		$('#loadingPop').data("kendoWindow").open();
+		$("#HwpCtrl_1").css("display", "none");
+
+		timeIn = setInterval(fnSetSignSetpChk, 1000);
+	}
+
+	/** TODO. 데이터, PDF 서버 저장 */
+	var signHwpFileData = "";
+	function fnSetSignSetpChk (){
 		$.ajax({
 			url: "<c:url value='/eval/setSignSetpChk' />",
 			data : {
 				commissioner_seq : "${userInfo.COMMISSIONER_SEQ}",
 				committee_seq : "${userInfo.COMMITTEE_SEQ}",
 				step : "2",
-				comboBox : comboBox,
-				comboBox1 : comboBox1,
+				comboBox: _pHwpCtrl.GetFieldText("sign_2_minute1"),
+				comboBox1: _pHwpCtrl.GetFieldText("sign_2_minute2"),
 			},
 			type : 'POST',
 			success: function(result){

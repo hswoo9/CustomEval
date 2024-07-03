@@ -179,7 +179,7 @@
 	function evalAvoidPopup(){
 		window.open(_g_contextPath_ + "/eval/evalAvoidPopup", 'evalAvoidPop', 'menubar=0,resizable=1,scrollbars=1,status=no,toolbar=no,width=1000,height=280,left=650,top=250');
 	}
-	
+
 </script>
 
 <style>

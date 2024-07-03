@@ -9,11 +9,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fd5b28e2-34f4-4843-88d4-d80ad6fadcdd" name="Changes" comment="시간선택 안할시 무한 alert창 발생">
+    <list default="true" id="fd5b28e2-34f4-4843-88d4-d80ad6fadcdd" name="Changes" comment="기관명 볼드체">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/eval/sign/evalSign9.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/eval/sign/evalSign9.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/CustomNPEPIS-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/eval/sign/evalSign2.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/CustomNPEPIS-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/eval/sign/evalSign2.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/CustomNPEPIS-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/eval/sign/evalSign9.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/CustomNPEPIS-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/eval/sign/evalSign9.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/evalSign.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/evalSign.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -186,7 +184,7 @@
       <workItem from="1704783605941" duration="246000" />
       <workItem from="1704784268446" duration="1257000" />
       <workItem from="1719538859335" duration="36000" />
-      <workItem from="1719538945142" duration="21664000" />
+      <workItem from="1719538945142" duration="22544000" />
     </task>
     <task id="LOCAL-00001" summary="로그인 창 placeholder 수정">
       <created>1679633456674</created>
@@ -234,7 +232,15 @@
       <option name="project" value="LOCAL" />
       <updated>1719970648297</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="기관명 볼드체">
+      <option name="closed" value="true" />
+      <created>1719971661578</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1719971661578</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -258,7 +264,8 @@
     <MESSAGE value="기피신청 / 사전접촉자 수정" />
     <MESSAGE value="마지막 평가위원장 최종확인 alert 띄우기" />
     <MESSAGE value="시간선택 안할시 무한 alert창 발생" />
-    <option name="LAST_COMMIT_MESSAGE" value="시간선택 안할시 무한 alert창 발생" />
+    <MESSAGE value="기관명 볼드체" />
+    <option name="LAST_COMMIT_MESSAGE" value="기관명 볼드체" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

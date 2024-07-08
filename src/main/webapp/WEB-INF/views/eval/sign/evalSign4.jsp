@@ -30,13 +30,13 @@
 		};
 	});
 
-	function fileDownChk(){
+/*	function fileDownChk(){
 		if(fileDownFlag){
 			signSaveBtn()
 		}else{
 			alert("평가자료를 다운로드 해주세요.");
 		}
-	}
+	}*/
 
 	var signHwpFileData = "";
 	function signSaveBtn(){
@@ -324,8 +324,8 @@
 		<c:if test="${userInfo.EVAL_AVOID eq 'N'}">
 			<input type="button" onclick="showModalPop()" value="기피신청">
 		</c:if>
-		<input type="button" onclick="fileDownChk();" style="float:right; margin-left:10px;" value="저장">
-		<input type="button" onclick="signFileDown();" style="float:right;" value="평가자료 다운로드">
+		<input type="button" onclick="signSaveBtn();" style="float:right; margin-left:10px;" value="저장">
+		<%--<input type="button" onclick="signFileDown();" style="float:right;" value="평가자료 다운로드">--%>
 	</div>
 </div>
 

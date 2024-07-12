@@ -111,7 +111,8 @@ public class EvalController {
 					return "redirect:/";
 				}
 			}
-
+			System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@" + map.get("EVAL_AVOID") + "@@@@@@@@@@@@@@@@@@@@@@@@@");
+			System.out.println("###########################" + map.get("EVAL_AVOID_CHECK_YN") + "#########################");
 			if(map.get("EVAL_AVOID").equals("Y") && map.get("EVAL_AVOID_CHECK_YN").equals("N")){
 				logger.info("pageInfo ===== /eval/sign/evalAvoid11");
 				//기피신청 수당확인 페이지로 이동

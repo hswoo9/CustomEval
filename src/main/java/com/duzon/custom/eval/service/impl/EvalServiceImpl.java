@@ -35,11 +35,11 @@ public class EvalServiceImpl implements EvalService {
 
 	private static final Logger logger = LoggerFactory.getLogger(EvalServiceImpl.class);
 
-    private String[] invalidName = {"\\\\","/",":","[*]","[?]","\"","<",">","[|]"};
+	private String[] invalidName = {"\\\\","/",":","[*]","[?]","\"","<",">","[|]"};
 
 	@Autowired
 	private EvalDAO evalDAO;
-	
+
 	@Autowired
 	private AttachFileService af;
 
@@ -66,10 +66,10 @@ public class EvalServiceImpl implements EvalService {
 
 	@Override
 	public Map<String, Object> getEvalchk(Map<String, Object> map) {
-		
+
 		//1. 평가가 있는지, 평가를 했는지 조회
 		Map<String, Object> data = evalDAO.getEvalchk(map);
-		
+
 		return data;
 	}
 
@@ -95,14 +95,14 @@ public class EvalServiceImpl implements EvalService {
 	@Override
 	public void evalViewSave(Map<String, Object> map) {
 
-		Gson gson = new Gson(); 
+		Gson gson = new Gson();
 		List<Map<String, Object>> list = gson.fromJson((String) map.get("list"),new TypeToken<List<Map<String, Object>>>(){}.getType() );
 		List<Map<String, Object>> remark = gson.fromJson((String) map.get("remark"),new TypeToken<List<Map<String, Object>>>(){}.getType() );
-		
+
 		if(map.get("jang").equals("Y")){
 			evalDAO.setEvalConfirm(map);
 		}
-		
+
 		for (Map<String, Object> vo : list) {
 			evalDAO.setEvalViewUpdate(vo);
 		}
@@ -110,9 +110,9 @@ public class EvalServiceImpl implements EvalService {
 		for (Map<String, Object> vo : remark) {
 			evalDAO.setEvalComRemarkUpdate(vo);
 		}
-		
+
 		evalDAO.evalSaveUpdate(map);
-		
+
 	}
 
 	@Override
@@ -132,10 +132,10 @@ public class EvalServiceImpl implements EvalService {
 
 		//투표 카운트 +1 하기
 		evalDAO.setCommSave(map);
-		
+
 		//로그인 유저 투표 여부 업데이트
 		evalDAO.setCommjangChk(map);
-		
+
 		//누가 위원장인가? 투표가 끝났으면 위원장 체크하기
 		Map<String, Object> chkList = evalDAO.getChkList(map);
 		String userCnt = String.valueOf(chkList.get("userCnt"));
@@ -143,10 +143,10 @@ public class EvalServiceImpl implements EvalService {
 
 		if( userCnt.equals(cnt) ){
 			evalDAO.setJangUpdate(map);
-            evalDAO.setEvalJangCntCn(map);
+			evalDAO.setEvalJangCntCn(map);
 			result = "Y";
 		}
-		
+
 		return result;
 	}
 
@@ -185,7 +185,7 @@ public class EvalServiceImpl implements EvalService {
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 
 		String stpe = String.valueOf(map.get("step"));
-		
+
 		map.put("col_nm", "sign_"+stpe);
 		map.put("col_file", "sign_"+stpe+"_file_seq");
 
@@ -194,35 +194,35 @@ public class EvalServiceImpl implements EvalService {
 		map.put("attch_file_seq", fileSeq);
 
 		if (!EgovStringUtil.nullConvert(map.get("signHwpFileData")).equals("")) {
-            try {
-                CommFileUtil commFileUtil = new CommFileUtil();
-                commFileUtil.setServerSFSave(EgovStringUtil.nullConvert(map.get("signHwpFileData")), (String) map.get("commissioner_seq"), fileSeq, "hwp");
+			try {
+				CommFileUtil commFileUtil = new CommFileUtil();
+				commFileUtil.setServerSFSave(EgovStringUtil.nullConvert(map.get("signHwpFileData")), (String) map.get("commissioner_seq"), fileSeq, "hwp");
 
-                PdfEcmFileVO pdfEcmFileVO = new PdfEcmFileVO();
-                pdfEcmFileVO.setRep_id(fileSeq);
-                pdfEcmFileVO.setComp_seq("1000");
-                pdfEcmFileVO.setDoc_id(fileSeq);
-                pdfEcmFileVO.setDoc_no("001");
-                pdfEcmFileVO.setDoc_path("Z:/upload/epis/cust_eval/" + map.get("commissioner_seq") + "/hwp");
-                pdfEcmFileVO.setDoc_name(fileSeq);
-                pdfEcmFileVO.setDoc_ext("hwp");
-                pdfEcmFileVO.setDoc_title("sign_" + stpe);
+				PdfEcmFileVO pdfEcmFileVO = new PdfEcmFileVO();
+				pdfEcmFileVO.setRep_id(fileSeq);
+				pdfEcmFileVO.setComp_seq("1000");
+				pdfEcmFileVO.setDoc_id(fileSeq);
+				pdfEcmFileVO.setDoc_no("001");
+				pdfEcmFileVO.setDoc_path("Z:/upload/epis/cust_eval/" + map.get("commissioner_seq") + "/hwp");
+				pdfEcmFileVO.setDoc_name(fileSeq);
+				pdfEcmFileVO.setDoc_ext("hwp");
+				pdfEcmFileVO.setDoc_title("sign_" + stpe);
 
-                PdfEcmMainVO pdfEcmMainVO = new PdfEcmMainVO();
+				PdfEcmMainVO pdfEcmMainVO = new PdfEcmMainVO();
 
-                pdfEcmMainVO.setRep_id(fileSeq);
-                pdfEcmMainVO.setComp_seq("1000");
-                pdfEcmMainVO.setDept_seq("1");
-                pdfEcmMainVO.setEmp_seq("1");
-                pdfEcmMainVO.setPdf_path("Z:/upload/epis/cust_eval/" + map.get("commissioner_seq") + "/pdf");
-                pdfEcmMainVO.setPdf_name("PDF_" + fileSeq);
-                pdfEcmMainVO.setStatus_cd("D0001");
+				pdfEcmMainVO.setRep_id(fileSeq);
+				pdfEcmMainVO.setComp_seq("1000");
+				pdfEcmMainVO.setDept_seq("1");
+				pdfEcmMainVO.setEmp_seq("1");
+				pdfEcmMainVO.setPdf_path("Z:/upload/epis/cust_eval/" + map.get("commissioner_seq") + "/pdf");
+				pdfEcmMainVO.setPdf_name("PDF_" + fileSeq);
+				pdfEcmMainVO.setStatus_cd("D0001");
 
-                evalDAO.insertPdfFile(pdfEcmFileVO);
-                evalDAO.insertPdfMain(pdfEcmMainVO);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+				evalDAO.insertPdfFile(pdfEcmFileVO);
+				evalDAO.insertPdfMain(pdfEcmMainVO);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}else{
 			returnMap.put("result", "fail");
 		}
@@ -230,33 +230,33 @@ public class EvalServiceImpl implements EvalService {
 
 		/** file 저장 */
 		//파일 업로드
-		
+
 		//상태값 변경
 		evalDAO.setSignSetp(map);
 
 		if(stpe.equals("9") && map.get("flag").equals("Y")){
 			// 사전접촉이 있으면 평가비용 5만원으로 변경
 			evalDAO.setEvalPayUpdate(map);
-			
+
 		}else if(stpe.equals("4")) {
 			//수당 개인정보 업데이트
 			evalDAO.setCommDetailUpdate(map);
 
-		//평가확정
+			//평가확정
 		}else if(stpe.equals("8")){
 			evalDAO.setEvalJangConfirm(map);
-			
+
 			if(map.get("join_select_type").equals("Y")){
 				evalDAO.setPurcReqUpdate(map);
 			}
 
 		}else if(stpe.equals("10")) {
-            Map<String, Object> coms = evalDAO.getEvalCommittee2(map);
-            coms.put("COMMITTEE_SEQ", coms.get("committee_seq"));
+			Map<String, Object> coms = evalDAO.getEvalCommittee2(map);
+			coms.put("COMMITTEE_SEQ", coms.get("committee_seq"));
 
-            Map<String, Object> coms2 = evalDAO.getEvalCommittee(coms);
+			Map<String, Object> coms2 = evalDAO.getEvalCommittee(coms);
 
-            map.put("evalCm", coms2.get("eval_cm"));
+			map.put("evalCm", coms2.get("eval_cm"));
 			evalDAO.setJangEvalPayUpdate(map);
 		}
 		returnMap.put("result", "success");
@@ -271,29 +271,29 @@ public class EvalServiceImpl implements EvalService {
 
 	@Override
 	public Map<String, Object> getEvalConfirmChk(Map<String, Object> map) {
-		
+
 		//rank_code 업데이트 프로시저 호출
 		evalDAO.setRankCode(map);
-		
+
 		List<Map<String, Object>> userList = evalDAO.getCommissionerList(map);
-		
+
 		String score_yn = (String) userList.get(0).get("SCORE_YN");
-		
-        int userCnt = 0;
-        //실제 평가위원 수
-        for (Map<String, Object> map2 : userList) {
-            if(map2.get("contact").equals("N") && map2.get("eval_avoid").equals("N")){
-                userCnt++;
-            }
-        }
-				
+
+		int userCnt = 0;
+		//실제 평가위원 수
+		for (Map<String, Object> map2 : userList) {
+			if(map2.get("contact").equals("N") && map2.get("eval_avoid").equals("N")){
+				userCnt++;
+			}
+		}
+
 		map.put("userCnt", userCnt);
 		map.put("score_yn", score_yn);
-		
+
 		//평점구하기 위한 평가위원 수 
 		//5명 이하일 경우 모두 
 		//그외 최상 최하 빼기 위해 두명 제외
-		if(userCnt > 4){
+		if(userCnt > 5){
 			map.put("userCntTotal", userCnt-2);
 		}else if(score_yn.equals("Y")) {
 			map.put("userCntTotal", userCnt-2);
@@ -301,14 +301,14 @@ public class EvalServiceImpl implements EvalService {
 		}else{
 			map.put("userCntTotal", userCnt);
 		}
-		
+
 		List<Map<String, Object>> col = evalDAO.getItemColList(map);
 		map.put("colList", col);
-		
+
 		List<Map<String, Object>> list = evalDAO.getEvalConfirmData(map);
-		
+
 		map.put("list", list);
-		
+
 		map.put("chk", "Y");
 
 		return map;
@@ -321,31 +321,31 @@ public class EvalServiceImpl implements EvalService {
 
 	@Override
 	public Map<String, Object> evalResultList(Map<String, Object> map) {
-		
+
 		Map<String, Object> result = new HashMap<String, Object>();
-		
+
 		//rank_code 업데이트 프로시저 호출
 //		evalDAO.setRankCode(map);
-		
+
 		List<Map<String, Object>> userList = evalDAO.getCommissionerList(map);
-		
+
 		String score_yn = (String) userList.get(0).get("SCORE_YN");
-		
-        int userCnt = 0;
-        //실제 평가위원 수
-        for (Map<String, Object> map2 : userList) {
-            if(map2.get("contact").equals("N") && map2.get("eval_avoid").equals("N")){
-                userCnt++;
-            }
-        }
-				
+
+		int userCnt = 0;
+		//실제 평가위원 수
+		for (Map<String, Object> map2 : userList) {
+			if(map2.get("contact").equals("N") && map2.get("eval_avoid").equals("N")){
+				userCnt++;
+			}
+		}
+
 		map.put("userCnt", userCnt);
 		map.put("score_yn", score_yn);
-		
+
 		//평점구하기 위한 평가위원 수 
 		//5명 이하일 경우 모두 
 		//그외 최상 최하 빼기 위해 두명 제외
-		if(userCnt > 4){
+		if(userCnt > 5){
 			map.put("userCntTotal", userCnt-2);
 		}else if(score_yn.equals("Y")) {
 			map.put("userCntTotal", userCnt-2);
@@ -353,20 +353,20 @@ public class EvalServiceImpl implements EvalService {
 		}else{
 			map.put("userCntTotal", userCnt);
 		}
-		
+
 		List<Map<String, Object>> col = evalDAO.getItemColList(map);
 		map.put("colList", col);
 		result.put("colList", col);
-		
+
 		List<Map<String, Object>> list = evalDAO.getEvalResultList(map);
 		result.put("list", list);
 
 		Map<String, Object> total = evalDAO.getEvalResultTotal(map);
 		result.put("total", total);
-		
+
 		List<Map<String, Object>> sumList = evalDAO.getEvalConfirmData(map);
 		result.put("sumList", sumList);
-		
+
 		return result;
 	}
 
@@ -395,13 +395,13 @@ public class EvalServiceImpl implements EvalService {
 
 	@Override
 	public String evalMod(Map<String, Object> map) {
-		
+
 		String cf = evalDAO.evalConfirmYn(map);
-		
+
 		if(cf.equals("N")){
 			evalDAO.evalMod(map);
 		}
-		
+
 		return cf;
 	}
 
@@ -705,43 +705,43 @@ public class EvalServiceImpl implements EvalService {
 		}
 	}
 
-    @Override
-    public Map<String, Object> makeZipFile(Map<String, Object> params, HttpServletRequest request, HttpServletResponse response) {
-        Map<String, Object> fileMap = evalDAO.evalProposalModFileDownload(params);
-        List<Map<String, Object>> fileList = new ArrayList<>();
+	@Override
+	public Map<String, Object> makeZipFile(Map<String, Object> params, HttpServletRequest request, HttpServletResponse response) {
+		Map<String, Object> fileMap = evalDAO.evalProposalModFileDownload(params);
+		List<Map<String, Object>> fileList = new ArrayList<>();
 
-        for(int i = 1; i < 11; i++){
-            Map<String, Object> map = new HashMap<>();
+		for(int i = 1; i < 11; i++){
+			Map<String, Object> map = new HashMap<>();
 
-            if(fileMap.get("sign_"+i).equals("Y")) {
-                if(i == 1){
-                    map.put("fileName", fileMap.get("NAME") + "_평가(심사)위원 위촉 확인 및 평가운영지침 준수 각서");
-                }else if(i == 2){
-                    map.put("fileName", fileMap.get("NAME") + "_평가위원 사전의결사항");
-                }else if(i == 3){
-                    map.put("fileName", fileMap.get("NAME") + "_사전접촉여부 확인(신고)서1");
-                }else if(i == 4){
-                    map.put("fileName", fileMap.get("NAME") + "_평가수당 지급 확인서");
-                }else if(i == 5){
-                    map.put("fileName", fileMap.get("NAME") + "_평가위원 개인정보 수집·이용 동의서");
-                }else if(i == 6){
-                    map.put("fileName", fileMap.get("NAME") + "_위원별 제안서 평가표");
-                }else if(i == 7){
-                    map.put("fileName", fileMap.get("NAME") + "_업체별 제안서 평가집계표");
-                }else if(i == 8){
-                    map.put("fileName", fileMap.get("NAME") + "_제안서 평가 총괄표");
-                }else if(i == 9){
-                    map.put("fileName", fileMap.get("NAME") + "_사전접촉여부 확인(신고)서2");
-                }else if(i == 10){
-                    map.put("fileName", fileMap.get("NAME") + "_평가위원장 가산금 지급 확인서");
-                }
-                fileList.add(map);
-            }
-        }
+			if(fileMap.get("sign_"+i).equals("Y")) {
+				if(i == 1){
+					map.put("fileName", fileMap.get("NAME") + "_평가(심사)위원 위촉 확인 및 평가운영지침 준수 각서");
+				}else if(i == 2){
+					map.put("fileName", fileMap.get("NAME") + "_평가위원 사전의결사항");
+				}else if(i == 3){
+					map.put("fileName", fileMap.get("NAME") + "_사전접촉여부 확인(신고)서1");
+				}else if(i == 4){
+					map.put("fileName", fileMap.get("NAME") + "_평가수당 지급 확인서");
+				}else if(i == 5){
+					map.put("fileName", fileMap.get("NAME") + "_평가위원 개인정보 수집·이용 동의서");
+				}else if(i == 6){
+					map.put("fileName", fileMap.get("NAME") + "_위원별 제안서 평가표");
+				}else if(i == 7){
+					map.put("fileName", fileMap.get("NAME") + "_업체별 제안서 평가집계표");
+				}else if(i == 8){
+					map.put("fileName", fileMap.get("NAME") + "_제안서 평가 총괄표");
+				}else if(i == 9){
+					map.put("fileName", fileMap.get("NAME") + "_사전접촉여부 확인(신고)서2");
+				}else if(i == 10){
+					map.put("fileName", fileMap.get("NAME") + "_평가위원장 가산금 지급 확인서");
+				}
+				fileList.add(map);
+			}
+		}
 
-        /**
-         * pdf 솔루션 통합본 생성
-         */
+		/**
+		 * pdf 솔루션 통합본 생성
+		 */
 
 //        for(int i = 0; i < fileList.size(); i++){
 //            PdfEcmFileVO pdfEcmFileVO = new PdfEcmFileVO();
@@ -769,30 +769,30 @@ public class EvalServiceImpl implements EvalService {
 //
 //        evalDAO.insertPdfMain(pdfEcmMainVO);
 
-        /**
-         * pdf 솔루션 통합본 생성 종료
-         */
+		/**
+		 * pdf 솔루션 통합본 생성 종료
+		 */
 
-		 /** pdf 변환 솔루션 파일경로 */
+		/** pdf 변환 솔루션 파일경로 */
 //        String zipDir = "/home/upload/epis/cust_eval/" + fileMap.get("commissioner_seq") + "/pdf";
 //		String returnZipDir = "/upload/epis/cust_eval/" + fileMap.get("commissioner_seq") + "/pdf";
 		String zipDir = "/home/upload/cust_eval/" + fileMap.get("commissioner_seq") + "/hwp";
 		String returnZipDir = "/upload/cust_eval/" + fileMap.get("commissioner_seq") + "/hwp";
-        try {
-            CommFileUtil commFileUtil = new CommFileUtil();
+		try {
+			CommFileUtil commFileUtil = new CommFileUtil();
 			returnZipDir = commFileUtil.setMakeZipFileDown(zipDir, returnZipDir, fileMap.get("TITLE") +"_"+ fileMap.get("NAME") + ".zip");
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 
 		Map<String, Object> returnMap = new HashMap<>();
 		returnMap.put("result", "success");
 		returnMap.put("zipDir", returnZipDir);
 
-        return returnMap;
-    }
+		return returnMap;
+	}
 
-    @Override
+	@Override
 	public void setScoreData(Map<String, Object> params) {
 		Gson gson = new Gson();
 

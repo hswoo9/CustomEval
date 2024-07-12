@@ -170,26 +170,58 @@
 				</TR>
 				<!-- 점수 (아이템)-->
 				<c:forEach items="${result[0].colList }" var="itemList" varStatus="colst">
-					<c:set var="sss" value="ITME_SCORE_${itemList.item_seq }"  />
+					<c:set var="sss" value="ITME_SCORE_${itemList.item_seq }" />
 					<TR>
 						<TD valign="middle" style='width:229px;height:30px;border-left:solid #000000 0.9pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
-							<P CLASS=HStyle0 STYLE='text-align:left;line-height:150%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>${itemList.item_name }</SPAN></P>
+							<P CLASS=HStyle0 STYLE='text-align:left;line-height:150%;'>
+								<SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>${itemList.item_name }</SPAN>
+							</P>
 						</TD>
 						<TD valign="middle" style='width:41px;height:30px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
-							<P CLASS=HStyle0 STYLE='text-align:center;line-height:150%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>${itemList.score }</SPAN></P>
+							<P CLASS=HStyle0 STYLE='text-align:center;line-height:150%;'>
+								<SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>
+									<c:choose>
+										<c:when test="${itemList.score == null || itemList.score == 0}">
+											-
+										</c:when>
+										<c:otherwise>
+											<fmt:formatNumber value="${itemList.score}" pattern=".####"/>
+										</c:otherwise>
+									</c:choose>
+								</SPAN>
+							</P>
 						</TD>
 
 						<c:forEach items="${result[mainSt.index].list }" var="userList" varStatus="st">
 							<TD valign="middle" style='height:30px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
-								<P CLASS=HStyle0 STYLE='text-align:center;line-height:150%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>${userList[sss]}</SPAN></P>
+								<P CLASS=HStyle0 STYLE='text-align:center;line-height:150%;'>
+									<SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>
+										<c:choose>
+											<c:when test="${userList[sss] == null || userList[sss] == 0}">
+												-
+											</c:when>
+											<c:otherwise>
+												<fmt:formatNumber value="${userList[sss]}" pattern=".####"/>
+											</c:otherwise>
+										</c:choose>
+									</SPAN>
+								</P>
 							</TD>
 						</c:forEach>
 
-<%--						<TD valign="middle" style='height:30px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>--%>
-<%--							<P CLASS=HStyle0 STYLE='text-align:center;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움"'><fmt:formatNumber value="${result[mainSt.index].sumList[mainSt.index][sss]}" pattern=".####"/></SPAN></P>--%>
-<%--						</TD>--%>
 						<TD valign="middle" style='height:30px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.9pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
-							<P CLASS=HStyle0 STYLE='text-align:center;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움"'><fmt:formatNumber value="${result[mainSt.index].sumList[mainSt.index][sss]}" pattern=".####"/></SPAN></P>
+							<P CLASS=HStyle0 STYLE='text-align:center;'>
+								<SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>
+									<c:choose>
+										<c:when test="${result[mainSt.index].sumList[mainSt.index][sss] == null || result[mainSt.index].sumList[mainSt.index][sss] == 0}">
+											-
+										</c:when>
+										<c:otherwise>
+											<fmt:formatNumber value="${result[mainSt.index].sumList[mainSt.index][sss]}" pattern=".####"/>
+										</c:otherwise>
+									</c:choose>
+								</SPAN>
+							</P>
 						</TD>
 					</TR>
 				</c:forEach>
@@ -198,24 +230,26 @@
 					<TD colspan="2" valign="middle" style='width:128px;height:33px;border-left:solid #000000 0.9pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.9pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
 						<P CLASS=HStyle0 STYLE='text-align:center;line-height:150%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>합&nbsp; 계 (100점)</SPAN></P>
 					</TD>
-					<c:forEach items="${result[mainSt.index].list }" var="userList">
+					<c:forEach items="${result[mainSt.index].list}" var="userList">
 						<TD valign="middle" style='height:33px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.9pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
 							<P CLASS=HStyle0 STYLE='text-align:center;line-height:150%;'>
 								<SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>
-								<c:choose>
-									<c:when test="${userList.scoreSum == 0}">
-										<fmt:formatNumber value="${userList.scoreSum}" pattern="0.0"/>
-									</c:when>
-									<c:otherwise>
-										<fmt:formatNumber value="${userList.scoreSum}" pattern=".####"/>
-									</c:otherwise>
-								</c:choose>
+									<c:choose>
+										<c:when test="${userList.scoreSum == null}">
+											-
+										</c:when>
+										<c:when test="${userList.scoreSum == 0}">
+											-
+										</c:when>
+										<c:otherwise>
+											<fmt:formatNumber value="${userList.scoreSum}" pattern=".####"/>
+										</c:otherwise>
+									</c:choose>
 								</SPAN>
 							</P>
 						</TD>
 					</c:forEach>
-
-<%--					<TD valign="middle" style='height:33px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.9pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>--%>
+				<%--					<TD valign="middle" style='height:33px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.9pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>--%>
 <%--						<P CLASS=HStyle0 STYLE='text-align:center;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>&nbsp;</SPAN></P>--%>
 <%--					</TD>--%>
 					<TD valign="middle" style='height:33px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.9pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.9pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>

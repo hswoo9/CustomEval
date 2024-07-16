@@ -330,7 +330,7 @@
 		, C.ITEM_NAME
 		, C.ITEM_SEQ
         <choose>
-            <when test='userCnt 5 4 or score_yn == "Y"'>
+            <when test='userCnt > 5 or score_yn == "Y"'>
                 ,SUM(B.SCORE) - MAX(B.SCORE) - MIN(B.SCORE) SUM_SCORE
             </when>
             <otherwise>
@@ -467,7 +467,7 @@
 		A.EVAL_COMPANY_SEQ
 		, B.ITEM_SEQ
         <choose>
-            <when test='userCnt 5 4 or score_yn == "Y"'>
+            <when test='userCnt > 5 or score_yn == "Y"'>
                 ,SUM(SCORE) - MAX(SCORE) - MIN(SCORE) TOTAL
             </when>
             <otherwise>

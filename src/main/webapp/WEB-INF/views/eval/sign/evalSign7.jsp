@@ -256,9 +256,20 @@
 						<P CLASS=HStyle0 STYLE='text-align:center;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움"'><fmt:formatNumber value="${result[mainSt.index].sumList[mainSt.index].TOTAL_SUM}" pattern=".####"/></SPAN></P>
 					</TD>
 				</TR>
+				<TR>
+					<TD colspan="4" valign="bottom" style='width:103px;height:28px;'>
+						<P CLASS=HStyle0 STYLE='line-height:180%;'>* 평가위원이 5인을 초과하는 경우 <b>세부</b>평가항목별 점수의 최고‧최저 점수를 제외</P>
+					</TD>
+				</TR>
+				<TR>
+					<TD colspan="4" valign="bottom" style='width:80px;height:28px;'>
+						<P CLASS=HStyle0 STYLE='text-align:left;line-height:180%;'>** 소수점 다섯째 자리에서 반올림</P>
+					</TD>
+				</TR>
 			</TABLE>
 			<br>
 		</c:forEach>
+
 	</div>
 
 	<div id="_pHwpCtrl" style="height: 100%;border: 1px solid lightgray;display: none"></div>

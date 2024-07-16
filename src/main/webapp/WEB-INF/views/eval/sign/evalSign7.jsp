@@ -87,8 +87,8 @@
 
 	function _hwpPutData(){
 		_pHwpCtrl.MoveToField("contents", true, true, true);
-		_pHwpCtrl.PutFieldText("contents", " ");
-		_pHwpCtrl.SetTextFile($('#contentsTemp').html(), "HTML", "insertfile");
+		_pHwpCtrl.PutFieldText("contents", "\n");
+		_pHwpCtrl.SetTextFile($('#contentsTemp').html(), "HTML", "insertfile", function(){
 
 		var name = "";
 
@@ -104,7 +104,8 @@
 		_hwpPutSignImg("sign", "${userInfo.SIGN_DIR }");
 
 		$("#signSave").show();
-	}
+	})
+	};
 
 	function reloadBtn(){
 		location.reload();

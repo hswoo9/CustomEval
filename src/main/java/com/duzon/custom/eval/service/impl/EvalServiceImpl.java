@@ -180,89 +180,121 @@ public class EvalServiceImpl implements EvalService {
 		return "notFail";
 	}
 
-	@Override
-	public Map<String, Object> setSignSetp(Map<String, Object> map) {
-		Map<String, Object> returnMap = new HashMap<String, Object>();
 
-		String stpe = String.valueOf(map.get("step"));
+		public Map<String, Object> setSignSetp(Map<String, Object> map) {
+			Map<String, Object> returnMap = new HashMap<String, Object>();
 
-		map.put("col_nm", "sign_"+stpe);
-		map.put("col_file", "sign_"+stpe+"_file_seq");
+			String step = String.valueOf(map.get("step"));
 
-		/** file 저장 */
-		String fileSeq = "EVAL_" + map.get("commissioner_seq") + "_" + map.get("step");
-		map.put("attch_file_seq", fileSeq);
+			map.put("col_nm", "sign_" + step);
+			map.put("col_file", "sign_" + step + "_file_seq");
 
-		if (!EgovStringUtil.nullConvert(map.get("signHwpFileData")).equals("")) {
-			try {
-				CommFileUtil commFileUtil = new CommFileUtil();
-				commFileUtil.setServerSFSave(EgovStringUtil.nullConvert(map.get("signHwpFileData")), (String) map.get("commissioner_seq"), fileSeq, "hwp");
-
-				PdfEcmFileVO pdfEcmFileVO = new PdfEcmFileVO();
-				pdfEcmFileVO.setRep_id(fileSeq);
-				pdfEcmFileVO.setComp_seq("1000");
-				pdfEcmFileVO.setDoc_id(fileSeq);
-				pdfEcmFileVO.setDoc_no("001");
-				pdfEcmFileVO.setDoc_path("Z:/upload/epis/cust_eval/" + map.get("commissioner_seq") + "/hwp");
-				pdfEcmFileVO.setDoc_name(fileSeq);
-				pdfEcmFileVO.setDoc_ext("hwp");
-				pdfEcmFileVO.setDoc_title("sign_" + stpe);
-
-				PdfEcmMainVO pdfEcmMainVO = new PdfEcmMainVO();
-
-				pdfEcmMainVO.setRep_id(fileSeq);
-				pdfEcmMainVO.setComp_seq("1000");
-				pdfEcmMainVO.setDept_seq("1");
-				pdfEcmMainVO.setEmp_seq("1");
-				pdfEcmMainVO.setPdf_path("Z:/upload/epis/cust_eval/" + map.get("commissioner_seq") + "/pdf");
-				pdfEcmMainVO.setPdf_name("PDF_" + fileSeq);
-				pdfEcmMainVO.setStatus_cd("D0001");
-
-				evalDAO.insertPdfFile(pdfEcmFileVO);
-				evalDAO.insertPdfMain(pdfEcmMainVO);
-			} catch (Exception e) {
-				e.printStackTrace();
+			// Step에 따른 파일 이름 매핑
+			String fileName;
+			switch (step) {
+				case "1":
+					fileName = "평가(심사)위원 위촉 확인 및 평가운영지침 준수 각서";
+					break;
+				case "2":
+					fileName = "평가위원 사전의결사항";
+					break;
+				case "3":
+					fileName = "사전접촉여부 확인(신고)서";
+					break;
+				case "4":
+					fileName = "평가수당 지급 확인서";
+					break;
+				case "5":
+					fileName = "평가위원 개인정보 수집·이용 동의서";
+					break;
+				case "6":
+					fileName = "위원별 제안서 평가표";
+					break;
+				case "7":
+					fileName = "업체별 제안서 평가집계표";
+					break;
+				case "8":
+					fileName = "제안서 평가 총괄표";
+					break;
+				case "9":
+					fileName = "사전접촉여부 확인(신고)서 한번더";
+					break;
+				case "10":
+					fileName = "평가위원장 가산금 지급 확인서";
+					break;
+				default:
+					fileName = "기타"; // Default case for safety
 			}
-		}else{
-			returnMap.put("result", "fail");
+
+			// file 저장
+			map.put("attch_file_seq", fileName);
+
+			if (!EgovStringUtil.nullConvert(map.get("signHwpFileData")).equals("")) {
+				try {
+					CommFileUtil commFileUtil = new CommFileUtil();
+					commFileUtil.setServerSFSave(EgovStringUtil.nullConvert(map.get("signHwpFileData")), (String) map.get("commissioner_seq"), fileName, "hwp");
+
+					PdfEcmFileVO pdfEcmFileVO = new PdfEcmFileVO();
+					pdfEcmFileVO.setRep_id(fileName);
+					pdfEcmFileVO.setComp_seq("1000");
+					pdfEcmFileVO.setDoc_id(fileName);
+					pdfEcmFileVO.setDoc_no("001");
+					pdfEcmFileVO.setDoc_path("Z:/upload/epis/cust_eval/" + map.get("commissioner_seq") + "/hwp");
+					pdfEcmFileVO.setDoc_name(fileName);
+					pdfEcmFileVO.setDoc_ext("hwp");
+					pdfEcmFileVO.setDoc_title("sign_" + step);
+
+					PdfEcmMainVO pdfEcmMainVO = new PdfEcmMainVO();
+
+					pdfEcmMainVO.setRep_id(fileName);
+					pdfEcmMainVO.setComp_seq("1000");
+					pdfEcmMainVO.setDept_seq("1");
+					pdfEcmMainVO.setEmp_seq("1");
+					pdfEcmMainVO.setPdf_path("Z:/upload/epis/cust_eval/" + map.get("commissioner_seq") + "/pdf");
+					pdfEcmMainVO.setPdf_name("PDF_" + fileName);
+					pdfEcmMainVO.setStatus_cd("D0001");
+
+					evalDAO.insertPdfFile(pdfEcmFileVO);
+					evalDAO.insertPdfMain(pdfEcmMainVO);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			} else {
+				returnMap.put("result", "fail");
+				return returnMap;
+			}
+
+			// 상태값 변경
+			evalDAO.setSignSetp(map);
+
+			if (step.equals("9") && map.get("flag").equals("Y")) {
+				// 사전접촉이 있으면 평가비용 5만원으로 변경
+				evalDAO.setEvalPayUpdate(map);
+			} else if (step.equals("4")) {
+				// 수당 개인정보 업데이트
+				evalDAO.setCommDetailUpdate(map);
+			} else if (step.equals("8")) {
+				// 평가확정
+				evalDAO.setEvalJangConfirm(map);
+
+				if (map.get("join_select_type").equals("Y")) {
+					evalDAO.setPurcReqUpdate(map);
+				}
+			} else if (step.equals("10")) {
+				Map<String, Object> coms = evalDAO.getEvalCommittee2(map);
+				coms.put("COMMITTEE_SEQ", coms.get("committee_seq"));
+
+				Map<String, Object> coms2 = evalDAO.getEvalCommittee(coms);
+
+				map.put("evalCm", coms2.get("eval_cm"));
+				evalDAO.setJangEvalPayUpdate(map);
+			}
+
+			returnMap.put("result", "success");
+			return returnMap;
 		}
 
 
-		/** file 저장 */
-		//파일 업로드
-
-		//상태값 변경
-		evalDAO.setSignSetp(map);
-
-		if(stpe.equals("9") && map.get("flag").equals("Y")){
-			// 사전접촉이 있으면 평가비용 5만원으로 변경
-			evalDAO.setEvalPayUpdate(map);
-
-		}else if(stpe.equals("4")) {
-			//수당 개인정보 업데이트
-			evalDAO.setCommDetailUpdate(map);
-
-			//평가확정
-		}else if(stpe.equals("8")){
-			evalDAO.setEvalJangConfirm(map);
-
-			if(map.get("join_select_type").equals("Y")){
-				evalDAO.setPurcReqUpdate(map);
-			}
-
-		}else if(stpe.equals("10")) {
-			Map<String, Object> coms = evalDAO.getEvalCommittee2(map);
-			coms.put("COMMITTEE_SEQ", coms.get("committee_seq"));
-
-			Map<String, Object> coms2 = evalDAO.getEvalCommittee(coms);
-
-			map.put("evalCm", coms2.get("eval_cm"));
-			evalDAO.setJangEvalPayUpdate(map);
-		}
-		returnMap.put("result", "success");
-
-		return returnMap;
-	}
 
 	@Override
 	public Map<String, Object> getEvalJangData(Map<String, Object> map) {

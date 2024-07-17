@@ -70,7 +70,7 @@
 		SET
 			SIGN_DIR = #{signDir}
 		WHERE
-			COMMISSIONER_SEQ = #{commissioner_seq}
+			COMMISSIONER_SEQ = #{commissioner_seq} AND ACTIVE = 'Y'
 	</update>
 
 	<select id="getResultList" parameterType="map" resultType="map">
@@ -768,7 +768,7 @@
 		AND
 			COMMISSIONER_SEQ != #{commissioner_seq}
         AND
-		    ATTEND_YN = "Y" AND EVAL_AVOID = "N" AND CONTACT = "N"
+		    ATTEND_YN = "Y" AND EVAL_AVOID = "N" AND CONTACT = "N" AND ACTIVE = "Y"
 	</select>
 
 	<select id="getEvalAvoidFailChk" parameterType="map" resultType="map">

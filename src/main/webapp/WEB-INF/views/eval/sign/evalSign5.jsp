@@ -100,7 +100,7 @@
 	<div id="signSave" style="display: none;">
 		<div>
 			<input type="button" onclick="evalAvoidPopup()" value="기피신청">
-			<input type="button" onclick="signSaveBtn();" style="float:right;" value="저장">
+			<input type="button" onclick="signSaveBtn();" style="float:right;" value="다음">
 		</div>
 	</div>
 

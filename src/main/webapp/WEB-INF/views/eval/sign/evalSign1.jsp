@@ -129,7 +129,7 @@
 		</div>
 
 		<div>
-			<input type="button" onclick="signSaveBtn();"  style="float:right; margin-left:10px;" value="저장">
+			<input type="button" onclick="signSaveBtn();"  style="float:right; margin-left:10px;" value="다음">
 			<c:if test="${userInfo.EVAL_JANG eq 'Y'}">
 				<input type="button" onclick="evalBlindPopup();" value="평가집계표 출력방식 설정" style="float:right;">
 			</c:if>

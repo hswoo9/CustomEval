@@ -311,7 +311,7 @@
 					<option>${minute}</option>
 				</c:forEach>
 			</select>
-			<input type="button" onclick="signSaveBtn();" style="margin-left:23px;" value="저장">
+			<input type="button" onclick="signSaveBtn();" style="margin-left:23px;" value="다음">
 		</div>
 	</div>
 

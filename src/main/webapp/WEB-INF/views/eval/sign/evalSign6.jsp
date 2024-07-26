@@ -271,7 +271,7 @@
 <div style="width: 50%;margin: 0 auto;">
 	<div id="signSave" style="display: none;">
 		<input type="button" onclick="evalAvoidPopup()" value="기피신청">
-		<input type="button" onclick="signSaveBtn();" style="float:right;" value="저장">
+		<input type="button" onclick="signSaveBtn();" style="float:right;" value="다음">
 		<input type="button" onclick="evalModBtn();" style="float:right;" value="평가 수정">
 	</div>
 

@@ -139,6 +139,7 @@
 			_hwpPutText("sum{{"+i+"}}", qksdhffla(list[i].TOTAL_SUM));
 			_hwpPutText("sum_ave{{"+i+"}}", qksdhffla(list[i].TOTAL_SUM * (rates/100)) );
 			_hwpPutText("eval{{"+i+"}}", list[i].TOTAL_SUM >= 85 ? '적격' : '부적격' );
+			_hwpPutText("rank{{"+i+"}}", list[i].RANK);
 		}
 
 
@@ -221,8 +222,8 @@
 <div style="width: 50%;margin: 0 auto;">
 	<div id="signSave" style="display: none;">
 <%--		<input type="button" onclick="OnConnectDevice();" value="서명하기">--%>
-		<input type="button" onclick="evalAvoidPopup()" value="기피신청">
-		<input type="button" onclick="signSaveBtn();" style="float:right; margin-left:10px;" value="저장">
+		<input type="hidden" onclick="evalAvoidPopup()" value="기피신청">
+		<input type="button" onclick="signSaveBtn();" style="float:right; margin-left:10px;" value="다음">
 		<input type="button" onclick="reloadBtn();" style="float:right;" value="새로고침">
 	</div>
 

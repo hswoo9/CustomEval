@@ -312,53 +312,75 @@
 	</select>
 	
 	<select id="getEvalConfirmData" parameterType="map" resultType="map">
-	/*getEvalConfirmData*/
-		SELECT 
-		T.*
-		, #{userCnt} AS USER_CNT
-		
-		, SUM(T.SUM_SCORE) / #{userCntTotal} TOTAL_SUM
-		
-		<foreach collection="colList" item="col">
-			, MAX(CASE WHEN T.ITEM_SEQ = #{col.item_seq} THEN T.SUM_SCORE / #{userCntTotal} END) AS ITME_SCORE_#{col.item_seq}
-		</foreach>
+		/*getEvalConfirmData*/
+		SELECT
+		T.*,
+		#{userCnt} AS USER_CNT,
+		SUM(T.SUM_SCORE) / #{userCntTotal} AS TOTAL_SUM,
+		<foreach collection="colList" item="col" separator=",">
+			MAX(CASE WHEN T.ITEM_SEQ = #{col.item_seq} THEN T.SUM_SCORE / #{userCntTotal} END) AS ITME_SCORE_#{col.item_seq}
+		</foreach>,
+		CASE
+		WHEN TOTALS.TOTAL_SUM >= 85 THEN TOTALS.RANK
+		ELSE '-'
+		END AS RANK
 		FROM (
-		SELECT 
-		A.EVAL_COMPANY_SEQ
-		, A.DISPLAY_TITLE
-		, C.SCORE
-		, C.ITEM_NAME
-		, C.ITEM_SEQ
-        <choose>
-            <when test='userCnt > 5 or score_yn == "Y"'>
-                ,SUM(B.SCORE) - MAX(B.SCORE) - MIN(B.SCORE) SUM_SCORE
-            </when>
-            <otherwise>
-                ,SUM(B.SCORE) AS SUM_SCORE
-            </otherwise>
-        </choose>
-        FROM DJ_EVAL_COMPANY A
+		SELECT
+		A.EVAL_COMPANY_SEQ,
+		A.DISPLAY_TITLE,
+		C.SCORE,
+		C.ITEM_NAME,
+		C.ITEM_SEQ,
+		<choose>
+			<when test='userCnt > 5 or score_yn == "Y"'>
+				SUM(B.SCORE) - MAX(B.SCORE) - MIN(B.SCORE) AS SUM_SCORE
+			</when>
+			<otherwise>
+				SUM(B.SCORE) AS SUM_SCORE
+			</otherwise>
+		</choose>
+		FROM DJ_EVAL_COMPANY A
 		JOIN DJ_EVAL_ITEM_RESULT B
 		ON A.EVAL_COMPANY_SEQ = B.EVAL_COMPANY_SEQ
 		AND A.COMMITTEE_SEQ = #{COMMITTEE_SEQ}
 		AND B.ACTIVE = 'Y'
-		
-<!--		<if test="userCnt &gt; 5">-->
-<!--			AND B.RANK_CODE = 'Y'-->
-<!--		</if>-->
-		
 		JOIN DJ_EVAL_COMMITTEE_ITEM C
 		ON B.ITEM_SEQ = C.ITEM_SEQ
 		AND C.ACTIVE = 'Y'
 		JOIN DJ_EVAL_COMMISSIONER D
 		ON B.COMMISSIONER_SEQ = D.COMMISSIONER_SEQ
-        AND D.EVAL_SAVE = 'Y'
-        AND D.CONFIRM_YN = 'Y'
+		AND D.EVAL_SAVE = 'Y'
+		AND D.CONFIRM_YN = 'Y'
 		AND D.CONTACT = 'N'
 		AND D.ATTEND_YN = 'Y'
-        AND D.EVAL_AVOID = "N"
-		GROUP BY A.EVAL_COMPANY_SEQ, C.ITEM_SEQ ) T
+		AND D.EVAL_AVOID = 'N'
+		GROUP BY A.EVAL_COMPANY_SEQ, C.ITEM_SEQ
+		) T
+		JOIN (
+		SELECT
+		A.EVAL_COMPANY_SEQ,
+		SUM(B.SCORE) / #{userCntTotal} AS TOTAL_SUM,
+		DENSE_RANK() OVER (ORDER BY SUM(B.SCORE) / #{userCntTotal} DESC) AS RANK
+		FROM DJ_EVAL_COMPANY A
+		JOIN DJ_EVAL_ITEM_RESULT B
+		ON A.EVAL_COMPANY_SEQ = B.EVAL_COMPANY_SEQ
+		AND A.COMMITTEE_SEQ = #{COMMITTEE_SEQ}
+		AND B.ACTIVE = 'Y'
+		JOIN DJ_EVAL_COMMITTEE_ITEM C
+		ON B.ITEM_SEQ = C.ITEM_SEQ
+		AND C.ACTIVE = 'Y'
+		JOIN DJ_EVAL_COMMISSIONER D
+		ON B.COMMISSIONER_SEQ = D.COMMISSIONER_SEQ
+		AND D.EVAL_SAVE = 'Y'
+		AND D.CONFIRM_YN = 'Y'
+		AND D.CONTACT = 'N'
+		AND D.ATTEND_YN = 'Y'
+		AND D.EVAL_AVOID = 'N'
+		GROUP BY A.EVAL_COMPANY_SEQ
+		) TOTALS
+		ON T.EVAL_COMPANY_SEQ = TOTALS.EVAL_COMPANY_SEQ
 		GROUP BY T.EVAL_COMPANY_SEQ
+		ORDER BY TOTAL_SUM DESC
 	</select>
 	
 	<select id="getEvalConfirmData2" parameterType="map" resultType="map">

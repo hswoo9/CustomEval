@@ -35,29 +35,42 @@
 	var flag = 'N';
 
 	function signSaveBtn() {
-		var evalId = $("#evalId").val();  // 여기서 다시 값을 가져옴
+		// 체크된 상태가 '있다'인 경우 확인 창을 띄움
+		var contactCheck = false;
+		for (var i = 0; i < jsonData.length; i++) {
+			var chk = $('select[name="chkData[]"] option:selected')[i].value;
 
-		if (confirm("평가위원장 (" + evalId + ")으로 계속 진행하시겠습니까?")) {
-			// 저장
-			for (var i = 0; i < jsonData.length; i++) {
-				var chk = $('select[name="chkData[]"] option:selected')[i].value;
+			if (chk == '있다') {
+				contactCheck = true;
+				break;
+			}
+		}
 
-				if (chk == '있다') {
-					flag = 'Y';
-				}
+		if (contactCheck) {
+			if (!confirm("사전접촉이 '있다'로 선택하셨습니다. 맞으면 확인, 틀리면 취소 버튼을 클릭해주시길 바랍니다.")) {
+				return;
+			}
+		}
 
-				_hwpPutText("contactor{{" + i + "}}", $('input[name="contactor[]"]')[i].value);
-				_hwpPutText("inputDate{{" + i + "}}", $('input[name="inputDate[]"]')[i].value.replace(/-/gi, ""));
-				_hwpPutText("chk{{" + i + "}}", chk);
-				_hwpPutText("contents{{" + i + "}}", $('input[name="contents[]"]')[i].value);
+		// 저장 로직
+		for (var i = 0; i < jsonData.length; i++) {
+			var chk = $('select[name="chkData[]"] option:selected')[i].value;
+
+			if (chk == '있다') {
+				flag = 'Y';
 			}
 
-			_pHwpCtrl.GetTextFile("HWPML2X", "", function (data) {
-				signHwpFileData = data;
-			});
-
-			setTimeout(signSave, 600);
+			_hwpPutText("contactor{{"+i+"}}", $('input[name="contactor[]"]')[i].value);
+			_hwpPutText("inputDate{{"+i+"}}", $('input[name="inputDate[]"]')[i].value.replace(/-/gi, ""));
+			_hwpPutText("chk{{"+i+"}}", chk);
+			_hwpPutText("contents{{"+i+"}}", $('input[name="contents[]"]')[i].value);
 		}
+
+		_pHwpCtrl.GetTextFile("HWPML2X", "", function(data) {
+			signHwpFileData = data;
+		})
+
+		setTimeout(signSave, 600);
 	}
 
 	function signSave() {
@@ -188,8 +201,8 @@
 
 <div class=WordSection1 style="width: 1400px; height: 1000px;padding-left: 200px;">
 	<div id="signSave" style="width: 100%;">
-		<input type="button" onclick="evalAvoidPopup()" value="기피신청">
-		<input type="button" onclick="signSaveBtn();" style="float:right;" value="저장">
+		<input type="hidden" onclick="evalAvoidPopup()" value="기피신청">
+		<input type="button" onclick="signSaveBtn();" style="float:right;" value="다음">
 	</div>
 
 	<div align=center style="padding-top: 30px; width: 1400px;">

@@ -169,9 +169,9 @@ public class EvalServiceImpl implements EvalService {
 			int total = Integer.parseInt(commissionerMinteList.get("TOTAL_COMMISSIONER").toString());
 			int minute1 = Integer.parseInt(commissionerMinteList.get("MINUTE1_IS_NULL_TOTAL").toString());
 			int minute1Group = Integer.parseInt(commissionerMinteList.get("MINUTE1_GROUP").toString());
-			if(total != minute1){
-				return "nullFail";
-			}else if(minute1Group != 1){
+			if (total != minute1) {
+				return "nullFail"; 
+			} else if (minute1Group != 1) {
 				evalDAO.getEvalMinuteChKGroupFailUpd(map);
 				return "groupFail";
 			}

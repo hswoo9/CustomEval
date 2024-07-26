@@ -29,12 +29,29 @@
 
 	var signHwpFileData = "";
 	var flag = 'N';
-	function signSaveBtn(){
-		//저장
+	function signSaveBtn() {
+		// 체크된 상태가 '있다'인 경우 확인 창을 띄움
+		var contactCheck = false;
 		for (var i = 0; i < jsonData.length; i++) {
 			var chk = $('select[name="chkData[]"] option:selected')[i].value;
 
-			if(chk == '있다') {
+			if (chk == '있다') {
+				contactCheck = true;
+				break;
+			}
+		}
+
+		if (contactCheck) {
+			if (!confirm("사전접촉이 '있다'로 선택하셨습니다. 맞으면 확인, 틀리면 취소 버튼을 클릭해주시길 바랍니다.")) {
+				return; // 취소 버튼 클릭 시 함수 종료
+			}
+		}
+
+		// 저장 로직
+		for (var i = 0; i < jsonData.length; i++) {
+			var chk = $('select[name="chkData[]"] option:selected')[i].value;
+
+			if (chk == '있다') {
 				flag = 'Y';
 			}
 
@@ -180,8 +197,8 @@
 <div class=WordSection1 style="width: 1400px; height: 1000px;padding-left: 200px;">
 	<div id="signSave" style="width:100%;">
 		<div>
-			<input type="button" onclick="evalAvoidPopup()" value="기피신청">
-			<input type="button" onclick="signSaveBtn();" style="float:right;" value="저장">
+			<input type="hidden" onclick="evalAvoidPopup()" value="기피신청">
+			<input type="button" onclick="signSaveBtn();" style="float:right;" value="다음">
 		</div>
 	</div>
 

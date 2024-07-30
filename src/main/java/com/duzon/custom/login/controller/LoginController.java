@@ -62,6 +62,7 @@ public class LoginController {
 		int cnt = loginService.getLoginChk(evalLoginVO);
 		map.put("evalId", evalLoginVO.getId());
         map.put("evalPw", evalLoginVO.getPw());
+		map.put("evalTitle", evalLoginVO.getTitle());
 		
 		//로그인처리
 		if(cnt > 0){

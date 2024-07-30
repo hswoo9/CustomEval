@@ -42,8 +42,9 @@ $(function(){
                        <input type="text" class="inp engfix" id="userId" name="id" placeholder="이름 입력" value="">
                        <input type="password" class="inp engfix" id="userPw" name="pw" placeholder="비밀번호 입력" value="">
                        <input type="text" class="inp engfix" id="userBirth" name="birth" placeholder="생년월일 입력" value="">
+                       <input type="text" class="inp engfix" id="commtitle" name="title" placeholder="평가제목 입력" value="">
                        <div class="log_btn">
-                           <input type="image" value="로그인" src="<c:url value='/resources/Images/btn/login_b2_type_btn.png' />" onclick="actionLogin();return false;">
+                           <input type="image" value="로그인" style="padding-top: 95px;" src="<c:url value='/resources/Images/btn/login_b2_type_btn.png' />" onclick="actionLogin();return false;">
                        </div> 
                    </fieldset>
                </form>

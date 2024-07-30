@@ -58,7 +58,7 @@
 		AND C.ACTIVE = 'Y'
 		JOIN CUST_EPIS.DJ_COMMISSIONER_DETAIL E
         ON C.COMMISSIONER_POOL_SEQ = E.COMMISSIONER_POOL_SEQ
-        WHERE A.EVAL_ID = #{evalId} AND A.EVAL_PW = HEX(AES_ENCRYPT(#{evalPw}, 'EVAL'))
+        WHERE A.EVAL_ID = #{evalId} AND A.EVAL_PW = HEX(AES_ENCRYPT(#{evalPw}, 'EVAL')) AND D.TITLE =#{evalTitle}
 		AND A.ACTIVE = 'Y'
 		AND A.CONFIRM_YN = 'Y'
 		/*AND A.ATTEND_YN = 'Y'*/
@@ -287,7 +287,8 @@
 			</if>
 		WHERE COMMISSIONER_SEQ = #{commissioner_seq}
 	</update>
-	
+
+
 	<select id="getEvalJangData" parameterType="map" resultType="map">
 	/*getEvalJangData*/
 		SELECT * FROM DJ_EVAL_COMMISSIONER A

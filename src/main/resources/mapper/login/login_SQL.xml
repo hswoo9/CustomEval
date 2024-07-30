@@ -6,12 +6,14 @@
 	/*loginChk*/
 		SELECT
 		    COUNT(1)
-		FROM CUST_EPIS.DJ_EVAL_COMMISSIONER
-		WHERE EVAL_ID = #{id}
-		  AND EVAL_PW = HEX(AES_ENCRYPT(#{pw}, 'EVAL'))
-		  AND EVAL_BIRTH = #{birth}
-          AND EVAL_AVOID = "N"
-          AND ATTEND_YN = "Y"
-          AND ACTIVE = "Y"
+		FROM cust_epis.dj_eval_commissioner A, cust_epis.dj_eval_committee B
+		WHERE A.committee_seq = B.committee_seq
+		  AND A.EVAL_ID = #{id}
+		  AND A.EVAL_PW = HEX(AES_ENCRYPT(#{pw}, 'EVAL'))
+		  AND A.EVAL_BIRTH = #{birth}
+		  AND B.TITLE =#{title}
+          AND A.EVAL_AVOID = "N"
+          AND A.ATTEND_YN = "Y"
+          AND A.ACTIVE = "Y"
 	</select>
 </mapper>

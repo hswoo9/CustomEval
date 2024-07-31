@@ -175,10 +175,13 @@ public class EvalServiceImpl implements EvalService {
 				evalDAO.getEvalMinuteChKGroupFailUpd(map);
 				return "groupFail";
 			}
+		}else if (stpe.equals("99")){
+			evalDAO.getEvalMinuteChKGroupFailUpd2(map);
 		}
 
 		return "notFail";
 	}
+
 
 
 		public Map<String, Object> setSignSetp(Map<String, Object> map) {

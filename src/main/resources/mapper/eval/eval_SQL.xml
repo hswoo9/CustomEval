@@ -762,12 +762,21 @@
 			COMMITTEE_SEQ = #{committee_seq}
 	</select>
 
-	<update id="getEvalMinuteChKGroupFailUpd" parameterType="map">
+	<update id="getEvalMinuteChKGroupFailUpd2" parameterType="map">
 		UPDATE
 			CUST_EPIS.DJ_EVAL_COMMISSIONER
 		SET
 			SIGN_2_MINUTE1 = NULL,
 			SIGN_2_MINUTE2 = NULL,
+			SIGN_2 = 'N'
+		WHERE
+			COMMITTEE_SEQ = #{committee_seq}
+	</update>
+
+	<update id="getEvalMinuteChKGroupFailUpd" parameterType="map">
+		UPDATE
+			CUST_EPIS.DJ_EVAL_COMMISSIONER
+		SET
 			SIGN_2 = 'N'
 		WHERE
 			COMMITTEE_SEQ = #{committee_seq}

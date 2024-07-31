@@ -213,6 +213,8 @@ public class EvalDAO extends AbstractDAO{
 
 	public Map<String, Object> getEvalCommissionerEvalMinuteChk(Map<String, Object> params) { return (Map<String, Object>) selectOne("eval.getEvalCommissionerEvalMinuteChk", params);}
 	public void getEvalMinuteChKGroupFailUpd(Map<String, Object> params) { update("eval.getEvalMinuteChKGroupFailUpd", params);}
+	public void getEvalMinuteChKGroupFailUpd2(Map<String, Object> params) { update("eval.getEvalMinuteChKGroupFailUpd2", params);}
+
 	public void setScoreData(Map<String, Object> map) {update("eval.setScoreData", map);}
 	public List<Map<String, Object>> getCommissionerChk(Map<String, Object> params) { return selectList("eval.getCommissionerChk", params);}
 	public Map<String, Object> getEvalAvoidFailChk(Map<String, Object> params) { return (Map<String, Object>) selectOne("eval.getEvalAvoidFailChk", params);}

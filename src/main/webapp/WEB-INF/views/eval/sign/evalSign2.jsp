@@ -86,6 +86,7 @@
 	function signSaveBtn() {
 		var comboBox = _pHwpCtrl.GetFieldText("sign_2_minute1");
 		var comboBox1 = _pHwpCtrl.GetFieldText("sign_2_minute2");
+		// 성공여부 변수
 
 		if (comboBox === "") {
 			alert("제안업체별 제안발표 분을 선택해주세요.");
@@ -103,6 +104,8 @@
 		$("#HwpCtrl_1").css("display", "none");
 
 		timeIn = setInterval(fnSetSignSetpChk, 1000);
+
+		// 값을 다시 NULL로 변경해주는
 	}
 
 	/** TODO. 데이터, PDF 서버 저장 */
@@ -126,6 +129,7 @@
 					alert("다른 값을 입력한 평가위원이 있습니다.\n데이터가 초기화됩니다.");
 					clearInterval(timeIn);
 					location.reload();
+					fnSetSignSetpChk2();
 				}else if(result == 'notFail'){
 					_pHwpCtrl.GetTextFile("HWPML2X", "", function(data) {
 						signHwpFileData = data;
@@ -136,6 +140,26 @@
 			}
 		})
 	}
+	//기존 groupFail 프로세스 후 데이터 초기와에 필요한 함수
+	function fnSetSignSetpChk2 (){
+		$.ajax({
+			url: "<c:url value='/eval/setSignSetpChk' />",
+			data : {
+				commissioner_seq : "${userInfo.COMMISSIONER_SEQ}",
+				committee_seq : "${userInfo.COMMITTEE_SEQ}",
+				step : "99",
+				comboBox: _pHwpCtrl.GetFieldText("sign_2_minute1"),
+				comboBox1: _pHwpCtrl.GetFieldText("sign_2_minute2"),
+			},
+			type : 'POST',
+			success: function(result){
+			}
+
+		})
+
+	}
+
+
 
 	function signSave(){
 		var formData = new FormData();

@@ -81,22 +81,24 @@
 		</div>
 	</div>
 
-	<div id="displayTitle" style="margin-top:10px; margin-bottom:10px; height:30px;"></div>
+	<%--<div id="displayTitle" style="margin-top:10px; margin-bottom:10px; height:30px;"></div>--%>
 
-	<div class="sub_contents_wrap" style="min-width:1500px; min-height: 0px;">
-		<div class="com_ta">
+
+	<div id ="dataScore" class="sub_contents_wrap" style="min-width:1500px; min-height: 0px;">
+		<%--<div class="com_ta">
 
 			<table id="listTable" style="width: 100%;">
 				<colgroup>
 					<col width="10%"/>
-				</colgroup>
+				</colgroup>--%>
 
-				<tbody id="dataTbody"></tbody>
-			</table>
-		</div>
+				<%--<tbody id="dataTbody"></tbody>--%>
+			<%--</table>
+		</div>--%>
+
 	</div>
 
-	<div class="left_div" style="padding-top: 50px;">
+	<%--<div class="left_div" style="padding-top: 50px;">
 		<p class="tit_p mt5 mb10" style="font-size: 20px;">평가의견</p>
 	</div>
 	<div class="sub_contents_wrap" style="min-width:1500px; min-height: 0px;">
@@ -115,11 +117,12 @@
 
 			</table>
 		</div>
-	</div>
+	</div>--%>
+
 
 </div><!-- iframe wrap -->
 
-<input type="hidden" id="compSeq" value=""/>
+<%--<input type="hidden" id="compSeq" value=""/>--%>
 <form id="payForm" action="<c:url value='/eval/evalPay' />" method="post">
 	<%-- 	<input type="hidden" name="commissioner_seq" id="commissioner_seq" value="${userInfo.COMMISSIONER_SEQ}"> --%>
 </form>
@@ -166,91 +169,154 @@
 			type : "post",
 			dataType : "json",
 			success : function(rs) {
-				console.log(rs);
+				console.log("rs : " ,rs);
 				var compResult = rs.companyList;
 				var result = rs.itemList;
+				var companyRemarkList = rs.companyRemarkList;
+				var list = rs.list;
+				console.log("company : ",compResult);
+				console.log("companyRemarkList : ",companyRemarkList);
+				console.log("list : ",list);
 
-				$("#compSeq").val(compResult[evalCnt].eval_company_seq);
+				//$("#compSeq").val(compResult[evalCnt].eval_company_seq);
 
 				var html = "";
 				var html2 = "";
-				$("#dataTbody").html(html);
 
+				//$("#dataTbody").html(html);
+				//$("#displayTitle").html(html2);
 
-				$("#displayTitle").html(html2);
-				html2 += '<span style="font-size:25px; margin-bottom:10px;">' + compResult[evalCnt].display_title + '</span>';
-				$("#displayTitle").html(html2);
+				console.log("result : ",result);
 
-				html += '<tr>';
-				html += '	<th colspan="3" id="th1" style="width: 70%;">제안평가 평가항목</th>';
-				html += '	<th colspan="5">평가점수</th>';
-				html += '</tr>';
-				html += '<tr>';
-				html += '	<th>대분류</th>';
-				html += '	<th>중분류</th>';
-				html += '	<th>소분류</th>';
-				html += '	<td>A</td>';
-				html += '	<td>B</td>';
-				html += '	<td>C</td>';
-				html += '	<td>D</td>';
-				html += '	<td>E</td>';
-				html += '</tr>';
+				for (var j = 0; j < compResult.length; j++) {
+					$("#compSeq").val(compResult[j].eval_company_seq);
 
-				console.log(result)
-				for (var i = 0; i < result.length; i++) {
-					var item = result[i];
-					if (result[i].EVAL_COMPANY_SEQ == compResult[evalCnt].eval_company_seq) {
+					//if (result[j].EVAL_COMPANY_SEQ == compResult[j].eval_company_seq) {
+
+						/*html2 += '<span style="font-size:25px; margin-bottom:10px;">'  + compResult[j].display_title + '</span>';
+
+						$("#displayTitle").html(html2);*/
+						html += '<div><span style="font-size:25px; margin-bottom:10px; padding-bottom: 15px">'  + compResult[j].display_title + '</span></div>';
+
+						html += '<div class="com_ta">';
+						html += '<table id="listTable" style="width: 100%; margin-bottom:25px">' +
+								'<colgroup>' +
+								'<col width="10%"/>' +
+								'</colgroup>';
+						html += '<input type="hidden" id="compSeq" value="' + compResult[j].eval_company_seq + '"/>'
+						html += '<tbody id="dataTbody">';
 						html += '<tr class="itemTr">';
 
-						html += '	<td>' + (item.item_name ? item.item_name : "") + '</td>';
-						html += '	<td>' + (item.item_medium_name ? item.item_medium_name : "") + '</td>';
-						html += '	<td>' + (item.item_small_name ? item.item_small_name : "") + '</td>';
-
-						html += '	<td class="itemRadioTd">';
-						if (result[i].score_1 == result[i].COMMISSIONER_SCORE && result[i].COMMISSIONER_SCORE != null) {
-							html += '		<label><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" onclick="radioClickEvent(' + result.length + ');" value="' + result[i].score_1  + '" checked />' + result[i].score_1 + '</label>';
-						} else {
-							html += '		<label><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" onclick="radioClickEvent(' + result.length + ');" value="' + result[i].score_1 + '" />' + result[i].score_1 + '</label>';
-						}
-						html += '	</td>';
-						html += '	<td class="itemRadioTd">';
-						if (result[i].score_2 == result[i].COMMISSIONER_SCORE && result[i].COMMISSIONER_SCORE != null) {
-							html += '		<label><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" onclick="radioClickEvent(' + result.length + ');" value="' + result[i].score_2  + '" checked>' + result[i].score_2 + '</label>';
-						} else {
-							html += '		<label><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" onclick="radioClickEvent(' + result.length + ');" value="' + result[i].score_2 + '">' + result[i].score_2 + '</label>';
-						}
-						html += '	</td>';
-						html += '	<td class="itemRadioTd">';
-						if (result[i].score_3 == result[i].COMMISSIONER_SCORE && result[i].COMMISSIONER_SCORE != null) {
-							html += '		<label><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" onclick="radioClickEvent(' + result.length + ');" value="' + result[i].score_3  + '" checked>' + result[i].score_3 + '</label>';
-						} else {
-							html += '		<label><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" onclick="radioClickEvent(' + result.length + ');" value="' + result[i].score_3 + '">' + result[i].score_3 + '</label>';
-						}
-						html += '	</td>';
-						html += '	<td class="itemRadioTd">';
-						if (result[i].score_4 == result[i].COMMISSIONER_SCORE && result[i].COMMISSIONER_SCORE != null) {
-							html += '		<label><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" onclick="radioClickEvent(' + result.length + ');" value="' + result[i].score_4  + '" checked>' + result[i].score_4 + '</label>';
-						} else {
-							html += '		<label><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" onclick="radioClickEvent(' + result.length + ');" value="' + result[i].score_4 + '">' + result[i].score_4 + '</label>';
-						}
-						html += '	</td>';
-						html += '	<td class="itemRadioTd">';
-						if (result[i].score_5 == result[i].COMMISSIONER_SCORE && result[i].COMMISSIONER_SCORE != null) {
-							html += '		<label><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" onclick="radioClickEvent(' + result.length + ');" value="' + result[i].score_5  + '" checked>' + result[i].score_5 + '</label>';
-						} else {
-							html += '		<label><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" onclick="radioClickEvent(' + result.length + ');" value="' + result[i].score_5 + '">' + result[i].score_5 + '</label>';
-						}
-
-
-						html += '	</td>';
+						html += '<tr>';
+						html += '	<th colspan="3" id="th1" style="width: 70%; padding: 15px">제안평가 평가항목</th>';
+						html += '	<th colspan="5">평가점수</th>';
 						html += '</tr>';
+						html += '<tr>';
+						html += '	<th>대분류</th>';
+						html += '	<th>중분류</th>';
+						html += '	<th>소분류</th>';
+						html += '	<td>A</td>';
+						html += '	<td>B</td>';
+						html += '	<td>C</td>';
+						html += '	<td>D</td>';
+						html += '	<td>E</td>';
+						html += '</tr>';
+
+						//$("#dataScore").html(html2);
+
+
+						for (var i = 0; i < result.length; i++) {
+							var item = result[i];
+							if (result[i].EVAL_COMPANY_SEQ == compResult[j].eval_company_seq) {
+
+
+
+								html += '	<td>' + (item.item_name ? item.item_name : "") + '</td>';
+								html += '	<td>' + (item.item_medium_name ? item.item_medium_name : "") + '</td>';
+								html += '	<td>' + (item.item_small_name ? item.item_small_name : "") + '</td>';
+
+								html += '	<td class="itemRadioTd">';
+								if (result[i].score_1 == result[i].COMMISSIONER_SCORE && result[i].COMMISSIONER_SCORE != null) {
+									html += '		<label><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" onclick="radioClickEvent(' + result.length + ');" value="' + result[i].score_1 + '" checked />' + result[i].score_1 + '</label>';
+								} else {
+									html += '		<label><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" onclick="radioClickEvent(' + result.length + ');" value="' + result[i].score_1 + '" />' + result[i].score_1 + '</label>';
+								}
+								html += '	</td>';
+								html += '	<td class="itemRadioTd">';
+								if (result[i].score_2 == result[i].COMMISSIONER_SCORE && result[i].COMMISSIONER_SCORE != null) {
+									html += '		<label><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" onclick="radioClickEvent(' + result.length + ');" value="' + result[i].score_2 + '" checked>' + result[i].score_2 + '</label>';
+								} else {
+									html += '		<label><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" onclick="radioClickEvent(' + result.length + ');" value="' + result[i].score_2 + '">' + result[i].score_2 + '</label>';
+								}
+								html += '	</td>';
+								html += '	<td class="itemRadioTd">';
+								if (result[i].score_3 == result[i].COMMISSIONER_SCORE && result[i].COMMISSIONER_SCORE != null) {
+									html += '		<label><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" onclick="radioClickEvent(' + result.length + ');" value="' + result[i].score_3 + '" checked>' + result[i].score_3 + '</label>';
+								} else {
+									html += '		<label><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" onclick="radioClickEvent(' + result.length + ');" value="' + result[i].score_3 + '">' + result[i].score_3 + '</label>';
+								}
+								html += '	</td>';
+								html += '	<td class="itemRadioTd">';
+								if (result[i].score_4 == result[i].COMMISSIONER_SCORE && result[i].COMMISSIONER_SCORE != null) {
+									html += '		<label><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" onclick="radioClickEvent(' + result.length + ');" value="' + result[i].score_4 + '" checked>' + result[i].score_4 + '</label>';
+								} else {
+									html += '		<label><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" onclick="radioClickEvent(' + result.length + ');" value="' + result[i].score_4 + '">' + result[i].score_4 + '</label>';
+								}
+								html += '	</td>';
+								html += '	<td class="itemRadioTd">';
+								if (result[i].score_5 == result[i].COMMISSIONER_SCORE && result[i].COMMISSIONER_SCORE != null) {
+									html += '		<label><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" onclick="radioClickEvent(' + result.length + ');" value="' + result[i].score_5 + '" checked>' + result[i].score_5 + '</label>';
+								} else {
+									html += '		<label><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" onclick="radioClickEvent(' + result.length + ');" value="' + result[i].score_5 + '">' + result[i].score_5 + '</label>';
+								}
+
+
+								html += '	</td>';
+								html += '</tr>';
+
+
+								}
+						}
+							html += '<tr>';
+							html += '	<th colspan="3">합계</th>';
+							html += '	<td id="totalScore" value="" colspan="5"></td>';
+							html += '</tr>';
+
+							html += '</tbody>';
+							html += '</table>'+
+									'</div>';
+
+					//평가의견
+					var list = companyRemarkList[j];
+					var remark = list.remark ? list.remark : '';
+
+						html += '<div class="left_div" style="padding-top: 15px;">' +
+								'<p class="tit_p mt5 mb10" style="font-size: 20px;">평가의견</p>' +
+								'</div>' +
+								'<div class="sub_contents_wrap" style="min-width:1500px; min-height: 0px; padding-bottom: 70px">' +
+								'<div class="com_ta">' +
+								'<table style="width: 100%;">' +
+								'<tr class="evalIndex' + j + '" style="' + (j > companyRemarkList.length ? 'display:none;' : '') + '">' +
+								'<th style="width: 15%;">' + companyRemarkList[j].DISPLAY_TITLE + '</th>' +
+								'<td style="text-align: left;">' +
+								'<input type="hidden" id="chkTxt' + j + '" name="chkTxt">' +
+								'<textarea class="comReMarkInput" id="' + companyRemarkList[j].com_remark_seq + '" style="font-size: 20px;" rows="4" cols="100" maxlength="400" placeholder="평가의견은 30자 이상 400자 이하로 입력해주세요.">' + remark + '</textarea>' +
+								'<span id="txtCnt">0</span>/400' +
+								'</td>' +
+								'</tr>' +
+								'</table>' +
+								'</div>' +
+								'</div>';
+
+
+
+
 					}
-				}
-				html += '<tr>';
-				html += '	<th colspan="3">합계</th>';
-				html += '	<td id="totalScore" value="" colspan="5"></td>';
-				html += '</tr>';
-				$("#dataTbody").html(html);
+
+
+				$("#dataScore").html(html);
+				//$("#dataTbody").html(html);
+
 
 
 
@@ -457,6 +523,8 @@
 	}
 
 	function nextEvalBtn(){
+
+
 		var flag = true;
 		var focusTarget;
 

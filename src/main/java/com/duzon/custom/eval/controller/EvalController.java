@@ -323,8 +323,10 @@ public class EvalController {
 	public Map<String, Object> getEvalData(@RequestParam Map<String, Object> params){
 		Map<String, Object> result = new HashMap<>();
 
+		//result.put("list", evalService.getResultList(params));
 		result.put("companyList", evalService.getCompanyList(params));
 		result.put("itemList", evalService.getItemList(params));
+		result.put("companyRemarkList", evalService.getCompanyRemarkList(params));
 
 		return result;
 	}

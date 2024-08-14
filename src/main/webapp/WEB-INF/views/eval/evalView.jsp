@@ -73,9 +73,9 @@
 		<div class="controll_btn p10">
 
 			<button type="button" class="evalButton" onclick="evalAvoidPopup()" style="width: 120px; float:left;">기피신청</button>
-			<button type="button" class="evalButton" id="prevButton" style="display: none;" onclick="prevEvalBtn();">이전</button>
-			<button type="button" class="evalButton" id="nextButton" onclick="nextEvalBtn();">다음</button>
-			<button type="button" class="evalButton" id="saveButton" style="display: none; float: right; margin-left:10px;" onclick="saveBtn();">저장</button>
+			<%--<button type="button" class="evalButton" id="prevButton" style="display: none;" onclick="prevEvalBtn();">이전</button>
+			<button type="button" class="evalButton" id="nextButton" onclick="nextEvalBtn();">다음</button>--%>
+			<button type="button" class="evalButton" id="saveButton" style="float: right; margin-left:10px;" onclick="saveBtn();">저장</button>
 			<%--<button type="button" class="evalButton" id="saveButton" style="display: none;" onclick="deviationChk();">저장</button>--%>
 			<!-- 			<button type="button" class="evalButton" onclick="nextPageBtn();">다음</button> -->
 		</div>
@@ -433,7 +433,7 @@
 		});
 
 		/*scoreSelectChange();*/
-		buttonView();
+		//buttonView();
 	}
 
 	/*function scoreSelectChange(){
@@ -691,7 +691,8 @@
 				return;
 			}
 
-			var flag = true;
+			//유효성 검사 시에 모든 radio버튼이 체크되어있음에도 검사에서 걸림. 다음주에 확인해 볼 것
+			/*var flag = true;
 
 			$.each($(".itemTr"), function(){
 				if($(this).find(".score:checked").length == 0){
@@ -704,7 +705,7 @@
 				alert("체크되지 않은 부분이 있습니다. 모두 체크해주세요.");
 				$(focusTarget).focus();
 				return;
-			}
+			}*/
 
 			var data = getData();
 
@@ -765,7 +766,7 @@
 
 	}
 
-	function buttonView(){
+	/*function buttonView(){
 
 		//업체 1개
 		if(evalEndCnt == 1){
@@ -812,7 +813,7 @@
 // 		$('#prevButton').hide();
 // 	}
 
-	}
+	}*/
 
 	function evalAvoidPopup(){
 		window.open(_g_contextPath_ + "/eval/evalAvoidPopup", 'evalAvoidPop', 'menubar=0,resizable=1,scrollbars=1,status=no,toolbar=no,width=1000,height=280,left=650,top=250');

@@ -1,6 +1,7 @@
 package com.duzon.custom.login.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,9 +16,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
-import com.duzon.custom.eval.service.EvalService;
 import com.duzon.custom.login.service.LoginService;
 import com.duzon.custom.login.vo.EvalLoginVO;
 
@@ -77,5 +78,21 @@ public class LoginController {
 		return "redirect:/eval/notice";
 	}
 	
+
+	@RequestMapping(value = "/login/evalSearchPopup.do", method = RequestMethod.GET)
+	public String LoginEvalSearchList(@RequestParam Map<String, Object> map, HttpServletRequest request, Model model) {
+		HttpSession session = request.getSession();
+
+		return "login/evalSearchListPopup";
+	}
+
+	@RequestMapping("/login/getevalSearchList.do")
+	@ResponseBody
+	public Map<String, Object> getEvalSearchList(@RequestParam Map<String, Object> params) {
+		Map<String, Object> response = new HashMap<>();
+		List<Map<String, Object>> list = loginService.getEvalSearchList(params);
+		response.put("list", list);
+		return response;
+	}
 
 }

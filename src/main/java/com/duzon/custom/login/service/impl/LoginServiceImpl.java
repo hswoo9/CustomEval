@@ -10,6 +10,9 @@ import com.duzon.custom.login.service.LoginService;
 import com.duzon.custom.login.vo.EvalLoginVO;
 
 
+import java.util.*;
+
+
 @Service
 public class LoginServiceImpl implements LoginService {
 	
@@ -23,7 +26,9 @@ public class LoginServiceImpl implements LoginService {
 	public int getLoginChk(EvalLoginVO evalLoginVO) {
 		return loginDao.getLoginChk(evalLoginVO);
 	}
-	
 
-	
+	@Override
+	public List<Map<String, Object>> getEvalSearchList(Map<String, Object> params) {
+		return loginDao.getEvalSearchList(params);
+	}
 }

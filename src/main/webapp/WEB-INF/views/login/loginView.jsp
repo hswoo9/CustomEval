@@ -4,6 +4,8 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="tiles"   uri="http://tiles.apache.org/tags-tiles" %>
+<jsp:useBean id="nowDate" class="java.util.Date" />
+<fmt:formatDate value="${nowDate}" var="nowDate" pattern="yyyy년  MM월  dd일" />
 
 <style>
 #login_b2_type .login_wrap .login_form_wrap form .inp1{margin:7px 0 0 0;padding:8px 10px;width:107px;border:1px solid #c9cac9;outline:none;background:#fff;font-size:15px;color:#4a4a4a;text-indent:0;}
@@ -42,7 +44,12 @@ $(function(){
                        <input type="text" class="inp engfix" id="userId" name="id" placeholder="이름 입력" value="">
                        <input type="password" class="inp engfix" id="userPw" name="pw" placeholder="비밀번호 입력" value="">
                        <input type="text" class="inp engfix" id="userBirth" name="birth" placeholder="생년월일 입력" value="">
-                       <input type="text" class="inp engfix" id="commtitle" name="title" placeholder="평가제목 입력" value="">
+                       <input type="text" class="inp engfix" id="commtitle" name="title" placeholder="평가제목 입력" value="" readonly>
+                       <button type="button"
+                               class="k-button k-button-md k-button-solid k-button-solid-base"
+                               onclick="evalSearchPopup()">
+                           <span class="k-icon k-i-search k-button-icon"></span>
+                       </button>
                        <div class="log_btn">
                            <input type="image" value="로그인" src="<c:url value='/resources/Images/btn/login_b2_type_btn.png' />" onclick="actionLogin();return false;">
                        </div> 
@@ -77,6 +84,10 @@ function actionLogin(){
 	
 	$('#loginForm').submit();
 	
+}
+
+function evalSearchPopup() {
+    window.open("/login/evalSearchPopup.do", 'evalSearchPopup', 'scrollbars=yes, resizeble=yes, menubar=no, toolbar=no, location=no, directories=yes, status=yes, width=1000, height=700');
 }
 </script>
 

@@ -152,6 +152,31 @@
 	var itemAr = new Array();
 
 
+	//상단 버튼 고정
+	window.addEventListener('scroll', function() {
+		var rightDiv = document.querySelector('.right_div');
+		var subTitleWrap = document.querySelector('.sub_title_wrap');
+		var subContentsWrap = document.querySelector('.sub_contents_wrap');
+
+		var offset = subTitleWrap.offsetHeight + subContentsWrap.offsetHeight;
+
+		if (window.pageYOffset > offset) {
+			rightDiv.style.position = 'fixed';
+			rightDiv.style.top = '0';
+			rightDiv.style.left = '0';
+			rightDiv.style.right = '0';
+			rightDiv.style.zIndex = '1000';
+			rightDiv.style.backgroundColor = '#f8f8f8';
+			rightDiv.style.boxShadow = '0 2px 5px rgba(0,0,0,0.2)';
+		} else {
+			rightDiv.style.position = 'static';
+			rightDiv.style.boxShadow = 'none';
+			rightDiv.style.backgroundColor = '#ffffff';
+		}
+	});
+
+
+
 	// 평가 리스트
 	function evalLst(evalCnt){
 
@@ -189,7 +214,7 @@
 				console.log("result : ",result);
 
 				for (var j = 0; j < compResult.length; j++) {
-					$("#compSeq").val(compResult[j].eval_company_seq);
+					//$("#compSeq").val(compResult[j].eval_company_seq);
 
 					//if (result[j].EVAL_COMPANY_SEQ == compResult[j].eval_company_seq) {
 
@@ -203,7 +228,7 @@
 								'<colgroup>' +
 								'<col width="10%"/>' +
 								'</colgroup>';
-						html += '<input type="hidden" id="compSeq" value="' + compResult[j].eval_company_seq + '"/>'
+						//html += '<input type="hidden" id="compSeq" value="' + compResult[j].eval_company_seq + '"/>'
 						html += '<tbody id="dataTbody">';
 						html += '<tr class="itemTr">';
 
@@ -230,44 +255,44 @@
 							if (result[i].EVAL_COMPANY_SEQ == compResult[j].eval_company_seq) {
 
 
-
+								html += '<input type="hidden" id="compSeq_' + j + '" value="' + compResult[j].eval_company_seq + '"/>';
 								html += '	<td>' + (item.item_name ? item.item_name : "") + '</td>';
 								html += '	<td>' + (item.item_medium_name ? item.item_medium_name : "") + '</td>';
 								html += '	<td>' + (item.item_small_name ? item.item_small_name : "") + '</td>';
 
 								html += '	<td class="itemRadioTd">';
 								if (result[i].score_1 == result[i].COMMISSIONER_SCORE && result[i].COMMISSIONER_SCORE != null) {
-									html += '		<label><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" onclick="radioClickEvent(' + result.length + ');" value="' + result[i].score_1 + '" checked />' + result[i].score_1 + '</label>';
+									html += '		<label><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" data-comp-seq="' + compResult[j].eval_company_seq + '" onclick="radioClickEvent(' + compResult[j].eval_company_seq + ');" value="' + result[i].score_1 + '" checked />' + result[i].score_1 + '</label>';
 								} else {
-									html += '		<label><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" onclick="radioClickEvent(' + result.length + ');" value="' + result[i].score_1 + '" />' + result[i].score_1 + '</label>';
+									html += '		<label><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" data-comp-seq="' + compResult[j].eval_company_seq + '" onclick="radioClickEvent(' + compResult[j].eval_company_seq + ');" value="' + result[i].score_1 + '" />' + result[i].score_1 + '</label>';
 								}
 								html += '	</td>';
 								html += '	<td class="itemRadioTd">';
 								if (result[i].score_2 == result[i].COMMISSIONER_SCORE && result[i].COMMISSIONER_SCORE != null) {
-									html += '		<label><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" onclick="radioClickEvent(' + result.length + ');" value="' + result[i].score_2 + '" checked>' + result[i].score_2 + '</label>';
+									html += '		<label><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" data-comp-seq="' + compResult[j].eval_company_seq + '" onclick="radioClickEvent(' + compResult[j].eval_company_seq + ');" value="' + result[i].score_2 + '" checked>' + result[i].score_2 + '</label>';
 								} else {
-									html += '		<label><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" onclick="radioClickEvent(' + result.length + ');" value="' + result[i].score_2 + '">' + result[i].score_2 + '</label>';
+									html += '		<label><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" data-comp-seq="' + compResult[j].eval_company_seq + '" onclick="radioClickEvent(' + compResult[j].eval_company_seq + ');" value="' + result[i].score_2 + '">' + result[i].score_2 + '</label>';
 								}
 								html += '	</td>';
 								html += '	<td class="itemRadioTd">';
 								if (result[i].score_3 == result[i].COMMISSIONER_SCORE && result[i].COMMISSIONER_SCORE != null) {
-									html += '		<label><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" onclick="radioClickEvent(' + result.length + ');" value="' + result[i].score_3 + '" checked>' + result[i].score_3 + '</label>';
+									html += '		<label><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" data-comp-seq="' + compResult[j].eval_company_seq + '" onclick="radioClickEvent(' + compResult[j].eval_company_seq + ');" value="' + result[i].score_3 + '" checked>' + result[i].score_3 + '</label>';
 								} else {
-									html += '		<label><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" onclick="radioClickEvent(' + result.length + ');" value="' + result[i].score_3 + '">' + result[i].score_3 + '</label>';
+									html += '		<label><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" data-comp-seq="' + compResult[j].eval_company_seq + '" onclick="radioClickEvent(' + compResult[j].eval_company_seq + ');" value="' + result[i].score_3 + '">' + result[i].score_3 + '</label>';
 								}
 								html += '	</td>';
 								html += '	<td class="itemRadioTd">';
 								if (result[i].score_4 == result[i].COMMISSIONER_SCORE && result[i].COMMISSIONER_SCORE != null) {
-									html += '		<label><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" onclick="radioClickEvent(' + result.length + ');" value="' + result[i].score_4 + '" checked>' + result[i].score_4 + '</label>';
+									html += '		<label><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" data-comp-seq="' + compResult[j].eval_company_seq + '" onclick="radioClickEvent(' + compResult[j].eval_company_seq + ');" value="' + result[i].score_4 + '" checked>' + result[i].score_4 + '</label>';
 								} else {
-									html += '		<label><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" onclick="radioClickEvent(' + result.length + ');" value="' + result[i].score_4 + '">' + result[i].score_4 + '</label>';
+									html += '		<label><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" data-comp-seq="' + compResult[j].eval_company_seq + '" onclick="radioClickEvent(' + compResult[j].eval_company_seq + ');" value="' + result[i].score_4 + '">' + result[i].score_4 + '</label>';
 								}
 								html += '	</td>';
 								html += '	<td class="itemRadioTd">';
 								if (result[i].score_5 == result[i].COMMISSIONER_SCORE && result[i].COMMISSIONER_SCORE != null) {
-									html += '		<label><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" onclick="radioClickEvent(' + result.length + ');" value="' + result[i].score_5 + '" checked>' + result[i].score_5 + '</label>';
+									html += '		<label><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" data-comp-seq="' + compResult[j].eval_company_seq + '" onclick="radioClickEvent(' + compResult[j].eval_company_seq + ');" value="' + result[i].score_5 + '" checked>' + result[i].score_5 + '</label>';
 								} else {
-									html += '		<label><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" onclick="radioClickEvent(' + result.length + ');" value="' + result[i].score_5 + '">' + result[i].score_5 + '</label>';
+									html += '		<label><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" data-comp-seq="' + compResult[j].eval_company_seq + '" onclick="radioClickEvent(' + compResult[j].eval_company_seq + ');" value="' + result[i].score_5 + '">' + result[i].score_5 + '</label>';
 								}
 
 
@@ -279,7 +304,7 @@
 						}
 							html += '<tr>';
 							html += '	<th colspan="3">합계</th>';
-							html += '	<td id="totalScore" value="" colspan="5"></td>';
+							html += '	<td id="totalScore_'+compResult[j].eval_company_seq+'" value="" colspan="5"></td>';
 							html += '</tr>';
 
 							html += '</tbody>';
@@ -293,21 +318,25 @@
 						html += '<div class="left_div" style="padding-top: 15px;">' +
 								'<p class="tit_p mt5 mb10" style="font-size: 20px;">평가의견</p>' +
 								'</div>' +
-								'<div class="sub_contents_wrap" style="min-width:1500px; min-height: 0px; padding-bottom: 70px">' +
+								'<div class="sub_contents_wrap" style="min-width:1500px; min-height: 0px; padding-bottom: 5px">' +
 								'<div class="com_ta">' +
 								'<table style="width: 100%;">' +
 								'<tr class="evalIndex' + j + '" style="' + (j > companyRemarkList.length ? 'display:none;' : '') + '">' +
 								'<th style="width: 15%;">' + companyRemarkList[j].DISPLAY_TITLE + '</th>' +
 								'<td style="text-align: left;">' +
 								'<input type="hidden" id="chkTxt' + j + '" name="chkTxt">' +
-								'<textarea class="comReMarkInput" id="' + companyRemarkList[j].com_remark_seq + '" style="font-size: 20px;" rows="4" cols="100" maxlength="400" placeholder="평가의견은 30자 이상 400자 이하로 입력해주세요.">' + remark + '</textarea>' +
-								'<span id="txtCnt">0</span>/400' +
+								'<textarea class="comReMarkInput" id="' + companyRemarkList[j].com_remark_seq + '" data-comp-seq="' + compResult[j].eval_company_seq + '" style="font-size: 20px;" rows="4" cols="100" maxlength="400" placeholder="평가의견은 30자 이상 400자 이하로 입력해주세요.">' + remark + '</textarea>' +
+								'<span id="txtCnt_' + j +'">0</span>/400' +
 								'</td>' +
 								'</tr>' +
 								'</table>' +
 								'</div>' +
 								'</div>';
 
+						html += '<div class="right_div" style="height:70px; padding-bottom: 100px">'+
+								'<div class="controll_btn p10">';
+						html += '<button type="button" class="evalButton" id="eachSaveButton" style = "width : 170px;" onclick="eachSaveButton(' + compResult[j].eval_company_seq + ');">'+companyRemarkList[j].DISPLAY_TITLE+' 저장</button>';
+						html += '</div></div>';
 
 
 
@@ -317,7 +346,12 @@
 				$("#dataScore").html(html);
 				//$("#dataTbody").html(html);
 
-
+				document.querySelectorAll('.comReMarkInput').forEach(function(textarea, index) {
+					textarea.addEventListener('input', function() {
+						var textLength = this.value.length;
+						document.getElementById('txtCnt_' + index).innerText = textLength;
+					});
+				});
 
 
 			}
@@ -325,6 +359,8 @@
 		});
 
 	}
+
+
 
 	function prevEvalBtn(){
 		var data = {
@@ -356,8 +392,8 @@
 
 	}
 
-	function radioClickEvent(){
-		var sum = 0;
+	function radioClickEvent(compSeq){
+		/*var sum = 0;
 
 		$.each($(".score:checked"), function(){
 			sum += Number($(this).val());
@@ -368,7 +404,23 @@
 		}else{
 			sum = sum.toFixed(1);
 		}
-		$("#totalScore").text(sum);
+		$("#totalScore").text(sum);*/
+
+		var sum = 0;
+
+		// compSeq와 일치하는 라디오 버튼들의 값을 합산
+		$.each($(".score:checked[data-comp-seq='" + compSeq + "']"), function() {
+			sum += Number($(this).val());
+		});
+
+		if (sum === 100.0) {
+			sum = 100;
+		} else {
+			sum = sum.toFixed(1);
+		}
+
+		// 해당 compSeq에 해당하는 합계 점수를 표시
+		$("#totalScore_" + compSeq).text(sum);
 
 	}
 
@@ -511,7 +563,7 @@
 			if($(this).is(":checked")){
 				var data = {
 					commissioner_seq : '${userInfo.COMMISSIONER_SEQ}',
-					eval_company_seq : $("#compSeq").val(),
+					eval_company_seq: $(this).data('comp-seq'),
 					item_seq : $(this).attr("ev_seq"),
 					score : $(this).val()
 				}
@@ -575,6 +627,51 @@
 		flag = false;
 
 		evalLst(evalCnt);
+	}
+
+	function eachSaveButton(companySeq){
+		var radioData = eachRadio();
+		var filteredData = radioData.filter(function(item) {
+			return item.eval_company_seq === companySeq;
+		});
+
+		var data = {
+			itemScoreList : JSON.stringify(filteredData)
+		}
+
+		var totalButtons = $('input[data-comp-seq="' + companySeq + '"]').length;
+		//console.log("totalButtons",totalButtons);
+		var groupsCount = Math.ceil(totalButtons / 5);
+
+		var checkedButtons = $('input[data-comp-seq="' + companySeq + '"]:checked').length;
+		//console.log("checkedButtons",checkedButtons);
+
+		var textareas = document.querySelectorAll('textarea[data-comp-seq="' + companySeq + '"]');
+
+		if (groupsCount != checkedButtons) {
+			alert('체크되지 않은 부분이 있습니다. 모두 체크해주세요.');
+			return;
+		}
+
+		textareas.forEach(function(textarea) {
+			var value = textarea.value;
+			if (value.length < 30 || value.length > 400) {
+				alert('평가의견은 30자 이상 400자 이하로 입력해주세요.');
+				return;
+			}
+		});
+
+		$.ajax({
+			url : '<c:url value="/eval/setScoreData" />',
+			type : "post",
+			dataType : "json",
+			data : data,
+			success:function(rs){
+			},
+			error : function(e){
+
+			}
+		});
 	}
 
 	function saveBtn(){

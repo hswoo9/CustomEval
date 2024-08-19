@@ -16,4 +16,15 @@
           AND A.ATTEND_YN = "Y"
           AND A.ACTIVE = "Y"
 	</select>
+
+	<select id="getEvalSearchList" parameterType="map" resultType="java.util.HashMap">
+		SELECT A.COMMITTEE_SEQ, A.TITLE, A.REQ_DEPT_NAME, A.OPR_EMP_NAME_1, A.EVAL_E_DATE, A.STEP
+		FROM cust_epis.dj_eval_committee A
+		WHERE 1=1
+		<if test="startDay != null and startDay != '' and endDay != null and endDay != ''">
+			AND DATE_FORMAT(A.REQ_DATE, '%Y%m%d') BETWEEN DATE_FORMAT(#{startDay}, '%Y%m%d') AND DATE_FORMAT(#{endDay}, '%Y%m%d')
+		</if>
+		AND A.STEP = 'A'
+		ORDER BY A.EVAL_E_DATE DESC;
+	</select>
 </mapper>

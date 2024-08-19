@@ -77,7 +77,7 @@ public class LoginController {
 		
 		return "redirect:/eval/notice";
 	}
-	
+
 
 	@RequestMapping(value = "/login/evalSearchPopup", method = RequestMethod.GET)
 	public String LoginEvalSearchList(@RequestParam Map<String, Object> map, HttpServletRequest request, Model model) {

@@ -167,12 +167,13 @@
     </div>
 </div>
     <jsp:useBean id="today" class="java.util.Date" />
-        <script type="text/javascript" src="/resources/js/loginPage/evalSearchListPopup.js?v=${today}"/></script>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/loginPage/evalSearchListPopup.js?v=${today}"/></script>
     <script>
+        var _g_contextPath_ = "${pageContext.request.contextPath}";
         $(document).ready(function() {
             evalSearchListPopup.fn_defaultScript();
         });
-        var evalSearchListUrl = "${pageContext.request.contextPath}/login/getevalSearchList.do";
+
 
         $("#startDay").kendoDatePicker({
             depth: "month",

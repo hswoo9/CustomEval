@@ -61,6 +61,7 @@ $(function(){
    </div>
    
 <script>
+    var _g_contextPath_ = "${pageContext.request.contextPath}";
 var left = window.innerWidth / 2 - 283;
 var top = window.innerHeight / 2 - 183;
 
@@ -78,17 +79,17 @@ $(function(){
 	$('#login_b2_type').css('top', top);
 	
 });
-function evalSearchPopup() {
-    debugger;
-    window.open(_g_contextPath_ + "/login/evalSearchPopup", 'evalSearchPopup', 'scrollbars=yes, resizeble=yes, menubar=no, toolbar=no, location=no, directories=yes, status=yes, width=1000, height=700');
-}
+
 
 function actionLogin(){
+
 	$('#loginForm').submit();
 	
 }
 
-
+function evalSearchPopup() {
+    window.open(_g_contextPath_ + "/login/evalSearchPopup", 'evalSearchPopup', 'scrollbars=yes, resizeble=yes, menubar=no, toolbar=no, location=no, directories=yes, status=yes, width=1000, height=700');
+}
 </script>
 
 	   

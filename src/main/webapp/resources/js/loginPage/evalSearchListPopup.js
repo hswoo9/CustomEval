@@ -1,3 +1,4 @@
+var _g_contextPath_ = "${pageContext.request.contextPath}";
 var evalSearchListPopup = {
 
     global: {},
@@ -13,8 +14,7 @@ var evalSearchListPopup = {
             pageSize: 20,
             transport: {
                 read: {
-                    /*url: "<c:url value='/login/getevalSearchList.do'/>",*/
-                    url : evalSearchListUrl,
+                    url: _g_contextPath_ + "/login/getevalSearchList",
                     dataType: "json",
                     type: "post"
                 },

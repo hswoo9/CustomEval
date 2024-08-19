@@ -28,19 +28,19 @@
     <script type="text/javascript" src="<c:url value='/resources/js/jszip.min.js'/>"></script>
 
     <!-- Bootstrap Core and vandor -->
-    <link rel="stylesheet" href="/resources/assets/plugins/bootstrap/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="/resources/assets/plugins/charts-c3/c3.min.css"/>
-    <link rel="stylesheet" href="/resources/assets/plugins/jvectormap/jvectormap-2.0.3.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/plugins/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/plugins/charts-c3/c3.min.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/plugins/jvectormap/jvectormap-2.0.3.css" />
 
     <!-- Core css -->
     <link rel="stylesheet" href="<c:url value='/resources/assets/css/main.css'/>"/>
-    <link rel="stylesheet" href="/resources/assets/css/theme4.css" />
-    <link rel="stylesheet" href="/resources/css/style1.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/theme4.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style1.css" />
 
     <!-- jQuery -->
-    <link rel="stylesheet" href="/resources/css/kendoui1/kendo.default-main.min.css"/>
-    <link rel="stylesheet" href="/resources/css/kendoui1/kendo.common.min.css"/>
-    <link rel="stylesheet" href="/resources/css/kendoui1/kendo.default.min.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/kendoui1/kendo.default-main.min.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/kendoui1/kendo.common.min.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/kendoui1/kendo.default.min.css"/>
 
     <!-- ckEditor -->
     <script type="text/javascript" src="<c:url value='/resources/ckEditor/ckeditor.js'/>"></script>

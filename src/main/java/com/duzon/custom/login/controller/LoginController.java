@@ -79,14 +79,14 @@ public class LoginController {
 	}
 	
 
-	@RequestMapping(value = "/login/evalSearchPopup.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/login/evalSearchPopup", method = RequestMethod.GET)
 	public String LoginEvalSearchList(@RequestParam Map<String, Object> map, HttpServletRequest request, Model model) {
 		HttpSession session = request.getSession();
 
 		return "login/evalSearchListPopup";
 	}
 
-	@RequestMapping("/login/getevalSearchList.do")
+	@RequestMapping("/login/getevalSearchList")
 	@ResponseBody
 	public Map<String, Object> getEvalSearchList(@RequestParam Map<String, Object> params) {
 		Map<String, Object> response = new HashMap<>();

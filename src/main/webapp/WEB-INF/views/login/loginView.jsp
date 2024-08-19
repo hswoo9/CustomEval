@@ -78,17 +78,17 @@ $(function(){
 	$('#login_b2_type').css('top', top);
 	
 });
-
+function evalSearchPopup() {
+    debugger;
+    window.open(_g_contextPath_ + "/login/evalSearchPopup", 'evalSearchPopup', 'scrollbars=yes, resizeble=yes, menubar=no, toolbar=no, location=no, directories=yes, status=yes, width=1000, height=700');
+}
 
 function actionLogin(){
-	
 	$('#loginForm').submit();
 	
 }
 
-function evalSearchPopup() {
-    window.open("/login/evalSearchPopup.do", 'evalSearchPopup', 'scrollbars=yes, resizeble=yes, menubar=no, toolbar=no, location=no, directories=yes, status=yes, width=1000, height=700');
-}
+
 </script>
 
 	   

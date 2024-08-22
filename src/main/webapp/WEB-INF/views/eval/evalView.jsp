@@ -10,6 +10,20 @@
 <fmt:formatDate value="${nowDate}" var="nowDate" pattern="yyyy-MM-dd" />
 
 <style>
+	input[type="radio"]:disabled {
+		pointer-events: none;
+		opacity: 1;
+	}
+
+	.radio-label {
+		color: inherit;
+		opacity: 1;
+	}
+
+	input[type="radio"]:disabled + .radio-label {
+		color: inherit;
+		opacity: 1;
+	}
 	.top_box dl dt{font-size: 25px; }
 	.top_box dl dd{margin-top: 3px;}
 	.top_box dl dd input{height: 45px; font-size: 15px;}
@@ -233,13 +247,13 @@
 						html += '<tr class="itemTr">';
 
 						html += '<tr>';
-						html += '	<th colspan="3" id="th1" style="width: 70%; padding: 15px">제안평가 평가항목</th>';
+						html += '	<th colspan="3" id="th1" style="width: 75%; padding: 15px">제안평가 평가항목</th>';
 						html += '	<th colspan="5">평가점수</th>';
 						html += '</tr>';
 						html += '<tr>';
-						html += '	<th>대분류</th>';
+						html += '	<th style="width:8%;">평가</th>';
+						html += '	<th style="width:20%;">대분류</th>';
 						html += '	<th>중분류</th>';
-						html += '	<th>소분류</th>';
 						html += '	<td>A</td>';
 						html += '	<td>B</td>';
 						html += '	<td>C</td>';
@@ -256,52 +270,42 @@
 
 
 								html += '<input type="hidden" id="compSeq_' + j + '" value="' + compResult[j].eval_company_seq + '"/>';
+								html += '	<td>' + (item.eval_type ? item.eval_type : "") + '</td>';
 								html += '	<td>' + (item.item_name ? item.item_name : "") + '</td>';
-								html += '	<td>' + (item.item_medium_name ? item.item_medium_name : "") + '</td>';
-								html += '	<td>' + (item.item_small_name ? item.item_small_name : "") + '</td>';
-
-								html += '	<td class="itemRadioTd">';
-								if (result[i].score_1 == result[i].COMMISSIONER_SCORE && result[i].COMMISSIONER_SCORE != null) {
-									html += '		<label><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" data-comp-seq="' + compResult[j].eval_company_seq + '" onclick="radioClickEvent(' + compResult[j].eval_company_seq + ');" value="' + result[i].score_1 + '" checked />' + result[i].score_1 + '</label>';
+								/*html += '	<td>' + (item.item_medium_name ? item.item_medium_name : "") + '</td>';*/
+								if (item.item_name === "상생기업") {
+									html += '    <td>';
+									html += '        <div>상생기업 단독 또는 상생기업 컨소시엄</div>';
+									html += '        <div>상생기업이 아닌 중소기업을 포함함 컨소시엄</div>';
+									html += '        <div>상생기업이 아닌 일반 기업 단독</div>';
+									html += '    </td>';
 								} else {
-									html += '		<label><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" data-comp-seq="' + compResult[j].eval_company_seq + '" onclick="radioClickEvent(' + compResult[j].eval_company_seq + ');" value="' + result[i].score_1 + '" />' + result[i].score_1 + '</label>';
-								}
-								html += '	</td>';
-								html += '	<td class="itemRadioTd">';
-								if (result[i].score_2 == result[i].COMMISSIONER_SCORE && result[i].COMMISSIONER_SCORE != null) {
-									html += '		<label><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" data-comp-seq="' + compResult[j].eval_company_seq + '" onclick="radioClickEvent(' + compResult[j].eval_company_seq + ');" value="' + result[i].score_2 + '" checked>' + result[i].score_2 + '</label>';
-								} else {
-									html += '		<label><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" data-comp-seq="' + compResult[j].eval_company_seq + '" onclick="radioClickEvent(' + compResult[j].eval_company_seq + ');" value="' + result[i].score_2 + '">' + result[i].score_2 + '</label>';
-								}
-								html += '	</td>';
-								html += '	<td class="itemRadioTd">';
-								if (result[i].score_3 == result[i].COMMISSIONER_SCORE && result[i].COMMISSIONER_SCORE != null) {
-									html += '		<label><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" data-comp-seq="' + compResult[j].eval_company_seq + '" onclick="radioClickEvent(' + compResult[j].eval_company_seq + ');" value="' + result[i].score_3 + '" checked>' + result[i].score_3 + '</label>';
-								} else {
-									html += '		<label><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" data-comp-seq="' + compResult[j].eval_company_seq + '" onclick="radioClickEvent(' + compResult[j].eval_company_seq + ');" value="' + result[i].score_3 + '">' + result[i].score_3 + '</label>';
-								}
-								html += '	</td>';
-								html += '	<td class="itemRadioTd">';
-								if (result[i].score_4 == result[i].COMMISSIONER_SCORE && result[i].COMMISSIONER_SCORE != null) {
-									html += '		<label><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" data-comp-seq="' + compResult[j].eval_company_seq + '" onclick="radioClickEvent(' + compResult[j].eval_company_seq + ');" value="' + result[i].score_4 + '" checked>' + result[i].score_4 + '</label>';
-								} else {
-									html += '		<label><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" data-comp-seq="' + compResult[j].eval_company_seq + '" onclick="radioClickEvent(' + compResult[j].eval_company_seq + ');" value="' + result[i].score_4 + '">' + result[i].score_4 + '</label>';
-								}
-								html += '	</td>';
-								html += '	<td class="itemRadioTd">';
-								if (result[i].score_5 == result[i].COMMISSIONER_SCORE && result[i].COMMISSIONER_SCORE != null) {
-									html += '		<label><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" data-comp-seq="' + compResult[j].eval_company_seq + '" onclick="radioClickEvent(' + compResult[j].eval_company_seq + ');" value="' + result[i].score_5 + '" checked>' + result[i].score_5 + '</label>';
-								} else {
-									html += '		<label><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" data-comp-seq="' + compResult[j].eval_company_seq + '" onclick="radioClickEvent(' + compResult[j].eval_company_seq + ');" value="' + result[i].score_5 + '">' + result[i].score_5 + '</label>';
+									html += '    <td>' + (item.item_medium_name ? item.item_medium_name : "") + '</td>';
 								}
 
+								var disabledAttr = item.item_name === "상생기업" ? "disabled" : "";
 
-								html += '	</td>';
+								html += '    <td class="itemRadioTd">';
+								html += '        <label class="radio-label"><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" data-comp-seq="' + compResult[j].eval_company_seq + '" onclick="radioClickEvent(' + compResult[j].eval_company_seq + ');" value="' + result[i].score_1 + '" ' + (result[i].COMMISSIONER_SCORE == result[i].score_1 ? "checked" : "") + ' ' + disabledAttr + ' />' + result[i].score_1 + '</label>';
+								html += '    </td>';
+								html += '    <td class="itemRadioTd">';
+								html += '        <label class="radio-label"><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" data-comp-seq="' + compResult[j].eval_company_seq + '" onclick="radioClickEvent(' + compResult[j].eval_company_seq + ');" value="' + result[i].score_2 + '" ' + (result[i].COMMISSIONER_SCORE == result[i].score_2 ? "checked" : "") + ' ' + disabledAttr + ' />' + result[i].score_2 + '</label>';
+								html += '    </td>';
+								html += '    <td class="itemRadioTd">';
+								html += '        <label class="radio-label"><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" data-comp-seq="' + compResult[j].eval_company_seq + '" onclick="radioClickEvent(' + compResult[j].eval_company_seq + ');" value="' + result[i].score_3 + '" ' + (result[i].COMMISSIONER_SCORE == result[i].score_3 ? "checked" : "") + ' ' + disabledAttr + ' />' + result[i].score_3 + '</label>';
+								html += '    </td>';
+								html += '    <td class="itemRadioTd">';
+								var score_4_display = result[i].score_4 != null ? result[i].score_4 : '-';
+								html += '        <label class="radio-label"><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" data-comp-seq="' + compResult[j].eval_company_seq + '" onclick="radioClickEvent(' + compResult[j].eval_company_seq + ');" value="' + result[i].score_4 + '" ' + (result[i].COMMISSIONER_SCORE == result[i].score_4 ? "checked" : "") + ' ' + disabledAttr + ' />' + score_4_display + '</label>';
+								html += '    </td>';
+								html += '    <td class="itemRadioTd">';
+								var score_5_display = result[i].score_5 != null ? result[i].score_5 : '-';
+								html += '        <label class="radio-label"><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" data-comp-seq="' + compResult[j].eval_company_seq + ');" onclick="radioClickEvent(' + compResult[j].eval_company_seq + ');" value="' + result[i].score_5 + '" ' + (result[i].COMMISSIONER_SCORE == result[i].score_5 ? "checked" : "") + ' ' + disabledAttr + ' />' + score_5_display + '</label>';
+								html += '    </td>';
 								html += '</tr>';
-
-
-								}
+							}
 						}
+
 							html += '<tr>';
 							html += '	<th colspan="3">합계</th>';
 							html += '	<td id="totalScore_'+compResult[j].eval_company_seq+'" value="" colspan="5"></td>';

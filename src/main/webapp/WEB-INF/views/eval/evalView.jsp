@@ -300,7 +300,7 @@
 								html += '    </td>';
 								html += '    <td class="itemRadioTd">';
 								var score_5_display = result[i].score_5 != null ? result[i].score_5 : '-';
-								html += '        <label class="radio-label"><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" data-comp-seq="' + compResult[j].eval_company_seq + ');" onclick="radioClickEvent(' + compResult[j].eval_company_seq + ');" value="' + result[i].score_5 + '" ' + (result[i].COMMISSIONER_SCORE == result[i].score_5 ? "checked" : "") + ' ' + disabledAttr + ' />' + score_5_display + '</label>';
+								html += '        <label class="radio-label"><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" data-comp-seq="' + compResult[j].eval_company_seq + '" onclick="radioClickEvent(' + compResult[j].eval_company_seq + ');" value="' + result[i].score_5 + '" ' + (result[i].COMMISSIONER_SCORE == result[i].score_5 ? "checked" : "") + ' ' + disabledAttr + ' />' + score_5_display + '</label>';
 								html += '    </td>';
 								html += '</tr>';
 							}
@@ -654,10 +654,10 @@
 
 		var textareas = document.querySelectorAll('textarea[data-comp-seq="' + companySeq + '"]');
 
-		if (groupsCount != checkedButtons) {
+		/*if (groupsCount != checkedButtons) {
 			alert('체크되지 않은 부분이 있습니다. 모두 체크해주세요.');
 			return;
-		}
+		}*/
 
 		textareas.forEach(function(textarea) {
 			var value = textarea.value;

@@ -350,8 +350,10 @@ public class EvalController {
 		
 		evalService.evalViewSave(map);
 		evalService.setScoreData(params);
-		
+
 	}
+	//원래 void임
+
 
 	@RequestMapping(value = "/eval/setCommSave", method = RequestMethod.POST) 
 	@ResponseBody
@@ -523,8 +525,16 @@ public class EvalController {
 
 	@RequestMapping(value = "/eval/setScoreData")
 	@ResponseBody
-	public void setScoreData(@RequestParam Map<String, Object> params){
+	public Map<String, Object> setScoreData(@RequestParam Map<String, Object> params){
+
+		System.out.println("*****params*****"+params);
 		evalService.setScoreData(params);
+
+		Map<String, Object> response = new HashMap<>();
+		response.put("status", "success");
+		response.put("message", "Data saved successfully.");
+
+		return response;
 	}
 
 	public String signFilePathF(HttpServletRequest servletRequest, Map<String, Object> params, String baseDir){

@@ -235,7 +235,8 @@
 						/*html2 += '<span style="font-size:25px; margin-bottom:10px;">'  + compResult[j].display_title + '</span>';
 
 						$("#displayTitle").html(html2);*/
-						html += '<div><span style="font-size:25px; margin-bottom:10px; padding-bottom: 15px">'  + compResult[j].display_title + '</span></div>';
+						html += '<div><span style="font-size:25px; margin-bottom:10px; padding-bottom: 15px">'  + compResult[j].display_title + '</span>';
+						html += '<span id="successMessage'+compResult[j].eval_company_seq+'" style="font-size:25px; margin-left:10px; margin-bottom:10px; padding-bottom: 15px; display: none;"> 저장완료</span></div>';
 
 						html += '<div class="com_ta">';
 						html += '<table id="listTable" style="width: 100%; margin-bottom:25px">' +
@@ -339,7 +340,9 @@
 
 						html += '<div class="right_div" style="height:70px; padding-bottom: 100px">'+
 								'<div class="controll_btn p10">';
-						html += '<button type="button" class="evalButton" id="eachSaveButton" style = "width : 170px;" onclick="eachSaveButton(' + compResult[j].eval_company_seq + ');">'+companyRemarkList[j].DISPLAY_TITLE+' 저장</button>';
+						//html += '<button type="button" class="evalButton" id="eachSaveButton" style = "width : 170px;" onclick="eachSaveButton(' + compResult[j].eval_company_seq + ');">'+companyRemarkList[j].DISPLAY_TITLE+' 저장</button>';
+						html += '<button type="button" class="evalButton" id="eachSaveButton" style="width: 170px;" onclick="eachSaveButton(' + compResult[j].eval_company_seq + ', \'' + companyRemarkList[j].DISPLAY_TITLE + '\');">' + companyRemarkList[j].DISPLAY_TITLE + ' 저장</button>';
+
 						html += '</div></div>';
 
 
@@ -634,14 +637,23 @@
 		evalLst(evalCnt);
 	}
 
-	function eachSaveButton(companySeq){
+	function showSuccessMessage(companySeq) {
+		var successMessage = document.getElementById('successMessage' + companySeq);
+		if (successMessage) {
+			successMessage.style.display = 'inline';
+			successMessage.style.color = 'blue';
+		}
+	}
+
+	function eachSaveButton(companySeq, displayTitle){
 		var radioData = eachRadio();
 		var filteredData = radioData.filter(function(item) {
 			return item.eval_company_seq === companySeq;
 		});
 
 		var data = {
-			itemScoreList : JSON.stringify(filteredData)
+			itemScoreList : JSON.stringify(filteredData),
+			displayTitle : displayTitle
 		}
 
 		//var totalButtons = $('input[data-comp-seq="' + companySeq + '"]').length;
@@ -654,10 +666,10 @@
 
 		var textareas = document.querySelectorAll('textarea[data-comp-seq="' + companySeq + '"]');
 
-		/*if (groupsCount != checkedButtons) {
+		if (groupsCount != checkedButtons) {
 			alert('체크되지 않은 부분이 있습니다. 모두 체크해주세요.');
 			return;
-		}*/
+		}
 
 		textareas.forEach(function(textarea) {
 			var value = textarea.value;
@@ -672,12 +684,21 @@
 			type : "post",
 			dataType : "json",
 			data : data,
-			success:function(rs){
+			success:function(response){
+				if (response.status === 'success') {
+					alert(data.displayTitle + ' 저장되었습니다.');
+					showSuccessMessage(companySeq);
+				} else {
+					alert('저장에 실패했습니다.');
+				}
 			},
 			error : function(e){
-
+				alert('오류가 발생하였습니다. 관리자에게 문의해주세요.');
+				return;
 			}
 		});
+
+		//alert('저장되었습니다.');
 	}
 
 	function saveBtn(){

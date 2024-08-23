@@ -424,6 +424,7 @@
 		}
 
 		// 해당 compSeq에 해당하는 합계 점수를 표시
+
 		$("#totalScore_" + compSeq).text(sum);
 
 	}
@@ -643,12 +644,13 @@
 			itemScoreList : JSON.stringify(filteredData)
 		}
 
-		var totalButtons = $('input[data-comp-seq="' + companySeq + '"]').length;
-		//console.log("totalButtons",totalButtons);
+		//var totalButtons = $('input[data-comp-seq="' + companySeq + '"]').length;
+		var totalButtons = $('input[data-comp-seq="' + companySeq + '"]').not(':disabled').length;
+
 		var groupsCount = Math.ceil(totalButtons / 5);
 
-		var checkedButtons = $('input[data-comp-seq="' + companySeq + '"]:checked').length;
-		//console.log("checkedButtons",checkedButtons);
+		//var checkedButtons = $('input[data-comp-seq="' + companySeq + '"]:checked').length;
+		var checkedButtons = $('input[data-comp-seq="' + companySeq + '"]:checked').not(':disabled').length;
 
 		var textareas = document.querySelectorAll('textarea[data-comp-seq="' + companySeq + '"]');
 

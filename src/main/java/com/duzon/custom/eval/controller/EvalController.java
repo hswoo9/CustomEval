@@ -235,10 +235,48 @@ public class EvalController {
 				model.addAttribute("getCompanyList", gs.toJson(evalService.getCompanyList(map)));
 				//평가내용
 				model.addAttribute("getCompanyRemarkList", gs.toJson(evalService.getCompanyRemarkList(map)));
-				//항목
-				model.addAttribute("itemList", gs.toJson(evalService.getItemList2(map)));
 				//기업별 토탈
 				model.addAttribute("companyTotal", gs.toJson(evalService.getCompanyTotal(map)));
+				//항목
+				List<Map<String, Object>> list = evalService.getItemList2(map);
+
+				for (Map<String, Object> item : list) {
+					String itemMediumName = (String) item.get("item_medium_name");
+					if (itemMediumName != null) {
+						// \n을 \\n으로 대체
+						String escapedItemMediumName = itemMediumName.replace("\n", "\\n");
+						item.put("item_medium_name", escapedItemMediumName);
+					}
+				}
+				model.addAttribute("itemList", gs.toJson(list));
+
+				//정성평가
+				List<Map<String, Object>> qualitativeList = new ArrayList<>();
+				//정량평가
+				List<Map<String, Object>> quantitativeList = new ArrayList<>();
+
+
+				// 데이터를 eval_type(정성평가,정량평가)에 따라 분류
+				for (Map<String, Object> item : list) {
+					Object evalTypeObj = item.get("eval_type");
+					String evalType = evalTypeObj.toString().trim();
+
+					if (evalType.equals("정성평가")) {
+						qualitativeList.add(item);
+
+					} else if (evalType.equals("정량평가")) {
+						quantitativeList.add(item);
+					}
+				}
+
+				Map<String, List<Map<String, Object>>> qualitativeGroups = groupByItemName(qualitativeList);
+				Map<String, List<Map<String, Object>>> quantitativeGroups = groupByItemName(quantitativeList);
+
+				model.addAttribute("qualitativeGroups", gs.toJson(qualitativeGroups));
+				model.addAttribute("quantitativeGroups", gs.toJson(quantitativeGroups));
+
+
+
 
 				return "/eval/sign/evalSign6";
 				
@@ -558,6 +596,17 @@ public class EvalController {
 		Map<String, Object> result = new HashMap<>();
 		result.put("signList", evalService.getSignList(params));
 		return result;
+	}
+
+	private static Map<String, List<Map<String, Object>>> groupByItemName(List<Map<String, Object>> itemList) {
+		Map<String, List<Map<String, Object>>> groupedItems = new HashMap<>();
+
+		for (Map<String, Object> item : itemList) {
+			String itemName = (String) item.get("item_name");
+			groupedItems.computeIfAbsent(itemName, k -> new ArrayList<>()).add(item);
+		}
+
+		return groupedItems;
 	}
 
 }

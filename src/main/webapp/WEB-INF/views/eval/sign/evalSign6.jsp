@@ -15,6 +15,34 @@
 	var getCompanyRemarkList = JSON.parse('${getCompanyRemarkList}');
 	var itemList = JSON.parse('${itemList}');
 	var getCompanyTotal = JSON.parse('${companyTotal}');
+	var qualitativeGroups = JSON.parse('${qualitativeGroups}');
+	var quantitativeGroups = JSON.parse('${quantitativeGroups}');
+
+	var numberOfquality= 0;
+	for (var key in qualitativeGroups) {
+		if (qualitativeGroups.hasOwnProperty(key)) {
+			var group = qualitativeGroups[key];
+			numberOfquality += group.length;
+		}
+	}
+	var numberOfquantity = 0;
+	for (var key in quantitativeGroups) {
+		if (quantitativeGroups.hasOwnProperty(key)) {
+			var group = quantitativeGroups[key];
+			numberOfquantity += group.length;
+		}
+	}
+
+	console.log("list",list);
+	console.log("getCompanyList",getCompanyList);
+	console.log("getCompanyRemarkList",getCompanyRemarkList);
+	console.log("itemList",itemList);
+	console.log("getCompanyTotal",getCompanyTotal);
+	console.log("qualitativeGroups",qualitativeGroups);
+	console.log("quantitativeGroups",quantitativeGroups);
+
+	console.log("numberOfquality",numberOfquality);
+	console.log("numberOfquantity",numberOfquantity);
 
 	$(function(){
 		alert('"제안평가 위원님은 본인의 평가가 이상이 없는지 확인하시고\n이상이 있으면 수정하여 주시기 바라며,\n저장버튼 클릭후에는 수정이 불가능 합니다"');
@@ -116,13 +144,13 @@
 
 		_hwpPutSignImg("sign", "${userInfo.SIGN_DIR }");
 
-		setItem();
+		//setItem();
 		//페이지 위로 이동
 		_pHwpCtrl.Run("MoveViewUp");
 
 		$("#signSave").show();
-	}
-
+	}*/
+/*
 	function setItem(){
 		//채우기
 		for (var i = 0; i < getCompanyList.length; i++) {
@@ -232,11 +260,207 @@
 		_pHwpCtrl.Run("TableMergeCell");
 
 	}*/
+
+
+
 	function _hwpPutData(){
 		_pHwpCtrl.MoveToField("contents", true, true, true);
 		_pHwpCtrl.PutFieldText("contents", "\n");
+
+		var html = '';
+		var companyCount = getCompanyTotal.length;
+
+		var html = '';
+		html += '<table style="border:1px solid black; border-collapse: collapse; width: 100%; table-layout: fixed;">';
+
+		html += '<thead>';
+		html += '<tr>';
+		html += '<th rowspan="2" colspan="3" style="border:1px solid black; border-collapse: collapse; width: 100px;">평가항목</th>';
+		html += '<th rowspan="2" style="border:1px solid black; border-collapse: collapse; width: 50px;">배점</th>';
+		html += '<th colspan="' + companyCount + '" style="border:1px solid black; border-collapse: collapse; width: 300px;">제안업체</th>';
+		html += '<th rowspan="2" style="border:1px solid black; border-collapse: collapse; width: 50px;">비고</th>';
+		html += '</tr>';
+
+		html += '<tr>';
+		for (var i = 0; i < companyCount; i++) {
+			html += '<td style="border:1px solid black; border-collapse: collapse; width : '+ (300/companyCount)+'px">' + String.fromCharCode(65 + i) + '</td>';
+		}
+		html += '</tr>';
+		html += '</thead>';
+
+
+		html += '<tbody>';
+		html += '<th rowspan="'+numberOfquality+'" style="border:1px solid black; border-collapse: collapse; width: 20px">정성평가</th>';
+
+		//정성평가
+		var qualityGroupArray = [];
+		for (var key in qualitativeGroups) {
+			if (qualitativeGroups.hasOwnProperty(key)) {
+				qualityGroupArray.push(qualitativeGroups[key]);
+				console.log("qualityGroupArray",qualityGroupArray);
+			}
+		}
+		console.log("qualityGroupArray.length",qualityGroupArray.length);
+
+		for(var i = 0; i<qualityGroupArray.length; i++) {
+			var totalScore = 0;
+			for (var j = 0; j < qualityGroupArray[i].length; j++) {
+				totalScore += qualityGroupArray[i][j].score;
+			}
+			html += '<td rowspan="' + qualityGroupArray[i].length + '" style="border:1px solid black; border-collapse: collapse;">' + qualityGroupArray[i][0].item_name + '('+totalScore+'점)</td>';
+			for(var j =0; j<qualityGroupArray[i].length; j++) {
+				html += '<td style="border:1px solid black; border-collapse: collapse; width: 120px">' + qualityGroupArray[i][j].item_medium_name + '</td>';
+				html += '<td style="border:1px solid black; border-collapse: collapse;">' + qualityGroupArray[i][j].score + '</td>';
+				for (var h = 0; h < companyCount; h++) {
+
+					var matchingResultScore = '';
+					for (var k = 0; k < list.length; k++) {
+						if (list[k].ITEM_SEQ === qualityGroupArray[i][j].item_seq &&
+								list[k].EVAL_COMPANY_SEQ === getCompanyTotal[h].EVAL_COMPANY_SEQ) {
+							matchingResultScore = list[k].RESULT_SCORE;
+							break;
+						}
+					}
+
+					html += '<td style="border:1px solid black; border-collapse: collapse;" it_seq="' + qualityGroupArray[i][j].item_seq + '" data-comp-seq="' + getCompanyTotal[h].EVAL_COMPANY_SEQ+ '">' + matchingResultScore + '</td>';
+				}
+				html += '<td style="border:1px solid black; border-collapse: collapse;"></td>';
+				html += '</tr>'
+				html += '<tr>'
+			}
+		}
+
+
+		html += '<th rowspan="'+numberOfquantity+'" style="border:1px solid black; border-collapse: collapse;">정량평가</th>';
+		//정량평가
+		var quantityGroupArray = [];
+		for (var key in quantitativeGroups) {
+			if (quantitativeGroups.hasOwnProperty(key)) {
+				quantityGroupArray.push(quantitativeGroups[key]);
+			}
+		}
+
+		//상생평가를 배열의 가장 뒤로 보내기
+		for (var i = 0; i < quantityGroupArray.length; i++) {
+			if (quantityGroupArray[i][0].item_name === "상생기업") {
+				var saengsengItem = quantityGroupArray.splice(i, 1)[0];
+				quantityGroupArray.push(saengsengItem);
+				break;
+			}
+		}
+
+		console.log("quantityGroupArray.length",quantityGroupArray.length);
+		for(var i = 0; i<quantityGroupArray.length; i++) {
+			var totalScore = 0;
+			for (var j = 0; j < quantityGroupArray[i].length; j++) {
+				totalScore += quantityGroupArray[i][j].score;
+			}
+			html += '<td rowspan="' + quantityGroupArray[i].length + '" style="border:1px solid black; border-collapse: collapse;">' + quantityGroupArray[i][0].item_name + '('+totalScore+'점)</td>';
+			for(var j =0; j<quantityGroupArray[i].length; j++) {
+				html += '<td style="border:1px solid black; border-collapse: collapse;">' + quantityGroupArray[i][j].item_medium_name + '</td>';
+				html += '<td style="border:1px solid black; border-collapse: collapse;">' + quantityGroupArray[i][j].score + '</td>';
+				for (var h = 0; h < companyCount; h++) {
+
+					var matchingResultScore = '';
+					for (var k = 0; k < list.length; k++) {
+						if (list[k].ITEM_SEQ === quantityGroupArray[i][j].item_seq &&
+								list[k].EVAL_COMPANY_SEQ === getCompanyTotal[h].EVAL_COMPANY_SEQ) {
+							matchingResultScore = list[k].RESULT_SCORE;
+							break; // 매칭되는 값이 있으면 루프 탈출
+						}
+					}
+
+					html += '<td style="border:1px solid black; border-collapse: collapse;" it_seq="' + quantityGroupArray[i][j].item_seq + '" data-comp-seq="' + getCompanyTotal[h].EVAL_COMPANY_SEQ+ '">' + matchingResultScore + '</td>';
+				}
+				html += '<td style="border:1px solid black; border-collapse: collapse;"></td>';
+				html += '</tr>'
+				html += '<tr>'
+			}
+		}
+
+		/*for(var i = 0; i<qualityGroupArray.length; i++) {
+			console.log("qualityGroupArray[i]",qualityGroupArray[i]);
+			console.log(qualityGroupArray[i][0].item_name);
+
+
+			html += '<td rowspan="' + qualityGroupArray[i].length + '" style="border:1px solid black; border-collapse: collapse;">' + qualityGroupArray[i][0].item_name + '( 점)</td>';
+
+			html += '<td style="border:1px solid black; border-collapse: collapse;"></td>';
+			html += '<td style="border:1px solid black; border-collapse: collapse;"></td>';
+			for (var i = 0; i < companyCount; i++) {
+				html += '<td style="border:1px solid black; border-collapse: collapse;"></td>';
+			}
+			html += '<td style="border:1px solid black; border-collapse: collapse;"></td>';
+			html += '</tr>';
+
+		}
+		html += '<tr>';*/
+			/*html += '<td style="border:1px solid black; border-collapse: collapse;"></td>';
+			html += '<td style="border:1px solid black; border-collapse: collapse;"></td>';
+			for (var i = 0; i < companyCount; i++) {
+				html += '<td style="border:1px solid black; border-collapse: collapse;"></td>';
+			}
+			html += '<td style="border:1px solid black; border-collapse: collapse;"></td>';
+			html += '<tr>';
+			html += '</tr>';
+			html += '</tr>';*/
+
+
+		/*html += '<tr>';
+		html += '<td style="border:1px solid black; border-collapse: collapse;">ㅇㅇㅇ( 점)</td>';
+		html += '<td style="border:1px solid black; border-collapse: collapse;"></td>';
+		html += '<td style="border:1px solid black; border-collapse: collapse;"></td>';
+		for (var i = 0; i < companyCount; i++) {
+			html += '<td style="border:1px solid black; border-collapse: collapse;"></td>';
+		}
+		html += '<td style="border:1px solid black; border-collapse: collapse;"></td>';
+		html += '</tr>';*/
+
+		/*html += '<tr>';
+		html += '<th rowspan="'+numberOfquantity+'" style="border:1px solid black; border-collapse: collapse;">정량평가</th>';
+		html += '<td style="border:1px solid black; border-collapse: collapse;">ㅇㅇㅇ( 점)</td>';
+		html += '<td style="border:1px solid black; border-collapse: collapse;"></td>';
+		html += '<td style="border:1px solid black; border-collapse: collapse;"></td>';
+		for (var i = 0; i < companyCount; i++) {
+			html += '<td style="border:1px solid black; border-collapse: collapse;"></td>';
+		}
+		html += '<td style="border:1px solid black; border-collapse: collapse;"></td>';
+		html += '</tr>';*/
+
+		//합계
+		//html += '<tr>';
+		html += '<th colspan="3" style="border:1px solid black; border-collapse: collapse;">합계</th>';
+		html += '<td style="border:1px solid black; border-collapse: collapse;">100</td>';
+
+		for (var i = 0; i < companyCount; i++) {
+			html += '<td style="border:1px solid black; border-collapse: collapse;"></td>';
+		}
+
+		html += '<td style="border:1px solid black; border-collapse: collapse;"></td>';
+		html += '</tr>';
+
+		//제안업체 평가의견
+		html += '<td rowspan="' + companyCount + '" style="border:1px solid black; border-collapse: collapse;">평가의견</td>';
+
+		for (var i = 0; i < companyCount; i++) {
+
+			html += '<td style="border:1px solid black; border-collapse: collapse;">' + String.fromCharCode(65 + i) + '</td>';
+			html += '<td colspan="6" style="border:1px solid black; border-collapse: collapse;">'+getCompanyRemarkList[i].remark+'</td>';
+			html += '</tr>';
+			html += '<tr>';
+		}
+
+		html += '</tbody>';
+		html += '</table>';
+
+		document.getElementById('contentsTemp').innerHTML = html;
+
+
 		_pHwpCtrl.SetTextFile($('#contentsTemp').html(), "HTML", "insertfile", function(){
 
+			var title1 = "${userInfo.TITLE }";
+			var date = "${nowDate}";
+			//var dept = "${userInfo.ORG_NAME }";
 			var name = "";
 
 			if("${userInfo.EVAL_BLIND_YN}" == "N"){
@@ -247,11 +471,19 @@
 			if(_pHwpCtrl.FieldExist("name" )) {
 				_pHwpCtrl.PutFieldText("name", name);
 			}
+			if(_pHwpCtrl.FieldExist("title1" )){
+				_pHwpCtrl.PutFieldText("title1", title1);
+			}
+			if(_pHwpCtrl.FieldExist("date")){
+				_pHwpCtrl.PutFieldText("date", date);
+			}
 
 			_hwpPutSignImg("sign", "${userInfo.SIGN_DIR }");
 
 			$("#signSave").show();
 		})
+
+
 	};
 
 
@@ -300,7 +532,7 @@
 		<h4 style="font-size: 30px;">위원별 제안서 평가표</h4>
 	</div>
 	<div id="contentsTemp" >
-		<SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>테스트중입니다.</SPAN>
+		<%--<SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>테스트중입니다.</SPAN>--%>
 		<%--<c:forEach items="${getCompanyList }" var="companyList" varStatus="mainSt">
 			<TABLE style="margin:0 auto">
 				<TR>

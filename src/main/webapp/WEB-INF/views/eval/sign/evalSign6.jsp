@@ -292,6 +292,9 @@
 		html += '<tbody>';
 		html += '<th rowspan="'+numberOfquality+'" style="border:1px solid black; border-collapse: collapse; width: 20px">정성평가</th>';
 
+		//점수 총합을 위한 변수
+		var totalScoresByCompany = new Array(companyCount).fill(0);
+
 		//정성평가
 		var qualityGroupArray = [];
 		for (var key in qualitativeGroups) {
@@ -318,11 +321,12 @@
 						if (list[k].ITEM_SEQ === qualityGroupArray[i][j].item_seq &&
 								list[k].EVAL_COMPANY_SEQ === getCompanyTotal[h].EVAL_COMPANY_SEQ) {
 							matchingResultScore = list[k].RESULT_SCORE;
+							totalScoresByCompany[h] += parseFloat(matchingResultScore) || 0; // 기업별 점수 합산
 							break;
 						}
 					}
 
-					html += '<td style="border:1px solid black; border-collapse: collapse;" it_seq="' + qualityGroupArray[i][j].item_seq + '" data-comp-seq="' + getCompanyTotal[h].EVAL_COMPANY_SEQ+ '">' + matchingResultScore + '</td>';
+					html += '<td style="border:1px solid black; border-collapse: collapse;" name="score" it_seq="' + qualityGroupArray[i][j].item_seq + '" data-comp-seq="' + getCompanyTotal[h].EVAL_COMPANY_SEQ+ '">' + matchingResultScore + '</td>';
 				}
 				html += '<td style="border:1px solid black; border-collapse: collapse;"></td>';
 				html += '</tr>'
@@ -366,11 +370,12 @@
 						if (list[k].ITEM_SEQ === quantityGroupArray[i][j].item_seq &&
 								list[k].EVAL_COMPANY_SEQ === getCompanyTotal[h].EVAL_COMPANY_SEQ) {
 							matchingResultScore = list[k].RESULT_SCORE;
-							break; // 매칭되는 값이 있으면 루프 탈출
+							totalScoresByCompany[h] += parseFloat(matchingResultScore) || 0; // 기업별 점수 합산
+							break;
 						}
 					}
 
-					html += '<td style="border:1px solid black; border-collapse: collapse;" it_seq="' + quantityGroupArray[i][j].item_seq + '" data-comp-seq="' + getCompanyTotal[h].EVAL_COMPANY_SEQ+ '">' + matchingResultScore + '</td>';
+					html += '<td style="border:1px solid black; border-collapse: collapse;" name="score" it_seq="' + quantityGroupArray[i][j].item_seq + '" data-comp-seq="' + getCompanyTotal[h].EVAL_COMPANY_SEQ+ '">' + matchingResultScore + '</td>';
 				}
 				html += '<td style="border:1px solid black; border-collapse: collapse;"></td>';
 				html += '</tr>'
@@ -433,7 +438,7 @@
 		html += '<td style="border:1px solid black; border-collapse: collapse;">100</td>';
 
 		for (var i = 0; i < companyCount; i++) {
-			html += '<td style="border:1px solid black; border-collapse: collapse;"></td>';
+			html += '<td style="border:1px solid black; border-collapse: collapse;">' + totalScoresByCompany[i] + '</td>';
 		}
 
 		html += '<td style="border:1px solid black; border-collapse: collapse;"></td>';

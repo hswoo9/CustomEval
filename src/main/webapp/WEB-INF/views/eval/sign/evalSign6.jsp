@@ -481,6 +481,7 @@
 			_hwpPutSignImg("sign", "${userInfo.SIGN_DIR }");
 
 			$("#signSave").show();
+			$("#contentsTemp").hide();
 		})
 
 
@@ -528,9 +529,9 @@
 		<input type="button" onclick="signSaveBtn();" style="float:right;" value="다음">
 		<input type="button" onclick="evalModBtn();" style="float:right;" value="평가 수정">
 	</div>
-	<div style="width:100%; padding-bottom: 35px; text-align: center; padding-top: 50px;">
+	<%--<div style="width:100%; padding-bottom: 35px; text-align: center; padding-top: 50px;">
 		<h4 style="font-size: 30px;">위원별 제안서 평가표</h4>
-	</div>
+	</div>--%>
 	<div id="contentsTemp" >
 		<%--<SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>테스트중입니다.</SPAN>--%>
 		<%--<c:forEach items="${getCompanyList }" var="companyList" varStatus="mainSt">

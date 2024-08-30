@@ -9,9 +9,32 @@
 <fmt:formatDate value="${nowDate}" var="nowDate" pattern="yyyy년  MM월  dd일" />
 
 <script type="text/javascript">
-
 	var result = JSON.parse('${result}');
 	var rates = "${userInfo.RATES}" || "";
+	var qualitativeGroups = JSON.parse('${qualitativeGroups}');
+	var quantitativeGroups = JSON.parse('${quantitativeGroups}');
+	var comList = result.list;
+	var colListArray = JSON.parse('${list}');
+	var list = colListArray.colList;
+
+	console.log("result",result);
+	console.log("collist",list);
+	console.log("result list",comList);
+
+	var numberOfquality= 0;
+	for (var key in qualitativeGroups) {
+		if (qualitativeGroups.hasOwnProperty(key)) {
+			var group = qualitativeGroups[key];
+			numberOfquality += group.length;
+		}
+	}
+	var numberOfquantity = 0;
+	for (var key in quantitativeGroups) {
+		if (quantitativeGroups.hasOwnProperty(key)) {
+			var group = quantitativeGroups[key];
+			numberOfquantity += group.length;
+		}
+	}
 
 	$(function(){
 	// 	OnConnectDevice();
@@ -94,14 +117,14 @@
 		_pHwpCtrl.ShowStatusBar(false);
 		_pHwpCtrl.SetFieldViewOption(1);
 
+		/*_pHwpCtrl.Run("MoveViewUp");
 		_pHwpCtrl.Run("MoveViewUp");
 		_pHwpCtrl.Run("MoveViewUp");
 		_pHwpCtrl.Run("MoveViewUp");
-		_pHwpCtrl.Run("MoveViewUp");
-		_pHwpCtrl.Run("MoveViewUp");
+		_pHwpCtrl.Run("MoveViewUp");*/
 	}
 
-	function _hwpPutData(){
+	/*function _hwpPutData(){
 		//내용
 		var title1 = "${userInfo.TITLE }";
 		var date = "${nowDate}";
@@ -123,9 +146,223 @@
 		_pHwpCtrl.Run("MoveViewUp");
 
 		$("#signSave").show();
-	}
+	}*/
+	function _hwpPutData(){
+		_pHwpCtrl.MoveToField("contents", true, true, true);
+		_pHwpCtrl.PutFieldText("contents", "\n");
 
-	function setItem(){
+		var companyCount = comList.length;
+
+		var html = '';
+
+		var html = '';
+		html += '<table style="border:1px solid black; border-collapse: collapse; width: 630px; table-layout: fixed; margin: auto;">';
+
+		html += '<thead>';
+		html += '<tr>';
+		html += '<th rowspan="2" colspan="3" style="border:1px solid black; border-collapse: collapse; width: 255px; text-align; center;">평가항목</th>';
+		html += '<th rowspan="2" style="border:1px solid black; border-collapse: collapse; width: 35px; text-align; center;">배점</th>';
+		html += '<th colspan="' + companyCount + '" style="border:1px solid black; border-collapse: collapse; width: 300px; text-align; center;">제안업체</th>';
+		html += '<th rowspan="2" style="border:1px solid black; border-collapse: collapse; width: 40px; text-align; center;">비고</th>';
+		html += '</tr>';
+
+		html += '<tr>';
+		for (var i = 0; i < companyCount; i++) {
+			html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center; width : '+ (300/companyCount)+'px">' + String.fromCharCode(65 + i) + '</td>';
+		}
+		html += '</tr>';
+		html += '</thead>';
+
+
+		html += '<tbody>';
+		html += '<th rowspan="'+numberOfquality+'" style="border:1px solid black; border-collapse: collapse; width: 20px; text-align; center;">정성평가</th>';
+
+		//정성평가
+		var qualityGroupArray = [];
+		for (var key in qualitativeGroups) {
+			if (qualitativeGroups.hasOwnProperty(key)) {
+				qualityGroupArray.push(qualitativeGroups[key]);
+				console.log("qualityGroupArray",qualityGroupArray);
+			}
+		}
+		console.log("qualityGroupArray.length",qualityGroupArray.length);
+
+		for(var i = 0; i<qualityGroupArray.length; i++) {
+			var totalScore = 0;
+			for (var j = 0; j < qualityGroupArray[i].length; j++) {
+				totalScore += qualityGroupArray[i][j].score;
+			}
+			html += '<td rowspan="' + qualityGroupArray[i].length + '" style="border:1px solid black; border-collapse: collapse; text-align; center;">' + qualityGroupArray[i][0].item_name + '('+totalScore+'점)</td>';
+			for(var j =0; j<qualityGroupArray[i].length; j++) {
+				html += '<td style="border:1px solid black; border-collapse: collapse; width: 120px; text-align; center;">' + qualityGroupArray[i][j].item_medium_name + '</td>';
+				html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center;">' + qualityGroupArray[i][j].score + '</td>';
+				for (var h = 0; h < companyCount; h++) {
+
+					var matchingResultScore = '';
+					for (var k = 0; k < list.length; k++) {
+						if (list[k].item_seq === qualityGroupArray[i][j].item_seq) {
+
+							var itemScoreKey = 'ITME_SCORE_' + qualityGroupArray[i][j].item_seq;
+
+							//matchingResultScore = list[k].RESULT_SCORE;
+							for (var key in comList[h]) {
+								if (key === itemScoreKey ) {
+									matchingResultScore = comList[h][key];
+									break;
+								}
+							}
+
+
+							break;
+						}
+					}
+
+					html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center;" name="score" it_seq="' + qualityGroupArray[i][j].item_seq + '" data-comp-seq="' + comList[h].EVAL_COMPANY_SEQ+ '">' + matchingResultScore + '</td>';
+				}
+				html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center;"></td>';
+				html += '</tr>'
+				html += '<tr>'
+			}
+		}
+
+
+		html += '<th rowspan="'+numberOfquantity+'" style="border:1px solid black; border-collapse: collapse; text-align; center;">정량평가</th>';
+		//정량평가
+		var quantityGroupArray = [];
+		for (var key in quantitativeGroups) {
+			if (quantitativeGroups.hasOwnProperty(key)) {
+				quantityGroupArray.push(quantitativeGroups[key]);
+			}
+		}
+
+		//상생평가를 배열의 가장 뒤로 보내기
+		for (var i = 0; i < quantityGroupArray.length; i++) {
+			if (quantityGroupArray[i][0].item_name === "상생기업") {
+				var saengsengItem = quantityGroupArray.splice(i, 1)[0];
+				quantityGroupArray.push(saengsengItem);
+				break;
+			}
+		}
+
+		console.log("quantityGroupArray.length",quantityGroupArray.length);
+		for(var i = 0; i<quantityGroupArray.length; i++) {
+			var totalScore = 0;
+			for (var j = 0; j < quantityGroupArray[i].length; j++) {
+				totalScore += quantityGroupArray[i][j].score;
+			}
+			html += '<td rowspan="' + quantityGroupArray[i].length + '" style="border:1px solid black; border-collapse: collapse; text-align; center;">' + quantityGroupArray[i][0].item_name + '('+totalScore+'점)</td>';
+			for(var j =0; j<quantityGroupArray[i].length; j++) {
+				if (quantityGroupArray[i][0].item_name === "상생기업") {
+					html += '<td style="border:1px solid black; border-collapse: collapse;">상생기업 단독 또는 상생기업 컨소시엄<br>상생기업이 아닌 중소기업을 포함한 컨소시엄<br>상생기업이 아닌 일반 기업 단독</td>';
+				}else{
+					html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center;">' + quantityGroupArray[i][j].item_medium_name + '</td>';
+				}
+				html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center;">' + quantityGroupArray[i][j].score + '</td>';
+				for (var h = 0; h < companyCount; h++) {
+
+					var matchingResultScore = '';
+					for (var k = 0; k < list.length; k++) {
+						if (list[k].item_seq === quantityGroupArray[i][j].item_seq) {
+
+							var itemScoreKey = 'ITME_SCORE_' + quantityGroupArray[i][j].item_seq;
+
+							//matchingResultScore = list[k].RESULT_SCORE;
+							for (var key in comList[h]) {
+								if (key === itemScoreKey ) {
+									matchingResultScore = comList[h][key];
+									break;
+								}
+							}
+
+
+							break;
+						}
+					}
+
+					html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center;" name="score" it_seq="' + quantityGroupArray[i][j].item_seq + '" data-comp-seq="' + comList[h].EVAL_COMPANY_SEQ+ '">' + matchingResultScore + '</td>';
+				}
+				html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center;"></td>';
+				html += '</tr>'
+				html += '<tr>'
+			}
+		}
+		//합계
+		//html += '<tr>';
+		html += '<th colspan="3" style="border:1px solid black; border-collapse: collapse; text-align; center;">합&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;계</th>';
+		html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center;">100</td>';
+
+		for (var i = 0; i < companyCount; i++) {
+			html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center;">' + comList[i].TOTAL_SUM + '</td>';
+		}
+
+		html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center;"></td>';
+		html += '</tr>';
+
+		//환산점수
+		html += '<tr>';
+		html += '<th colspan="4" style="border:1px solid black; border-collapse: collapse; text-align; center;">환산점수( %)</th>';
+		for (var i = 0; i < companyCount; i++) {
+			var convertedScore = qksdhffla(comList[i].TOTAL_SUM * (rates / 100));
+			html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center;">'+convertedScore+'</td>';
+		}
+
+		html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center;"></td>';
+		html += '</tr>';
+
+		//적격판정
+		html += '<tr>';
+		html += '<th colspan="4" style="border:1px solid black; border-collapse: collapse; text-align; center;">적 격 판 정</th>';
+		for (var i = 0; i < companyCount; i++) {
+			var eligibility = comList[i].TOTAL_SUM >= 85 ? '적격' : '부적격';
+			html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center;">'+eligibility+'</td>';
+		}
+
+		html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center;"></td>';
+		html += '</tr>';
+
+		//순위
+		html += '<tr>';
+		html += '<th colspan="4" style="border:1px solid black; border-collapse: collapse; text-align; center;">순&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;위</th>';
+		for (var i = 0; i < companyCount; i++) {
+			html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center;">' + comList[i].RANK + '</td>';
+		}
+
+		html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center;"></td>';
+		html += '</tr>';
+
+		document.getElementById('contentsTemp').innerHTML = html;
+
+
+		//한글문서에 채워넣기
+		_pHwpCtrl.SetTextFile($('#contentsTemp').html(), "HTML", "insertfile", function(){
+
+			var title1 = "${userInfo.TITLE }";
+			var date = "${nowDate}";
+			//var dept = "${userInfo.ORG_NAME }";
+			var name = "";
+
+			if("${userInfo.EVAL_BLIND_YN}" == "N"){
+				name = "${userInfo.NAME }";
+			}else{
+				name = "${fn:substring(userInfo.NAME, 0, 1)}**";
+			}
+			if(_pHwpCtrl.FieldExist("name" )) {
+				_pHwpCtrl.PutFieldText("name", name);
+			}
+			if(_pHwpCtrl.FieldExist("title1" )){
+				_pHwpCtrl.PutFieldText("title1", title1);
+			}
+			if(_pHwpCtrl.FieldExist("date")){
+				_pHwpCtrl.PutFieldText("date", date);
+			}
+
+			_hwpPutSignImg("sign", "${userInfo.SIGN_DIR }");
+
+			$("#signSave").show();
+			$("#contentsTemp").hide();
+		})
+	}
+	/*function setItem(){
 		//항목 리스트
 		var colList = result.colList;
 		//기업별 점수
@@ -193,7 +430,7 @@
 			_pHwpCtrl.MoveToField("rowTable{{2}}");
 			_pHwpCtrl.Run("TableDeleteRow");
 		}
-	}
+	}*/
 
 	//반올림
 	function qksdhffla(v){
@@ -218,6 +455,8 @@
 		window.open(_g_contextPath_ + "/eval/evalAvoidPopup", 'evalAvoidPop', 'menubar=0,resizable=1,scrollbars=1,status=no,toolbar=no,width=1000,height=280,left=650,top=250');
 	}
 
+
+
 </script>
 <div style="width: 50%;margin: 0 auto;">
 	<div id="signSave" style="display: none;">
@@ -226,6 +465,8 @@
 		<input type="button" onclick="signSaveBtn();" style="float:right; margin-left:10px;" value="다음">
 		<input type="button" onclick="reloadBtn();" style="float:right;" value="새로고침">
 	</div>
-
+	<div id="contentsTemp" ></div>
 	<div id="_pHwpCtrl" style="height: 100%;border: 1px solid lightgray;"></div>
+
 </div>
+

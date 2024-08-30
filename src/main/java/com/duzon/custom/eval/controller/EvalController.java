@@ -314,10 +314,62 @@ public class EvalController {
 
 			}else if(map.get("SIGN_8").equals("N") && map.get("EVAL_JANG").equals("Y")){
 				logger.info("pageInfo ===== /eval/sign/evalSign8");
-				
+				Map<String,Object> resultMap = evalService.getEvalConfirmChk(map);
+
 				//평가 결과
-				model.addAttribute("result", gs.toJson(evalService.getEvalConfirmChk(map)));
-				
+				//model.addAttribute("result", gs.toJson(evalService.getEvalConfirmChk(map)));
+				//System.out.println("sign8 result"+resultMap);
+
+				List<Map<String, Object>> colList = (List<Map<String, Object>>) resultMap.get("colList");
+				//System.out.println("colList"+colList);
+				for (Map<String, Object> item : colList) {
+					String itemMediumName = (String) item.get("item_medium_name");
+					if (itemMediumName != null) {
+						// \n을 \\n으로 대체
+						String escapedItemMediumName = itemMediumName.replace("\n", "\\n");
+						item.put("item_medium_name", escapedItemMediumName);
+					}
+				}
+				//정성평가
+				List<Map<String, Object>> qualitativeList = new ArrayList<>();
+				//정량평가
+				List<Map<String, Object>> quantitativeList = new ArrayList<>();
+
+
+				// 데이터를 eval_type(정성평가,정량평가)에 따라 분류
+				for (Map<String, Object> item : colList) {
+					Object evalTypeObj = item.get("eval_type");
+					String evalType = evalTypeObj.toString().trim();
+
+					if (evalType.equals("정성평가")) {
+						qualitativeList.add(item);
+
+					} else if (evalType.equals("정량평가")) {
+						quantitativeList.add(item);
+					}
+				}
+
+				Map<String, List<Map<String, Object>>> qualitativeGroups = groupByItemName(qualitativeList);
+				Map<String, List<Map<String, Object>>> quantitativeGroups = groupByItemName(quantitativeList);
+
+				System.out.println("정성평가 qualitativeGroups"+qualitativeGroups);
+				System.out.println("정량평가 quantitativeGroups"+quantitativeGroups);
+
+				model.addAttribute("qualitativeGroups", gs.toJson(qualitativeGroups));
+				model.addAttribute("quantitativeGroups", gs.toJson(quantitativeGroups));
+
+				Map<String, List<Map<String, Object>>> list = new HashMap<>();
+				list.put("colList",colList);
+
+				model.addAttribute("list", gs.toJson(list));
+
+				resultMap.remove("colList");
+
+				model.addAttribute("result", gs.toJson(resultMap));
+
+
+				//list = 점수결과
+				//colList = 평가목록 ({committee_seq=385, score_5=12.0, item_seq=2748, item_medium_name=정성중1-1, score_2=18.0, active=Y, score_1=20.0, item_name=정성대1, score_4=14.0, score_3=16.0, score=20, create_date=2024-08-29 11:37:34.0, eval_type=정성평가})
 				return "/eval/sign/evalSign8";
 				
 			}else if(map.get("SIGN_4").equals("N")){

@@ -189,7 +189,71 @@
 		}
 	});
 
+	$.fn.rowspan = function(colIdx, isStats) {       
+		return this.each(function(){      
+			var that;     
+			$('tr', this).each(function(row) {      
+				$('td:eq('+colIdx+')', this).filter(':visible').each(function(col) {
+					
+					if ($(this).html() == $(that).html()
+						&& (!isStats 
+								|| isStats && $(this).prev().html() == $(that).prev().html()
+								)
+						) {            
+						rowspan = $(that).attr("rowspan") || 1;
+						rowspan = Number(rowspan)+1;
 
+						$(that).attr("rowspan",rowspan);
+						
+						// do your action for the colspan cell here            
+						//$(this).hide();
+						
+						$(this).remove(); 
+						// do your action for the old cell here
+						
+					} else {            
+						that = this;         
+					}          
+					
+					// set the that if not already set
+					that = (that == null) ? this : that;      
+				});     
+			});    
+		});  
+	};
+	
+	$.fn.rowspan2 = function(colIdx, isStats) {       
+		return this.each(function(){      
+			var that;     
+			$('tr', this).each(function(row) {      
+				$('td:eq('+colIdx+')', this).filter(':visible').each(function(col) {
+					
+					if ($(this).html() == $(that).html()
+						&& (!isStats 
+								|| isStats && $(this).prev().html() == $(that).prev().html()
+								)
+						) {            
+						rowspan = $(that).attr("rowspan") || 1;
+						rowspan = Number(rowspan)+1;
+
+						$(that).attr("rowspan",rowspan);
+						
+						// do your action for the colspan cell here            
+						//$(this).hide();
+						
+						$(this).remove(); 
+						// do your action for the old cell here
+						
+					} else {            
+						that = this;         
+					}          
+					
+					// set the that if not already set
+					that = (that == null) ? this : that;      
+				});     
+			});    
+		});  
+	}; 
 
 	// 평가 리스트
 	function evalLst(evalCnt){
@@ -239,7 +303,7 @@
 						html += '<span id="successMessage'+compResult[j].eval_company_seq+'" style="font-size:25px; margin-left:10px; margin-bottom:10px; padding-bottom: 15px; display: none;"> 저장완료</span></div>';
 
 						html += '<div class="com_ta">';
-						html += '<table id="listTable" style="width: 100%; margin-bottom:25px">' +
+						html += '<table id="listTable" class="listTable" style="width: 100%; margin-bottom:25px">' +
 								'<colgroup>' +
 								'<col width="10%"/>' +
 								'</colgroup>';
@@ -351,6 +415,8 @@
 
 
 				$("#dataScore").html(html);
+				$('.listTable').rowspan2(1); //rowspan2 - rowspan 순으로 실행시켜야 원하는 모양으로 나타남.
+		  		$('.listTable').rowspan(0);
 				//$("#dataTbody").html(html);
 
 				document.querySelectorAll('.comReMarkInput').forEach(function(textarea, index) {

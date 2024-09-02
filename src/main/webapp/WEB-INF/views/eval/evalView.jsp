@@ -713,10 +713,11 @@
 				alert("평가가 진행 중입니다.\n위원장은 모든 평가위원의 평가가 종료 된 후에 평가 저장이 가능합니다.");
 				return;
 			}
-			else if ($('.evalIndex'+evalCnt+' .comReMarkInput').val().length < 30 || $('.evalIndex'+evalCnt+' .comReMarkInput').val().length > 400){
+
+			/*else if ($('.evalIndex'+evalCnt+' .comReMarkInput').val().length < 30 || $('.evalIndex'+evalCnt+' .comReMarkInput').val().length > 400){
 				alert("평가의견은 30자 이상 400자 이하로 입력해주세요.");
 				return;
-			}
+			}*/
 
 			//유효성 검사 시에 모든 radio버튼이 체크되어있음에도 검사에서 걸림. 다음주에 확인해 볼 것
 			/*var flag = true;
@@ -733,6 +734,17 @@
 				$(focusTarget).focus();
 				return;
 			}*/
+
+			//전체 저장 평가항목 유효성 체크
+			if (!validateScores()) {
+				return;
+			}
+
+			//전체 저장 평가의견 유효성 체크
+			if (!validateRemarks()) {
+				return;
+			}
+
 
 			var data = getData();
 
@@ -752,6 +764,51 @@
 			dataSave(saveData);
 
 		}
+	}
+
+	//전체 저장 시 유효성체크 함수
+	function validateScores() {
+		var scoreRadios = document.querySelectorAll('input.score');
+		var checkedGroups = {};
+
+		scoreRadios.forEach(function(radio) {
+			var compSeq = radio.getAttribute('data-comp-seq');
+
+			if (!radio.disabled) {
+				if (!checkedGroups[compSeq]) {
+					checkedGroups[compSeq] = false;
+				}
+
+				if (radio.checked) {
+					checkedGroups[compSeq] = true;
+				}
+			}
+		});
+
+		for (var group in checkedGroups) {
+			if (!checkedGroups[group]) {
+				alert("평가되지 않은 항목이 있습니다.");
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	//전체 저장 시 평가의견 유효성 체크
+	function validateRemarks() {
+		var remarks = document.querySelectorAll('.comReMarkInput');
+
+		for (var i = 0; i < remarks.length; i++) {
+			var remark = remarks[i].value.trim();
+
+			if (remark.length < 30 || remark.length > 400) {
+				alert("평가의견은 30자 이상 400자 이하로 입력해주세요.");
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	function getCommissionerChk(){

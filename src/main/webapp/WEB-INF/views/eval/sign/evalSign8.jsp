@@ -194,8 +194,9 @@
 			}
 			html += '<td rowspan="' + qualityGroupArray[i].length + '" style="border:1px solid black; border-collapse: collapse; text-align; center; padding-top: 5px; padding-bottom: 5px; width: 100px;">' + qualityGroupArray[i][0].item_name + '<br>('+totalScore+'점)</td>';
 			for(var j =0; j<qualityGroupArray[i].length; j++) {
+				var qualityScore = qksdhffla(qualityGroupArray[i][j].score);
 				html += '<td style="border:1px solid black; border-collapse: collapse; width: 100px; padding-top: 5px; padding-bottom: 5px">' + qualityGroupArray[i][j].item_medium_name + '</td>';
-				html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center;">' + qualityGroupArray[i][j].score + '</td>';
+				html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center;">' + qualityScore + '</td>';
 				for (var h = 0; h < companyCount; h++) {
 
 					var matchingResultScore = '';
@@ -207,7 +208,7 @@
 							//matchingResultScore = list[k].RESULT_SCORE;
 							for (var key in comList[h]) {
 								if (key === itemScoreKey ) {
-									matchingResultScore = comList[h][key];
+									matchingResultScore = qksdhffla(comList[h][key]);
 									break;
 								}
 							}
@@ -257,7 +258,8 @@
 				}else{
 					html += '<td style="border:1px solid black; border-collapse: collapse; padding-top: 5px; padding-bottom: 5px">' + quantityGroupArray[i][j].item_medium_name + '</td>';
 				}
-				html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center;">' + quantityGroupArray[i][j].score + '</td>';
+				var quantityscore = qksdhffla(quantityGroupArray[i][j].score);
+				html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center;">' + quantityscore + '</td>';
 				for (var h = 0; h < companyCount; h++) {
 
 					var matchingResultScore = '';
@@ -269,7 +271,7 @@
 							//matchingResultScore = list[k].RESULT_SCORE;
 							for (var key in comList[h]) {
 								if (key === itemScoreKey ) {
-									matchingResultScore = comList[h][key];
+									matchingResultScore = qksdhffla(comList[h][key]);
 									break;
 								}
 							}
@@ -292,7 +294,8 @@
 		html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center;">100점</td>';
 
 		for (var i = 0; i < companyCount; i++) {
-			html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center;">' + comList[i].TOTAL_SUM + '</td>';
+			var totalScore = qksdhffla(comList[i].TOTAL_SUM);
+			html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center;">' + totalScore + '</td>';
 		}
 
 		html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center;"></td>';

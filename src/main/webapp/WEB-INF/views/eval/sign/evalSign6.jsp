@@ -317,7 +317,7 @@
 					for (var k = 0; k < list.length; k++) {
 						if (list[k].ITEM_SEQ === qualityGroupArray[i][j].item_seq &&
 								list[k].EVAL_COMPANY_SEQ === getCompanyTotal[h].EVAL_COMPANY_SEQ) {
-							matchingResultScore = list[k].RESULT_SCORE;
+							matchingResultScore = totalToFixed(list[k].RESULT_SCORE);
 							break;
 						}
 					}
@@ -370,7 +370,7 @@
 					for (var k = 0; k < list.length; k++) {
 						if (list[k].ITEM_SEQ === quantityGroupArray[i][j].item_seq &&
 								list[k].EVAL_COMPANY_SEQ === getCompanyTotal[h].EVAL_COMPANY_SEQ) {
-							matchingResultScore = list[k].RESULT_SCORE;
+							matchingResultScore = totalToFixed(list[k].RESULT_SCORE);
 							break;
 						}
 					}
@@ -438,7 +438,8 @@
 		html += '<td style="border:1px solid black; border-collapse: collapse;text-align:center;">100</td>';
 
 		for (var i = 0; i < companyCount; i++) {
-			html += '<td style="border:1px solid black; border-collapse: collapse;text-align:center;">' + getCompanyList[i].SCORE_SUM + '</td>';
+			var totalScoreSum = totalToFixed(getCompanyList[i].SCORE_SUM);
+			html += '<td style="border:1px solid black; border-collapse: collapse;text-align:center;">' + totalScoreSum + '</td>';
 		}
 
 		html += '<td style="border:1px solid black; border-collapse: collapse;text-align:center;"></td>';

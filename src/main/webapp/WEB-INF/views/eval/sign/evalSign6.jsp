@@ -307,7 +307,7 @@
 			for (var j = 0; j < qualityGroupArray[i].length; j++) {
 				totalScore += qualityGroupArray[i][j].score;
 			}
-			html += '<td rowspan="' + qualityGroupArray[i].length + '" style="border:1px solid black; width: 70px; border-collapse: collapse; text-align: center;">' + qualityGroupArray[i][0].item_name + '<br>('+totalScore+'점)</td>';
+			html += '<td rowspan="' + qualityGroupArray[i].length + '" style="border:1px solid black; width: 90px; border-collapse: collapse; text-align: center;">' + qualityGroupArray[i][0].item_name + '<br>('+totalScore+'점)</td>';
 			for(var j =0; j<qualityGroupArray[i].length; j++) {
 				html += '<td style="border:1px solid black; border-collapse: collapse; width: 120px; ">' + qualityGroupArray[i][j].item_medium_name + '</td>';
 				html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center;">' + qualityGroupArray[i][j].score + '</td>';

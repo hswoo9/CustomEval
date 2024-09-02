@@ -432,22 +432,22 @@
 	/*getItemColList*/
 		<!-- SELECT * FROM DJ_EVAL_COMMITTEE_ITEM WHERE COMMITTEE_SEQ = #{COMMITTEE_SEQ} AND ACTIVE = 'Y' -->
 		
-		SELECT 
-        ITEM_SEQ, 
-        COMMITTEE_SEQ, 
-        ITEM_NAME, 
-        ITEM_MEDIUM_NAME, 
-        ITEM_SMALL_NAME, 
-        SCORE, 
-        ACTIVE, 
-        EVAL_TYPE, 
-        CREATE_DATE, 
-        SCORE_1, 
-        SCORE_2, 
-        SCORE_3, 
-        SCORE_4, 
-        SCORE_5, 
-        IFNULL(BIG_ITEM_SUM_SCORE,LAG(BIG_ITEM_SUM_SCORE) OVER(ORDER BY T.ITEM_SEQ)) AS BIG_ITEM_SUM_SCORE
+		select 
+        item_seq, 
+        committee_seq, 
+        item_name, 
+        item_medium_name, 
+        item_small_name, 
+        score, 
+        active, 
+        eval_type, 
+        create_date, 
+        score_1, 
+        score_2, 
+        score_3, 
+        score_4, 
+        score_5, 
+        IFNULL(BIG_ITEM_SUM_SCORE,LAG(BIG_ITEM_SUM_SCORE) OVER(ORDER BY T.ITEM_SEQ)) AS big_item_sum_score
         FROM
         (SELECT A.*,
         IFNULL(B.SUM_SCORE,LAG(B.SUM_SCORE) OVER(ORDER BY A.ITEM_SEQ)) AS BIG_ITEM_SUM_SCORE

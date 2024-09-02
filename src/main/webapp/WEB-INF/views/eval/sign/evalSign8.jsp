@@ -156,14 +156,14 @@
 		var html = '';
 
 		var html = '';
-		html += '<table style="border:1px solid black; border-collapse: collapse; width: 630px; table-layout: fixed; margin: auto;">';
+		html += '<table style="border:1px solid black; border-collapse: collapse; width: 640px; table-layout: fixed; margin: auto;">';
 
 		html += '<thead>';
 		html += '<tr>';
-		html += '<th rowspan="2" colspan="3" style="border:1px solid black; border-collapse: collapse; width: 255px; text-align; center;">평가항목</th>';
-		html += '<th rowspan="2" style="border:1px solid black; border-collapse: collapse; width: 35px; text-align; center;">배점</th>';
-		html += '<th colspan="' + companyCount + '" style="border:1px solid black; border-collapse: collapse; width: 300px; text-align; center;">제안업체</th>';
-		html += '<th rowspan="2" style="border:1px solid black; border-collapse: collapse; width: 40px; text-align; center;">비고</th>';
+		html += '<th rowspan="2" colspan="3" style="border:1px solid black; border-collapse: collapse; width: 280px; text-align; center;">평가항목</th>';
+		html += '<th rowspan="2" style="border:1px solid black; border-collapse: collapse; width: 30px; text-align; center;">배점</th>';
+		html += '<th colspan="' + companyCount + '" style="border:1px solid black; border-collapse: collapse; width: 300px; text-align; center; padding-top: 5px; padding-bottom: 5px">제안업체</th>';
+		html += '<th rowspan="2" style="border:1px solid black; border-collapse: collapse; width: 30px; text-align; center;">비고</th>';
 		html += '</tr>';
 
 		html += '<tr>';
@@ -175,7 +175,7 @@
 
 
 		html += '<tbody>';
-		html += '<th rowspan="'+numberOfquality+'" style="border:1px solid black; border-collapse: collapse; width: 20px; text-align; center;">정성평가</th>';
+		html += '<th rowspan="'+numberOfquality+'" style="border:1px solid black; border-collapse: collapse; width: 40px; text-align; center; margin : 5px">정성<br>평가</th>';
 
 		//정성평가
 		var qualityGroupArray = [];
@@ -192,9 +192,9 @@
 			for (var j = 0; j < qualityGroupArray[i].length; j++) {
 				totalScore += qualityGroupArray[i][j].score;
 			}
-			html += '<td rowspan="' + qualityGroupArray[i].length + '" style="border:1px solid black; border-collapse: collapse; text-align; center;">' + qualityGroupArray[i][0].item_name + '('+totalScore+'점)</td>';
+			html += '<td rowspan="' + qualityGroupArray[i].length + '" style="border:1px solid black; border-collapse: collapse; text-align; center; padding-top: 5px; padding-bottom: 5px">' + qualityGroupArray[i][0].item_name + '<br>('+totalScore+'점)</td>';
 			for(var j =0; j<qualityGroupArray[i].length; j++) {
-				html += '<td style="border:1px solid black; border-collapse: collapse; width: 120px; text-align; center;">' + qualityGroupArray[i][j].item_medium_name + '</td>';
+				html += '<td style="border:1px solid black; border-collapse: collapse; width: 100px; padding-top: 5px; padding-bottom: 5px">' + qualityGroupArray[i][j].item_medium_name + '</td>';
 				html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center;">' + qualityGroupArray[i][j].score + '</td>';
 				for (var h = 0; h < companyCount; h++) {
 
@@ -226,7 +226,7 @@
 		}
 
 
-		html += '<th rowspan="'+numberOfquantity+'" style="border:1px solid black; border-collapse: collapse; text-align; center;">정량평가</th>';
+		html += '<th rowspan="'+numberOfquantity+'" style="border:1px solid black; border-collapse: collapse; text-align; center;">정량<br>평가</th>';
 		//정량평가
 		var quantityGroupArray = [];
 		for (var key in quantitativeGroups) {
@@ -250,12 +250,12 @@
 			for (var j = 0; j < quantityGroupArray[i].length; j++) {
 				totalScore += quantityGroupArray[i][j].score;
 			}
-			html += '<td rowspan="' + quantityGroupArray[i].length + '" style="border:1px solid black; border-collapse: collapse; text-align; center;">' + quantityGroupArray[i][0].item_name + '('+totalScore+'점)</td>';
+			html += '<td rowspan="' + quantityGroupArray[i].length + '" style="border:1px solid black; border-collapse: collapse; text-align; center; padding-top: 5px; padding-bottom: 5px">' + quantityGroupArray[i][0].item_name + '<br>('+totalScore+'점)</td>';
 			for(var j =0; j<quantityGroupArray[i].length; j++) {
 				if (quantityGroupArray[i][0].item_name === "상생기업") {
-					html += '<td style="border:1px solid black; border-collapse: collapse;">상생기업 단독 또는 상생기업 컨소시엄<br>상생기업이 아닌 중소기업을 포함한 컨소시엄<br>상생기업이 아닌 일반 기업 단독</td>';
+					html += '<td style="border:1px solid black; border-collapse: collapse; padding-top: 5px; padding-bottom: 5px">상생기업 단독 또는 상생기업 컨소시엄<br>상생기업이 아닌 중소기업을 포함한 컨소시엄<br>상생기업이 아닌 일반 기업 단독</td>';
 				}else{
-					html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center;">' + quantityGroupArray[i][j].item_medium_name + '</td>';
+					html += '<td style="border:1px solid black; border-collapse: collapse; padding-top: 5px; padding-bottom: 5px">' + quantityGroupArray[i][j].item_medium_name + '</td>';
 				}
 				html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center;">' + quantityGroupArray[i][j].score + '</td>';
 				for (var h = 0; h < companyCount; h++) {
@@ -289,7 +289,7 @@
 		//합계
 		//html += '<tr>';
 		html += '<th colspan="3" style="border:1px solid black; border-collapse: collapse; text-align; center;">합&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;계</th>';
-		html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center;">100</td>';
+		html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center;">100점</td>';
 
 		for (var i = 0; i < companyCount; i++) {
 			html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center;">' + comList[i].TOTAL_SUM + '</td>';
@@ -300,7 +300,7 @@
 
 		//환산점수
 		html += '<tr>';
-		html += '<th colspan="4" style="border:1px solid black; border-collapse: collapse; text-align; center;">환산점수( %)</th>';
+		html += '<th colspan="4" style="border:1px solid black; border-collapse: collapse; text-align; center; padding-top: 5px; padding-bottom: 5px">환산점수( %)</th>';
 		for (var i = 0; i < companyCount; i++) {
 			var convertedScore = qksdhffla(comList[i].TOTAL_SUM * (rates / 100));
 			html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center;">'+convertedScore+'</td>';
@@ -311,7 +311,7 @@
 
 		//적격판정
 		html += '<tr>';
-		html += '<th colspan="4" style="border:1px solid black; border-collapse: collapse; text-align; center;">적 격 판 정</th>';
+		html += '<th colspan="4" style="border:1px solid black; border-collapse: collapse; text-align; center; padding-top: 5px; padding-bottom: 5px">적 격 판 정</th>';
 		for (var i = 0; i < companyCount; i++) {
 			var eligibility = comList[i].TOTAL_SUM >= 85 ? '적격' : '부적격';
 			html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center;">'+eligibility+'</td>';
@@ -322,7 +322,7 @@
 
 		//순위
 		html += '<tr>';
-		html += '<th colspan="4" style="border:1px solid black; border-collapse: collapse; text-align; center;">순&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;위</th>';
+		html += '<th colspan="4" style="border:1px solid black; border-collapse: collapse; text-align; center; padding-top: 5px; padding-bottom: 5px">순&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;위</th>';
 		for (var i = 0; i < companyCount; i++) {
 			html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center;">' + comList[i].RANK + '</td>';
 		}

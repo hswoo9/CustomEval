@@ -265,7 +265,7 @@
 									${itemList.item_name }<br>(5점) <!-- 대분류 -->
 								</c:when>
 								<c:otherwise>
-									${itemList.item_name }<br>(${itemList.big_item_sum_score }점) <!-- 대분류 -->
+									${itemList.item_name }<br>(${itemList.BIG_ITEM_SUM_SCORE }점) <!-- 대분류 -->
 								</c:otherwise>
 							</c:choose>
 								

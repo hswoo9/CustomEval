@@ -671,13 +671,22 @@
 			return;
 		}
 
+		var isValid = true;
+
 		textareas.forEach(function(textarea) {
 			var value = textarea.value;
+
 			if (value.length < 30 || value.length > 400) {
 				alert('평가의견은 30자 이상 400자 이하로 입력해주세요.');
+				isValid = false;
 				return;
 			}
+
 		});
+
+		if(!isValid){
+			return;
+		}
 
 		$.ajax({
 			url : '<c:url value="/eval/setScoreData" />',

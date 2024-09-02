@@ -317,8 +317,10 @@
 		SELECT
 		T.*,
 		#{userCnt} AS USER_CNT,
+		SUM(T.SUM_SCORE) AS TOTAL_ITEM_SUM,
 		SUM(T.SUM_SCORE) / #{userCntTotal} AS TOTAL_SUM,
 		<foreach collection="colList" item="col" separator=",">
+			MAX(CASE WHEN T.ITEM_SEQ = #{col.item_seq} THEN T.SUM_SCORE END) AS ITME_SUM_SCORE_#{col.item_seq},
 			MAX(CASE WHEN T.ITEM_SEQ = #{col.item_seq} THEN T.SUM_SCORE / #{userCntTotal} END) AS ITME_SCORE_#{col.item_seq}
 		</foreach>,
 		CASE
@@ -381,7 +383,7 @@
 		) TOTALS
 		ON T.EVAL_COMPANY_SEQ = TOTALS.EVAL_COMPANY_SEQ
 		GROUP BY T.EVAL_COMPANY_SEQ
-		ORDER BY TOTAL_SUM DESC
+		ORDER BY EVAL_COMPANY_SEQ , TOTAL_SUM DESC
 	</select>
 	
 	<select id="getEvalConfirmData2" parameterType="map" resultType="map">
@@ -428,7 +430,12 @@
 	
 	<select id="getItemColList" parameterType="map" resultType="map">
 	/*getItemColList*/
-		SELECT * FROM DJ_EVAL_COMMITTEE_ITEM WHERE COMMITTEE_SEQ = #{COMMITTEE_SEQ} AND ACTIVE = 'Y'
+		<!-- SELECT * FROM DJ_EVAL_COMMITTEE_ITEM WHERE COMMITTEE_SEQ = #{COMMITTEE_SEQ} AND ACTIVE = 'Y' -->
+		SELECT A.*,IFNULL(B.SUM_SCORE,LAG(B.SUM_SCORE) OVER(ORDER BY A.ITEM_SEQ)) AS BIG_ITEM_SUM_SCORE
+		FROM DJ_EVAL_COMMITTEE_ITEM A
+		LEFT JOIN (SELECT *,SUM(SCORE) AS SUM_SCORE FROM DJ_EVAL_COMMITTEE_ITEM WHERE COMMITTEE_SEQ = #{COMMITTEE_SEQ} AND ACTIVE = 'Y' GROUP BY ITEM_NAME ORDER BY ITEM_SEQ) B
+		ON A.ITEM_SEQ = B.ITEM_SEQ
+		WHERE A.COMMITTEE_SEQ = #{COMMITTEE_SEQ} AND A.ACTIVE = 'Y'
 	</select>
 	
 	<update id="setRankCode" parameterType="map">

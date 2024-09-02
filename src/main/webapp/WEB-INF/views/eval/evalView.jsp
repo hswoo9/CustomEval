@@ -734,6 +734,12 @@
 				return;
 			}*/
 
+			//전체 저장 유효성 체크
+			if (!validateScores()) {
+				return;
+			}
+
+
 			var data = getData();
 
 			var itemScoreList = eachRadio();
@@ -752,6 +758,35 @@
 			dataSave(saveData);
 
 		}
+	}
+
+	//전체 저장 시 유효성체크 함수
+	function validateScores() {
+		var scoreRadios = document.querySelectorAll('input.score');
+		var checkedGroups = {};
+
+		scoreRadios.forEach(function(radio) {
+			var compSeq = radio.getAttribute('data-comp-seq');
+
+			if (!radio.disabled) {
+				if (!checkedGroups[compSeq]) {
+					checkedGroups[compSeq] = false;
+				}
+
+				if (radio.checked) {
+					checkedGroups[compSeq] = true;
+				}
+			}
+		});
+
+		for (var group in checkedGroups) {
+			if (!checkedGroups[group]) {
+				alert("평가되지 않은 항목이 있습니다.");
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	function getCommissionerChk(){

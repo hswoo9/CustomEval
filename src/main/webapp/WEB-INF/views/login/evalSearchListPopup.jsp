@@ -180,7 +180,8 @@
             start: "month",
             culture : "ko-KR",
             format : "yyyy-MM-dd",
-            value : new Date().getFullYear() + "-01-01",
+            //value : new Date().getFullYear() + "-01-01",
+            value : new Date(),
             change : function(){
                 var sDt;
                 var nDt;

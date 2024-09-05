@@ -89,7 +89,7 @@
 			<button type="button" class="evalButton" onclick="evalAvoidPopup()" style="width: 120px; float:left;">기피신청</button>
 			<%--<button type="button" class="evalButton" id="prevButton" style="display: none;" onclick="prevEvalBtn();">이전</button>
 			<button type="button" class="evalButton" id="nextButton" onclick="nextEvalBtn();">다음</button>--%>
-			<button type="button" class="evalButton" id="saveButton" style="float: right; margin-left:10px;" onclick="saveBtn();">저장</button>
+			<button type="button" class="evalButton" id="saveButton" style="width: 120px; float: right; margin-left:10px;" onclick="saveBtn();">평가확정</button>
 			<%--<button type="button" class="evalButton" id="saveButton" style="display: none;" onclick="deviationChk();">저장</button>--%>
 			<!-- 			<button type="button" class="evalButton" onclick="nextPageBtn();">다음</button> -->
 		</div>
@@ -777,7 +777,7 @@
 	}
 
 	function saveBtn(){
-		if(confirm('저장하시겠습니까?')){
+		if(confirm('평가확정 이후에는 점수를 수정하실 수 없습니다. 그래도 확정하시겠습니까?')){
 
 			var result = true;
 			if("${userInfo.EVAL_JANG}" == "Y"){

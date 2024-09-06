@@ -333,6 +333,7 @@
 
 			html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center;"></td>';
 			html += '</tr>';
+			html += '<tr>';
 			html += '</tbody>';
 			html += '</table>';
 	}

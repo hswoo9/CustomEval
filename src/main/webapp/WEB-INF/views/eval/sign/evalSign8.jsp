@@ -147,191 +147,195 @@
 
 		$("#signSave").show();
 	}*/
-	function _hwpPutData(){
+	function _hwpPutData() {
 		_pHwpCtrl.MoveToField("contents", true, true, true);
 		_pHwpCtrl.PutFieldText("contents", "\n");
 
 		var companyCount = comList.length;
+		var maxCompaniesPerTable = 9; // 표 당 최대 9개의 제안업체
+		var tableCount = Math.ceil(companyCount / maxCompaniesPerTable); // 필요한 표의 개수 계산
 
 		var html = '';
+		for (var t = 0; t < tableCount; t++) {
+			var currentCompanyCount = Math.min(companyCount - t * maxCompaniesPerTable, maxCompaniesPerTable);
+			html += '<table style="border:1px solid black; border-collapse: collapse; width: 640px; table-layout: fixed; margin: auto;">';
 
-		var html = '';
-		html += '<table style="border:1px solid black; border-collapse: collapse; width: 640px; table-layout: fixed; margin: auto;">';
+			html += '<thead>';
+			html += '<tr>';
+			html += '<th rowspan="2" colspan="3" style="border:1px solid black; border-collapse: collapse; width: 280px; text-align; center;">평가항목</th>';
+			html += '<th rowspan="2" style="border:1px solid black; border-collapse: collapse; width: 30px; text-align; center;">배점</th>';
+			html += '<th colspan="' + currentCompanyCount + '" style="border:1px solid black; border-collapse: collapse; width: 300px; text-align; center; padding-top: 5px; padding-bottom: 5px">제안업체</th>';
+			html += '<th rowspan="2" style="border:1px solid black; border-collapse: collapse; width: 30px; text-align; center;">비고</th>';
+			html += '</tr>';
 
-		html += '<thead>';
-		html += '<tr>';
-		html += '<th rowspan="2" colspan="3" style="border:1px solid black; border-collapse: collapse; width: 280px; text-align; center;">평가항목</th>';
-		html += '<th rowspan="2" style="border:1px solid black; border-collapse: collapse; width: 30px; text-align; center;">배점</th>';
-		html += '<th colspan="' + companyCount + '" style="border:1px solid black; border-collapse: collapse; width: 300px; text-align; center; padding-top: 5px; padding-bottom: 5px">제안업체</th>';
-		html += '<th rowspan="2" style="border:1px solid black; border-collapse: collapse; width: 30px; text-align; center;">비고</th>';
-		html += '</tr>';
-
-		html += '<tr>';
-		for (var i = 0; i < companyCount; i++) {
-			html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center; width : '+ (300/companyCount)+'px">' + String.fromCharCode(65 + i) + '</td>';
-		}
-		html += '</tr>';
-		html += '</thead>';
-
-
-		html += '<tbody>';
-		html += '<th rowspan="'+numberOfquality+'" style="border:1px solid black; border-collapse: collapse; width: 40px; text-align; center; margin : 5px">정성<br>평가</th>';
-
-		//정성평가
-		var qualityGroupArray = [];
-		for (var key in qualitativeGroups) {
-			if (qualitativeGroups.hasOwnProperty(key)) {
-				qualityGroupArray.push(qualitativeGroups[key]);
-				console.log("qualityGroupArray",qualityGroupArray);
+			html += '<tr>';
+			for (var i = 0; i < currentCompanyCount; i++) {
+				html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center; width : ' + (300 / currentCompanyCount) + 'px">' + String.fromCharCode(65 + t * maxCompaniesPerTable + i) + '</td>';
 			}
-		}
-		console.log("qualityGroupArray.length",qualityGroupArray.length);
-
-		for(var i = 0; i<qualityGroupArray.length; i++) {
-			var totalScore = 0;
-			for (var j = 0; j < qualityGroupArray[i].length; j++) {
-				totalScore += qualityGroupArray[i][j].score;
-			}
-			html += '<td rowspan="' + qualityGroupArray[i].length + '" style="border:1px solid black; border-collapse: collapse; text-align; center; padding-top: 5px; padding-bottom: 5px; width: 100px;">' + qualityGroupArray[i][0].item_name + '<br>('+totalScore+'점)</td>';
-			for(var j =0; j<qualityGroupArray[i].length; j++) {
-				var qualityScore = qksdhffla(qualityGroupArray[i][j].score);
-				html += '<td style="border:1px solid black; border-collapse: collapse; width: 100px; padding-top: 5px; padding-bottom: 5px">' + qualityGroupArray[i][j].item_medium_name + '</td>';
-				html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center;">' + qualityScore + '</td>';
-				for (var h = 0; h < companyCount; h++) {
-
-					var matchingResultScore = '';
-					for (var k = 0; k < list.length; k++) {
-						if (list[k].item_seq === qualityGroupArray[i][j].item_seq) {
-
-							var itemScoreKey = 'ITME_SCORE_' + qualityGroupArray[i][j].item_seq;
-
-							//matchingResultScore = list[k].RESULT_SCORE;
-							for (var key in comList[h]) {
-								if (key === itemScoreKey ) {
-									matchingResultScore = qksdhffla(comList[h][key]);
-									break;
-								}
-							}
+			html += '</tr>';
+			html += '</thead>';
 
 
-							break;
-						}
-					}
+			html += '<tbody>';
+			html += '<th rowspan="' + numberOfquality + '" style="border:1px solid black; border-collapse: collapse; width: 40px; text-align; center; margin : 5px">정성<br>평가</th>';
 
-					html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center;" name="score" it_seq="' + qualityGroupArray[i][j].item_seq + '" data-comp-seq="' + comList[h].EVAL_COMPANY_SEQ+ '">' + matchingResultScore + '</td>';
+			//정성평가
+			var qualityGroupArray = [];
+			for (var key in qualitativeGroups) {
+				if (qualitativeGroups.hasOwnProperty(key)) {
+					qualityGroupArray.push(qualitativeGroups[key]);
+
 				}
-				html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center;"></td>';
-				html += '</tr>'
-				html += '<tr>'
 			}
-		}
 
 
-		html += '<th rowspan="'+numberOfquantity+'" style="border:1px solid black; border-collapse: collapse; text-align; center;">정량<br>평가</th>';
-		//정량평가
-		var quantityGroupArray = [];
-		for (var key in quantitativeGroups) {
-			if (quantitativeGroups.hasOwnProperty(key)) {
-				quantityGroupArray.push(quantitativeGroups[key]);
-			}
-		}
+			for (var i = 0; i < qualityGroupArray.length; i++) {
+				var totalScore = 0;
+				for (var j = 0; j < qualityGroupArray[i].length; j++) {
+					totalScore += qualityGroupArray[i][j].score;
+				}
+				html += '<td rowspan="' + qualityGroupArray[i].length + '" style="border:1px solid black; border-collapse: collapse; text-align; center; padding-top: 5px; padding-bottom: 5px; width: 100px;">' + qualityGroupArray[i][0].item_name + '<br>(' + totalScore + '점)</td>';
+				for (var j = 0; j < qualityGroupArray[i].length; j++) {
+					var qualityScore = qksdhffla(qualityGroupArray[i][j].score);
+					html += '<td style="border:1px solid black; border-collapse: collapse; width: 100px; padding-top: 5px; padding-bottom: 5px">' + qualityGroupArray[i][j].item_medium_name + '</td>';
+					html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center;">' + qualityScore + '</td>';
+					for (var h = t * maxCompaniesPerTable; h < t * maxCompaniesPerTable + currentCompanyCount; h++) {
 
-		//상생평가를 배열의 가장 뒤로 보내기
-		for (var i = 0; i < quantityGroupArray.length; i++) {
-			if (quantityGroupArray[i][0].item_name === "상생기업") {
-				var saengsengItem = quantityGroupArray.splice(i, 1)[0];
-				quantityGroupArray.push(saengsengItem);
-				break;
-			}
-		}
+						var matchingResultScore = '';
+						for (var k = 0; k < list.length; k++) {
+							if (list[k].item_seq === qualityGroupArray[i][j].item_seq) {
 
-		console.log("quantityGroupArray.length",quantityGroupArray.length);
-		for(var i = 0; i<quantityGroupArray.length; i++) {
-			var totalScore = 0;
-			for (var j = 0; j < quantityGroupArray[i].length; j++) {
-				totalScore += quantityGroupArray[i][j].score;
+								var itemScoreKey = 'ITME_SCORE_' + qualityGroupArray[i][j].item_seq;
+
+								//matchingResultScore = list[k].RESULT_SCORE;
+								for (var key in comList[h]) {
+									if (key === itemScoreKey) {
+										matchingResultScore = qksdhffla(comList[h][key]);
+										break;
+									}
+								}
+
+
+								break;
+							}
+						}
+
+						html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center;" name="score" it_seq="' + qualityGroupArray[i][j].item_seq + '" data-comp-seq="' + comList[h].EVAL_COMPANY_SEQ + '">' + matchingResultScore + '</td>';
+					}
+					html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center;"></td>';
+					html += '</tr>'
+					html += '<tr>'
+				}
 			}
-			html += '<td rowspan="' + quantityGroupArray[i].length + '" style="border:1px solid black; border-collapse: collapse; text-align; center; padding-top: 5px; padding-bottom: 5px">' + quantityGroupArray[i][0].item_name + '<br>('+totalScore+'점)</td>';
-			for(var j =0; j<quantityGroupArray[i].length; j++) {
+
+
+			html += '<th rowspan="' + numberOfquantity + '" style="border:1px solid black; border-collapse: collapse; text-align; center;">정량<br>평가</th>';
+			//정량평가
+			var quantityGroupArray = [];
+			for (var key in quantitativeGroups) {
+				if (quantitativeGroups.hasOwnProperty(key)) {
+					quantityGroupArray.push(quantitativeGroups[key]);
+				}
+			}
+
+			//상생평가를 배열의 가장 뒤로 보내기
+			for (var i = 0; i < quantityGroupArray.length; i++) {
 				if (quantityGroupArray[i][0].item_name === "상생기업") {
-					html += '<td style="border:1px solid black; border-collapse: collapse; padding-top: 5px; padding-bottom: 5px">상생기업 단독 또는 상생기업 컨소시엄<br>상생기업이 아닌 중소기업을 포함한 컨소시엄<br>상생기업이 아닌 일반 기업 단독</td>';
-				}else{
-					html += '<td style="border:1px solid black; border-collapse: collapse; padding-top: 5px; padding-bottom: 5px">' + quantityGroupArray[i][j].item_medium_name + '</td>';
+					var saengsengItem = quantityGroupArray.splice(i, 1)[0];
+					quantityGroupArray.push(saengsengItem);
+					break;
 				}
-				var quantityscore = qksdhffla(quantityGroupArray[i][j].score);
-				html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center;">' + quantityscore + '</td>';
-				for (var h = 0; h < companyCount; h++) {
-
-					var matchingResultScore = '';
-					for (var k = 0; k < list.length; k++) {
-						if (list[k].item_seq === quantityGroupArray[i][j].item_seq) {
-
-							var itemScoreKey = 'ITME_SCORE_' + quantityGroupArray[i][j].item_seq;
-
-							//matchingResultScore = list[k].RESULT_SCORE;
-							for (var key in comList[h]) {
-								if (key === itemScoreKey ) {
-									matchingResultScore = qksdhffla(comList[h][key]);
-									break;
-								}
-							}
-
-
-							break;
-						}
-					}
-
-					html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center;" name="score" it_seq="' + quantityGroupArray[i][j].item_seq + '" data-comp-seq="' + comList[h].EVAL_COMPANY_SEQ+ '">' + matchingResultScore + '</td>';
-				}
-				html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center;"></td>';
-				html += '</tr>'
-				html += '<tr>'
 			}
-		}
-		//합계
-		//html += '<tr>';
-		html += '<th colspan="3" style="border:1px solid black; border-collapse: collapse; text-align; center;">합&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;계</th>';
-		html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center;">100점</td>';
 
-		for (var i = 0; i < companyCount; i++) {
-			var totalScore = qksdhffla(comList[i].TOTAL_SUM);
-			html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center;">' + totalScore + '</td>';
-		}
+			for (var i = 0; i < quantityGroupArray.length; i++) {
+				var totalScore = 0;
+				for (var j = 0; j < quantityGroupArray[i].length; j++) {
+					totalScore += quantityGroupArray[i][j].score;
+				}
+				html += '<td rowspan="' + quantityGroupArray[i].length + '" style="border:1px solid black; border-collapse: collapse; text-align; center; padding-top: 5px; padding-bottom: 5px">' + quantityGroupArray[i][0].item_name + '<br>(' + totalScore + '점)</td>';
+				for (var j = 0; j < quantityGroupArray[i].length; j++) {
+					if (quantityGroupArray[i][0].item_name === "상생기업") {
+						html += '<td style="border:1px solid black; border-collapse: collapse; padding-top: 5px; padding-bottom: 5px">상생기업 단독 또는 상생기업 컨소시엄<br>상생기업이 아닌 중소기업을 포함한 컨소시엄<br>상생기업이 아닌 일반 기업 단독</td>';
+					} else {
+						html += '<td style="border:1px solid black; border-collapse: collapse; padding-top: 5px; padding-bottom: 5px">' + quantityGroupArray[i][j].item_medium_name + '</td>';
+					}
+					var quantityscore = qksdhffla(quantityGroupArray[i][j].score);
+					html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center;">' + quantityscore + '</td>';
+					for (var h = t * maxCompaniesPerTable; h < t * maxCompaniesPerTable + currentCompanyCount; h++) {
 
-		html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center;"></td>';
-		html += '</tr>';
+						var matchingResultScore = '';
+						for (var k = 0; k < list.length; k++) {
+							if (list[k].item_seq === quantityGroupArray[i][j].item_seq) {
 
-		//환산점수
-		html += '<tr>';
-		html += '<th colspan="4" style="border:1px solid black; border-collapse: collapse; text-align; center; padding-top: 5px; padding-bottom: 5px">환산점수( %)</th>';
-		for (var i = 0; i < companyCount; i++) {
-			var convertedScore = qksdhffla(comList[i].TOTAL_SUM * (rates / 100));
-			html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center;">'+convertedScore+'</td>';
-		}
+								var itemScoreKey = 'ITME_SCORE_' + quantityGroupArray[i][j].item_seq;
 
-		html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center;"></td>';
-		html += '</tr>';
+								//matchingResultScore = list[k].RESULT_SCORE;
+								for (var key in comList[h]) {
+									if (key === itemScoreKey) {
+										matchingResultScore = qksdhffla(comList[h][key]);
+										break;
+									}
+								}
 
-		//적격판정
-		html += '<tr>';
-		html += '<th colspan="4" style="border:1px solid black; border-collapse: collapse; text-align; center; padding-top: 5px; padding-bottom: 5px">적 격 판 정</th>';
-		for (var i = 0; i < companyCount; i++) {
-			var eligibility = comList[i].TOTAL_SUM >= 85 ? '적격' : '부적격';
-			html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center;">'+eligibility+'</td>';
-		}
 
-		html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center;"></td>';
-		html += '</tr>';
+								break;
+							}
+						}
 
-		//순위
-		html += '<tr>';
-		html += '<th colspan="4" style="border:1px solid black; border-collapse: collapse; text-align; center; padding-top: 5px; padding-bottom: 5px">순&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;위</th>';
-		for (var i = 0; i < companyCount; i++) {
-			html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center;">' + comList[i].RANK + '</td>';
-		}
+						html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center;" name="score" it_seq="' + quantityGroupArray[i][j].item_seq + '" data-comp-seq="' + comList[h].EVAL_COMPANY_SEQ + '">' + matchingResultScore + '</td>';
+					}
+					html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center;"></td>';
+					html += '</tr>'
+					html += '<tr>'
+				}
+			}
+			//합계
+			//html += '<tr>';
+			html += '<th colspan="3" style="border:1px solid black; border-collapse: collapse; text-align; center;">합&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;계</th>';
+			html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center;">100점</td>';
 
-		html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center;"></td>';
-		html += '</tr>';
+			for (var i = t * maxCompaniesPerTable; i < t * maxCompaniesPerTable + currentCompanyCount; i++) {
+				var totalScore = qksdhffla(comList[i].TOTAL_SUM);
+				html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center;">' + totalScore + '</td>';
+			}
+
+			html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center;"></td>';
+			html += '</tr>';
+
+			//환산점수
+			html += '<tr>';
+			html += '<th colspan="4" style="border:1px solid black; border-collapse: collapse; text-align; center; padding-top: 5px; padding-bottom: 5px">환산점수( %)</th>';
+			for (var i = t * maxCompaniesPerTable; i < t * maxCompaniesPerTable + currentCompanyCount; i++) {
+				var convertedScore = qksdhffla(comList[i].TOTAL_SUM * (rates / 100));
+				html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center;">' + convertedScore + '</td>';
+			}
+
+			html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center;"></td>';
+			html += '</tr>';
+
+			//적격판정
+			html += '<tr>';
+			html += '<th colspan="4" style="border:1px solid black; border-collapse: collapse; text-align; center; padding-top: 5px; padding-bottom: 5px">적 격 판 정</th>';
+			for (var i = t * maxCompaniesPerTable; i < t * maxCompaniesPerTable + currentCompanyCount; i++) {
+				var eligibility = comList[i].TOTAL_SUM >= 85 ? '적격' : '부적격';
+				html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center;">' + eligibility + '</td>';
+			}
+
+			html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center;"></td>';
+			html += '</tr>';
+
+			//순위
+			html += '<tr>';
+			html += '<th colspan="4" style="border:1px solid black; border-collapse: collapse; text-align; center; padding-top: 5px; padding-bottom: 5px">순&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;위</th>';
+			for (var i = t * maxCompaniesPerTable; i < t * maxCompaniesPerTable + currentCompanyCount; i++) {
+				html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center;">' + comList[i].RANK + '</td>';
+			}
+
+			html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center;"></td>';
+			html += '</tr>';
+			html += '</tbody>';
+			html += '</table>';
+	}
 
 		document.getElementById('contentsTemp').innerHTML = html;
 

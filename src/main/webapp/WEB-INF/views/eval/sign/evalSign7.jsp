@@ -204,7 +204,7 @@
 
 		<%
 			int userCount = (Integer) pageContext.getAttribute("userCount");
-			int maxUserCount = 9;
+			int maxUserCount = 5;
 			int tableCount = (int) Math.ceil((double) userCount / maxUserCount);
 			int endTableCount = (tableCount-1);
 
@@ -265,7 +265,7 @@
 					</TD>
 				</TR>
 				<TR>
-					<TD rowspan="2" colspan="3" valign="middle" style='width:405px;height:74px;border-left:solid #000000 0.9pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
+					<TD rowspan="2" colspan="3" valign="middle" style='width:350px;height:74px;border-left:solid #000000 0.9pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
 						<P CLASS=HStyle0 STYLE='text-align:center;line-height:150%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움"; font-size:11px;'>평가항목</SPAN></P>
 					</TD>
 					<TD rowspan="2" valign="middle" style='width:40px;height:74px;border-left:solid #000000 0.9pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
@@ -332,7 +332,7 @@
 
 
 						</TD>
-						<TD valign="middle"  style='width:280px;height:30px;border-left:solid #000000 0.9pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
+						<TD valign="middle"  style='width:225px;height:30px;border-left:solid #000000 0.9pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
 							<P CLASS=HStyle0 STYLE='text-align:left;line-height:150%;'>
 								<c:choose>
 									<c:when test="${result[0].colList[colIndex].item_name == '상생기업'}">

@@ -296,6 +296,7 @@ public class EvalController {
 //				
 //				//회사
 				model.addAttribute("getCompanyList", getCompanyList);
+				System.out.println("********getCompanyList********* : "+ getCompanyList);
 //
 //				//결과
 				List<Map<String, Object>> resultList = new ArrayList<Map<String, Object>>();
@@ -309,6 +310,7 @@ public class EvalController {
 				}
 //				
 				model.addAttribute("result", resultList);
+				System.out.println("********result********* : "+ resultList);
 				
 				return "/eval/sign/evalSign7";
 
@@ -366,6 +368,7 @@ public class EvalController {
 				resultMap.remove("colList");
 
 				model.addAttribute("result", gs.toJson(resultMap));
+
 
 
 				//list = 점수결과

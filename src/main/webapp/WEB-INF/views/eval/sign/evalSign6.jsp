@@ -17,6 +17,7 @@
 	var getCompanyTotal = JSON.parse('${companyTotal}');
 	var qualitativeGroups = JSON.parse('${qualitativeGroups}');
 	var quantitativeGroups = JSON.parse('${quantitativeGroups}');
+	console.log("getCompanyTotal",getCompanyTotal);
 
 	var numberOfquality= 0;
 	for (var key in qualitativeGroups) {
@@ -379,7 +380,7 @@
 			html += '<th colspan="3" style="border:1px solid black; border-collapse: collapse;text-align:center;">합계</th>';
 			html += '<td style="border:1px solid black; border-collapse: collapse;text-align:center;">100</td>';
 			for (var i = t * maxCompaniesPerTable; i < t * maxCompaniesPerTable + currentCompanyCount; i++) {
-				var totalScoreSum = totalToFixed(getCompanyList[i].SCORE_SUM);
+				var totalScoreSum = totalToFixed(getCompanyTotal[i].real_score);
 				html += '<td style="border:1px solid black; border-collapse: collapse;text-align:center;">' + totalScoreSum + '</td>';
 			}
 			html += '<td style="border:1px solid black; border-collapse: collapse;text-align:center;"></td>';

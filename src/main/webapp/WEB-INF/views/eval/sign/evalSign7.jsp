@@ -234,6 +234,7 @@
 					int currentUserCount = Math.min(userCount - startIndex, maxUserCount);
 					int adjustedUserCount = currentUserCount + 4;
 
+
 					pageContext.setAttribute("currentUserCount", currentUserCount);
 					pageContext.setAttribute("adjustedUserCount", adjustedUserCount);
 
@@ -271,7 +272,7 @@
 					<TD rowspan="2" valign="middle" style='width:40px;height:74px;border-left:solid #000000 0.9pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
 						<P CLASS=HStyle0 STYLE='text-align:center;line-height:150%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움";'>배점</SPAN></P>
 					</TD>
-					<TD colspan="<%= currentUserCount %>" valign="middle" style='height:28px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
+					<TD colspan="<%= currentUserCount %>" valign="middle" style='width : 450px; height:28px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
 						<P CLASS=HStyle0 STYLE='text-align:center;line-height:130%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움";'>평가위원</SPAN></P>
 					</TD>
 					<TD rowspan="2" valign="middle" style='width:60px;height:74px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
@@ -288,7 +289,7 @@
 				<TR>
 					<%--<c:forEach items="${result[0].list }" var="userList">--%>
 					<c:forEach var="index" items="${indices}">
-						<TD valign="middle" style='width:51px;height:46px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
+						<TD valign="middle" style='width:<%= 450 / currentUserCount %>px;height:46px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
 							<P CLASS=HStyle0 STYLE='text-align:center;line-height:130%;'>
 								<c:choose>
 									<c:when test="${userInfo.EVAL_BLIND_YN eq 'Y'}">

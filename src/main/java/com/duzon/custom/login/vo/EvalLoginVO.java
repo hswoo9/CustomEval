@@ -12,8 +12,12 @@ public class EvalLoginVO {
 	private String pw;
     private String birth;
 	private String title;
+	private String phone;
 	private boolean evalFlag;
 
+	public String getPhone() { return phone;}
+
+	public void setPhone(String phone) {this.phone = phone;}
 
     public String getBirth() {
         return birth;

@@ -41,15 +41,18 @@ $(function(){
                <form id="loginForm" action="<c:url value='/login' />" method="post">
                	<input type="hidden" id="isScLogin" name="isScLogin" value="">
                    <fieldset>
-                       <input type="text" class="inp engfix" id="commtitle" name="title" placeholder="평가제목 입력" value="" readonly>
-                       <button type="button"
-                               class="k-button k-button-md k-button-solid k-button-solid-base"
-                               onclick="evalSearchPopup()">
-                           <span class="k-icon k-i-search k-button-icon"></span>
-                       </button>
+                       <div style="position: relative;">
+                           <input type="text" class="inp engfix" id="commtitle" name="title" placeholder="평가제목 입력" value="" readonly>
+                               <button type="button"
+                                       class="k-button k-button-md k-button-solid k-button-solid-base"
+                                       onclick="evalSearchPopup()"
+                                       style="position: absolute; right: 0; top: 50%; transform: translateY(-50%); margin-right: 130px; margin-top: 3.5px;">
+                                   <span class="k-icon k-i-search k-button-icon"></span>
+                               </button>
+                         </div>
                        <input type="text" class="inp engfix" id="userId" name="id" placeholder="이름 입력" value="">
                        <input type="password" class="inp engfix" id="userPw" name="pw" placeholder="비밀번호 입력" value="">
-                       <input type="text" class="inp engfix" id="userPhone" name="phone" placeholder="휴대폰 입력" value="">
+                       <input type="text" class="inp engfix" id="userPhone" name="phone" placeholder="전화번호 입력 (-포함)" value="">
 
                        <div class="log_btn">
                            <input type="image" value="로그인" src="<c:url value='/resources/Images/btn/login_b2_type_btn.png' />" onclick="actionLogin();return false;">

@@ -158,19 +158,19 @@
 		var html = '';
 		for (var t = 0; t < tableCount; t++) {
 			var currentCompanyCount = Math.min(companyCount - t * maxCompaniesPerTable, maxCompaniesPerTable);
-			html += '<table style="border:1px solid black; border-collapse: collapse; width: 640px; table-layout: fixed; margin: auto;">';
+			html += '<table style="border:1px solid black; border-collapse: collapse; width: 930px; table-layout: fixed; margin: auto;">';
 
 			html += '<thead>';
 			html += '<tr>';
-			html += '<th rowspan="2" colspan="3" style="border:1px solid black; border-collapse: collapse; width: 280px; text-align; center;">평가항목</th>';
-			html += '<th rowspan="2" style="border:1px solid black; border-collapse: collapse; width: 30px; text-align; center;">배점</th>';
-			html += '<th colspan="' + currentCompanyCount + '" style="border:1px solid black; border-collapse: collapse; width: 300px; text-align; center; padding-top: 5px; padding-bottom: 5px">제안업체</th>';
-			html += '<th rowspan="2" style="border:1px solid black; border-collapse: collapse; width: 30px; text-align; center;">비고</th>';
+			html += '<th rowspan="2" colspan="3" style="border:1px solid black; border-collapse: collapse; width: 430px; text-align; center;">평가항목</th>';
+			html += '<th rowspan="2" style="border:1px solid black; border-collapse: collapse; width: 40px; text-align; center;">배점</th>';
+			html += '<th colspan="' + currentCompanyCount + '" style="border:1px solid black; border-collapse: collapse; width: 510px; text-align; center; padding-top: 5px; padding-bottom: 5px">제안업체</th>';
+			html += '<th rowspan="2" style="border:1px solid black; border-collapse: collapse; width:50px; text-align; center;">비고</th>';
 			html += '</tr>';
 
 			html += '<tr>';
 			for (var i = 0; i < currentCompanyCount; i++) {
-				html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center; width : ' + (300 / currentCompanyCount) + 'px">' + String.fromCharCode(65 + t * maxCompaniesPerTable + i) + '</td>';
+				html += '<td style="border:1px solid black; border-collapse: collapse; text-align; center; width : ' + (510 / currentCompanyCount) + 'px">' + String.fromCharCode(65 + t * maxCompaniesPerTable + i) + '</td>';
 			}
 			html += '</tr>';
 			html += '</thead>';
@@ -466,7 +466,7 @@
 
 
 </script>
-<div style="width: 50%;margin: 0 auto;">
+<div style="width: 80%;margin: 0 auto;">
 	<div id="signSave" style="display: none;">
 <%--		<input type="button" onclick="OnConnectDevice();" value="서명하기">--%>
 		<input type="hidden" onclick="evalAvoidPopup()" value="기피신청">

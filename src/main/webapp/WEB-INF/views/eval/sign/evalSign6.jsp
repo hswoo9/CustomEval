@@ -276,19 +276,19 @@
 		var html = '';
 		for (var t = 0; t < tableCount; t++) {
 			var currentCompanyCount = Math.min(companyCount - t * maxCompaniesPerTable, maxCompaniesPerTable); // 현재 표에 들어갈 제안업체 수
-			html += '<table style="border:1px solid black; border-collapse: collapse; width: 630px; table-layout: fixed; margin: auto;">';
+			html += '<table style="border:1px solid black; border-collapse: collapse; width: 930px; table-layout: fixed; margin : auto;">';
 
 			html += '<thead>';
 			html += '<tr>';
-			html += '<th rowspan="2" colspan="3" style="border:1px solid black; border-collapse: collapse; width: 285px; text-align; center;">평가항목</th>';
-			html += '<th rowspan="2" style="border:1px solid black; border-collapse: collapse; width: 35px; text-align; center;">배점</th>';
-			html += '<th colspan="' + currentCompanyCount + '" style="border:1px solid black; border-collapse: collapse; width: 270px; text-align; center;">제안업체</th>';
+			html += '<th rowspan="2" colspan="3" style="border:1px solid black; border-collapse: collapse; width: 400px; text-align; center;">평가항목</th>';
+			html += '<th rowspan="2" style="border:1px solid black; border-collapse: collapse; width: 40px; text-align; center;">배점</th>';
+			html += '<th colspan="' + currentCompanyCount + '" style="border:1px solid black; border-collapse: collapse; width: 450px; text-align; center;">제안업체</th>';
 			html += '<th rowspan="2" style="border:1px solid black; border-collapse: collapse; width: 40px; text-align; center;">비고</th>';
 			html += '</tr>';
 
 			html += '<tr>';
 			for (var i = 0; i < currentCompanyCount; i++) {
-				html += '<td style="border:1px solid black; border-collapse: collapse; text-align: center; width : ' + (270 / currentCompanyCount) + 'px">' + String.fromCharCode(65 + t * maxCompaniesPerTable + i) + '</td>';
+				html += '<td style="border:1px solid black; border-collapse: collapse; text-align: center; width : ' + (450 / currentCompanyCount) + 'px">' + String.fromCharCode(65 + t * maxCompaniesPerTable + i) + '</td>';
 			}
 			html += '</tr>';
 			html += '</thead>';
@@ -308,9 +308,9 @@
 				for (var j = 0; j < qualityGroupArray[i].length; j++) {
 					totalScore += qualityGroupArray[i][j].score;
 				}
-				html += '<td rowspan="' + qualityGroupArray[i].length + '" style="border:1px solid black; width: 100px; border-collapse: collapse; text-align: center;">' + qualityGroupArray[i][0].item_name + '<br>(' + totalScore + '점)</td>';
+				html += '<td rowspan="' + qualityGroupArray[i].length + '" style="border:1px solid black; width: 150px; border-collapse: collapse; text-align: center;">' + qualityGroupArray[i][0].item_name + '<br>(' + totalScore + '점)</td>';
 				for (var j = 0; j < qualityGroupArray[i].length; j++) {
-					html += '<td style="border:1px solid black; border-collapse: collapse; width: 110px;">' + qualityGroupArray[i][j].item_medium_name + '</td>';
+					html += '<td style="border:1px solid black; border-collapse: collapse; width: 250px;">' + qualityGroupArray[i][j].item_medium_name + '</td>';
 					html += '<td style="border:1px solid black; border-collapse: collapse; text-align: center;">' + qualityGroupArray[i][j].score + '</td>';
 					for (var h = t * maxCompaniesPerTable; h < t * maxCompaniesPerTable + currentCompanyCount; h++) {
 
@@ -470,7 +470,7 @@
 	}
 
 </script>
-<div style="width: 50%;margin: 0 auto;">
+<div style="width: 80%;margin: 0 auto;">
 	<div id="signSave" style="display: none;">
 		<input type="button" onclick="evalAvoidPopup()" value="기피신청">
 		<input type="button" onclick="signSaveBtn();" style="float:right;" value="다음">

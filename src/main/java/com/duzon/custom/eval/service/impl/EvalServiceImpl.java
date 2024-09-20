@@ -142,9 +142,23 @@ public class EvalServiceImpl implements EvalService {
 		String cnt = String.valueOf(chkList.get("cnt"));
 
 		if( userCnt.equals(cnt) ){
-			evalDAO.setJangUpdate(map);
-			evalDAO.setEvalJangCntCn(map);
-			result = "Y";
+			List<Map<String, Object>> jangCntList = evalDAO.getJangCnt(map);
+			if (jangCntList.size() == 1) {
+				Map<String, Object> jangCnt = jangCntList.get(0);
+				Object updateSeq = jangCnt.get("COMMISSIONER_SEQ");
+
+				Map<String, Object> jangCntMap = new HashMap<>();
+				jangCntMap.put("updateSeq",updateSeq);
+
+				evalDAO.setJangUpdate(jangCntMap);
+				evalDAO.setEvalJangCntCn(map);
+				result = "Y";
+
+			}else if (jangCntList.size() > 1) {
+				evalDAO.setEvalJangReSelected(map);
+				evalDAO.setEvalJangCntCn(map);
+				result = "O";
+			}
 		}
 
 		return result;

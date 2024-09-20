@@ -145,7 +145,10 @@ function evalApply(){
 
 	        	if(result == 'Y'){
 	        		location.href = "<c:url value='/eval/evalView' />";	
-	        	}else{
+	        	}else if(result == 'O'){
+					alert('동점자가 있습니다. 다시 투표해주세요.');
+					location.reload();
+				}else{
 	        		evalApplyData = data;
 	        		timeIn = setInterval(getEvalJang, 1000);
 	        	}

@@ -224,4 +224,10 @@ public class EvalDAO extends AbstractDAO{
 	public List<Map<String, Object>> getSignList(Map<String, Object> params){
 		return selectList("eval.getSignList", params);
 	}
+
+	public List<Map<String, Object>> getJangCnt(Map<String, Object> map) {
+		return selectList("eval.getJangCnt", map);
+	}
+
+
 }

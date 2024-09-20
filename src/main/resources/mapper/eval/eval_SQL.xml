@@ -243,12 +243,25 @@
         WHERE
             COMMITTEE_SEQ = #{committee_seq}
     </update>
-	
+
+	<update id="setEvalJangCntChk" parameterType="map">
+		UPDATE CUST_EPIS.DJ_EVAL_COMMISSIONER
+		SET
+			EVA_JANG_CHK = 'N'
+		WHERE
+			COMMITTEE_SEQ = #{committee_seq}
+	</update>
+
+	<select id="getJangCnt" parameterType="map" resultType="int">
+		SELECT COMMISSIONER_SEQ FROM DJ_EVAL_COMMISSIONER WHERE COMMITTEE_SEQ = #{committee_seq} AND ACTIVE = 'Y'
+		AND EVAL_JANG_CNT = (SELECT MAX(EVAL_JANG_CNT) FROM DJ_EVAL_COMMISSIONER WHERE COMMITTEE_SEQ = #{committee_seq} AND ACTIVE = 'Y')
+	</select>
+
 	<update id="setJangUpdate" parameterType="map">
-		<selectKey order="BEFORE" keyProperty="updateSeq" resultType="int">
+		<!--<selectKey order="BEFORE" keyProperty="updateSeq" resultType="int">
 			SELECT COMMISSIONER_SEQ FROM DJ_EVAL_COMMISSIONER WHERE COMMITTEE_SEQ = #{committee_seq} AND ACTIVE = 'Y' 
         	AND EVAL_JANG_CNT = (SELECT MAX(EVAL_JANG_CNT) FROM DJ_EVAL_COMMISSIONER WHERE COMMITTEE_SEQ = #{committee_seq} AND ACTIVE = 'Y')
-		</selectKey>
+		</selectKey>-->
 		/*setJangUpdate*/
 		UPDATE DJ_EVAL_COMMISSIONER SET 
 		    EVAL_JANG = 'Y'

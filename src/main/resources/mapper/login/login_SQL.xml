@@ -10,7 +10,7 @@
 		WHERE A.committee_seq = B.committee_seq
 		  AND A.EVAL_ID = #{id}
 		  AND A.EVAL_RANDOMPW = #{pw}
-		  AND A.EVAL_PHONE = #{phone}
+		  AND REPLACE(A.EVAL_PHONE, '-', '') = #{phone}
 		  AND B.TITLE =#{title}
           AND A.EVAL_AVOID = "N"
           AND A.ATTEND_YN = "Y"

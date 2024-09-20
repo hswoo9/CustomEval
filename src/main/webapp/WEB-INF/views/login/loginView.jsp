@@ -52,7 +52,7 @@ $(function(){
                          </div>
                        <input type="text" class="inp engfix" id="userId" name="id" placeholder="이름 입력" value="">
                        <input type="password" class="inp engfix" id="userPw" name="pw" placeholder="비밀번호 입력" value="">
-                       <input type="text" class="inp engfix" id="userPhone" name="phone" placeholder="전화번호 입력 (-포함)" value="">
+                       <input type="text" class="inp engfix" id="userPhone" name="phone" placeholder="전화번호 입력" value="">
 
                        <div class="log_btn">
                            <input type="image" value="로그인" src="<c:url value='/resources/Images/btn/login_b2_type_btn.png' />" onclick="actionLogin();return false;">

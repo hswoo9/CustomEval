@@ -244,10 +244,10 @@
             COMMITTEE_SEQ = #{committee_seq}
     </update>
 
-	<update id="setEvalJangCntChk" parameterType="map">
+	<update id="setEvalJangChkTie" parameterType="map">
 		UPDATE CUST_EPIS.DJ_EVAL_COMMISSIONER
 		SET
-			EVA_JANG_CHK = 'N'
+			EVA_JANG_CHK = 'O'
 		WHERE
 			COMMITTEE_SEQ = #{committee_seq}
 	</update>
@@ -272,6 +272,11 @@
 	<select id="getEvalJang" parameterType="map" resultType="string">
 	/*getEvalJang*/
 		SELECT CASE WHEN COUNT(1) = 0 THEN 'N' ELSE 'Y' END FROM DJ_EVAL_COMMISSIONER WHERE COMMITTEE_SEQ = #{committee_seq} AND ACTIVE = 'Y' AND EVAL_JANG = 'Y'
+	</select>
+
+	<select id="getEvalTieChk" parameterType="map" resultType="string">
+		/*getEvalTieChk*/
+		SELECT CASE WHEN COUNT(1) = 0 THEN 'N' ELSE 'Y' END FROM DJ_EVAL_COMMISSIONER WHERE COMMITTEE_SEQ = #{committee_seq} AND ACTIVE = 'Y' AND EVA_JANG_CHK = 'O'
 	</select>
 
 	<select id="getEvalId" parameterType="map" resultType="string">

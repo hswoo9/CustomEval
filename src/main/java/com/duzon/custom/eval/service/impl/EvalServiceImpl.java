@@ -155,7 +155,7 @@ public class EvalServiceImpl implements EvalService {
 				result = "Y";
 
 			}else if (jangCntList.size() > 1) {
-				evalDAO.setEvalJangReSelected(map);
+				evalDAO.setEvalJangChkTie(map);
 				evalDAO.setEvalJangCntCn(map);
 				result = "O";
 			}
@@ -166,7 +166,23 @@ public class EvalServiceImpl implements EvalService {
 
 	@Override
 	public String getEvalJang(Map<String, Object> map) {
-		return evalDAO.getEvalJang(map);
+		String result = "";
+
+		String evalJangYN = evalDAO.getEvalJang(map);
+
+		if(evalJangYN.equals("N")){
+			String evalJangChkYN = evalDAO.getEvalTieChk(map);
+			if(evalJangChkYN.equals("N")){
+				result = "N";
+			}else if (evalJangChkYN.equals("Y")){
+				evalDAO.setEvalJangReSelected(map);
+				result = "O";
+			}
+		}else if(evalJangYN.equals("Y")){
+			result = "Y";
+		}
+
+		return result;
 	}
 
 	@Override

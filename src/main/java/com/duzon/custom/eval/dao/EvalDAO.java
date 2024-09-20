@@ -228,6 +228,13 @@ public class EvalDAO extends AbstractDAO{
 	public List<Map<String, Object>> getJangCnt(Map<String, Object> map) {
 		return selectList("eval.getJangCnt", map);
 	}
+	public void setEvalJangChkTie(Map<String,Object> map) {
+		update("eval.setEvalJangChkTie", map);
+	}
+
+	public String getEvalTieChk(Map<String, Object> map) {
+		return (String) selectOne("eval.getEvalTieChk", map);
+	}
 
 
 }

@@ -176,7 +176,11 @@ function getEvalJang(){
         	if(result == 'Y'){
         		clearInterval(timeIn);
         		location.href = "<c:url value='/eval/evalView' />";	
-        	}
+        	}else if(result == 'O'){
+				alert('동점자가 있습니다. 다시 투표해주세요.');
+				clearInterval(timeIn);
+				location.reload();
+			}
         },
 
 	});

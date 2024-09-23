@@ -213,7 +213,7 @@
 
 			int colListCount = (Integer) pageContext.getAttribute("colListCount");
 
-			java.util.List<Integer> colIndics = new ArrayList<>();
+			ArrayList<Integer> colIndics = new ArrayList<Integer>();
 			for(int j = 0; j<colListCount; j++){
 				colIndics.add(j);
 			}
@@ -238,7 +238,7 @@
 					pageContext.setAttribute("currentUserCount", currentUserCount);
 					pageContext.setAttribute("adjustedUserCount", adjustedUserCount);
 
-					java.util.List<Integer> indices = new ArrayList<>();
+					ArrayList<Integer> indices = new ArrayList<Integer>();
 					for (int i = 0; i < currentUserCount; i++) {
 						indices.add(startIndex + i);
 					}

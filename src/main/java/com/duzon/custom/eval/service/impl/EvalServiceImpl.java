@@ -134,7 +134,7 @@ public class EvalServiceImpl implements EvalService {
 		evalDAO.setCommSave(map);
 
 		//로그인 유저 투표 여부 업데이트
-		evalDAO.setCommjangChk(map);
+		//evalDAO.setCommjangChk(map);
 
 		//누가 위원장인가? 투표가 끝났으면 위원장 체크하기
 		Map<String, Object> chkList = evalDAO.getChkList(map);
@@ -142,16 +142,19 @@ public class EvalServiceImpl implements EvalService {
 		String cnt = String.valueOf(chkList.get("cnt"));
 
 		if( userCnt.equals(cnt) ){
-			List<Map<String, Object>> jangCntList = evalDAO.getJangCnt(map);
+			List<Object> jangCntList = evalDAO.getJangCnt(map);
+			System.out.println("*****jangCntList.size()****"+jangCntList.size());
+			System.out.println("*****jangCntList****"+jangCntList);
 			if (jangCntList.size() == 1) {
-				Map<String, Object> jangCnt = jangCntList.get(0);
-				Object updateSeq = jangCnt.get("COMMISSIONER_SEQ");
+				Object updateSeq = jangCntList.get(0);
+				System.out.println("*****updateSeq****"+updateSeq);
+				//Object updateSeq = jangCnt.get("COMMISSIONER_SEQ");
 
 				Map<String, Object> jangCntMap = new HashMap<>();
 				jangCntMap.put("updateSeq",updateSeq);
 
 				evalDAO.setJangUpdate(jangCntMap);
-				evalDAO.setEvalJangCntCn(map);
+				//evalDAO.setEvalJangCntCn(map);
 				result = "Y";
 
 			}else if (jangCntList.size() > 1) {
@@ -172,10 +175,11 @@ public class EvalServiceImpl implements EvalService {
 
 		if(evalJangYN.equals("N")){
 			String evalJangChkYN = evalDAO.getEvalTieChk(map);
+			//evalDAO.setEvalJangReSelected(map);
 			if(evalJangChkYN.equals("N")){
 				result = "N";
 			}else if (evalJangChkYN.equals("Y")){
-				evalDAO.setEvalJangReSelected(map);
+				//evalDAO.setEvalJangReSelected(map);
 				result = "O";
 			}
 		}else if(evalJangYN.equals("Y")){
@@ -970,5 +974,10 @@ public class EvalServiceImpl implements EvalService {
 	@Override
 	public List<Map<String, Object>> getSignList(Map<String, Object> params){
 		return evalDAO.getSignList(params);
+	}
+
+	@Override
+	public void setEvalJangReSelected(Map<String,Object> map){
+		evalDAO.setEvalJangReSelected(map);
 	}
 }

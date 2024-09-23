@@ -664,4 +664,15 @@ public class EvalController {
 		return groupedItems;
 	}
 
+	@RequestMapping(value = "/eval/setEvalJangReSelected", method = RequestMethod.POST)
+	@ResponseBody
+	public void setEvalJangReSelected(@RequestParam Map<String, Object> params, HttpServletRequest request) {
+		System.out.println("*****params*****"+params);
+		Map<String, Object> seqMap = new HashMap<>();
+		seqMap.put("COMMITTEE_SEQ",params.get("committee_seq"));
+		System.out.println("*****seqMap*****"+seqMap);
+
+		evalService.setEvalJangReSelected(seqMap);
+	}
+
 }

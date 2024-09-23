@@ -75,5 +75,7 @@ public interface EvalService {
 
 	List<Map<String, Object>> getSignList(Map<String, Object> params);
 
+	void setEvalJangReSelected(Map<String, Object> map);
+
 
 }

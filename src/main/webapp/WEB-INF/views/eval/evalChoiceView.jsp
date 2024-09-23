@@ -179,7 +179,19 @@ function getEvalJang(){
         	}else if(result == 'O'){
 				alert('동점자가 있습니다. 다시 투표해주세요.');
 				clearInterval(timeIn);
-				location.reload();
+
+				$.ajax({
+					url:"<c:url value='/eval/setEvalJangReSelected' />",
+					data: evalApplyData,
+					type: 'POST',
+					dataType: 'text',
+					success : function (){
+						//clearInterval(timeIn);
+						location.reload();
+					}
+				});
+				/*clearInterval(timeIn);
+				location.reload();*/
 			}
         },
 

@@ -223,24 +223,30 @@
 
 	<table style="width: 1400px;">
 		<colgroup>
-			<col width="30%">
 			<col width="10%">
-			<col width="10%">
-			<col width="10%">
+			<col width="20%">
+			<col width="15%">
+			<col width="15%">
 			<col width="40%">
 		</colgroup>
 		<thead>
 		<tr>
+			<th>확인</th>
 			<th>업체명</th>
 			<th>사전 접촉자<br/>(업체측 관계자)</th>
 			<th>일시</th>
-			<th>확인</th>
 			<th>세부내용</th>
 		</tr>
 		</thead>
 		<tbody>
 		<c:forEach var="item" items="${companyList}" varStatus="status">
 			<tr>
+				<td>
+					<select name="chkData[]" id="chkData${status.count}" style="width: 80px;" onchange="chkDataChange(this)">
+						<option value="없다" selected="selected">없다</option>
+						<option value="있다">있다</option>
+					</select>
+				</td>
 				<input type="hidden" id="evalId" value="${item.EVAL_ID}">
 				<td>${item.company_name}</td>
 				<td>
@@ -248,12 +254,6 @@
 				</td>
 				<td>
 					<input type="text" name="inputDate[]" id="inputDate${status.count}" style="width: 80%" disabled>
-				</td>
-				<td>
-					<select name="chkData[]" id="chkData${status.count}" style="width: 80px;" onchange="chkDataChange(this)">
-						<option value="없다" selected="selected">없다</option>
-						<option value="있다">있다</option>
-					</select>
 				</td>
 				<td>
 					<input type="text" name="contents[]" id="contents${status.count}" style="width: 95%;" disabled>

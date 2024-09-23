@@ -777,8 +777,7 @@
 	}
 
 	function saveBtn(){
-		if(confirm('평가확정 이후에는 점수를 수정하실 수 없습니다. 그래도 확정하시겠습니까?')){
-
+		if(confirm('평가를 확정하시겠습니까?')){
 			var result = true;
 			if("${userInfo.EVAL_JANG}" == "Y"){
 				result = getCommissionerChk();

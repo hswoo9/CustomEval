@@ -51,11 +51,13 @@
 
 	var signHwpFileData = "";
 	function signSaveBtn(){
-		_pHwpCtrl.GetTextFile("HWPML2X", "", function(data) {
-			signHwpFileData = data;
-		})
+		if (confirm('평가확정 이후에는 점수를 수정하실 수 없습니다. 그래도 확정하시겠습니까?')) {
+			_pHwpCtrl.GetTextFile("HWPML2X", "", function (data) {
+				signHwpFileData = data;
+			})
 
-		setTimeout(signSave, 600);
+			setTimeout(signSave, 600);
+		}
 	}
 
 	function signSave(){

@@ -320,7 +320,7 @@
 	
 	<update id="setEvalConfirm" parameterType="map">
 	/*setEvalConfirm*/
-		UPDATE DJ_EVAL_COMMISSIONER SET EVAL_CONFIRM = 'Y' WHERE COMMITTEE_SEQ = #{committee_seq}
+		UPDATE DJ_EVAL_COMMISSIONER SET EVAL_CONFIRM = 'N' WHERE COMMITTEE_SEQ = #{committee_seq}
 	</update>
 	
 	<select id="getEvalConfirmChk" parameterType="map" resultType="string">

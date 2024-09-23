@@ -321,7 +321,7 @@
 		</div>
 		<div>
 			제안발표
-			<select id="minute1" onchange="minuteChange(this)">
+			<select id="minute1" onchange="minuteChange(this)" style="width:50px;">
 				<option>선택</option>
 				<c:forEach var="minute" begin="5" step="5" end="200">
 					<option>${minute}</option>
@@ -329,7 +329,7 @@
 			</select>
 
 			질의응답
-			<select id="minute2" onchange="minuteChange(this)">
+			<select id="minute2" onchange="minuteChange(this)" style="width:50px;">
 				<option>선택</option>
 				<c:forEach var="minute" begin="5" step="5" end="200">
 					<option>${minute}</option>

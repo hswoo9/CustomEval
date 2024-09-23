@@ -35,42 +35,45 @@
 	var flag = 'N';
 
 	function signSaveBtn() {
-		// 체크된 상태가 '있다'인 경우 확인 창을 띄움
-		var contactCheck = false;
-		for (var i = 0; i < jsonData.length; i++) {
-			var chk = $('select[name="chkData[]"] option:selected')[i].value;
+		if(confirm('사전접촉여부는 추후 수정이 불가능 합니다. 확정하시겠습니까?')) {
 
-			if (chk == '있다') {
-				contactCheck = true;
-				break;
-			}
-		}
+			// 체크된 상태가 '있다'인 경우 확인 창을 띄움
+			var contactCheck = false;
+			for (var i = 0; i < jsonData.length; i++) {
+				var chk = $('select[name="chkData[]"] option:selected')[i].value;
 
-		if (contactCheck) {
-			if (!confirm("사전접촉이 '있다'로 선택하셨습니다. 맞으면 확인, 틀리면 취소 버튼을 클릭해주시길 바랍니다.")) {
-				return;
-			}
-		}
-
-		// 저장 로직
-		for (var i = 0; i < jsonData.length; i++) {
-			var chk = $('select[name="chkData[]"] option:selected')[i].value;
-
-			if (chk == '있다') {
-				flag = 'Y';
+				if (chk == '있다') {
+					contactCheck = true;
+					break;
+				}
 			}
 
-			_hwpPutText("contactor{{"+i+"}}", $('input[name="contactor[]"]')[i].value);
-			_hwpPutText("inputDate{{"+i+"}}", $('input[name="inputDate[]"]')[i].value.replace(/-/gi, ""));
-			_hwpPutText("chk{{"+i+"}}", chk);
-			_hwpPutText("contents{{"+i+"}}", $('input[name="contents[]"]')[i].value);
+			if (contactCheck) {
+				if (!confirm("사전접촉이 '있다'로 선택하셨습니다. 맞으면 확인, 틀리면 취소 버튼을 클릭해주시길 바랍니다.")) {
+					return;
+				}
+			}
+
+			// 저장 로직
+			for (var i = 0; i < jsonData.length; i++) {
+				var chk = $('select[name="chkData[]"] option:selected')[i].value;
+
+				if (chk == '있다') {
+					flag = 'Y';
+				}
+
+				_hwpPutText("contactor{{" + i + "}}", $('input[name="contactor[]"]')[i].value);
+				_hwpPutText("inputDate{{" + i + "}}", $('input[name="inputDate[]"]')[i].value.replace(/-/gi, ""));
+				_hwpPutText("chk{{" + i + "}}", chk);
+				_hwpPutText("contents{{" + i + "}}", $('input[name="contents[]"]')[i].value);
+			}
+
+			_pHwpCtrl.GetTextFile("HWPML2X", "", function (data) {
+				signHwpFileData = data;
+			})
+
+			setTimeout(signSave, 600);
 		}
-
-		_pHwpCtrl.GetTextFile("HWPML2X", "", function(data) {
-			signHwpFileData = data;
-		})
-
-		setTimeout(signSave, 600);
 	}
 
 	function signSave() {

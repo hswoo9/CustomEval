@@ -52,6 +52,15 @@
 	var signHwpFileData = "";
 	function signSaveBtn(){
 		if (confirm('평가확정 이후에는 점수를 수정하실 수 없습니다. 그래도 확정하시겠습니까?')) {
+			var result = true;
+			if("${userInfo.EVAL_JANG}" == "Y"){
+				result = getCommissionerChk();
+			}
+
+			if(!result){
+				alert("평가가 진행 중입니다.\n위원장은 모든 평가위원의 평가가 종료 된 후에 평가 저장이 가능합니다.");
+				return;
+			}
 			_pHwpCtrl.GetTextFile("HWPML2X", "", function (data) {
 				signHwpFileData = data;
 			})
@@ -87,6 +96,46 @@
 				return false ;
 			}
 		})
+	}
+
+
+	function getCommissionerChk(){
+		var commissionerChk = true;
+
+		$.ajax({
+			url: "<c:url value='/eval/getCommissionerChk' />",
+			data : {
+				committee_seq : '${userInfo.COMMITTEE_SEQ}',
+				commissioner_seq : '${userInfo.COMMISSIONER_SEQ}',
+			},
+			type : 'POST',
+			dataType : "json",
+			async : false,
+			success: function(result){
+				console.log(result);
+				commissionerChk = result.commissionerChk;
+			}
+		});
+
+		return commissionerChk;
+
+		/*$.ajax({
+			url: "<c:url value='/eval/evalJangConfirmChk' />",
+			data : {evalId : '${userInfo.EVAL_USER_ID}'},
+			type : 'POST',
+			success: function(result){
+
+				if('${userInfo.EVAL_JANG}' == 'Y'){
+					location.reload();
+				}else if(result.JANG_CONFIRM_YN == 'Y'){
+					location.reload();
+				}else{
+					alert('평가가 진행 중입니다.');
+				}
+
+			}
+		}); */
+
 	}
 
 	function setSign(imgData){

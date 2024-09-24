@@ -778,7 +778,7 @@
 
 	function saveBtn(){
 		if(confirm('평가를 확정하시겠습니까?')){
-			var result = true;
+			/*var result = true;
 			if("${userInfo.EVAL_JANG}" == "Y"){
 				result = getCommissionerChk();
 			}
@@ -786,7 +786,7 @@
 			if(!result){
 				alert("평가가 진행 중입니다.\n위원장은 모든 평가위원의 평가가 종료 된 후에 평가 저장이 가능합니다.");
 				return;
-			}
+			}*/
 
 			/*else if ($('.evalIndex'+evalCnt+' .comReMarkInput').val().length < 30 || $('.evalIndex'+evalCnt+' .comReMarkInput').val().length > 400){
 				alert("평가의견은 30자 이상 400자 이하로 입력해주세요.");
@@ -885,7 +885,7 @@
 		return true;
 	}
 
-	function getCommissionerChk(){
+	/*function getCommissionerChk(){
 		var commissionerChk = true;
 
 		$.ajax({
@@ -905,7 +905,7 @@
 
 		return commissionerChk;
 
-		/*$.ajax({
+		/!*$.ajax({
 			url: "<c:url value='/eval/evalJangConfirmChk' />",
 			data : {evalId : '${userInfo.EVAL_USER_ID}'},
 			type : 'POST',
@@ -920,9 +920,9 @@
 				}
 
 			}
-		}); */
+		}); *!/
 
-	}
+	}*/
 
 	/*function buttonView(){
 

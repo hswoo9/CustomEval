@@ -372,6 +372,29 @@
 							pageContext.setAttribute("end", end);
 						%>
 
+
+
+						<c:set var="maxValue" value="0" />
+						<c:set var="minValue" value="999" />
+						<c:set var="maxValueStruck" value="false" />
+						<c:set var="minValueStruck" value="false" />
+
+						<c:if test="${userCount > 5}">
+
+						<c:forEach items="${result[mainSt.index].list }" var="userScoreList">
+
+								<fmt:parseNumber var="scoreAsNumber" value="${userScoreList.get(sss)}" type="number" />
+								<c:if test="${scoreAsNumber > maxValue}">
+									<c:set var="maxValue" value="${scoreAsNumber}" />
+								</c:if>
+								<c:if test="${scoreAsNumber < minValue}">
+									<c:set var="minValue" value="${scoreAsNumber}" />
+								</c:if>
+
+						</c:forEach>
+
+						</c:if>
+
 						<c:forEach items="${result[mainSt.index].list }" var="userList" varStatus="st" begin="${begin}" end="${end}">
 
 							<TD valign="middle" name="user_score" style='height:30px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
@@ -381,9 +404,28 @@
 											<c:when test="${userList[sss] == null || userList[sss] == 0}">
 												-
 											</c:when>
+
 											<c:otherwise>
-												<fmt:formatNumber value="${userList.get(sss)}" pattern=".####"/>
+												<c:choose>
+													<c:when test="${userList.get(sss) == maxValue && maxValueStruck == 'false' && userCount > 5}">
+														<!-- 최대값에 취소선 적용 -->
+														<strike><fmt:formatNumber value="${userList.get(sss)}" pattern=".####"/></strike>
+														<c:set var="maxValueStruck" value="true" />
+													</c:when>
+													<c:when test="${userList.get(sss) == minValue && minValueStruck == 'false' && userCount > 5}">
+														<!-- 최소값에 취소선 적용 -->
+														<strike><fmt:formatNumber value="${userList.get(sss)}" pattern=".####"/></strike>
+														<c:set var="minValueStruck" value="true" />
+													</c:when>
+
+													<c:otherwise>
+														<fmt:formatNumber value="${userList.get(sss)}" pattern=".####"/>
+													</c:otherwise>
+
+												</c:choose>
 											</c:otherwise>
+
+
 										</c:choose>
 									</SPAN>
 								</P>

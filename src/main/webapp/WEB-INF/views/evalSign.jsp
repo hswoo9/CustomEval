@@ -28,6 +28,9 @@
     <h3>전자서명 작성</h3>
     <canvas id="canvas" width="1920" height="1080"></canvas>
 </div>
+<div>
+    <span type="text" style="font-size: 10px;">위의 전자서명은 성명을 정자로 표기해주시고,<br>이번 평가에서만 사용됨을 알려드립니다.</span>
+</div>
 <div style="text-align: right">
     <button id="remove" style="margin-top: 15px;">지우기</button>
     <button id="save" style="margin-top: 15px;">저장</button>

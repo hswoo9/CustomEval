@@ -19,6 +19,15 @@
   		$("#contentsTemp").hide();
 	});
 
+	window.onload = function() {
+		history.pushState(null, null, window.location.href);
+		history.pushState(null, null, window.location.href);
+
+		window.addEventListener('popstate', function () {
+			history.pushState(null, null, window.location.href);
+		});
+	};
+
 	var signHwpFileData = "";
 	
 	$.fn.rowspan = function(colIdx, isStats) {       
@@ -223,7 +232,7 @@
 
 		<c:forEach items="${getCompanyList }" var="companyList" varStatus="mainSt">
 
-
+		<div style="page-break-after: always;">
 
 			<c:forEach var="t" begin="0" end="${endTableCount}">
 
@@ -524,7 +533,10 @@
 					</TD>
 				</TR>
 			</TABLE>
+
 			</c:forEach>
+		<hr style="width : 100%; text-align:center;"/>
+		</div>
 		</c:forEach>
 
 	</div>

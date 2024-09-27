@@ -13,6 +13,17 @@
 table tr th,td { font-size: 15px; }
 </style>
 
+<script>
+	window.onload = function() {
+		history.pushState(null, null, window.location.href);
+		history.pushState(null, null, window.location.href);
+
+		window.addEventListener('popstate', function () {
+				history.pushState(null, null, window.location.href);
+		});
+	};
+</script>
+
 <div class="iframe_wrap" style="min-width:1400px">
 
 	<!-- 컨텐츠타이틀영역 -->
@@ -108,6 +119,8 @@ $(function(){
 		$('#loadingPop').data("kendoWindow").open();
 		timeIn = setInterval(getEvalJang, 1000);
 	}
+
+
 	
 });
 

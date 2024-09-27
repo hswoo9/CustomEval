@@ -16,7 +16,18 @@
 		if("${userInfo.EVAL_JANG}" == "Y" && !$("#jangBlindChk").val()){
 			evalBlindPopup();
 		}
+
 	});
+
+	window.onload = function() {
+		history.pushState(null, null, window.location.href);
+		history.pushState(null, null, window.location.href);
+
+		window.addEventListener('popstate', function () {
+			history.pushState(null, null, window.location.href);
+		});
+	};
+
 
 	function evalBlindPopup(){
 		window.open(_g_contextPath_ + "/eval/evalBlindPopup?committee_seq=${userInfo.COMMITTEE_SEQ}", 'evalAvoidPop', 'menubar=0,resizable=1,scrollbars=1,status=no,toolbar=no,width=540,height=240,left=650,top=250');

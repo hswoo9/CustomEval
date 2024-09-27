@@ -21,6 +21,15 @@
 	console.log("collist",list);
 	console.log("result list",comList);
 
+	window.onload = function() {
+		history.pushState(null, null, window.location.href);
+		history.pushState(null, null, window.location.href);
+
+		window.addEventListener('popstate', function () {
+			history.pushState(null, null, window.location.href);
+		});
+	};
+
 	var numberOfquality= 0;
 	for (var key in qualitativeGroups) {
 		if (qualitativeGroups.hasOwnProperty(key)) {

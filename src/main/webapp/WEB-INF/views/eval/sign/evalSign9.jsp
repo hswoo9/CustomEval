@@ -11,6 +11,15 @@
 <title>사전접촉여부</title>
 
 <script type="text/javascript">
+	window.onload = function() {
+		history.pushState(null, null, window.location.href);
+		history.pushState(null, null, window.location.href);
+
+		window.addEventListener('popstate', function () {
+			history.pushState(null, null, window.location.href);
+		});
+	};
+
 	$(document).ready(function() {
 		var evalId = $("#evalId").val();
 		console.log("EvalId:", evalId);

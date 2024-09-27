@@ -142,6 +142,15 @@
 </form>
 
 <script>
+	window.onload = function() {
+		history.pushState(null, null, window.location.href);
+		history.pushState(null, null, window.location.href);
+
+		window.addEventListener('popstate', function () {
+			history.pushState(null, null, window.location.href);
+		});
+	};
+
 	var evalCnt = 0;
 	var evalEndCnt = ${companyList.size()};
 	var evalSize = 1;

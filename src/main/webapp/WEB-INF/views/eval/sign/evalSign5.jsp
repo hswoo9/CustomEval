@@ -10,6 +10,16 @@
 <title>평가위원 개인정보 수집·이용 동의서</title>
 
 <script type="text/javascript">
+
+	window.onload = function() {
+		history.pushState(null, null, window.location.href);
+		history.pushState(null, null, window.location.href);
+
+		window.addEventListener('popstate', function () {
+			history.pushState(null, null, window.location.href);
+		});
+	};
+
 	var signHwpFileData = "";
 	function signSaveBtn(){
 		_pHwpCtrl.GetTextFile("HWPML2X", "", function(data) {

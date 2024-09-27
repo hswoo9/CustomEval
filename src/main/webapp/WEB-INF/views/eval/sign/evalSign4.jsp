@@ -49,31 +49,29 @@
 
 	var signHwpFileData = "";
 	function signSaveBtn(){
-		var nnn = $('#num').val().replace(/-/gi,"");
-		var p1 = nnn.substr(0,6);
-		var p2 = nnn.substr(6,7);
-		var flag = isKorJumin(nnn.substr(0,6), nnn.substr(6,7));
+		var p1 = $('#num1').val();
+		var p2 = $('#num2').val();
+		var flag = isKorJumin(p1, p2);
+
+		if (p1.length == 0 || p2.length == 0) {
+			alert('주민등록 번호를 입력해 주세요.');
+			return;
+		}
 
 		if($('#dept').val().length == 0){
 			alert('소속을 입력해 주세요.');
 			return
 		}
 
-		if($('#num').val().length == 0){
-			alert('주민등록 번호를 입력해 주세요.');
-			return
-		}
-
-		// 현재는 flag값을 가져와서 하는데 나중에는 주민번호가 필요없을수 있어서 현재는 이대로 사용하고 추 후에는 !flag 없이 사용가능
-		if(!flag || nnn.length !== 13){
+		if (!flag || (p1 + p2).length !== 13) {
 			alert('주민등록번호를 확인해 주세요.');
-			return
+			return;
 		}
 
-		if($('#bank_no').val().length == 0){
+		/*if($('#bank_no').val().length == 0){
 			alert('계좌번호를 입력해 주세요.');
 			return
-		}
+		}*/
 
 		if($('#addr').val().length == 0){
 			alert('주소를 입력해 주세요.');
@@ -84,7 +82,7 @@
 		var ob2 = $('#dept').val();
 		var ob3 = $('#bank_name').val();
 		//var ob4 = $('#bank_name option:checked').text();
-		var ob5 = $('#bank_no').val();
+		/*var ob5 = $('#bank_no').val();*/
 		var ob6 = $('#addr').val();
 		var ob7 = $('#oName').val();
 
@@ -97,7 +95,7 @@
 		_hwpPutText("addr", ob6);
 		//_hwpPutText("bank_name", ob4);
 		_hwpPutText("bank_name", ob3);
-		_hwpPutText("bank_no", ob5);
+		/*_hwpPutText("bank_no", ob5);*/
 
 		_pHwpCtrl.GetTextFile("HWPML2X", "", function(data) {
 			signHwpFileData = data;
@@ -115,7 +113,7 @@
 		//formData.append("bank_cd", $('#bank_name').val());
 		formData.append("bank_name", $('#bank_name').val());
 		//formData.append("bank_name", $('#bank_name option:checked').text());
-		formData.append("bank_no", $('#bank_no').val());
+		/*formData.append("bank_no", $('#bank_no').val());*/
 		formData.append("addr", $('#addr').val());
 		formData.append("signHwpFileData", signHwpFileData);
 
@@ -169,38 +167,37 @@
 
 	}
 
-	function _hwpPutData(){
-		//내용
+	function _hwpPutData() {
+		// 내용
 		var title1 = "「${userInfo.TITLE } 사업」평가수당 지급 확인서";
 		var title2 = " ◈ (수집·이용목적)「${userInfo.TITLE }」제안 평가비 지급 증빙";
 		var title3 = " ◈ (고유식별정보 수집·이용목적)「${userInfo.TITLE } 사업」제안 평가비 지급 증빙을 위한 실명 확인";
 		var name = "${userInfo.NAME }";
-	// 	var dept = "${userInfo.ORG_NAME }";
-	// 	var num = "${userInfo.BIRTH_DATE }";
-	// 	var addr = "${userInfo.ORG_ADDR1 } ${userInfo.ORG_ADDR2 }";
-	// 	var bank_name = "${userInfo.BANK_NAME }";
-		var bank_no = "${userInfo.BANK_NO }";
-		var eval_pay = "${userInfo.EVAL_PAY }";
-		var trans_pay = "${userInfo.TRANS_PAY }";
-		var total_pay = Number(eval_pay) + Number(trans_pay);
+		var bank_name = "${userInfo.BANK_NAME }";
+		var eval_pay = document.getElementById("evaluationFee").value.replace(/,/g, '') || 0; // 평가비
+		var trans_pay = document.getElementById("transportFee").value.replace(/,/g, '') || 0; // 교통비
+		var total_pay = Number(eval_pay) + Number(trans_pay); // 합계
 		var date = "${nowDate}";
 
 		_hwpPutText("title1", title1);
 		_hwpPutText("title2", title2);
-		_hwpPutText("title3", title2);
+		_hwpPutText("title3", title3);
 		_hwpPutText("name", name);
 		_hwpPutText("date", date);
-	// 	_hwpPutText("dept", dept);
-	// 	_hwpPutText("num", num);
-	// 	_hwpPutText("addr", addr);
-	// 	_hwpPutText("bank_name", bank_name);
-	// 	_hwpPutText("bank_no", bank_no);
 		_hwpPutText("eval_pay", numberWithCommas(eval_pay) + '원');
 		_hwpPutText("trans_pay", numberWithCommas(trans_pay) + '원');
 		_hwpPutText("total_pay", numberWithCommas(total_pay) + '원');
 
+		// 주민등록번호와 계좌번호 추가
+		var num1 = $('#num1').val();
+		var num2 = $('#num2').val();
+		var bank_no = $('#bank_no').val();
+
+		_hwpPutText("num", num1 + '-' + num2);
+		_hwpPutText("bank_no", bank_no);
+
 		_hwpPutSignImg("sign", "${userInfo.SIGN_DIR }");
-		
+
 		$("#signSave").show();
 	}
 
@@ -360,16 +357,19 @@
 		<TD valign="middle" bgcolor="#e5e5ff"  style='width:186px;height:31px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 1.1pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
 		<P CLASS=HStyle0 STYLE='text-align:center;'><SPAN STYLE='font-size:12.0pt;font-family:"한양중고딕,한컴돋움";font-weight:bold;line-height:160%'>교 통 비</SPAN></P>
 		</TD>
+		<TD valign="middle" bgcolor="#e5e5ff"  style='width:186px;height:31px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 1.1pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
+			<P CLASS=HStyle0 STYLE='text-align:center;'><SPAN STYLE='font-size:12.0pt;font-family:"한양중고딕,한컴돋움";font-weight:bold;line-height:160%'>합 계</SPAN></P>
+		</TD>
 		<%--<TD valign="middle" bgcolor="#e5e5ff"  style='width:186px;height:31px;border-left:solid #000000 0.4pt;border-right:solid #000000 1.1pt;border-top:solid #000000 1.1pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
 		<P CLASS=HStyle0 STYLE='text-align:center;'><SPAN STYLE='font-size:12.0pt;font-family:"한양중고딕,한컴돋움";font-weight:bold;line-height:160%'>합&nbsp;&nbsp; 계</SPAN></P>
 		</TD>--%>
 	</TR>
-	<TR>
+	<%--<TR>
 		<TD valign="middle" style='width:186px;height:31px;border-left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 1.1pt;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
 			<P CLASS=HStyle0 STYLE='margin-right:5.0pt;text-align:right;'>
 				<SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>
 					내부 규정에 따름
-					<%--<c:choose>
+					&lt;%&ndash;<c:choose>
 						<c:when test="${userInfo.EVAL_AVOID eq 'Y'}">
 							50,000원
 							&lt;%&ndash;<fmt:formatNumber type="number" maxFractionDigits="3" value="${userInfo.EVAL_PAY }"/>&ndash;%&gt;
@@ -377,7 +377,7 @@
 						<c:otherwise>
 							내부 규정에 따름
 						</c:otherwise>
-					</c:choose>--%>
+					</c:choose>&ndash;%&gt;
 				</SPAN>
 			</P>
 		</TD>
@@ -385,18 +385,41 @@
 			<P CLASS=HStyle0 STYLE='margin-right:5.0pt;text-align:right;'>
 				<SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>
 					내부 규정에 따름
-	<%--				<fmt:formatNumber type="number" maxFractionDigits="3" value="${userInfo.TRANS_PAY }" />원--%>
+	&lt;%&ndash;				<fmt:formatNumber type="number" maxFractionDigits="3" value="${userInfo.TRANS_PAY }" />원&ndash;%&gt;
 				</SPAN>
 			</P>
 		</TD>
-		<%--<TD valign="middle" style='width:186px;height:31px;border-left:solid #000000 0.4pt;border-right:solid #000000 1.1pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 1.1pt;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
+		<TD valign="middle" style='width:186px;height:31px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 1.1pt;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
+			<P CLASS=HStyle0 STYLE='margin-right:5.0pt;text-align:right;'>
+				<SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>
+					내부 규정에 따름
+	&lt;%&ndash;				<fmt:formatNumber type="number" maxFractionDigits="3" value="${userInfo.TRANS_PAY }" />원&ndash;%&gt;
+				</SPAN>
+			</P>
+		</TD>
+		&lt;%&ndash;<TD valign="middle" style='width:186px;height:31px;border-left:solid #000000 0.4pt;border-right:solid #000000 1.1pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 1.1pt;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
 		<P CLASS=HStyle0 STYLE='margin-right:5.0pt;text-align:right;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>내부 규정에 따름</SPAN></P>
-		</TD>--%>
-	</TR>
+		</TD>&ndash;%&gt;
+	</TR>--%>
+		<TR>
+			<TD valign="middle" style='width:186px;height:31px;border-left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt; text-align: right;'>
+				<input type="text" id="evaluationFee" style="width: 90%; text-align: right; box-sizing: border-box; border: none;" placeholder="평가비를 입력하세요." oninput="updateTotal()" />
+				<SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>원</SPAN>
+			</TD>
+			<TD valign="middle" style='width:186px;height:31px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt; text-align: right;'>
+				<input type="text" id="transportFee" style="width: 90%; text-align: right; box-sizing: border-box; border: none;" readonly />
+				<SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>원</SPAN>
+			</TD>
+			<TD valign="middle" style='width:186px;height:31px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt; text-align: right;'>
+				<input type="text" id="totalFee" style="width: 90%; text-align: right; box-sizing: border-box; border: none;" readonly />
+				<SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>원</SPAN>
+			</TD>
+		</TR>
 	</TABLE></P>
 	<P CLASS=HStyle0 STYLE='margin-top:5.0pt;text-align:center;line-height:130%;'></P>
 	
 	<P CLASS=HStyle34 STYLE='margin-top:3.0pt;line-height:160%;'>
+	<P CLASS=HStyle34 style="color:red; font-size: 16px;"> * 사업담당자 확인 후 입력 필수</P>
 	<TABLE border="1" cellspacing="0" cellpadding="0" style='width:580px; border-collapse:collapse;border:none;'>
 	<TR>
 		<TD colspan="3" valign="middle" style='width:163px;height:22px;border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
@@ -416,28 +439,40 @@
 	</TR>
 	<TR>
 		<TD colspan="3" valign="middle" style='width:163px;height:22px;border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
-		<P CLASS=HStyle34 STYLE='margin-top:3.0pt;line-height:160%;'><SPAN STYLE='font-size:11.0pt;font-family:"휴먼명조";line-height:160%'>○ 주민등록번호 : </SPAN></P>
+			<P CLASS=HStyle34 STYLE='margin-top:3.0pt;line-height:160%;'><SPAN STYLE='font-size:11.0pt;font-family:"휴먼명조";line-height:160%'>○ 주민등록번호 : </SPAN></P>
 		</TD>
 		<TD colspan="4" valign="middle" style='width:417px;height:22px;border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
-			<input type="text" style="width: 275px;" id="num" value="${userInfo.BIRTH_DATE }">
-			<%--<input type="radio" id="open" name="publicOrProtected" value="Y" onchange="publicOrProtectedRadio(this)" checked>공개
-			<input type="radio" id="private" name="publicOrProtected" value="N" onchange="publicOrProtectedRadio(this)">비공개--%>
+			<input type="text" style="width: 100px;" id="num1" maxlength="6" placeholder="6자리" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
+			<span>-</span>
+			<input type="text" style="width: 100px;" id="num2" maxlength="7" placeholder="7자리" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
 		</TD>
 	</TR>
 	<TR>
 		<TD colspan="3" valign="middle" style='width:163px;height:22px;border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
-		<P CLASS=HStyle34 STYLE='margin-top:3.0pt;line-height:160%;'><SPAN STYLE='font-size:11.0pt;font-family:"휴먼명조";line-height:160%'>○ 소속기관 주소 : </SPAN></P>
+			<P CLASS=HStyle34 STYLE='margin-top:3.0pt;line-height:160%;'><SPAN STYLE='font-size:11.0pt;font-family:"휴먼명조";line-height:160%'>○ 소속기관 주소 : </SPAN></P>
 		</TD>
 		<TD colspan="4" valign="middle" style='width:417px;height:22px;border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
-		<input type="text" style="width: 275px;" id="addr" value="${userInfo.ORG_ADDR1 } ${userInfo.ORG_ADDR2 }">
+			<select id="region" >
+				<option value="------">------</option>
+				<option value="서울/경기">서울/경기</option>
+				<option value="강원영동">강원(영동)</option>
+				<option value="강원영서">강원(영서)</option>
+				<option value="대전/충청">대전/충청</option>
+				<option value="전북">전북</option>
+				<option value="광주/전남">광주/전남</option>
+				<option value="대구/경북">대구/경북</option>
+				<option value="부산/경남">부산/경남</option>
+				<option value="제주">제주</option>
+			</select>
+			<input type="text" style="width: 198px;" id="addr" value="" placeholder="그 외 주소 입력">
 		</TD>
 	</TR>
 	<TR>
 		<TD colspan="2" valign="middle" style='width:163px;height:22px;border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
-		<P CLASS=HStyle34 STYLE='margin-top:3.0pt;line-height:160%;'><SPAN STYLE='font-size:11.0pt;font-family:"휴먼명조";line-height:160%'>○ 은행명: </SPAN></P>
+		<P CLASS=HStyle34 STYLE='margin-top:3.0pt;line-height:160%;'><SPAN STYLE='font-size:11.0pt;font-family:"휴먼명조";line-height:160%'>○ (은행명)계좌번호: </SPAN></P>
 		</TD>
 		<TD colspan="5" valign="middle" style='width:417px;height:22px;border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
-			<input type="text" style="width: 275px;" id="bank_name" value="${userInfo.BANK_NAME}">
+			<input type="text" style="width: 275px;" id="bank_name" value="">
 			<%--<select id="bank_name">
 				<c:forEach items="${bankList }" var="list">
 					<option value="${list.BANK_CD }" ${userInfo.BANK_NAME == list.BANK_CD ? 'selected="selected"' : '' } >${list.BANK_NM }</option>
@@ -445,14 +480,14 @@
 			</select>--%>
 		</TD>
 	</TR>
-	<TR>
+	<%--<TR>
 		<TD colspan="2" valign="middle" style='width:163px;height:22px;border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
 		<P CLASS=HStyle34 STYLE='margin-top:3.0pt;line-height:160%;'><SPAN STYLE='font-size:11.0pt;font-family:"휴먼명조";line-height:160%'>○ 계좌번호 : </SPAN></P>
 		</TD>
 		<TD colspan="5" valign="middle" style='width:417px;height:22px;border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
 		<input type="text" style="width: 275px;" id="bank_no" value="${userInfo.BANK_NO }">
 		</TD>
-	</TR>
+	</TR>--%>
 	<TR>
 		<TD colspan="7" valign="middle" style='text-align:center; width:163px;height:22px;border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
 		<P CLASS=HStyle34 STYLE='margin-top:3.0pt;line-height:160%;'><SPAN STYLE='font-size:11.0pt;font-family:"휴먼명조";line-height:160%'>${nowDate }</SPAN></P>
@@ -534,7 +569,53 @@
 
 <div id="_pHwpCtrl" style="height: 100%;border: 1px solid lightgray;display: none"></div>
 
+<script type="text/javascript">
+	function updateTransportFee() {
+		var region = document.getElementById("region").value;
+		var transportFee = 0;
 
+		if (region === "제주") {
+			transportFee = 100000;
+		} else if (region === "대전/충청" || region === "------") {
+			transportFee = 0;
+		} else {
+			transportFee = 50000;
+		}
+
+		document.getElementById("transportFee").value = transportFee;
+		updateTotal(); // 교통비 업데이트 후 총합 업데이트 호출
+	}
+
+	function updateTotal() {
+		var dept = document.getElementById("dept").value;
+		var evaluationFeeInput = document.getElementById("evaluationFee");
+		var transportFeeInput = document.getElementById("transportFee");
+		var totalFeeInput = document.getElementById("totalFee");
+
+		// 소속에 따라 값 변경
+		if (dept === "농림수산식품교육문화정보원" || dept === "농정원") {
+			evaluationFeeInput.value = "-";
+			transportFeeInput.value = "-";
+			totalFeeInput.value = "-";
+		} else {
+			var evaluationFee = parseInt(evaluationFeeInput.value.replace(/,/g, '') || 0);
+			var transportFee = parseInt(transportFeeInput.value.replace(/,/g, '') || 0);
+			var totalFee = evaluationFee + transportFee;
+
+			totalFeeInput.value = totalFee.toLocaleString(); // 천 단위 구분 기호 추가
+		}
+	}
+
+	// 소속 변경 시 호출
+	document.getElementById("dept").addEventListener("input", function() {
+		updateTotal();
+	});
+
+	// 지역 변경 시 호출
+	document.getElementById("region").addEventListener("change", function() {
+		updateTransportFee();
+	});
+</script>
 
 <%--<object classid="CLSID:1DEAD10F-9EBF-4599-8F00-92714483A9C9" codebase="<c:url value='/resources/activex/NEOSLauncher.cab'></c:url>#version=1,0,0,4" id="uploader"  style="display:none;" >--%>
 <%--</object>--%>

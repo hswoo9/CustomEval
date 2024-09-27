@@ -79,7 +79,7 @@ table tr th,td { font-size: 15px; }
 		<table class="fwb ac" style="width:100%;">
 			<tr>
 				<td>
-					<span class=""><img src="<c:url value='/resources/Images/ico/loading.gif'/>" alt="" />  &nbsp;&nbsp;&nbsp;평가위원장을 등록 중입니다.</span>		
+					<span class=""><img src="<c:url value='/resources/Images/ico/loading.gif'/>" alt="" />  &nbsp;&nbsp;&nbsp;평가위원장을 선택하지 않은 분이 계십니다.<br>잠시만 기다려주세요.</span>
 				</td>
 			</tr>
 		</table>

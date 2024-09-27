@@ -124,7 +124,7 @@ public class EvalController {
 				session.invalidate();
 				fm.put("message", "\"평가위원님의 제안 평가가\\n정상적으로 제출 되었습니다.\"\\n수고 하셨습니다.");
 				//기피신청자 평가수당 지급 확인서 확인 후 세션 풀림
-				return "redirect:/";
+				return "/eval/sign/evalSign11";
 			}
 
 			if(map.get("SIGN_1").equals("N")){
@@ -180,7 +180,7 @@ public class EvalController {
 					HttpSession session = request.getSession();
 					session.invalidate();
 					fm.put("message", "평가가 종료되었습니다.");
-					return "redirect:/";
+					return "/eval/sign/evalSign11";
 				}
 				
 			}else if(map.get("EVAL_SAVE").equals("N") && map.get("SIGN_6").equals("N")){
@@ -218,7 +218,7 @@ public class EvalController {
 					HttpSession session = request.getSession();
 					session.invalidate();
 					fm.put("message", "과반수의 평가위원이 기피신청을 하였으므로,\\n평가를 진행할 수 없습니다.");
-					return "redirect:/";
+					return "/eval/sign/evalSign11";
 				}
 
 			}else if(map.get("SIGN_6").equals("N")){
@@ -396,7 +396,7 @@ public class EvalController {
 				HttpSession session = request.getSession();
 				session.invalidate();
 				fm.put("message", "\"평가위원님의 제안 평가가\\n정상적으로 제출 되었습니다.\"\\n수고 하셨습니다.");
-				return "redirect:/";
+				return "/eval/sign/evalSign11";
 
 			}
 		}else{

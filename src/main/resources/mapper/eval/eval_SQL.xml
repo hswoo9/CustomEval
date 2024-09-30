@@ -922,4 +922,11 @@
 		AND A.ATTEND_YN = 'Y'
 		AND A.EVAL_JANG = 'N'
 	</select>
+
+	<select id="getCommissionerSeqEvalId" parameterType="map" resultType="string">
+		select EVAL_ID
+		FROM CUST_EPIS.DJ_EVAL_COMMISSIONER
+		WHERE COMMISSIONER_SEQ = #{commissioner_seq}
+		AND ACTIVE = 'Y'
+	</select>
 </mapper>

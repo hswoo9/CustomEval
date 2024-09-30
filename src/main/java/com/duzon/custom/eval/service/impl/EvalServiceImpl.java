@@ -12,6 +12,7 @@ import com.duzon.custom.common.vo.PdfEcmFileVO;
 import com.duzon.custom.common.vo.PdfEcmMainVO;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.pdf.*;
+import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -227,42 +228,49 @@ public class EvalServiceImpl implements EvalService {
 			map.put("col_nm", "sign_" + step);
 			map.put("col_file", "sign_" + step + "_file_seq");
 
+			Map<String, Object> comSeq = new HashMap<String, Object>();
+			comSeq.put("commissioner_seq",map.get("commissioner_seq"));
+			String evalId = evalDAO.getCommissionerSeqEvalId(comSeq);
+
 			// Step에 따른 파일 이름 매핑
 			String fileName;
 			switch (step) {
 				case "1":
-					fileName = "평가(심사)위원 위촉 확인 및 평가운영지침 준수 각서";
+					fileName = "평가(심사)위원 위촉 확인 및 평가운영지침 준수 각서_"+evalId;
 					break;
 				case "2":
-					fileName = "평가위원 사전의결사항";
+					fileName = "평가위원 사전의결사항_"+evalId;
 					break;
 				case "3":
-					fileName = "사전접촉여부 확인(신고)서";
+					fileName = "사전접촉여부 확인(신고)서_"+evalId;
 					break;
 				case "4":
-					fileName = "평가수당 지급 확인서";
+					fileName = "평가수당 지급 확인서_"+evalId;
 					break;
 				case "5":
-					fileName = "평가위원 개인정보 수집·이용 동의서";
+					fileName = "평가위원 개인정보 수집·이용 동의서_"+evalId;
 					break;
 				case "6":
-					fileName = "위원별 제안서 평가표";
+					fileName = "(평가표)위원별 제안서 평가표_"+evalId;
 					break;
 				case "7":
-					fileName = "업체별 제안서 평가집계표";
+					fileName = "(평가표)업체별 제안서 평가집계표_"+evalId;
 					break;
 				case "8":
-					fileName = "제안서 평가 총괄표";
+					fileName = "(평가표)제안서 평가 총괄표_"+evalId;
 					break;
 				case "9":
-					fileName = "사전접촉여부 확인(신고)서 한번더";
+					fileName = "사전접촉여부 확인(신고)서 한번더_"+evalId;
 					break;
 				case "10":
-					fileName = "평가위원장 가산금 지급 확인서";
+					fileName = "평가위원장 가산금 지급 확인서_"+evalId;
 					break;
 				default:
 					fileName = "기타"; // Default case for safety
 			}
+
+
+
 
 			// file 저장
 			map.put("attch_file_seq", fileName);

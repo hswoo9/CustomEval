@@ -236,5 +236,9 @@ public class EvalDAO extends AbstractDAO{
 		return (String) selectOne("eval.getEvalTieChk", map);
 	}
 
+	public String getCommissionerSeqEvalId(Map<String, Object> map) {
+		return (String) selectOne("eval.getCommissionerSeqEvalId", map);
+	}
+
 
 }

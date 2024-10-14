@@ -139,7 +139,7 @@
 	}
 
 
-	/// 연결끊기
+	/*/// 연결끊기
 	function OnDisconnectDevice()
 	{
 		KM701.SetClose();
@@ -147,7 +147,7 @@
 		conn = 0;
 
 	// 	alert('연결을 끊었습니다');
-	}
+	}*/
 
 
 	/// 서명 입력(실시간 Auto View)

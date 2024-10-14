@@ -184,8 +184,8 @@ function setSign(imgData){
 
 <div id="signSave">
 	<input type="button" onclick="OnConnectDevice();" value="서명하기">
-	<input type="button" onclick="signSaveBtn();" value="다음">
-	<input type="button" onclick="getEvalConfirmChk();" value="새로고침">
+	<input type="button" onclick="signSaveBtn();" style="background-color: #dee4ea; border-color: black; border-width: thin;" value="다음">
+	<input type="button" onclick="getEvalConfirmChk();" style="background-color: #dee4ea; border-color: black; border-width: thin;" value="새로고침">
 </div>
 
 <div id="signBody" style="width: 205mm; height: 292mm; border: 1px; border-style: solid;"> 

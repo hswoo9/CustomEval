@@ -328,7 +328,7 @@
 <div style="width: 50%;margin: 0 auto;">
 	<div id="signSave" style="display: none;display: flex;justify-content: space-between;">
 		<div>
-			<input type="button" onclick="evalAvoidPopup()" value="기피신청">
+			<input type="button" onclick="evalAvoidPopup()" style="background-color: #dee4ea; border-color: black; border-width: thin;" value="기피신청">
 			<sapn style="padding-left: 10px;">※업체별 시간 입력 가이드</sapn>
 		</div>
 		<div>
@@ -347,7 +347,7 @@
 					<option>${minute}</option>
 				</c:forEach>
 			</select>
-			<input type="button" onclick="signSaveBtn();" style="margin-left:23px;" value="다음">
+			<input type="button" onclick="signSaveBtn();" style="margin-left:23px; background-color: #dee4ea; border-color: black; border-width: thin;" value="다음">
 		</div>
 	</div>
 

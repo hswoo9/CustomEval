@@ -329,9 +329,9 @@
 	<div id="signSave" style="display: none; width:78%;">
 <%--		<input type="button" onclick="OnConnectDevice();" value="서명하기">--%>
 		<c:if test="${userInfo.EVAL_AVOID eq 'N'}">
-			<input type="hidden" onclick="showModalPop()" value="기피신청">
+			<input type="hidden" onclick="showModalPop()" style="background-color: #dee4ea; border-color: black; border-width: thin;" value="기피신청">
 		</c:if>
-		<input type="button" onclick="signSaveBtn();" style="float:right; margin-left:10px;" value="다음">
+		<input type="button" onclick="signSaveBtn();" style="float:right; margin-left:10px; background-color: #dee4ea; border-color: black; border-width: thin;" value="다음">
 		<%--<input type="button" onclick="signFileDown();" style="float:right;" value="평가자료 다운로드">--%>
 	</div>
 </div>

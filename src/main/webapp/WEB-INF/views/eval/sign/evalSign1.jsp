@@ -136,11 +136,11 @@
 		<div>
 			<input type="hidden" id="jangBlindChk" name="jangBlindChk">
 	<%--		<input type="button" onclick="OnConnectDevice();" value="서명하기">--%>
-			<input type="button" onclick="evalAvoidPopup()" value="기피신청">
+			<input type="button" onclick="evalAvoidPopup()" style="background-color: #dee4ea; border-color: black; border-width: thin;" value="기피신청">
 		</div>
 
 		<div>
-			<input type="button" onclick="signSaveBtn();"  style="float:right; margin-left:10px;" value="다음">
+			<input type="button" onclick="signSaveBtn();"  style="float:right; margin-left:10px; background-color: #dee4ea; border-color: black; border-width: thin;" value="다음">
 			<c:if test="${userInfo.EVAL_JANG eq 'Y'}">
 				<input type="button" onclick="evalBlindPopup();" value="평가집계표 출력방식 설정" style="float:right;">
 			</c:if>

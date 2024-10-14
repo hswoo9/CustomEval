@@ -33,7 +33,7 @@ function nextPageBtn(){
 </script>
 
 <div id="signSave">
-	<input type="button" onclick="nextPageBtn();" value="다음">
+	<input type="button" onclick="nextPageBtn();" style="background-color: #dee4ea; border-color: black; border-width: thin;" value="다음">
 </div>
 
 <OBJECT id="HwpCtrl_1" style="LEFT: 0px; TOP: 100px" height="840px;" width="900px;" align=center classid=CLSID:BD9C32DE-3155-4691-8972-097D53B10052 onError="activex_error(${status.count})">

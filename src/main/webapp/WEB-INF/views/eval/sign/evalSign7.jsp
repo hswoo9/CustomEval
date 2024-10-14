@@ -199,9 +199,9 @@
 
 <div style="width: 80%;margin: 0 auto;">
 	<div id="signSave" style="display: none;">
-		<input type="hidden" onclick="evalAvoidPopup()" value="기피신청">
-		<input type="button" onclick="signSaveBtn();" style="float:right; margin-left : 10px;" value="다음">
-		<input type="button" onclick="reloadBtn();" style="float:right;" value="새로고침">
+		<input type="hidden" onclick="evalAvoidPopup()" style="background-color: #dee4ea; border-color: black; border-width: thin;" value="기피신청">
+		<input type="button" onclick="signSaveBtn();" style="float:right; margin-left : 10px; background-color: #dee4ea; border-color: black; border-width: thin;" value="다음">
+		<input type="button" onclick="reloadBtn();" style="float:right; background-color: #dee4ea; border-color: black; border-width: thin;"  value="새로고침">
 	</div>
  	<div style="width:100%; padding-bottom: 35px; text-align: center; padding-top: 50px;">
 		<h4 style="font-size: 30px;">업체별 제안서 평가집계표</h4>

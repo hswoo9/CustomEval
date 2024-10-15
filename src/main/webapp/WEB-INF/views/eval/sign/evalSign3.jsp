@@ -7,8 +7,8 @@
 <%@ taglib prefix="fmt"  uri="http://java.sun.com/jsp/jstl/fmt"%>
 <jsp:useBean id="nowDate" class="java.util.Date" />
 <fmt:formatDate value="${nowDate}" var="nowDate" pattern="yyyy년   MM월   dd일" />
-<script type="text/javascript" src="https://10.10.10.112:8080/js/hwpctrlapp/utils/util.js"></script>
-<script type="text/javascript" src="https://10.10.10.112:8080/js/webhwpctrl.js"></script>
+<script type="text/javascript" src="http://10.10.10.112:8080/js/hwpctrlapp/utils/util.js"></script>
+<script type="text/javascript" src="http://10.10.10.112:8080/js/webhwpctrl.js"></script>
 
 <title>사전접촉여부</title>
 

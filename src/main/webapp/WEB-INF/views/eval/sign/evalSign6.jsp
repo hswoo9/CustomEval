@@ -533,7 +533,7 @@
 <div style="width: 80%;margin: 0 auto;">
 	<div id="signSave" style="display: none;">
 		<input type="button" onclick="evalAvoidPopup()" style="background-color: #dee4ea; border-color: black; border-width: thin;" value="기피신청">
-		<input type="button" onclick="signSaveBtn();" style="float:right; background-color: #dee4ea; border-color: black; border-width: thin;" value="다음">
+		<input type="button" onclick="signSaveBtn();" style="float:right; background-color: #dee4ea; border-color: black; border-width: thin; margin-left: 5px;" value="평가확정">
 		<input type="button" onclick="evalModBtn();" style="float:right; background-color: #dee4ea; border-color: black; border-width: thin;" value="평가 수정">
 	</div>
 	<%--<div style="width:100%; padding-bottom: 35px; text-align: center; padding-top: 50px;">

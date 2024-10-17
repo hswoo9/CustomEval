@@ -7,6 +7,8 @@
 <%@ taglib prefix="fmt"  uri="http://java.sun.com/jsp/jstl/fmt"%>
 <jsp:useBean id="nowDate" class="java.util.Date" />
 <fmt:formatDate value="${nowDate}" var="nowDate" pattern="yyyy년   MM월   dd일" />
+<script type="text/javascript" src="http://10.10.10.112:8080/js/hwpctrlapp/utils/util.js"></script>
+<script type="text/javascript" src="http://10.10.10.112:8080/js/webhwpctrl.js"></script>
 
 <title>각서</title>
 
@@ -136,11 +138,11 @@
 		<div>
 			<input type="hidden" id="jangBlindChk" name="jangBlindChk">
 	<%--		<input type="button" onclick="OnConnectDevice();" value="서명하기">--%>
-			<input type="button" onclick="evalAvoidPopup()" value="기피신청">
+			<input type="button" onclick="evalAvoidPopup()" style="background-color: #dee4ea; border-color: black; border-width: thin;" value="기피신청">
 		</div>
 
 		<div>
-			<input type="button" onclick="signSaveBtn();"  style="float:right; margin-left:10px;" value="다음">
+			<input type="button" onclick="signSaveBtn();"  style="float:right; margin-left:10px; background-color: #dee4ea; border-color: black; border-width: thin;" value="다음">
 			<c:if test="${userInfo.EVAL_JANG eq 'Y'}">
 				<input type="button" onclick="evalBlindPopup();" value="평가집계표 출력방식 설정" style="float:right;">
 			</c:if>

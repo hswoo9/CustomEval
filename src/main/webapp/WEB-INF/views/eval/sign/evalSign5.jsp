@@ -7,6 +7,8 @@
 <%@ taglib prefix="fmt"  uri="http://java.sun.com/jsp/jstl/fmt"%>
 <jsp:useBean id="nowDate" class="java.util.Date" />
 <fmt:formatDate value="${nowDate}" var="nowDate" pattern="yyyy년   MM월   dd일" />
+<script type="text/javascript" src="http://10.10.10.112:8080/js/hwpctrlapp/utils/util.js"></script>
+<script type="text/javascript" src="http://10.10.10.112:8080/js/webhwpctrl.js"></script>
 <title>평가위원 개인정보 수집·이용 동의서</title>
 
 <script type="text/javascript">
@@ -109,8 +111,8 @@
 <div style="width: 50%;margin: 0 auto;">
 	<div id="signSave" style="display: none;">
 		<div>
-			<input type="button" onclick="evalAvoidPopup()" value="기피신청">
-			<input type="button" onclick="signSaveBtn();" style="float:right;" value="다음">
+			<input type="button" onclick="evalAvoidPopup()" style="background-color: #dee4ea; border-color: black; border-width: thin;" value="기피신청">
+			<input type="button" onclick="signSaveBtn();" style="float:right; background-color: #dee4ea; border-color: black; border-width: thin;" value="다음">
 		</div>
 	</div>
 

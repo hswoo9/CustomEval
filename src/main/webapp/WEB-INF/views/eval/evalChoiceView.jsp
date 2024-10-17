@@ -65,7 +65,7 @@ table tr th,td { font-size: 15px; }
 			</table>		
 			
 			<div style="padding-top: 20px; text-align: center;">
-				<input type="button" style="margin-bottom: 15px;" id="applyBtn" onclick="evalApply();" value="등록하기">
+				<input type="button" style="margin-bottom: 15px; background-color: #dee4ea; border-color: black; border-width: thin;" id="applyBtn" onclick="evalApply();" value="등록하기">
 			</div>
 			
 		</div>
@@ -92,7 +92,7 @@ var evalApplyData;
 var timeIn;
 
 $(function(){
-	
+
 	$('.commChk').on('click', function(e){
 		
 		var t = $(this).prop('checked');

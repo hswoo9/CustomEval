@@ -7,6 +7,8 @@
 <%@ taglib prefix="fmt"  uri="http://java.sun.com/jsp/jstl/fmt"%>
 <jsp:useBean id="nowDate" class="java.util.Date" />
 <fmt:formatDate value="${nowDate}" var="nowDate" pattern="yyyy년  MM월  dd일" />
+<script type="text/javascript" src="http://10.10.10.112:8080/js/hwpctrlapp/utils/util.js"></script>
+<script type="text/javascript" src="http://10.10.10.112:8080/js/webhwpctrl.js"></script>
 
 <script type="text/javascript">
 	var result = JSON.parse('${result}');
@@ -478,9 +480,9 @@
 <div style="width: 80%;margin: 0 auto;">
 	<div id="signSave" style="display: none;">
 <%--		<input type="button" onclick="OnConnectDevice();" value="서명하기">--%>
-		<input type="hidden" onclick="evalAvoidPopup()" value="기피신청">
-		<input type="button" onclick="signSaveBtn();" style="float:right; margin-left:10px;" value="다음">
-		<input type="button" onclick="reloadBtn();" style="float:right;" value="새로고침">
+		<input type="hidden" onclick="evalAvoidPopup()" style="background-color: #dee4ea; border-color: black; border-width: thin;" value="기피신청">
+		<input type="button" onclick="signSaveBtn();" style="float:right; margin-left:10px; background-color: #dee4ea; border-color: black; border-width: thin;" value="다음">
+		<input type="button" onclick="reloadBtn();" style="float:right; background-color: #dee4ea; border-color: black; border-width: thin;" value="새로고침">
 	</div>
 	<div id="contentsTemp" ></div>
 	<div id="_pHwpCtrl" style="height: 100%;border: 1px solid lightgray;"></div>

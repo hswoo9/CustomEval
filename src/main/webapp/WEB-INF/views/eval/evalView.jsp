@@ -86,10 +86,10 @@
 	<div class="right_div" style="height:70px;">
 		<div class="controll_btn p10">
 
-			<button type="button" class="evalButton" onclick="evalAvoidPopup()" style="width: 120px; float:left;">기피신청</button>
+			<button type="button" class="evalButton" onclick="evalAvoidPopup()" style="width: 120px; float:left; background-color: #dee4ea; border-color: black; border-width: thin;">기피신청</button>
 			<%--<button type="button" class="evalButton" id="prevButton" style="display: none;" onclick="prevEvalBtn();">이전</button>
 			<button type="button" class="evalButton" id="nextButton" onclick="nextEvalBtn();">다음</button>--%>
-			<button type="button" class="evalButton" id="saveButton" style="width: 120px; float: right; margin-left:10px;" onclick="saveBtn();">다음</button>
+			<button type="button" class="evalButton" id="saveButton" style="width: 120px; float: right; margin-left:10px; background-color: #dee4ea; border-color: black; border-width: thin;" onclick="saveBtn();">다음</button>
 			<%--<button type="button" class="evalButton" id="saveButton" style="display: none;" onclick="deviationChk();">저장</button>--%>
 			<!-- 			<button type="button" class="evalButton" onclick="nextPageBtn();">다음</button> -->
 		</div>

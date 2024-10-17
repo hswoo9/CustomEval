@@ -175,7 +175,7 @@ function htmlToHwp(){
 <div style="padding-left: 25%;">
 	<div id="signSave">
 		<%--<input type="button" onclick="OnConnectDevice();" value="서명하기">--%>
-		<input type="button" onclick="signSaveBtn();" value="다음">
+		<input type="button" onclick="signSaveBtn();" style="background-color: #dee4ea; border-color: black; border-width: thin;" value="다음">
 	</div>
 	
 <div id="contentsTemp">

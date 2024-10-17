@@ -54,9 +54,9 @@
 	console.log("numberOfquality",numberOfquality);
 	console.log("numberOfquantity",numberOfquantity);*/
 
-	$(function(){
+/* 	$(function(){
 		alert('"제안평가 위원님은 본인의 평가가 이상이 없는지 확인하시고\n이상이 있으면 수정하여 주시기 바라며,\n저장버튼 클릭후에는 수정이 불가능 합니다"');
-	});
+	}); */
 
 	var signHwpFileData = "";
 	function signSaveBtn(){

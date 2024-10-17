@@ -89,7 +89,7 @@
 			<button type="button" class="evalButton" onclick="evalAvoidPopup()" style="width: 120px; float:left;">기피신청</button>
 			<%--<button type="button" class="evalButton" id="prevButton" style="display: none;" onclick="prevEvalBtn();">이전</button>
 			<button type="button" class="evalButton" id="nextButton" onclick="nextEvalBtn();">다음</button>--%>
-			<button type="button" class="evalButton" id="saveButton" style="width: 120px; float: right; margin-left:10px;" onclick="saveBtn();">평가확정</button>
+			<button type="button" class="evalButton" id="saveButton" style="width: 120px; float: right; margin-left:10px;" onclick="saveBtn();">다음</button>
 			<%--<button type="button" class="evalButton" id="saveButton" style="display: none;" onclick="deviationChk();">저장</button>--%>
 			<!-- 			<button type="button" class="evalButton" onclick="nextPageBtn();">다음</button> -->
 		</div>
@@ -852,20 +852,33 @@
 	//전체 저장 시 유효성체크 함수
 	function validateScores() {
 		var scoreRadios = document.querySelectorAll('input.score');
+		debugger
 		var checkedGroups = {};
 
 		scoreRadios.forEach(function(radio) {
+			var evSeq = radio.getAttribute('ev_seq');
 			var compSeq = radio.getAttribute('data-comp-seq');
+			var groupKey = compSeq + '_' + evSeq;
 
-			if (!radio.disabled) {
-				if (!checkedGroups[compSeq]) {
+			/*if (!radio.disabled) {
+				if (!checkedGroups[compSeq] && !checkedGroups[evSeq]) {
 					checkedGroups[compSeq] = false;
 				}
 
 				if (radio.checked) {
 					checkedGroups[compSeq] = true;
 				}
+			}*/
+			if (!radio.disabled) {
+				if (!checkedGroups[groupKey]) {
+					checkedGroups[groupKey] = false;
+				}
+
+				if (radio.checked) {
+					checkedGroups[groupKey] = true;
+				}
 			}
+
 		});
 
 		for (var group in checkedGroups) {

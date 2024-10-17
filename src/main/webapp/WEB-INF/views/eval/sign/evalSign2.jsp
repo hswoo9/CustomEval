@@ -245,7 +245,7 @@
 
 	function _hwpPutData(){
 		//내용
-		var title1 = "7. 평가위원장은  ${jangName}로 호선한다.";
+		var title1 = "7. 평가위원장은  ${jangName}(으)로 호선한다.";
 		var date = "${nowDate}";
 		var name = "${userInfo.NAME}";
 

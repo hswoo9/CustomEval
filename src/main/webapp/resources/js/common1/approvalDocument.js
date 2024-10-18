@@ -88,9 +88,12 @@ var approvalDocument = {
         approvalDocument.fn_setEditor(approvalDocument.fn_getHtml(""));
     },
 
-    fn_setEditor : function(html){
-        approvalDocument.global.hwpCtrl = BuildWebHwpCtrl("docEditor", approvalDocument.global.params.hwpUrl, function () {approvalDocument.editorComplete(html);});
-        
+    fn_setEditor : function(html) {
+        approvalDocument.global.hwpCtrl = BuildWebHwpCtrl("docEditor", approvalDocument.global.params.hwpUrl, function () {
+            approvalDocument.editorComplete(html);
+
+            approvalDocument.global.hwpCtrl.PrintDocument();
+        });
     },
 
     editorComplete : function(html){

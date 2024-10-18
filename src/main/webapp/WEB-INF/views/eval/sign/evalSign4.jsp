@@ -7,8 +7,8 @@
 <%@ taglib prefix="fmt"  uri="http://java.sun.com/jsp/jstl/fmt"%>
 <jsp:useBean id="nowDate" class="java.util.Date" />
 <fmt:formatDate value="${nowDate}" var="nowDate" pattern="yyyy년   MM월   dd일" />
-<script type="text/javascript" src="http://10.10.10.112:8080/js/hwpctrlapp/utils/util.js"></script>
-<script type="text/javascript" src="http://10.10.10.112:8080/js/webhwpctrl.js"></script>
+<%--<script type="text/javascript" src="http://10.10.10.112:8080/js/hwpctrlapp/utils/util.js"></script>
+<script type="text/javascript" src="http://10.10.10.112:8080/js/webhwpctrl.js"></script>--%>
 
 <title>평가수당</title>
 
@@ -65,10 +65,10 @@
 			return
 		}
 
-		if (!flag || (p1 + p2).length !== 13) {
+		/*if (!flag || (p1 + p2).length !== 13) {
 			alert('주민등록번호를 확인해 주세요.');
 			return;
-		}
+		}*/
 
 		/*if($('#bank_no').val().length == 0){
 			alert('계좌번호를 입력해 주세요.');

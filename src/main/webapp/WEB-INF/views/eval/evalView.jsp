@@ -403,7 +403,7 @@
 								'<th style="width: 15%;">' + companyRemarkList[j].DISPLAY_TITLE + '</th>' +
 								'<td style="text-align: left;">' +
 								'<input type="hidden" id="chkTxt' + j + '" name="chkTxt">' +
-								'<textarea class="comReMarkInput" id="' + companyRemarkList[j].com_remark_seq + '" data-comp-seq="' + compResult[j].eval_company_seq + '" style="font-size: 20px;" rows="4" cols="100" maxlength="400" placeholder="평가의견은 30자 이상 400자 이하로 입력해주세요.">' + remark + '</textarea>' +
+								'<textarea class="comReMarkInput" id="' + companyRemarkList[j].com_remark_seq + '" data-comp-seq="' + compResult[j].eval_company_seq + '" style="font-size: 20px;" rows="4" cols="100" maxlength="400" placeholder="400자 이하로 입력해주세요.">' + remark + '</textarea>' +
 								'<span id="txtCnt_' + j +'">0</span>/400' +
 								'</td>' +
 								'</tr>' +
@@ -675,8 +675,8 @@
 			$(focusTarget).focus();
 			return;
 		}
-		else if ($('.evalIndex'+evalCnt+' .comReMarkInput').val().length < 30 || $('.evalIndex'+evalCnt+' .comReMarkInput').val().length > 400){
-			alert("평가의견은 30자 이상 400자 이하로 입력해주세요.");
+		else if ($('.evalIndex'+evalCnt+' .comReMarkInput').val().length < 0 || $('.evalIndex'+evalCnt+' .comReMarkInput').val().length > 400){
+			alert("평가의견은 400자 이하로 입력해주세요.");
 			return;
 		}
 
@@ -751,8 +751,8 @@
 		textareas.forEach(function(textarea) {
 			var value = textarea.value;
 
-			if (value.length < 30 || value.length > 400) {
-				alert('평가의견은 30자 이상 400자 이하로 입력해주세요.');
+			if (value.length < 0 || value.length > 400) {
+				alert('평가의견은 400자 이하로 입력해주세요.');
 				isValid = false;
 				return;
 			}
@@ -898,8 +898,8 @@
 		for (var i = 0; i < remarks.length; i++) {
 			var remark = remarks[i].value.trim();
 
-			if (remark.length < 30 || remark.length > 400) {
-				alert("평가의견은 30자 이상 400자 이하로 입력해주세요.");
+			if (remark.length < 0 || remark.length > 400) {
+				alert("평가의견은 400자 이하로 입력해주세요.");
 				return false;
 			}
 		}

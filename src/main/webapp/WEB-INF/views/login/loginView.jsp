@@ -51,7 +51,7 @@ $(function(){
                                </button>
                          </div>
                        <input type="text" class="inp engfix" id="userId" name="id" placeholder="이름 입력" value="">
-                       <input type="password" class="inp engfix" id="userPw" name="pw" placeholder="비밀번호 입력" value="">
+                       <%--<input type="password" class="inp engfix" id="userPw" name="pw" placeholder="비밀번호 입력" value="">--%>
                        <input type="text" class="inp engfix" id="userPhone" name="phone" placeholder="전화번호 입력" value="" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
 
                        <div class="log_btn">

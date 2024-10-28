@@ -80,13 +80,16 @@
 			return
 		}
 
-		var ob1 = $('#num').val();
+		var ob1 = $('#num1').val() + $('#num2').val();
 		var ob2 = $('#dept').val();
 		var ob3 = $('#bank_name').val();
 		//var ob4 = $('#bank_name option:checked').text();
-		/*var ob5 = $('#bank_no').val();*/
+		var ob5 = $('#bank_no').val();
 		var ob6 = $('#addr').val();
 		var ob7 = $('#oName').val();
+		var ob8 = document.getElementById("evaluationFee").value.replace(/,/g, '') || 0; // 평가비
+		var ob9 = document.getElementById("transportFee").value.replace(/,/g, '') || 0; // 교통비
+		var ob10 = Number(ob8) + Number(ob9); // 합계
 
 		_hwpPutText("dept", ob2);
 		/*if($("input[name='publicOrProtected']:checked").val() == "Y"){
@@ -94,10 +97,14 @@
 		}else{
 			_hwpPutText("num", '******-*******');
 		}*/
+		_hwpPutText("eval_pay", ob8);
+		_hwpPutText("trans_pay", ob9);
+		_hwpPutText("total_pay", ob10);
 		_hwpPutText("addr", ob6);
+		_hwpPutText("num", ob1);
 		//_hwpPutText("bank_name", ob4);
 		_hwpPutText("bank_name", ob3);
-		/*_hwpPutText("bank_no", ob5);*/
+		_hwpPutText("bank_no", ob5);
 
 		_pHwpCtrl.GetTextFile("HWPML2X", "", function(data) {
 			signHwpFileData = data;
@@ -344,7 +351,7 @@
 	<TR>
 		<TD valign="middle" bgcolor="#ffffff"  style='width:580px;height:70px;border-left:none;border-right:none;border-top:none;border-bottom:double #000000 2.0pt;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
 		<P CLASS=HStyle0 STYLE='text-align:center;'><SPAN STYLE='font-size:17.0pt;font-weight:bold;line-height:160%'>「${userInfo.TITLE } 사업」평가수당 지급 확인서</SPAN></P>
-		<P CLASS=HStyle0 STYLE='text-align:center;'><SPAN STYLE='font-size:17.0pt;font-weight:bold;line-height:160%'>평가수당 지급 확인서</SPAN></P>
+		<%--<P CLASS=HStyle0 STYLE='text-align:center;'><SPAN STYLE='font-size:17.0pt;font-weight:bold;line-height:160%'>평가수당 지급 확인서</SPAN></P>--%>
 		</TD>
 	</TR>
 	</TABLE>
@@ -471,7 +478,7 @@
 	</TR>
 	<TR>
 		<TD colspan="2" valign="middle" style='width:163px;height:22px;border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
-		<P CLASS=HStyle34 STYLE='margin-top:3.0pt;line-height:160%;'><SPAN STYLE='font-size:11.0pt;font-family:"휴먼명조";line-height:160%'>○ (은행명)계좌번호: </SPAN></P>
+		<P CLASS=HStyle34 STYLE='margin-top:3.0pt;line-height:160%;'><SPAN STYLE='font-size:11.0pt;font-family:"휴먼명조";line-height:160%'>○ 은행명 :</SPAN></P>
 		</TD>
 		<TD colspan="5" valign="middle" style='width:417px;height:22px;border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
 			<input type="text" style="width: 275px;" id="bank_name" value="">
@@ -482,6 +489,14 @@
 			</select>--%>
 		</TD>
 	</TR>
+		<TR>
+			<TD colspan="2" valign="middle" style='width:163px;height:22px;border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
+				<P CLASS=HStyle34 STYLE='margin-top:3.0pt;line-height:160%;'><SPAN STYLE='font-size:11.0pt;font-family:"휴먼명조";line-height:160%'>○ 계좌번호 : </SPAN></P>
+			</TD>
+			<TD colspan="5" valign="middle" style='width:417px;height:22px;border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
+				<input type="text" style="width: 275px;" id="bank_no" value="${userInfo.BANK_NO }">
+			</TD>
+		</TR>
 	<%--<TR>
 		<TD colspan="2" valign="middle" style='width:163px;height:22px;border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
 		<P CLASS=HStyle34 STYLE='margin-top:3.0pt;line-height:160%;'><SPAN STYLE='font-size:11.0pt;font-family:"휴먼명조";line-height:160%'>○ 계좌번호 : </SPAN></P>

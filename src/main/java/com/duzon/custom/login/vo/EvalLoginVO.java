@@ -9,7 +9,7 @@ public class EvalLoginVO {
 	 */
 	
 	private String id;
-	private String pw;
+	/*private String pw;*/
     private String birth;
 	private String title;
 	private String phone;
@@ -41,12 +41,12 @@ public class EvalLoginVO {
 		this.id = id;
 	}
 
-	public String getPw() {
+	/*public String getPw() {
 		return pw;
 	}
 	public void setPw(String pw) {
 		this.pw = pw;
-	}
+	}*/
 
 	public boolean isEvalFlag() {
 		return evalFlag;

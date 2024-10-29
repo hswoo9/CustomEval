@@ -49,8 +49,7 @@
 		}
 	}*/
 
-	var signHwpFileData = "";
-	function signSaveBtn(){
+	function showModifyConfirmButtons() {
 		var p1 = $('#num1').val();
 		var p2 = $('#num2').val();
 		var flag = isKorJumin(p1, p2);
@@ -60,25 +59,85 @@
 			return;
 		}
 
+		if ($('#dept').val().length == 0) {
+			alert('소속을 입력해 주세요.');
+			return;
+		}
+
+		/*if (!flag || (p1 + p2).length !== 13) {
+            alert('주민등록번호를 확인해 주세요.');
+            return;
+        }*/
+
+		/*if ($('#bank_no').val().length == 0) {
+            alert('계좌번호를 입력해 주세요.');
+            return;
+        }*/
+
+		if ($('#addr').val().length == 0) {
+			alert('주소를 입력해 주세요.');
+			return;
+		}
+
+		alert("작성하신 평가수당을 확인 하시고 확정/수정 버튼을 눌러주시기 바랍니다.")
+		$('input[type="text"]').prop('readonly', true);
+
+		$('#region').prop('disabled', true);
+
+		document.getElementById("nextButton").style.display = "none";
+		document.getElementById("modifyButton").style.display = "inline-block";
+		document.getElementById("confirmButton").style.display = "inline-block";
+	}
+
+	function showNextButton() {
+		$('input[type="text"]').prop('readonly', false);
+
+		$('#region').prop('disabled', false);
+		$('#oName').prop('readonly', true);
+		$('#transportFee').prop('readonly', true);
+		$('#totalFee').prop('readonly', true);
+
+		document.getElementById("modifyButton").style.display = "none";
+		document.getElementById("confirmButton").style.display = "none";
+		document.getElementById("nextButton").style.display = "inline-block";
+	}
+
+	function confirmEvaluation() {
+		if (confirm("이대로 평가수당을 확정시키겠습니까?")) {
+			signSaveBtn();
+		}
+	}
+
+	var signHwpFileData = "";
+	function signSaveBtn(){
+		var p1 = $('#num1').val();
+		var p2 = $('#num2').val();
+		var flag = isKorJumin(p1, p2);
+
+		/*if (p1.length == 0 || p2.length == 0) {
+			alert('주민등록 번호를 입력해 주세요.');
+			return;
+		}
+
 		if($('#dept').val().length == 0){
 			alert('소속을 입력해 주세요.');
 			return
 		}
 
-		/*if (!flag || (p1 + p2).length !== 13) {
+		/!*if (!flag || (p1 + p2).length !== 13) {
 			alert('주민등록번호를 확인해 주세요.');
 			return;
-		}*/
+		}*!/
 
-		/*if($('#bank_no').val().length == 0){
+		/!*if($('#bank_no').val().length == 0){
 			alert('계좌번호를 입력해 주세요.');
 			return
-		}*/
+		}*!/
 
 		if($('#addr').val().length == 0){
 			alert('주소를 입력해 주세요.');
 			return
-		}
+		}*/
 
 		var ob1 = $('#num1').val() + $('#num2').val();
 		var ob2 = $('#dept').val();
@@ -340,8 +399,10 @@
 		<c:if test="${userInfo.EVAL_AVOID eq 'N'}">
 			<input type="hidden" onclick="showModalPop()" style="background-color: #dee4ea; border-color: black; border-width: thin;" value="기피신청">
 		</c:if>
-		<input type="button" onclick="signSaveBtn();" style="float:right; margin-left:10px; background-color: #dee4ea; border-color: black; border-width: thin;" value="다음">
-		<%--<input type="button" onclick="signFileDown();" style="float:right;" value="평가자료 다운로드">--%>
+	<input type="button" id="nextButton" onclick="showModifyConfirmButtons();" style="float:right; margin-left:10px; background-color: #dee4ea; border-color: black; border-width: thin;" value="다음">
+	<input type="button" id="confirmButton" style="float:right; margin-left:10px; background-color: #dee4ea; border-color: black; border-width: thin; display: none;" value="확정" onclick="confirmEvaluation();">
+	<input type="button" id="modifyButton" style="float:right; margin-left:10px; background-color: #dee4ea; border-color: black; border-width: thin; display: none;" value="수정" onclick="showNextButton();">
+<%--<input type="button" onclick="signFileDown();" style="float:right;" value="평가자료 다운로드">--%>
 	</div>
 </div>
 
@@ -355,9 +416,9 @@
 		</TD>
 	</TR>
 	</TABLE>
-	
+
 	<P CLASS=HStyle0 STYLE='text-align:center;line-height:180%;'></P>
-	
+
 	<TABLE border="1" cellspacing="0" cellpadding="0" style='width:580px; border-collapse:collapse;border:none;'>
 	<TR>
 		<TD valign="middle" bgcolor="#e5e5ff"  style='width:186px;height:31px;border-left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 1.1pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
@@ -426,7 +487,7 @@
 		</TR>
 	</TABLE></P>
 	<P CLASS=HStyle0 STYLE='margin-top:5.0pt;text-align:center;line-height:130%;'></P>
-	
+
 	<P CLASS=HStyle34 STYLE='margin-top:3.0pt;line-height:160%;'>
 	<P CLASS=HStyle34 style="color:red; font-size: 16px;"> * 사업담당자 확인 후 입력 필수</P>
 	<TABLE border="1" cellspacing="0" cellpadding="0" style='width:580px; border-collapse:collapse;border:none;'>
@@ -527,8 +588,8 @@
 		</TD>
 	</TR>
 	</TABLE>
-	
-	
+
+
 	<TABLE border="1" cellspacing="0" cellpadding="0" style='border-collapse:collapse;border:none;'>
 	<TR>
 		<TD valign="middle" style='width:84px;height:13px;border-left:none;border-right:none;border-top:none;border-bottom:dotted #000000 0.9pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>

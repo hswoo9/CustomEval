@@ -73,6 +73,7 @@ public class EvalController {
 //		SIGN_8 = 제안서 평가 총괄표
 //		SIGN_9 = 사전접촉여부 확인(신고)서 한번더
 //		SIGN_10 = 평가위원장 가산금 지급 확인서
+//		SIGN_11 = 평가최종페이지
 
 		
 		FlashMap fm = RequestContextUtils.getOutputFlashMap(request);
@@ -408,7 +409,7 @@ public class EvalController {
 			return "redirect:/";
 			
 		}
-		
+
 	}
 
 	@RequestMapping("/eval/getEvalData")

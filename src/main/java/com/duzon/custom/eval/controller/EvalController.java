@@ -636,8 +636,9 @@ public class EvalController {
 
 		path = baseDir + "cust_eval/" + params.get("commissioner_seq").toString() + "/sign";
 
-		if(servletRequest.getServerName().contains("localhost") || servletRequest.getServerName().contains("127.0.0.1") || servletRequest.getServerName().contains("121.186.165.80")){
+		if(servletRequest.getServerName().contains("localhost") || servletRequest.getServerName().contains("127.0.0.1") || servletRequest.getServerName().contains("121.186.165.80") || servletRequest.getServerName().contains("1.233.95.140")){
 			path = "/home" + path;
+			System.out.println("***********path : "+path);
 		}else{
 			path = "/data" + path;
 		}

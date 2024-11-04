@@ -24,10 +24,13 @@ public class CommFileUtil {
 
     private String[] invalidName = {"\\\\","/",":","[*]","[?]","\"","<",">","[|]"," "};
 
-    private String ADDRESS = "121.186.165.80";
-    private int PORT = 22;
+    //private String ADDRESS = "121.186.165.80";
+    private String ADDRESS = "1.233.95.140";
+    //private int PORT = 22;
+    private int PORT = 51002;
     private String USERNAME = "root";
-    private String PASSWORD = "dev123!@#";
+    //private String PASSWORD = "dev123!@#";
+    private String PASSWORD = "epqmwlttn1q2w3e";
     private static Session session = null;
     private static Channel channel = null;
     private static ChannelSftp channelSftp = null;
@@ -116,7 +119,8 @@ public class CommFileUtil {
                 }
             }
             listMap = new HashMap<String, Object>();
-            listMap.put("signDir", "http:\\\\121.186.165.80:8010\\upload\\cust_eval\\" + fileName.replaceAll("_sign", "") + "\\sign\\" + fileName + ".png");
+            //listMap.put("signDir", "http:\\\\121.186.165.80:8010\\upload\\cust_eval\\" + fileName.replaceAll("_sign", "") + "\\sign\\" + fileName + ".png");
+            listMap.put("signDir", "http:\\\\1.233.95.140:51002\\upload\\cust_eval\\" + fileName.replaceAll("_sign", "") + "\\sign\\" + fileName + ".png");
 
         } catch (Exception e) {
             e.printStackTrace();

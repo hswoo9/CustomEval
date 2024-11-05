@@ -2,6 +2,7 @@ package com.duzon.custom.eval.service.impl;
 
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.nio.file.*;
 import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -49,12 +50,30 @@ public class EvalServiceImpl implements EvalService {
 		Map<String, Object> result = new HashMap<String, Object>();
 
 		try {
-			byte[] imgByte = Base64.getDecoder().decode((String) map.get("sign"));
+			BASE64Decoder decoder = new BASE64Decoder();
+			byte[] imgByte = decoder.decodeBuffer((String) map.get("sign"));
+			String originFileExt = "png";
+			String fileName = map.get("commissioner_seq").toString() + "_sign";
 
-			CommFileUtil commFileUtil = new CommFileUtil();
+			File lOutFile = File.createTempFile(fileName, "." + originFileExt);
+			BufferedImage image = ImageIO.read(new ByteArrayInputStream(imgByte));
+			ImageIO.write(image, originFileExt, lOutFile);
+
+			File newPath = new File(serverDir);
+			if (!newPath.exists()) {
+				newPath.mkdirs();
+			}
+			Path path = Paths.get(serverDir + fileName + "." + originFileExt);
+			Files.copy(new FileInputStream(lOutFile), path, new CopyOption[]{StandardCopyOption.REPLACE_EXISTING});
+
+			String signDir = "http:\\\\1.233.95.140:58090\\upload\\cust_eval\\" + fileName.replaceAll("_sign", "") + "\\sign\\" + fileName + ".png";
+			map.put("signDir", signDir.toString().replace("\\\\", "//").replace("\\", "/"));
+
+			/*CommFileUtil commFileUtil = new CommFileUtil();
 			Map<String, Object> signDirMap = commFileUtil.setServerIFSave(serverDir, imgByte, map.get("commissioner_seq") + "_sign");
-			map.put("signDir", signDirMap.get("signDir").toString().replace("\\\\", "//").replace("\\", "/"));
+			map.put("signDir", signDirMap.get("signDir").toString().replace("\\\\", "//").replace("\\", "/"));*/
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
 

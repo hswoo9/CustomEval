@@ -159,7 +159,7 @@
 		// _pHwpCtrl.Open(hwpPath,"HWP");51
 		var serverPath = "";
 		var hostname = window.location.hostname;
-		if(hostname.indexOf("localhost") > -1 || hostname.indexOf("127.0.0.1") > -1 || hostname.indexOf("121.186.165.80") > -1){
+		if(hostname.indexOf("localhost") > -1 || hostname.indexOf("127.0.0.1") > -1 || hostname.indexOf("1.233.95.140") > -1){
 			serverPath = "http://1.233.95.140:58090/";
 		}else{
 			serverPath = "http://one.epis.or.kr/"

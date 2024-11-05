@@ -49,8 +49,7 @@ public class EvalServiceImpl implements EvalService {
 		Map<String, Object> result = new HashMap<String, Object>();
 
 		try {
-			BASE64Decoder decoder = new BASE64Decoder();
-			byte[] imgByte = decoder.decodeBuffer((String) map.get("sign"));
+			byte[] imgByte = Base64.getDecoder().decode((String) map.get("sign"));
 
 			CommFileUtil commFileUtil = new CommFileUtil();
 			Map<String, Object> signDirMap = commFileUtil.setServerIFSave(serverDir, imgByte, map.get("commissioner_seq") + "_sign");

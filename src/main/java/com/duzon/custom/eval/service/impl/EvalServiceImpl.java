@@ -50,22 +50,23 @@ public class EvalServiceImpl implements EvalService {
 		Map<String, Object> result = new HashMap<String, Object>();
 
 		try {
-			BASE64Decoder decoder = new BASE64Decoder();
-			byte[] imgByte = decoder.decodeBuffer((String) map.get("sign"));
+			System.out.println("===================[ 1 ]====================");
+			byte[] imgByte = Base64.getDecoder().decode((String) map.get("sign"));
 			String originFileExt = "png";
 			String fileName = map.get("commissioner_seq").toString() + "_sign";
-
+			System.out.println("===================[ 2 ]====================");
 			File lOutFile = File.createTempFile(fileName, "." + originFileExt);
 			BufferedImage image = ImageIO.read(new ByteArrayInputStream(imgByte));
 			ImageIO.write(image, originFileExt, lOutFile);
-
+			System.out.println("===================[ 3 ]====================");
 			File newPath = new File(serverDir);
 			if (!newPath.exists()) {
 				newPath.mkdirs();
 			}
-			Path path = Paths.get(serverDir + fileName + "." + originFileExt);
+			System.out.println("===================[ 4 ]====================");
+			Path path = Paths.get(serverDir + "/" + fileName + "." + originFileExt);
 			Files.copy(new FileInputStream(lOutFile), path, new CopyOption[]{StandardCopyOption.REPLACE_EXISTING});
-
+			System.out.println("===================[ 5 ]====================");
 			String signDir = "http:\\\\1.233.95.140:58090\\upload\\cust_eval\\" + fileName.replaceAll("_sign", "") + "\\sign\\" + fileName + ".png";
 			map.put("signDir", signDir.toString().replace("\\\\", "//").replace("\\", "/"));
 
@@ -295,8 +296,26 @@ public class EvalServiceImpl implements EvalService {
 
 			if (!EgovStringUtil.nullConvert(map.get("signHwpFileData")).equals("")) {
 				try {
-					CommFileUtil commFileUtil = new CommFileUtil();
-					commFileUtil.setServerSFSave(EgovStringUtil.nullConvert(map.get("signHwpFileData")), (String) map.get("commissioner_seq"), fileName, "hwp");
+
+					String originFileName = fileName;
+					String originFileExt  = "hwp";
+					String fileStr = EgovStringUtil.nullConvert(map.get("signHwpFileData"));
+					File file = File.createTempFile(originFileName, "." + originFileExt);
+					FileOutputStream lFileOutputStream = new FileOutputStream(file);
+					lFileOutputStream.write(fileStr.getBytes("UTF-8"));
+					lFileOutputStream.close();
+
+					String serverFilePath = "/home/upload/cust_eval/" + map.get("commissioner_seq").toString() + "/hwp/";
+					File newPath = new File(serverFilePath);
+					if (!newPath.exists()) {
+						newPath.mkdirs();
+					}
+
+					Path path = Paths.get(serverFilePath + fileName + "." + originFileExt);
+					Files.copy(new FileInputStream(file), path, new CopyOption[]{StandardCopyOption.REPLACE_EXISTING});
+
+					/*CommFileUtil commFileUtil = new CommFileUtil();
+					commFileUtil.setServerSFSave(EgovStringUtil.nullConvert(map.get("signHwpFileData")), (String) map.get("commissioner_seq"), fileName, "hwp");*/
 
 					PdfEcmFileVO pdfEcmFileVO = new PdfEcmFileVO();
 					pdfEcmFileVO.setRep_id(fileName);

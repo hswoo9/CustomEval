@@ -84,7 +84,7 @@ public class EvalController {
 
 		/** 웹한글 기안기 url 가져오기 */
 		String hwpUrl = "";
-		if(request.getServerName().contains("localhost") || request.getServerName().contains("127.0.0.1")){
+		if(request.getServerName().contains("localhost") || request.getServerName().contains("127.0.0.1") || request.getServerName().contains("1.233.95.140")){
 			hwpUrl = commonService.getHwpCtrlUrl("l_hwpUrl");
 		}else{
 			hwpUrl = commonService.getHwpCtrlUrl("s_hwpUrl");

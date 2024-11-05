@@ -120,7 +120,7 @@ public class CommFileUtil {
             }
             listMap = new HashMap<String, Object>();
             //listMap.put("signDir", "http:\\\\121.186.165.80:8010\\upload\\cust_eval\\" + fileName.replaceAll("_sign", "") + "\\sign\\" + fileName + ".png");
-            listMap.put("signDir", "http:\\\\1.233.95.140:51002\\upload\\cust_eval\\" + fileName.replaceAll("_sign", "") + "\\sign\\" + fileName + ".png");
+            listMap.put("signDir", "http:\\\\1.233.95.140:58090\\upload\\cust_eval\\" + fileName.replaceAll("_sign", "") + "\\sign\\" + fileName + ".png");
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -80,6 +80,9 @@
 		}
 
 		alert("작성하신 평가수당을 확인 하시고 확정/수정 버튼을 눌러주시기 바랍니다.")
+
+		createSummaryTable();
+
 		$('input[type="text"]').prop('readonly', true);
 
 		$('#region').prop('disabled', true);
@@ -87,6 +90,80 @@
 		document.getElementById("nextButton").style.display = "none";
 		document.getElementById("modifyButton").style.display = "inline-block";
 		document.getElementById("confirmButton").style.display = "inline-block";
+
+		document.getElementById("contentsTemp").style.display = "none";
+	}
+
+
+	function createSummaryTable() {
+		// 입력된 값을 변수에 저장
+		var evaluationFee = $('#evaluationFee').val() || '0';
+		var transportFee = $('#transportFee').val() || '0';
+		var totalFee = $('#totalFee').val() || '0';
+		var dept = $('#dept').val() || '';
+		var oName = $('#oName').val() || '';
+		var addr = $('#addr').val() || '';
+		var bankName = $('#bank_name').val() || '';
+		var bankNo = $('#bank_no').val() || '';
+		var ssn1 = $('#num1').val() || '';
+		var ssn2 = $('#num2').val() || '';
+
+		// 테이블 HTML 생성
+		var tableHtml = `
+        <table border="1" cellspacing="0" cellpadding="0" style='width:580px; border-collapse:collapse; padding-left: 30%;'>
+            <tr>
+                <td style="text-align: center; background-color: #e5e5ff; padding: 10px; width: 33%">평가비</td>
+                <td style="text-align: center; background-color: #e5e5ff; padding: 10px; width: 33%">교통비</td>
+                <td style="text-align: center; background-color: #e5e5ff; padding: 10px; width: 33%">합계</td>
+            </tr>
+            <tr>
+                <td style="text-align: right; padding: 10px;" id="evaluationFeeCell"></td>
+                <td style="text-align: right; padding: 10px;" id="transportFeeCell"></td>
+                <td style="text-align: right; padding: 10px;" id="totalFeeCell"></td>
+            </tr>
+            <tr>
+                <td style="text-align: center; background-color: #e5e5ff; padding: 10px; width: 33%">소속</td>
+                <td style="text-align: center; background-color: #e5e5ff; padding: 10px; width: 33%">성명</td>
+                <td style="text-align: center; background-color: #e5e5ff; padding: 10px; width: 33%">주소</td>
+            </tr>
+            <tr>
+                <td style="text-align: right; padding: 10px;" id="deptCell"></td>
+                <td style="text-align: right; padding: 10px;" id="oNameCell"></td>
+                <td style="text-align: right; padding: 10px;" id="addrCell"></td>
+            </tr>
+            <tr>
+                <td style="text-align: center; background-color: #e5e5ff; padding: 10px; width: 34%">은행명</td>
+                <td style="text-align: center; background-color: #e5e5ff; padding: 10px; width: 34%">계좌번호</td>
+                <td style="text-align: center; background-color: #e5e5ff; padding: 10px; width: 34%">주민번호</td>
+            </tr>
+            <tr>
+                <td style="text-align: right; padding: 10px;" id="bankName"></td>
+                <td style="text-align: right; padding: 10px;" id="bankNo"></td>
+                <td style="text-align: right; padding: 10px;" id="ssn"></td>
+            </tr>
+        </table>
+    `;
+
+		// summaryTable 요소가 존재하는지 확인
+		var summaryTable = document.getElementById("summaryTable");
+
+		if (summaryTable) {
+			summaryTable.innerHTML = tableHtml; // 테이블을 summaryTable에 삽입
+			summaryTable.style.display = "block"; // 테이블이 보이도록 설정
+
+			// 각 셀에 값 삽입
+			document.getElementById('evaluationFeeCell').innerHTML = evaluationFee + ' 원';
+			document.getElementById('transportFeeCell').innerHTML = transportFee + ' 원';
+			document.getElementById('totalFeeCell').innerHTML = totalFee + ' 원';
+			document.getElementById('deptCell').innerHTML = dept;
+			document.getElementById('oNameCell').innerHTML = oName;
+			document.getElementById('addrCell').innerHTML = addr;
+			document.getElementById('bankName').innerHTML = bankName;
+			document.getElementById('bankNo').innerHTML = bankNo;
+			document.getElementById('ssn').innerHTML = ssn1 + ssn2;
+		} else {
+			console.error("summaryTable 요소를 찾을 수 없습니다.");
+		}
 	}
 
 	function showNextButton() {
@@ -408,6 +485,7 @@
 	</div>
 </div>
 
+<div id="summaryTable" style="display: none; margin-top: 50px;  padding-left: 30%;"></div>
 
 <div id="contentsTemp" style="width: 580px; padding-left: 30%;">
 	<TABLE border="1" cellspacing="0" cellpadding="0" style='width:580px; border-collapse:collapse;border:none;'>

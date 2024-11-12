@@ -41,13 +41,13 @@
 		};
 	});
 
-/*	function fileDownChk(){
-		if(fileDownFlag){
-			signSaveBtn()
-		}else{
-			alert("평가자료를 다운로드 해주세요.");
-		}
-	}*/
+	/*	function fileDownChk(){
+            if(fileDownFlag){
+                signSaveBtn()
+            }else{
+                alert("평가자료를 다운로드 해주세요.");
+            }
+        }*/
 
 	function showModifyConfirmButtons() {
 		var p1 = $('#num1').val();
@@ -176,12 +176,14 @@
 		var formData = new FormData();
 		formData.append("commissioner_seq", "${userInfo.COMMISSIONER_SEQ}");
 		formData.append("step", "4");
+		formData.append("oName", $('#oName').val());
+		formData.append("totalFee", $('#totalFee').val());
 		formData.append("birth_date", $('#num').val());
 		formData.append("org_name", $('#dept').val());
-		//formData.append("bank_cd", $('#bank_name').val());
+		formData.append("region", $('#region').val());
 		formData.append("bank_name", $('#bank_name').val());
 		//formData.append("bank_name", $('#bank_name option:checked').text());
-		/*formData.append("bank_no", $('#bank_no').val());*/
+		formData.append("bank_no", $('#bank_no').val());
 		formData.append("addr", $('#addr').val());
 		formData.append("signHwpFileData", signHwpFileData);
 
@@ -205,7 +207,7 @@
 				alert("문서저장시 오류가 발생했습니다. 시스템관리자한테 문의 하세요.");
 				return false ;
 			}
-		})
+		});
 	}
 
 	function setSign(imgData){
@@ -395,82 +397,82 @@
 
 <div style="width: 40%;margin: 0 auto;">
 	<div id="signSave" style="display: none; width:78%;">
-<%--		<input type="button" onclick="OnConnectDevice();" value="서명하기">--%>
+		<%--		<input type="button" onclick="OnConnectDevice();" value="서명하기">--%>
 		<c:if test="${userInfo.EVAL_AVOID eq 'N'}">
 			<input type="hidden" onclick="showModalPop()" style="background-color: #dee4ea; border-color: black; border-width: thin;" value="기피신청">
 		</c:if>
-	<input type="button" id="nextButton" onclick="showModifyConfirmButtons();" style="float:right; margin-left:10px; background-color: #dee4ea; border-color: black; border-width: thin;" value="다음">
-	<input type="button" id="confirmButton" style="float:right; margin-left:10px; background-color: #dee4ea; border-color: black; border-width: thin; display: none;" value="확정" onclick="confirmEvaluation();">
-	<input type="button" id="modifyButton" style="float:right; margin-left:10px; background-color: #dee4ea; border-color: black; border-width: thin; display: none;" value="수정" onclick="showNextButton();">
-<%--<input type="button" onclick="signFileDown();" style="float:right;" value="평가자료 다운로드">--%>
+		<input type="button" id="nextButton" onclick="showModifyConfirmButtons();" style="float:right; margin-left:10px; background-color: #dee4ea; border-color: black; border-width: thin;" value="다음">
+		<input type="button" id="confirmButton" style="float:right; margin-left:10px; background-color: #dee4ea; border-color: black; border-width: thin; display: none;" value="확정" onclick="confirmEvaluation();">
+		<input type="button" id="modifyButton" style="float:right; margin-left:10px; background-color: #dee4ea; border-color: black; border-width: thin; display: none;" value="수정" onclick="showNextButton();">
+		<%--<input type="button" onclick="signFileDown();" style="float:right;" value="평가자료 다운로드">--%>
 	</div>
 </div>
 
 
 <div id="contentsTemp" style="width: 580px; padding-left: 30%;">
 	<TABLE border="1" cellspacing="0" cellpadding="0" style='width:580px; border-collapse:collapse;border:none;'>
-	<TR>
-		<TD valign="middle" bgcolor="#ffffff"  style='width:580px;height:70px;border-left:none;border-right:none;border-top:none;border-bottom:double #000000 2.0pt;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
-		<P CLASS=HStyle0 STYLE='text-align:center;'><SPAN STYLE='font-size:17.0pt;font-weight:bold;line-height:160%'>「${userInfo.TITLE } 사업」평가수당 지급 확인서</SPAN></P>
-		<%--<P CLASS=HStyle0 STYLE='text-align:center;'><SPAN STYLE='font-size:17.0pt;font-weight:bold;line-height:160%'>평가수당 지급 확인서</SPAN></P>--%>
-		</TD>
-	</TR>
+		<TR>
+			<TD valign="middle" bgcolor="#ffffff"  style='width:580px;height:70px;border-left:none;border-right:none;border-top:none;border-bottom:double #000000 2.0pt;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
+				<P CLASS=HStyle0 STYLE='text-align:center;'><SPAN STYLE='font-size:17.0pt;font-weight:bold;line-height:160%'>「${userInfo.TITLE } 사업」평가수당 지급 확인서</SPAN></P>
+				<%--<P CLASS=HStyle0 STYLE='text-align:center;'><SPAN STYLE='font-size:17.0pt;font-weight:bold;line-height:160%'>평가수당 지급 확인서</SPAN></P>--%>
+			</TD>
+		</TR>
 	</TABLE>
 
 	<P CLASS=HStyle0 STYLE='text-align:center;line-height:180%;'></P>
 
 	<TABLE border="1" cellspacing="0" cellpadding="0" style='width:580px; border-collapse:collapse;border:none;'>
-	<TR>
-		<TD valign="middle" bgcolor="#e5e5ff"  style='width:186px;height:31px;border-left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 1.1pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
-		<P CLASS=HStyle0 STYLE='text-align:center;'><SPAN STYLE='font-size:12.0pt;font-family:"한양중고딕,한컴돋움";font-weight:bold;line-height:160%'>평 가 비</SPAN></P>
-		</TD>
-		<TD valign="middle" bgcolor="#e5e5ff"  style='width:186px;height:31px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 1.1pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
-		<P CLASS=HStyle0 STYLE='text-align:center;'><SPAN STYLE='font-size:12.0pt;font-family:"한양중고딕,한컴돋움";font-weight:bold;line-height:160%'>교 통 비</SPAN></P>
-		</TD>
-		<TD valign="middle" bgcolor="#e5e5ff"  style='width:186px;height:31px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 1.1pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
-			<P CLASS=HStyle0 STYLE='text-align:center;'><SPAN STYLE='font-size:12.0pt;font-family:"한양중고딕,한컴돋움";font-weight:bold;line-height:160%'>합 계</SPAN></P>
-		</TD>
-		<%--<TD valign="middle" bgcolor="#e5e5ff"  style='width:186px;height:31px;border-left:solid #000000 0.4pt;border-right:solid #000000 1.1pt;border-top:solid #000000 1.1pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
-		<P CLASS=HStyle0 STYLE='text-align:center;'><SPAN STYLE='font-size:12.0pt;font-family:"한양중고딕,한컴돋움";font-weight:bold;line-height:160%'>합&nbsp;&nbsp; 계</SPAN></P>
-		</TD>--%>
-	</TR>
-	<%--<TR>
-		<TD valign="middle" style='width:186px;height:31px;border-left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 1.1pt;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
-			<P CLASS=HStyle0 STYLE='margin-right:5.0pt;text-align:right;'>
-				<SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>
-					내부 규정에 따름
-					&lt;%&ndash;<c:choose>
-						<c:when test="${userInfo.EVAL_AVOID eq 'Y'}">
-							50,000원
-							&lt;%&ndash;<fmt:formatNumber type="number" maxFractionDigits="3" value="${userInfo.EVAL_PAY }"/>&ndash;%&gt;
-						</c:when>
-						<c:otherwise>
-							내부 규정에 따름
-						</c:otherwise>
-					</c:choose>&ndash;%&gt;
-				</SPAN>
-			</P>
-		</TD>
-		<TD valign="middle" style='width:186px;height:31px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 1.1pt;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
-			<P CLASS=HStyle0 STYLE='margin-right:5.0pt;text-align:right;'>
-				<SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>
-					내부 규정에 따름
-	&lt;%&ndash;				<fmt:formatNumber type="number" maxFractionDigits="3" value="${userInfo.TRANS_PAY }" />원&ndash;%&gt;
-				</SPAN>
-			</P>
-		</TD>
-		<TD valign="middle" style='width:186px;height:31px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 1.1pt;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
-			<P CLASS=HStyle0 STYLE='margin-right:5.0pt;text-align:right;'>
-				<SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>
-					내부 규정에 따름
-	&lt;%&ndash;				<fmt:formatNumber type="number" maxFractionDigits="3" value="${userInfo.TRANS_PAY }" />원&ndash;%&gt;
-				</SPAN>
-			</P>
-		</TD>
-		&lt;%&ndash;<TD valign="middle" style='width:186px;height:31px;border-left:solid #000000 0.4pt;border-right:solid #000000 1.1pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 1.1pt;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
-		<P CLASS=HStyle0 STYLE='margin-right:5.0pt;text-align:right;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>내부 규정에 따름</SPAN></P>
-		</TD>&ndash;%&gt;
-	</TR>--%>
+		<TR>
+			<TD valign="middle" bgcolor="#e5e5ff"  style='width:186px;height:31px;border-left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 1.1pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
+				<P CLASS=HStyle0 STYLE='text-align:center;'><SPAN STYLE='font-size:12.0pt;font-family:"한양중고딕,한컴돋움";font-weight:bold;line-height:160%'>평 가 비</SPAN></P>
+			</TD>
+			<TD valign="middle" bgcolor="#e5e5ff"  style='width:186px;height:31px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 1.1pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
+				<P CLASS=HStyle0 STYLE='text-align:center;'><SPAN STYLE='font-size:12.0pt;font-family:"한양중고딕,한컴돋움";font-weight:bold;line-height:160%'>교 통 비</SPAN></P>
+			</TD>
+			<TD valign="middle" bgcolor="#e5e5ff"  style='width:186px;height:31px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 1.1pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
+				<P CLASS=HStyle0 STYLE='text-align:center;'><SPAN STYLE='font-size:12.0pt;font-family:"한양중고딕,한컴돋움";font-weight:bold;line-height:160%'>합 계</SPAN></P>
+			</TD>
+			<%--<TD valign="middle" bgcolor="#e5e5ff"  style='width:186px;height:31px;border-left:solid #000000 0.4pt;border-right:solid #000000 1.1pt;border-top:solid #000000 1.1pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
+            <P CLASS=HStyle0 STYLE='text-align:center;'><SPAN STYLE='font-size:12.0pt;font-family:"한양중고딕,한컴돋움";font-weight:bold;line-height:160%'>합&nbsp;&nbsp; 계</SPAN></P>
+            </TD>--%>
+		</TR>
+		<%--<TR>
+            <TD valign="middle" style='width:186px;height:31px;border-left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 1.1pt;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
+                <P CLASS=HStyle0 STYLE='margin-right:5.0pt;text-align:right;'>
+                    <SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>
+                        내부 규정에 따름
+                        &lt;%&ndash;<c:choose>
+                            <c:when test="${userInfo.EVAL_AVOID eq 'Y'}">
+                                50,000원
+                                &lt;%&ndash;<fmt:formatNumber type="number" maxFractionDigits="3" value="${userInfo.EVAL_PAY }"/>&ndash;%&gt;
+                            </c:when>
+                            <c:otherwise>
+                                내부 규정에 따름
+                            </c:otherwise>
+                        </c:choose>&ndash;%&gt;
+                    </SPAN>
+                </P>
+            </TD>
+            <TD valign="middle" style='width:186px;height:31px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 1.1pt;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
+                <P CLASS=HStyle0 STYLE='margin-right:5.0pt;text-align:right;'>
+                    <SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>
+                        내부 규정에 따름
+        &lt;%&ndash;				<fmt:formatNumber type="number" maxFractionDigits="3" value="${userInfo.TRANS_PAY }" />원&ndash;%&gt;
+                    </SPAN>
+                </P>
+            </TD>
+            <TD valign="middle" style='width:186px;height:31px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 1.1pt;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
+                <P CLASS=HStyle0 STYLE='margin-right:5.0pt;text-align:right;'>
+                    <SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>
+                        내부 규정에 따름
+        &lt;%&ndash;				<fmt:formatNumber type="number" maxFractionDigits="3" value="${userInfo.TRANS_PAY }" />원&ndash;%&gt;
+                    </SPAN>
+                </P>
+            </TD>
+            &lt;%&ndash;<TD valign="middle" style='width:186px;height:31px;border-left:solid #000000 0.4pt;border-right:solid #000000 1.1pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 1.1pt;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
+            <P CLASS=HStyle0 STYLE='margin-right:5.0pt;text-align:right;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>내부 규정에 따름</SPAN></P>
+            </TD>&ndash;%&gt;
+        </TR>--%>
 		<TR>
 			<TD valign="middle" style='width:186px;height:31px;border-left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt; text-align: right;'>
 				<input type="text" id="evaluationFee" style="width: 90%; text-align: right; box-sizing: border-box; border: none;" placeholder="평가비를 입력하세요." oninput="updateTotal()" />
@@ -491,65 +493,65 @@
 	<P CLASS=HStyle34 STYLE='margin-top:3.0pt;line-height:160%;'>
 	<P CLASS=HStyle34 style="color:red; font-size: 16px;"> * 사업담당자 확인 후 입력 필수</P>
 	<TABLE border="1" cellspacing="0" cellpadding="0" style='width:580px; border-collapse:collapse;border:none;'>
-	<TR>
-		<TD colspan="3" valign="middle" style='width:163px;height:22px;border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
-		<P CLASS=HStyle34 STYLE='margin-top:3.0pt;line-height:160%;'><SPAN STYLE='font-size:11.0pt;font-family:"휴먼명조";line-height:160%'>○ 소 속 : </SPAN></P>
-		</TD>
-		<TD colspan="4" valign="middle" style='width:417px;height:22px;border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
-		<input type="text" style="width: 275px;" id="dept" value="${userInfo.ORG_NAME }">
-		</TD>
-	</TR>
-	<TR>
-		<TD colspan="3" valign="middle" style='width:163px;height:22px;border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
-		<P CLASS=HStyle34 STYLE='margin-top:3.0pt;line-height:160%;'><SPAN STYLE='font-size:11.0pt;font-family:"휴먼명조";line-height:160%'>○ 성 명 : </SPAN></P>
-		</TD>
-		<TD colspan="4" valign="middle" style='width:417px;height:22px;border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
-		<input type="text" style="width: 275px;" id="oName" value="${userInfo.NAME }" readonly="readonly">
-		</TD>
-	</TR>
-	<TR>
-		<TD colspan="3" valign="middle" style='width:163px;height:22px;border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
-			<P CLASS=HStyle34 STYLE='margin-top:3.0pt;line-height:160%;'><SPAN STYLE='font-size:11.0pt;font-family:"휴먼명조";line-height:160%'>○ 주민등록번호 : </SPAN></P>
-		</TD>
-		<TD colspan="4" valign="middle" style='width:417px;height:22px;border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
-			<input type="text" style="width: 100px;" id="num1" maxlength="6" placeholder="6자리" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
-			<span>-</span>
-			<input type="text" style="width: 100px;" id="num2" maxlength="7" placeholder="7자리" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
-		</TD>
-	</TR>
-	<TR>
-		<TD colspan="3" valign="middle" style='width:163px;height:22px;border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
-			<P CLASS=HStyle34 STYLE='margin-top:3.0pt;line-height:160%;'><SPAN STYLE='font-size:11.0pt;font-family:"휴먼명조";line-height:160%'>○ 소속기관 주소 : </SPAN></P>
-		</TD>
-		<TD colspan="4" valign="middle" style='width:417px;height:22px;border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
-			<select id="region" >
-				<option value="------">------</option>
-				<option value="서울/경기">서울/경기</option>
-				<option value="강원영동">강원(영동)</option>
-				<option value="강원영서">강원(영서)</option>
-				<option value="대전/충청">대전/충청</option>
-				<option value="전북">전북</option>
-				<option value="광주/전남">광주/전남</option>
-				<option value="대구/경북">대구/경북</option>
-				<option value="부산/경남">부산/경남</option>
-				<option value="제주">제주</option>
-			</select>
-			<input type="text" style="width: 198px;" id="addr" value="" placeholder="그 외 주소 입력">
-		</TD>
-	</TR>
-	<TR>
-		<TD colspan="2" valign="middle" style='width:163px;height:22px;border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
-		<P CLASS=HStyle34 STYLE='margin-top:3.0pt;line-height:160%;'><SPAN STYLE='font-size:11.0pt;font-family:"휴먼명조";line-height:160%'>○ 은행명 :</SPAN></P>
-		</TD>
-		<TD colspan="5" valign="middle" style='width:417px;height:22px;border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
-			<input type="text" style="width: 275px;" id="bank_name" value="">
-			<%--<select id="bank_name">
-				<c:forEach items="${bankList }" var="list">
-					<option value="${list.BANK_CD }" ${userInfo.BANK_NAME == list.BANK_CD ? 'selected="selected"' : '' } >${list.BANK_NM }</option>
-				</c:forEach>
-			</select>--%>
-		</TD>
-	</TR>
+		<TR>
+			<TD colspan="3" valign="middle" style='width:163px;height:22px;border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
+				<P CLASS=HStyle34 STYLE='margin-top:3.0pt;line-height:160%;'><SPAN STYLE='font-size:11.0pt;font-family:"휴먼명조";line-height:160%'>○ 소 속 : </SPAN></P>
+			</TD>
+			<TD colspan="4" valign="middle" style='width:417px;height:22px;border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
+				<input type="text" style="width: 275px;" id="dept" value="${userInfo.ORG_NAME }">
+			</TD>
+		</TR>
+		<TR>
+			<TD colspan="3" valign="middle" style='width:163px;height:22px;border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
+				<P CLASS=HStyle34 STYLE='margin-top:3.0pt;line-height:160%;'><SPAN STYLE='font-size:11.0pt;font-family:"휴먼명조";line-height:160%'>○ 성 명 : </SPAN></P>
+			</TD>
+			<TD colspan="4" valign="middle" style='width:417px;height:22px;border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
+				<input type="text" style="width: 275px;" id="oName" value="${userInfo.NAME }" readonly="readonly">
+			</TD>
+		</TR>
+		<TR>
+			<TD colspan="3" valign="middle" style='width:163px;height:22px;border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
+				<P CLASS=HStyle34 STYLE='margin-top:3.0pt;line-height:160%;'><SPAN STYLE='font-size:11.0pt;font-family:"휴먼명조";line-height:160%'>○ 주민등록번호 : </SPAN></P>
+			</TD>
+			<TD colspan="4" valign="middle" style='width:417px;height:22px;border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
+				<input type="text" style="width: 100px;" id="num1" maxlength="6" placeholder="6자리" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
+				<span>-</span>
+				<input type="text" style="width: 100px;" id="num2" maxlength="7" placeholder="7자리" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
+			</TD>
+		</TR>
+		<TR>
+			<TD colspan="3" valign="middle" style='width:163px;height:22px;border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
+				<P CLASS=HStyle34 STYLE='margin-top:3.0pt;line-height:160%;'><SPAN STYLE='font-size:11.0pt;font-family:"휴먼명조";line-height:160%'>○ 소속기관 주소 : </SPAN></P>
+			</TD>
+			<TD colspan="4" valign="middle" style='width:417px;height:22px;border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
+				<select id="region" >
+					<option value="------">------</option>
+					<option value="서울/경기">서울/경기</option>
+					<option value="강원영동">강원(영동)</option>
+					<option value="강원영서">강원(영서)</option>
+					<option value="대전/충청">대전/충청</option>
+					<option value="전북">전북</option>
+					<option value="광주/전남">광주/전남</option>
+					<option value="대구/경북">대구/경북</option>
+					<option value="부산/경남">부산/경남</option>
+					<option value="제주">제주</option>
+				</select>
+				<input type="text" style="width: 198px;" id="addr" value="" placeholder="그 외 주소 입력">
+			</TD>
+		</TR>
+		<TR>
+			<TD colspan="2" valign="middle" style='width:163px;height:22px;border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
+				<P CLASS=HStyle34 STYLE='margin-top:3.0pt;line-height:160%;'><SPAN STYLE='font-size:11.0pt;font-family:"휴먼명조";line-height:160%'>○ 은행명 :</SPAN></P>
+			</TD>
+			<TD colspan="5" valign="middle" style='width:417px;height:22px;border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
+				<input type="text" style="width: 275px;" id="bank_name" value="">
+				<%--<select id="bank_name">
+                    <c:forEach items="${bankList }" var="list">
+                        <option value="${list.BANK_CD }" ${userInfo.BANK_NAME == list.BANK_CD ? 'selected="selected"' : '' } >${list.BANK_NM }</option>
+                    </c:forEach>
+                </select>--%>
+			</TD>
+		</TR>
 		<TR>
 			<TD colspan="2" valign="middle" style='width:163px;height:22px;border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
 				<P CLASS=HStyle34 STYLE='margin-top:3.0pt;line-height:160%;'><SPAN STYLE='font-size:11.0pt;font-family:"휴먼명조";line-height:160%'>○ 계좌번호 : </SPAN></P>
@@ -558,89 +560,89 @@
 				<input type="text" style="width: 275px;" id="bank_no" value="${userInfo.BANK_NO }">
 			</TD>
 		</TR>
-	<%--<TR>
-		<TD colspan="2" valign="middle" style='width:163px;height:22px;border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
-		<P CLASS=HStyle34 STYLE='margin-top:3.0pt;line-height:160%;'><SPAN STYLE='font-size:11.0pt;font-family:"휴먼명조";line-height:160%'>○ 계좌번호 : </SPAN></P>
-		</TD>
-		<TD colspan="5" valign="middle" style='width:417px;height:22px;border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
-		<input type="text" style="width: 275px;" id="bank_no" value="${userInfo.BANK_NO }">
-		</TD>
-	</TR>--%>
-	<TR>
-		<TD colspan="7" valign="middle" style='text-align:center; width:163px;height:22px;border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
-		<P CLASS=HStyle34 STYLE='margin-top:3.0pt;line-height:160%;'><SPAN STYLE='font-size:11.0pt;font-family:"휴먼명조";line-height:160%'>${nowDate }</SPAN></P>
-		</TD>
-		</TD>
-	</TR>
-	<TR>
-		<TD colspan="4" valign="middle" style='width:250px;height:62px;border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
-		<P CLASS=HStyle0 STYLE='text-align:right;'>&nbsp;</P>
-		</TD>
-		<TD valign="middle" style='width:91px;height:62px;border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
-		<P CLASS=HStyle0 STYLE='text-align:right;'>성&nbsp; 명 :</P>
-		</TD>
-		<TD valign="middle" style='width:76px;height:62px;border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
-		<P CLASS=HStyle0 STYLE='text-align:center;'>${userInfo.NAME }</P>
-		</TD>
-		<TD valign="middle" style='width:91px;height:62px;border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
-			(인)
-			<span id="signVal"><img alt="(인)" id="sign" src="${userInfo.SIGN_DIR}" style="position: absolute; text-align: center; transform: translate(-46px, -28px);width: 76px"></span>
-		</TD>
-	</TR>
+		<%--<TR>
+            <TD colspan="2" valign="middle" style='width:163px;height:22px;border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
+            <P CLASS=HStyle34 STYLE='margin-top:3.0pt;line-height:160%;'><SPAN STYLE='font-size:11.0pt;font-family:"휴먼명조";line-height:160%'>○ 계좌번호 : </SPAN></P>
+            </TD>
+            <TD colspan="5" valign="middle" style='width:417px;height:22px;border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
+            <input type="text" style="width: 275px;" id="bank_no" value="${userInfo.BANK_NO }">
+            </TD>
+        </TR>--%>
+		<TR>
+			<TD colspan="7" valign="middle" style='text-align:center; width:163px;height:22px;border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
+				<P CLASS=HStyle34 STYLE='margin-top:3.0pt;line-height:160%;'><SPAN STYLE='font-size:11.0pt;font-family:"휴먼명조";line-height:160%'>${nowDate }</SPAN></P>
+			</TD>
+			</TD>
+		</TR>
+		<TR>
+			<TD colspan="4" valign="middle" style='width:250px;height:62px;border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
+				<P CLASS=HStyle0 STYLE='text-align:right;'>&nbsp;</P>
+			</TD>
+			<TD valign="middle" style='width:91px;height:62px;border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
+				<P CLASS=HStyle0 STYLE='text-align:right;'>성&nbsp; 명 :</P>
+			</TD>
+			<TD valign="middle" style='width:76px;height:62px;border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
+				<P CLASS=HStyle0 STYLE='text-align:center;'>${userInfo.NAME }</P>
+			</TD>
+			<TD valign="middle" style='width:91px;height:62px;border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
+				(인)
+				<span id="signVal"><img alt="(인)" id="sign" src="${userInfo.SIGN_DIR}" style="position: absolute; text-align: center; transform: translate(-46px, -28px);width: 76px"></span>
+			</TD>
+		</TR>
 	</TABLE>
 
 
 	<TABLE border="1" cellspacing="0" cellpadding="0" style='border-collapse:collapse;border:none;'>
-	<TR>
-		<TD valign="middle" style='width:84px;height:13px;border-left:none;border-right:none;border-top:none;border-bottom:dotted #000000 0.9pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
-		<P CLASS=HStyle0 STYLE='line-height:100%;'><SPAN STYLE='font-size:3.0pt;font-family:"한양중고딕,한컴돋움";line-height:100%'>&nbsp;</SPAN></P>
-		</TD>
-		<TD rowspan="2" valign="middle" style='width:399px;height:29px;border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
-		<P CLASS=HStyle0 STYLE='margin-bottom:2.8pt;text-align:center;line-height:100%;'><SPAN STYLE='font-size:12.0pt;font-family:"한양중고딕,한컴돋움";letter-spacing:-15%;font-weight:bold;line-height:100%'>＜</SPAN><SPAN STYLE='font-size:12.0pt;font-family:"한양중고딕,한컴돋움";font-weight:bold;line-height:100%'> 개인정보 및 고유식별정보 수집·이용 동의서</SPAN><SPAN STYLE='font-size:12.0pt;font-family:"한양중고딕,한컴돋움";letter-spacing:-15%;font-weight:bold;line-height:100%'>＞</SPAN></P>
-		</TD>
-		<TD valign="middle" style='width:81px;height:13px;border-left:none;border-right:none;border-top:none;border-bottom:dotted #000000 0.9pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
-		<P CLASS=HStyle0 STYLE='line-height:100%;'><SPAN STYLE='font-size:1.0pt;font-family:"한양중고딕,한컴돋움";line-height:100%'>&nbsp;</SPAN></P>
-		</TD>
-	</TR>
-	<TR>
-		<TD valign="middle" style='width:84px;height:16px;border-left:dotted #000000 0.9pt;border-right:none;border-top:dotted #000000 0.9pt;border-bottom:none;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
-		<P CLASS=HStyle0 STYLE='line-height:100%;'><SPAN STYLE='font-size:1.0pt;font-family:"한양중고딕,한컴돋움";line-height:100%'>&nbsp;</SPAN></P>
-		</TD>
-		<TD valign="middle" style='width:81px;height:16px;border-left:none;border-right:dotted #000000 0.9pt;border-top:dotted #000000 0.9pt;border-bottom:none;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
-		<P CLASS=HStyle0 STYLE='line-height:100%;'><SPAN STYLE='font-size:1.0pt;font-family:"한양중고딕,한컴돋움";line-height:100%'>&nbsp;</SPAN></P>
-		</TD>
-	</TR>
-	<TR>
-		<TD colspan="3" valign="middle" style='width:563px;height:257px;border-left:dotted #000000 0.9pt;border-right:dotted #000000 0.9pt;border-top:none;border-bottom:none;padding:2.8pt 2.8pt 2.8pt 2.8pt'>
-		<P CLASS=HStyle0 STYLE='margin-top:10.0pt;margin-bottom:2.8pt;line-height:130%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>★ </SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움";font-weight:bold'>개인정보 수집·이용</SPAN></P>
-		<P CLASS=HStyle0 STYLE='margin-left:21.7pt;margin-right:5.0pt;margin-top:4.0pt;text-indent:-21.7pt;line-height:130%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:5%'>&nbsp;◈ </SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:-6%'>(수집·이용목적)</SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:-3%'>「${userInfo.TITLE }」</SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:-8%'>제안 평가비 지급 증빙</SPAN></P>
-		<P CLASS=HStyle0 STYLE='margin-left:29.5pt;margin-right:5.0pt;margin-top:4.0pt;text-indent:-29.5pt;line-height:130%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:5%'>&nbsp;◈ </SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:-2%'>(수집항목) 성명, 소속, 주소, 거래 은행명, 계좌번호</SPAN></P>
-		<P CLASS=HStyle0 STYLE='margin-left:29.5pt;margin-right:5.0pt;margin-top:4.0pt;text-indent:-29.5pt;line-height:130%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:5%'>&nbsp;◈ </SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:-2%'>(보유·이용기간) 지출 증빙문서 보존기한 완료시까지</SPAN></P>
-		<P CLASS=HStyle0 STYLE='margin-left:29.5pt;margin-right:5.0pt;margin-top:4.0pt;text-indent:-29.5pt;line-height:130%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:-2%'>&nbsp;&nbsp;&nbsp; </SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:7%'>* </SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:5%'>근거: 국고금관리법, 공공기록물관리에관한법률 등</SPAN></P>
-		<P CLASS=HStyle0 STYLE='margin-left:21.6pt;margin-right:5.0pt;margin-top:4.0pt;text-indent:-21.6pt;line-height:130%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:5%'>&nbsp;◈ </SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:-5%'>(동의 거부권리 안내) </SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:-3%'>본 개인정보 수집·이용에 대한 동의를 거부할 수 있으나,</SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:-1%'> 이 경우</SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움"'> 정부 예산회계 처리가 불가하여 수당지급이 곤란할 수 있습니다.</SPAN></P>
-		<P CLASS=HStyle0 STYLE='margin-left:29.2pt;margin-right:5.0pt;margin-top:10.0pt;text-align:right;text-indent:-29.2pt;line-height:130%;'>
-			<%--<SPAN STYLE='font-family:"한양중고딕,한컴돋움";font-weight:bold'>V 동의&nbsp; □ 동의안함</SPAN>--%>
-			<input type="checkbox" id="agree" name="agreeCheckYn" value="Y"  onchange="agreeCheckYn(this)" checked><span>동의</span>
-			<input type="checkbox" id="disagree" name="agreeCheckYn" value="N"  onchange="agreeCheckYn(this)"><span>동의안함</span>
-		</P>
-		<P CLASS=HStyle0 STYLE='margin-left:29.2pt;margin-right:5.0pt;margin-top:4.0pt;text-align:right;text-indent:-29.2pt;line-height:130%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>&nbsp;</SPAN></P>
-		</TD>
-	</TR>
-	<TR>
-		<TD colspan="3" valign="middle" style='width:563px;height:142px;border-left:dotted #000000 0.9pt;border-right:dotted #000000 0.9pt;border-top:none;border-bottom:dotted #000000 0.9pt;padding:2.8pt 2.8pt 2.8pt 2.8pt'>
-		<P CLASS=HStyle0 STYLE='margin-top:10.0pt;margin-bottom:2.8pt;line-height:130%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>★ </SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움";font-weight:bold'>고유식별정보 수집·이용</SPAN></P>
-		<P CLASS=HStyle0 STYLE='margin-left:29.5pt;margin-right:5.0pt;margin-top:4.0pt;text-indent:-29.5pt;line-height:130%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:5%'>&nbsp;◈ </SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:-2%'>(고유식별정보 수집·이용목적)「${userInfo.TITLE} 사업」제안 평가비 지급 증빙을 위한 실명 확인</SPAN></P>
-		<P CLASS=HStyle0 STYLE='margin-left:29.5pt;margin-right:5.0pt;margin-top:4.0pt;text-indent:-29.5pt;line-height:130%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:5%'>&nbsp;◈ </SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:-2%'>(수집 고유식별정보) 주민등록번호</SPAN></P>
-		<P CLASS=HStyle0 STYLE='margin-left:29.5pt;margin-right:5.0pt;margin-top:4.0pt;text-indent:-29.5pt;line-height:130%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:5%'>&nbsp;◈ </SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:-2%'>(보유·이용기간) 지출문서 보존기한 완료시까지</SPAN></P>
-		<P CLASS=HStyle0 STYLE='margin-left:29.5pt;margin-right:5.0pt;margin-top:4.0pt;text-indent:-29.5pt;line-height:130%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:-2%'>&nbsp;&nbsp; </SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:1%'>* </SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:-1%'>근거: 금융실명거래및비밀보장에관한법률, 공공기록물관리에관한법률 등</SPAN></P>
-		<P CLASS=HStyle0 STYLE='margin-left:23.1pt;margin-right:5.0pt;margin-top:4.0pt;text-indent:-23.1pt;line-height:130%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:5%'>&nbsp;◈ </SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:-2%'>(</SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:-3%'>동의 거부권리 안내) </SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:-1%'>본 고유식별정보 수집·이용에 대한 동의를 거부할 수 </SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:-3%'>있으나, 이 경우 D-brain 등 정부 예산회계 처리가</SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:-2%'> 불가하여 수당지급이 곤란</SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>할 수 있습니다.</SPAN></P>
-		<P CLASS=HStyle0 STYLE='margin-left:29.2pt;margin-right:5.0pt;margin-top:10.0pt;text-align:right;text-indent:-29.2pt;line-height:130%;'>
-			<%--<SPAN STYLE='font-family:"한양중고딕,한컴돋움";font-weight:bold'>V 동의&nbsp; □ 동의안함</SPAN>--%>
-			<input type="checkbox" id="agree2" name="agreeCheckYn2" value="Y"  onchange="agreeCheckYn2(this)" checked><span>동의</span>
-			<input type="checkbox" id="disagree2" name="agreeCheckYn2" value="N"  onchange="agreeCheckYn2(this)"><span>동의안함</span>
-		</P>
-		</TD>
-	</TR>
+		<TR>
+			<TD valign="middle" style='width:84px;height:13px;border-left:none;border-right:none;border-top:none;border-bottom:dotted #000000 0.9pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
+				<P CLASS=HStyle0 STYLE='line-height:100%;'><SPAN STYLE='font-size:3.0pt;font-family:"한양중고딕,한컴돋움";line-height:100%'>&nbsp;</SPAN></P>
+			</TD>
+			<TD rowspan="2" valign="middle" style='width:399px;height:29px;border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
+				<P CLASS=HStyle0 STYLE='margin-bottom:2.8pt;text-align:center;line-height:100%;'><SPAN STYLE='font-size:12.0pt;font-family:"한양중고딕,한컴돋움";letter-spacing:-15%;font-weight:bold;line-height:100%'>＜</SPAN><SPAN STYLE='font-size:12.0pt;font-family:"한양중고딕,한컴돋움";font-weight:bold;line-height:100%'> 개인정보 및 고유식별정보 수집·이용 동의서</SPAN><SPAN STYLE='font-size:12.0pt;font-family:"한양중고딕,한컴돋움";letter-spacing:-15%;font-weight:bold;line-height:100%'>＞</SPAN></P>
+			</TD>
+			<TD valign="middle" style='width:81px;height:13px;border-left:none;border-right:none;border-top:none;border-bottom:dotted #000000 0.9pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
+				<P CLASS=HStyle0 STYLE='line-height:100%;'><SPAN STYLE='font-size:1.0pt;font-family:"한양중고딕,한컴돋움";line-height:100%'>&nbsp;</SPAN></P>
+			</TD>
+		</TR>
+		<TR>
+			<TD valign="middle" style='width:84px;height:16px;border-left:dotted #000000 0.9pt;border-right:none;border-top:dotted #000000 0.9pt;border-bottom:none;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
+				<P CLASS=HStyle0 STYLE='line-height:100%;'><SPAN STYLE='font-size:1.0pt;font-family:"한양중고딕,한컴돋움";line-height:100%'>&nbsp;</SPAN></P>
+			</TD>
+			<TD valign="middle" style='width:81px;height:16px;border-left:none;border-right:dotted #000000 0.9pt;border-top:dotted #000000 0.9pt;border-bottom:none;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
+				<P CLASS=HStyle0 STYLE='line-height:100%;'><SPAN STYLE='font-size:1.0pt;font-family:"한양중고딕,한컴돋움";line-height:100%'>&nbsp;</SPAN></P>
+			</TD>
+		</TR>
+		<TR>
+			<TD colspan="3" valign="middle" style='width:563px;height:257px;border-left:dotted #000000 0.9pt;border-right:dotted #000000 0.9pt;border-top:none;border-bottom:none;padding:2.8pt 2.8pt 2.8pt 2.8pt'>
+				<P CLASS=HStyle0 STYLE='margin-top:10.0pt;margin-bottom:2.8pt;line-height:130%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>★ </SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움";font-weight:bold'>개인정보 수집·이용</SPAN></P>
+				<P CLASS=HStyle0 STYLE='margin-left:21.7pt;margin-right:5.0pt;margin-top:4.0pt;text-indent:-21.7pt;line-height:130%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:5%'>&nbsp;◈ </SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:-6%'>(수집·이용목적)</SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:-3%'>「${userInfo.TITLE }」</SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:-8%'>제안 평가비 지급 증빙</SPAN></P>
+				<P CLASS=HStyle0 STYLE='margin-left:29.5pt;margin-right:5.0pt;margin-top:4.0pt;text-indent:-29.5pt;line-height:130%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:5%'>&nbsp;◈ </SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:-2%'>(수집항목) 성명, 소속, 주소, 거래 은행명, 계좌번호</SPAN></P>
+				<P CLASS=HStyle0 STYLE='margin-left:29.5pt;margin-right:5.0pt;margin-top:4.0pt;text-indent:-29.5pt;line-height:130%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:5%'>&nbsp;◈ </SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:-2%'>(보유·이용기간) 지출 증빙문서 보존기한 완료시까지</SPAN></P>
+				<P CLASS=HStyle0 STYLE='margin-left:29.5pt;margin-right:5.0pt;margin-top:4.0pt;text-indent:-29.5pt;line-height:130%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:-2%'>&nbsp;&nbsp;&nbsp; </SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:7%'>* </SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:5%'>근거: 국고금관리법, 공공기록물관리에관한법률 등</SPAN></P>
+				<P CLASS=HStyle0 STYLE='margin-left:21.6pt;margin-right:5.0pt;margin-top:4.0pt;text-indent:-21.6pt;line-height:130%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:5%'>&nbsp;◈ </SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:-5%'>(동의 거부권리 안내) </SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:-3%'>본 개인정보 수집·이용에 대한 동의를 거부할 수 있으나,</SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:-1%'> 이 경우</SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움"'> 정부 예산회계 처리가 불가하여 수당지급이 곤란할 수 있습니다.</SPAN></P>
+				<P CLASS=HStyle0 STYLE='margin-left:29.2pt;margin-right:5.0pt;margin-top:10.0pt;text-align:right;text-indent:-29.2pt;line-height:130%;'>
+					<%--<SPAN STYLE='font-family:"한양중고딕,한컴돋움";font-weight:bold'>V 동의&nbsp; □ 동의안함</SPAN>--%>
+					<input type="checkbox" id="agree" name="agreeCheckYn" value="Y"  onchange="agreeCheckYn(this)" checked><span>동의</span>
+					<input type="checkbox" id="disagree" name="agreeCheckYn" value="N"  onchange="agreeCheckYn(this)"><span>동의안함</span>
+				</P>
+				<P CLASS=HStyle0 STYLE='margin-left:29.2pt;margin-right:5.0pt;margin-top:4.0pt;text-align:right;text-indent:-29.2pt;line-height:130%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>&nbsp;</SPAN></P>
+			</TD>
+		</TR>
+		<TR>
+			<TD colspan="3" valign="middle" style='width:563px;height:142px;border-left:dotted #000000 0.9pt;border-right:dotted #000000 0.9pt;border-top:none;border-bottom:dotted #000000 0.9pt;padding:2.8pt 2.8pt 2.8pt 2.8pt'>
+				<P CLASS=HStyle0 STYLE='margin-top:10.0pt;margin-bottom:2.8pt;line-height:130%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>★ </SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움";font-weight:bold'>고유식별정보 수집·이용</SPAN></P>
+				<P CLASS=HStyle0 STYLE='margin-left:29.5pt;margin-right:5.0pt;margin-top:4.0pt;text-indent:-29.5pt;line-height:130%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:5%'>&nbsp;◈ </SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:-2%'>(고유식별정보 수집·이용목적)「${userInfo.TITLE} 사업」제안 평가비 지급 증빙을 위한 실명 확인</SPAN></P>
+				<P CLASS=HStyle0 STYLE='margin-left:29.5pt;margin-right:5.0pt;margin-top:4.0pt;text-indent:-29.5pt;line-height:130%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:5%'>&nbsp;◈ </SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:-2%'>(수집 고유식별정보) 주민등록번호</SPAN></P>
+				<P CLASS=HStyle0 STYLE='margin-left:29.5pt;margin-right:5.0pt;margin-top:4.0pt;text-indent:-29.5pt;line-height:130%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:5%'>&nbsp;◈ </SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:-2%'>(보유·이용기간) 지출문서 보존기한 완료시까지</SPAN></P>
+				<P CLASS=HStyle0 STYLE='margin-left:29.5pt;margin-right:5.0pt;margin-top:4.0pt;text-indent:-29.5pt;line-height:130%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:-2%'>&nbsp;&nbsp; </SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:1%'>* </SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:-1%'>근거: 금융실명거래및비밀보장에관한법률, 공공기록물관리에관한법률 등</SPAN></P>
+				<P CLASS=HStyle0 STYLE='margin-left:23.1pt;margin-right:5.0pt;margin-top:4.0pt;text-indent:-23.1pt;line-height:130%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:5%'>&nbsp;◈ </SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:-2%'>(</SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:-3%'>동의 거부권리 안내) </SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:-1%'>본 고유식별정보 수집·이용에 대한 동의를 거부할 수 </SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:-3%'>있으나, 이 경우 D-brain 등 정부 예산회계 처리가</SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:-2%'> 불가하여 수당지급이 곤란</SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>할 수 있습니다.</SPAN></P>
+				<P CLASS=HStyle0 STYLE='margin-left:29.2pt;margin-right:5.0pt;margin-top:10.0pt;text-align:right;text-indent:-29.2pt;line-height:130%;'>
+					<%--<SPAN STYLE='font-family:"한양중고딕,한컴돋움";font-weight:bold'>V 동의&nbsp; □ 동의안함</SPAN>--%>
+					<input type="checkbox" id="agree2" name="agreeCheckYn2" value="Y"  onchange="agreeCheckYn2(this)" checked><span>동의</span>
+					<input type="checkbox" id="disagree2" name="agreeCheckYn2" value="N"  onchange="agreeCheckYn2(this)"><span>동의안함</span>
+				</P>
+			</TD>
+		</TR>
 	</TABLE>
 
 </div>
@@ -699,4 +701,3 @@
 <%--</object>--%>
 <%--<OBJECT id="HwpCtrl_1" name="_pHwpCtrl" style="display:none; LEFT: 0px; TOP: 100px" height="1300px;" width="900px;" align=center classid=CLSID:BD9C32DE-3155-4691-8972-097D53B10052>--%>
 <%--</OBJECT>--%>
-

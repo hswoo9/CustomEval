@@ -92,8 +92,22 @@
 		}else{
 			serverPath = "http://one.epis.or.kr/"
 		}
+		/*if(hostname.indexOf("localhost") > -1){
+			serverPath = "<%= request.getScheme() %>://" +
+					"<%= request.getServerName() %>:" +
+					"<%= request.getServerPort() %>" +
+					"<%= request.getContextPath() %>";
+
+
+		}else if(hostname.indexOf("127.0.0.1") > -1 || hostname.indexOf("1.233.95.140") > -1){
+			serverPath = "http://1.233.95.140:58090/";
+		}else{
+			serverPath = "http://one.epis.or.kr/"
+		}*/
 		// var hwpPath = "http://"+_g_serverName+":"+_g_serverPort+_g_contextPath_+"/common/getHwpFile?fileNm=step2";
 		var hwpPath = serverPath + "/upload/evalForm/step2.hwp";
+		console.log("hwpPath : "+hwpPath);
+
 		_hwpOpen(hwpPath, "HWP");
 
 		_pHwpCtrl.EditMode = 0;
@@ -124,7 +138,14 @@
 		_hwpPutText("postion", postion);
 		_hwpPutText("name", name);
 
-		_hwpPutSignImg("sign", "${userInfo.SIGN_DIR }");
+		//_hwpPutSignImg("sign", "${userInfo.SIGN_DIR }");
+
+		var serverPath = "<%= request.getScheme() %>://" +
+				"<%= request.getServerName() %>:" +
+				"<%= request.getServerPort() %>" +
+				"<%= request.getContextPath() %>";
+		var hwpPath = serverPath + "/upload/evalForm/sign/2128_sign.png";
+		_hwpPutSignImg("sign", hwpPath);
 
 		$("#signSave").show();
 	}

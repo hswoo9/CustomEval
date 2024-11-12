@@ -7,6 +7,17 @@
 <%@ taglib prefix="fmt"  uri="http://java.sun.com/jsp/jstl/fmt"%>
 <jsp:useBean id="nowDate" class="java.util.Date" />
 <fmt:formatDate value="${nowDate}" var="nowDate" pattern="yyyy년  MM월  dd일" />
+
+<%--<script type="text/javascript" src ="<c:url value='/js/html2canvas.min.js' />"></script>
+<script type="text/javascript" src ="<c:url value='/js/es6-promise.auto.js' />"></script>
+<script type="text/javascript" src ="<c:url value='/js/jspdf.min.js' />"></script>
+<script type="text/javascript" src ="<c:url value='/js/jquery-latest.min.js' />"></script>--%>
+<script type="text/javascript" src="<c:url value='/resources/js/html2canvas.min.js' />"></script>
+<script type="text/javascript" src="<c:url value='/resources/js/es6-promise.auto.js' />"></script>
+<script type="text/javascript" src="<c:url value='/resources/js/jspdf.min.js' />"></script>
+<script type="text/javascript" src="<c:url value='/resources/js/jquery-latest.min.js' />"></script>
+
+
 <title>위원별 제안서 평가표</title>
 
 <script type="text/javascript">
@@ -70,11 +81,21 @@
 				alert("평가가 진행 중입니다.\n위원장은 모든 평가위원의 평가가 종료 된 후에 평가 저장이 가능합니다.");
 				return;
 			}
-			_pHwpCtrl.GetTextFile("HWPML2X", "", function (data) {
+			/*_pHwpCtrl.GetTextFile("HWPML2X", "", function (data) {
 				signHwpFileData = data;
-			})
+			})*/
+			html2canvas(document.getElementById("contentsTemp")).then(canvas => {
+				const imgData = canvas.toDataURL("image/png");
+				const pdf = new jsPDF("p", "mm", "a4");
 
-			setTimeout(signSave, 600);
+				pdf.addImage(imgData, "PNG", 10, 10);
+				const pdfBlob = pdf.output("blob");
+
+				signHwpFileData = pdfBlob;
+			});
+
+			//setTimeout(signSave, 600);
+			signSave();
 		}
 	}
 
@@ -487,7 +508,7 @@
 			_hwpPutSignImg("sign", "${userInfo.SIGN_DIR }");
 
 			$("#signSave").show();
-			$("#contentsTemp").hide();
+			//$("#contentsTemp").hide();
 		})
 
 
@@ -686,7 +707,7 @@
 		</c:forEach>--%>
 
 	</div>
-	<div id="_pHwpCtrl" style="height: 100%;border: 1px solid lightgray;"></div>
+	<div id="_pHwpCtrl" style="height: 100%;border: 1px solid lightgray; display: none;"></div>
 </div>
 
 <%--<object classid="CLSID:1DEAD10F-9EBF-4599-8F00-92714483A9C9" codebase="<c:url value='/resources/activex/NEOSLauncher.cab'></c:url>#version=1,0,0,4" id="uploader"  style="display:none;" >--%>

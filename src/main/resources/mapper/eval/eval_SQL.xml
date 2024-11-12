@@ -929,4 +929,14 @@
 		WHERE COMMISSIONER_SEQ = #{commissioner_seq}
 		AND ACTIVE = 'Y'
 	</select>
+
+	<update id="setEvalJangNo" parameterType="map">
+		/*setEvalJangNo*/
+		UPDATE DJ_EVAL_COMMISSIONER SET
+			EVAL_JANG_NO = #{commissioner_pool_seq}
+		WHERE COMMITTEE_SEQ = #{committee_seq}
+		  AND  EVAL_ID = #{evalId}
+		  AND ACTIVE = 'Y'
+	</update>
+
 </mapper>

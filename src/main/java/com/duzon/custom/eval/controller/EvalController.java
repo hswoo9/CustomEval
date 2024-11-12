@@ -455,7 +455,7 @@ public class EvalController {
 		logger.debug("setCommSave");
 		
 		map.putAll((Map<String, Object>) request.getSession().getAttribute("evalLoginVO"));
-		
+		System.out.println("***들어오는 map : " + map);
 		return evalService.setCommSave(map);
 		
 	}

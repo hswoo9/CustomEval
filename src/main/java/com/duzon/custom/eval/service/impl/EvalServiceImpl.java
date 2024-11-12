@@ -152,6 +152,8 @@ public class EvalServiceImpl implements EvalService {
 
 		//투표 카운트 +1 하기
 		evalDAO.setCommSave(map);
+		//투표자 seq 입력
+		evalDAO.setEvalJangNo(map);
 
 		//로그인 유저 투표 여부 업데이트
 		//evalDAO.setCommjangChk(map);

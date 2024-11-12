@@ -240,5 +240,9 @@ public class EvalDAO extends AbstractDAO{
 		return (String) selectOne("eval.getCommissionerSeqEvalId", map);
 	}
 
+	public void setEvalJangNo(Map<String, Object> map) {
+		update("eval.setEvalJangNo", map);
+	}
+
 
 }

@@ -56,6 +56,7 @@ table tr th,td { font-size: 15px; }
 								<input type="checkbox" value="${list.commissioner_seq }" class="commChk" style="width: 30px; height: 30px;">
 								<input type="hidden" id="comm_nmae" value="${list.NAME }">
 								<input type="hidden" id="committee_seq" value="${list.committee_seq }">
+								<input type="hidden" id="commissioner_pool_seq" value="${list.commissioner_pool_seq }">
 							</td>
 							<td>${list.NAME }</td>
 						</tr>
@@ -136,11 +137,14 @@ function evalApply(){
 				committee_seq : $(v).parent().find('#committee_seq').val(),
 				commissioner_seq : $(v).val(),
 				name	: $(v).parent().find('#comm_nmae').val(),
+				commissioner_pool_seq : $(v).parent().find('#commissioner_pool_seq').val()
 			};
 			
 		}
 		
 	});
+
+	console.log("data : ",data);
 	
 	if(data.commissioner_seq == null){
 		alert('평가위원장을 선택해 주세요.');

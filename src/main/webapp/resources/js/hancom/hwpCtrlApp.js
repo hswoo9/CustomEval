@@ -57,7 +57,7 @@ LayoutView["initialize"] = function(id, baseurl, callback) {
     var iframe = document.createElement("iframe");
     // var parentUrl = getBaseUrl(location.href);
     var parentUrl = location.href.split("/")[0] + "//" + location.href.split("/")[2] ;
-    if(location.host.indexOf("121.186.165.80") > -1 || location.host.indexOf("10.10.10.114") > -1){
+    if(location.host.indexOf("121.186.165.80") > -1 || location.host.indexOf("10.10.10.114") > -1 || location.host.indexOf("1.233.95.140") > -1){
         parentUrl += "/eval";
     }
     var frameUrl = parentUrl + "/resources/js/hancom/hwpctrlmain.html";

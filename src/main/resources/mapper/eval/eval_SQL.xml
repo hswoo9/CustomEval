@@ -306,7 +306,6 @@
 		WHERE COMMISSIONER_SEQ = #{commissioner_seq}
 	</update>
 
-
 	<select id="getEvalJangData" parameterType="map" resultType="map">
 	/*getEvalJangData*/
 		SELECT * FROM DJ_EVAL_COMMISSIONER A
@@ -677,7 +676,8 @@
 		SET A.BIRTH_DATE = REPLACE(#{birth_date}, '-', '')
 		, B.ORG_NAME = #{org_name}
 		, B.BANK_NO = #{bank_no}
-		, B.BANK_CD = #{bank_cd}
+		, B.REGION = #{region}
+		, B.TOTALFEE = #{totalFee}
 		, B.BANK_NAME = #{bank_name}
 		, B.ORG_ADDR1 = #{addr}
 		WHERE A.COMMISSIONER_POOL_SEQ = (SELECT COMMISSIONER_POOL_SEQ FROM DJ_EVAL_COMMISSIONER WHERE COMMISSIONER_SEQ = #{commissioner_seq})

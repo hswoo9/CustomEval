@@ -176,6 +176,7 @@
 		var formData = new FormData();
 		formData.append("commissioner_seq", "${userInfo.COMMISSIONER_SEQ}");
 		formData.append("step", "4");
+		formData.append("oName", $('#oName').val());
 		formData.append("totalFee", $('#totalFee').val());
 		formData.append("birth_date", $('#num').val());
 		formData.append("org_name", $('#dept').val());

@@ -17,6 +17,14 @@
 <script type="text/javascript" src="<c:url value='/resources/js/jspdf.min.js' />"></script>
 <script type="text/javascript" src="<c:url value='/resources/js/jquery-latest.min.js' />"></script>
 
+<style>
+    #contentsTemp { margin-top : 10px}
+
+    th {
+        background-color : #8c8c8c;
+        color : white;
+    }
+</style>
 
 <title>위원별 제안서 평가표</title>
 
@@ -81,9 +89,9 @@
 				alert("평가가 진행 중입니다.\n위원장은 모든 평가위원의 평가가 종료 된 후에 평가 저장이 가능합니다.");
 				return;
 			}
-			_pHwpCtrl.GetTextFile("HWPML2X", "", function (data) {
-				signHwpFileData = data;
-			})
+			// _pHwpCtrl.GetTextFile("HWPML2X", "", function (data) {
+			// 	signHwpFileData = data;
+			// })
 
 			//pdf
 			/*html2canvas(document.getElementById("contentsTemp")).then(canvas => {
@@ -105,7 +113,6 @@
 		var formData = new FormData();
 		formData.append("commissioner_seq", "${userInfo.COMMISSIONER_SEQ}");
 		formData.append("step", "6");
-		formData.append("signHwpFileData", signHwpFileData);
 
 		$.ajax({
 			url : "<c:url value='/eval/setSignSetp'/>",
@@ -188,16 +195,16 @@
 			serverPath = "http://one.epis.or.kr/"
 		}
 
-		var hwpPath = serverPath + "/upload/evalForm/step7.hwp";
-		_hwpOpen(hwpPath, "HWP");
-
-		_pHwpCtrl.EditMode = 0;
-		_pHwpCtrl.SetToolBar(1, "TOOLBAR_MENU");
-		_pHwpCtrl.SetToolBar(1, "TOOLBAR_STANDARD");
-		_pHwpCtrl.ShowRibbon(false);
-		_pHwpCtrl.ShowCaret(false);
-		_pHwpCtrl.ShowStatusBar(false);
-		_pHwpCtrl.SetFieldViewOption(1);
+		// var hwpPath = serverPath + "/upload/evalForm/step7.hwp";
+		// _hwpOpen(hwpPath, "HWP");
+        //
+		// _pHwpCtrl.EditMode = 0;
+		// _pHwpCtrl.SetToolBar(1, "TOOLBAR_MENU");
+		// _pHwpCtrl.SetToolBar(1, "TOOLBAR_STANDARD");
+		// _pHwpCtrl.ShowRibbon(false);
+		// _pHwpCtrl.ShowCaret(false);
+		// _pHwpCtrl.ShowStatusBar(false);
+		// _pHwpCtrl.SetFieldViewOption(1);
 	}
 
 	/*function _hwpPutData(){
@@ -345,10 +352,9 @@
 	}*/
 
 
-
 	function _hwpPutData(){
-		_pHwpCtrl.MoveToField("contents", true, true, true);
-		_pHwpCtrl.PutFieldText("contents", "\n");
+		// _pHwpCtrl.MoveToField("contents", true, true, true);
+		// _pHwpCtrl.PutFieldText("contents", "\n");
 
 		//var html = '';
 		var companyCount = getCompanyTotal.length;
@@ -469,10 +475,10 @@
 			html += '</tr>';
 
 			// 제안업체 평가의견
-			html += '<td rowspan="' + currentCompanyCount + '" style="border:1px solid black; border-collapse: collapse;text-align:center; height: 27px;">평가의견</td>';
+			html += '<td rowspan="' + currentCompanyCount + '" style="background-color: #8c8c8c; color: white; border:1px solid black; border-collapse: collapse;text-align:center; height: 27px;">평가의견</td>';
 			for (var i = t * maxCompaniesPerTable; i < t * maxCompaniesPerTable + currentCompanyCount; i++) {
-				html += '<td style="border:1px solid black; border-collapse: collapse;">' + String.fromCharCode(65 + i) + '</td>';
-				html += '<td colspan="' + (currentCompanyCount + 3) + '" style="border:1px solid black; border-collapse: collapse; height: 27px;">' + getCompanyRemarkList[i].remark + '</td>';
+				html += '<td style="border:1px solid black; border-collapse: collapse; text-align: center;">' + String.fromCharCode(65 + i) + '</td>';
+				html += '<td colspan="' + (currentCompanyCount + 3) + '" style="border:1px solid black; border-collapse: collapse; height: 27px; padding: 1px;">' + getCompanyRemarkList[i].remark + '</td>';
 				html += '</tr>';
 				html += '<tr>';
 			}
@@ -482,36 +488,38 @@
 		}
 
 
-		document.getElementById('contentsTemp').innerHTML = html;
+		$("#contentsTemp").append(html);
+        $("#signSave").show();
 
 
-		_pHwpCtrl.SetTextFile($('#contentsTemp').html(), "HTML", "insertfile", function(){
+		<%--_pHwpCtrl.SetTextFile($('#contentsTemp').html(), "HTML", "insertfile", function(){--%>
 
-			var title1 = "${userInfo.TITLE }";
-			var date = "${nowDate}";
-			//var dept = "${userInfo.ORG_NAME }";
-			var name = "";
+		<%--	var title1 = "${userInfo.TITLE }";--%>
+		<%--	var date = "${nowDate}";--%>
+		<%--	//var dept = "${userInfo.ORG_NAME }";--%>
+		<%--	var name = "";--%>
 
-			if("${userInfo.EVAL_BLIND_YN}" == "N"){
-				name = "${userInfo.NAME }";
-			}else{
-				name = "${fn:substring(userInfo.NAME, 0, 1)}**";
-			}
-			if(_pHwpCtrl.FieldExist("name" )) {
-				_pHwpCtrl.PutFieldText("name", name);
-			}
-			if(_pHwpCtrl.FieldExist("title1" )){
-				_pHwpCtrl.PutFieldText("title1", title1);
-			}
-			if(_pHwpCtrl.FieldExist("date")){
-				_pHwpCtrl.PutFieldText("date", date);
-			}
+		<%--	if("${userInfo.EVAL_BLIND_YN}" == "N"){--%>
+		<%--		name = "${userInfo.NAME }";--%>
+		<%--	}else{--%>
+		<%--		name = "${fn:substring(userInfo.NAME, 0, 1)}**";--%>
+		<%--	}--%>
+		<%--	if(_pHwpCtrl.FieldExist("name" )) {--%>
+		<%--		_pHwpCtrl.PutFieldText("name", name);--%>
+		<%--	}--%>
+		<%--	if(_pHwpCtrl.FieldExist("title1" )){--%>
+		<%--		_pHwpCtrl.PutFieldText("title1", title1);--%>
+		<%--	}--%>
+		<%--	if(_pHwpCtrl.FieldExist("date")){--%>
+		<%--		_pHwpCtrl.PutFieldText("date", date);--%>
+		<%--	}--%>
 
-			_hwpPutSignImg("sign", "${userInfo.SIGN_DIR }");
+		<%--	_hwpPutSignImg("sign", "${userInfo.SIGN_DIR }");--%>
 
-			$("#signSave").show();
-			//$("#contentsTemp").hide();
-		})
+		<%--	//$("#contentsTemp").hide();--%>
+		<%--})--%>
+
+
 
 
 	}
@@ -553,7 +561,7 @@
 
 </script>
 <div style="width: 80%;margin: 0 auto;">
-	<div id="signSave" style="display: none;">
+	<div id="signSave" style="">
 		<input type="button" onclick="evalAvoidPopup()" style="background-color: #dee4ea; border-color: black; border-width: thin;" value="기피신청">
 		<input type="button" onclick="signSaveBtn();" style="float:right; background-color: #dee4ea; border-color: black; border-width: thin; margin-left: 5px;" value="평가확정">
 		<input type="button" onclick="evalModBtn();" style="float:right; background-color: #dee4ea; border-color: black; border-width: thin;" value="평가 수정">
@@ -561,7 +569,7 @@
 	<%--<div style="width:100%; padding-bottom: 35px; text-align: center; padding-top: 50px;">
 		<h4 style="font-size: 30px;">위원별 제안서 평가표</h4>
 	</div>--%>
-	<div id="contentsTemp" >
+	<div id="contentsTemp">
 		<%--<SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>테스트중입니다.</SPAN>--%>
 		<%--<c:forEach items="${getCompanyList }" var="companyList" varStatus="mainSt">
 			<TABLE style="margin:0 auto">
@@ -709,8 +717,12 @@
 		</c:forEach>--%>
 
 	</div>
-	<div id="_pHwpCtrl" style="height: 100%;border: 1px solid lightgray; display: none;"></div>
+<%--	<div id="_pHwpCtrl" style="height: 100%;border: 1px solid lightgray; display: none;"></div>--%>
 </div>
 
+
+<script>
+    _hwpPutData()
+</script>
 <%--<object classid="CLSID:1DEAD10F-9EBF-4599-8F00-92714483A9C9" codebase="<c:url value='/resources/activex/NEOSLauncher.cab'></c:url>#version=1,0,0,4" id="uploader"  style="display:none;" >--%>
 <%--</object>--%>

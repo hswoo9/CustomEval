@@ -141,7 +141,7 @@ function evalAvoidPopup(){
 
 </script>
 
-<div style="width: 50%;margin: 0 auto;">
+<div style="width: 75%;margin: 0 auto;">
 	<div id="signSave" style="display: none;">
 		<%--<input type="button" onclick=";" value="서명하기">--%>
 		<input type="button" onclick="evalAvoidPopup()" style="background-color: #dee4ea; border-color: black; border-width: thin;" value="기피신청">

@@ -10,6 +10,12 @@
 <%--<script type="text/javascript" src="http://10.10.10.112:8080/js/hwpctrlapp/utils/util.js"></script>
 <script type="text/javascript" src="http://10.10.10.112:8080/js/webhwpctrl.js"></script>--%>
 
+<style>
+    th {
+        background-color : #8c8c8c;
+        color : white;
+    }
+</style>
 <script type="text/javascript">
 	var result = JSON.parse('${result}');
 	var rates = "${userInfo.RATES}" || "";
@@ -54,11 +60,13 @@
 
 	var signHwpFileData = "";
 	function signSaveBtn(){
-		_pHwpCtrl.GetTextFile("HWPML2X", "", function(data) {
-			signHwpFileData = data;
-		})
+		// _pHwpCtrl.GetTextFile("HWPML2X", "", function(data) {
+		// 	signHwpFileData = data;
+		// })
+        //
+		// setTimeout(signSave, 600);
 
-		setTimeout(signSave, 600);
+        signSave()
 	}
 
 	function signSave(){
@@ -69,7 +77,7 @@
 		formData.append("purc_req_id", "${userInfo.PURC_REQ_ID}");
 		formData.append("proba", rates);
 		formData.append("step", "8");
-		formData.append("signHwpFileData", signHwpFileData);
+		// formData.append("signHwpFileData", signHwpFileData);
 
 		$.ajax({
 			url : "<c:url value='/eval/setSignSetp'/>",
@@ -117,16 +125,16 @@
 			serverPath = "http://one.epis.or.kr/"
 		}
 
-		var hwpPath = serverPath + "/upload/evalForm/step9.hwp";
-		_hwpOpen(hwpPath, "HWP");
-
-		_pHwpCtrl.EditMode = 0;
-		_pHwpCtrl.SetToolBar(1, "TOOLBAR_MENU");
-		_pHwpCtrl.SetToolBar(1, "TOOLBAR_STANDARD");
-		_pHwpCtrl.ShowRibbon(false);
-		_pHwpCtrl.ShowCaret(false);
-		_pHwpCtrl.ShowStatusBar(false);
-		_pHwpCtrl.SetFieldViewOption(1);
+		// var hwpPath = serverPath + "/upload/evalForm/step9.hwp";
+		// _hwpOpen(hwpPath, "HWP");
+        //
+		// _pHwpCtrl.EditMode = 0;
+		// _pHwpCtrl.SetToolBar(1, "TOOLBAR_MENU");
+		// _pHwpCtrl.SetToolBar(1, "TOOLBAR_STANDARD");
+		// _pHwpCtrl.ShowRibbon(false);
+		// _pHwpCtrl.ShowCaret(false);
+		// _pHwpCtrl.ShowStatusBar(false);
+		// _pHwpCtrl.SetFieldViewOption(1);
 
 		/*_pHwpCtrl.Run("MoveViewUp");
 		_pHwpCtrl.Run("MoveViewUp");
@@ -159,8 +167,8 @@
 		$("#signSave").show();
 	}*/
 	function _hwpPutData() {
-		_pHwpCtrl.MoveToField("contents", true, true, true);
-		_pHwpCtrl.PutFieldText("contents", "\n");
+		// _pHwpCtrl.MoveToField("contents", true, true, true);
+		// _pHwpCtrl.PutFieldText("contents", "\n");
 
 		var companyCount = comList.length;
 		var maxCompaniesPerTable = 9; // 표 당 최대 9개의 제안업체
@@ -169,7 +177,7 @@
 		var html = '';
 		for (var t = 0; t < tableCount; t++) {
 			var currentCompanyCount = Math.min(companyCount - t * maxCompaniesPerTable, maxCompaniesPerTable);
-			html += '<table style="border:1px solid black; border-collapse: collapse; width: 930px; table-layout: fixed; margin: auto;">';
+			html += '<table style="border:1px solid black; border-collapse: collapse; width: 1150px; table-layout: fixed; margin: auto;">';
 
 			html += '<thead>';
 			html += '<tr>';
@@ -349,37 +357,37 @@
 			html += '</table>';
 	}
 
-		document.getElementById('contentsTemp').innerHTML = html;
+		$("#contentsTemp").append(html);
 
 
 		//한글문서에 채워넣기
-		_pHwpCtrl.SetTextFile($('#contentsTemp').html(), "HTML", "insertfile", function(){
+		<%--_pHwpCtrl.SetTextFile($('#contentsTemp').html(), "HTML", "insertfile", function(){--%>
 
-			var title1 = "${userInfo.TITLE }";
-			var date = "${nowDate}";
-			//var dept = "${userInfo.ORG_NAME }";
-			var name = "";
+		<%--	var title1 = "${userInfo.TITLE }";--%>
+		<%--	var date = "${nowDate}";--%>
+		<%--	//var dept = "${userInfo.ORG_NAME }";--%>
+		<%--	var name = "";--%>
 
-			if("${userInfo.EVAL_BLIND_YN}" == "N"){
-				name = "${userInfo.NAME }";
-			}else{
-				name = "${fn:substring(userInfo.NAME, 0, 1)}**";
-			}
-			if(_pHwpCtrl.FieldExist("name" )) {
-				_pHwpCtrl.PutFieldText("name", name);
-			}
-			if(_pHwpCtrl.FieldExist("title1" )){
-				_pHwpCtrl.PutFieldText("title1", title1);
-			}
-			if(_pHwpCtrl.FieldExist("date")){
-				_pHwpCtrl.PutFieldText("date", date);
-			}
+		<%--	if("${userInfo.EVAL_BLIND_YN}" == "N"){--%>
+		<%--		name = "${userInfo.NAME }";--%>
+		<%--	}else{--%>
+		<%--		name = "${fn:substring(userInfo.NAME, 0, 1)}**";--%>
+		<%--	}--%>
+		<%--	if(_pHwpCtrl.FieldExist("name" )) {--%>
+		<%--		_pHwpCtrl.PutFieldText("name", name);--%>
+		<%--	}--%>
+		<%--	if(_pHwpCtrl.FieldExist("title1" )){--%>
+		<%--		_pHwpCtrl.PutFieldText("title1", title1);--%>
+		<%--	}--%>
+		<%--	if(_pHwpCtrl.FieldExist("date")){--%>
+		<%--		_pHwpCtrl.PutFieldText("date", date);--%>
+		<%--	}--%>
 
-			_hwpPutSignImg("sign", "${userInfo.SIGN_DIR }");
+		<%--	_hwpPutSignImg("sign", "${userInfo.SIGN_DIR }");--%>
 
-			$("#signSave").show();
-			$("#contentsTemp").hide();
-		})
+		<%--	$("#signSave").show();--%>
+		<%--	$("#contentsTemp").hide();--%>
+		// })
 	}
 	/*function setItem(){
 		//항목 리스트
@@ -477,15 +485,23 @@
 
 
 </script>
-<div style="width: 80%;margin: 0 auto;">
-	<div id="signSave" style="display: none;">
-<%--		<input type="button" onclick="OnConnectDevice();" value="서명하기">--%>
-		<input type="hidden" onclick="evalAvoidPopup()" style="background-color: #dee4ea; border-color: black; border-width: thin;" value="기피신청">
-		<input type="button" onclick="signSaveBtn();" style="float:right; margin-left:10px; background-color: #dee4ea; border-color: black; border-width: thin;" value="다음">
-		<input type="button" onclick="reloadBtn();" style="float:right; background-color: #dee4ea; border-color: black; border-width: thin;" value="새로고침">
-	</div>
-	<div id="contentsTemp" ></div>
-	<div id="_pHwpCtrl" style="height: 100%;border: 1px solid lightgray;"></div>
+
+<div id="signSave" style="float:right">
+    <%--		<input type="button" onclick="OnConnectDevice();" value="서명하기">--%>
+    <input type="hidden" onclick="evalAvoidPopup()" style="background-color: #dee4ea; border-color: black; border-width: thin;" value="기피신청">
+    <input type="button" onclick="signSaveBtn();" style="float:right; margin-left:10px; background-color: #dee4ea; border-color: black; border-width: thin;" value="다음">
+    <input type="button" onclick="reloadBtn();" style="float:right; background-color: #dee4ea; border-color: black; border-width: thin;" value="새로고침">
+</div>
+
+<div style="width: 100%;">
+    <p class=a style='margin-top:30px;margin-bottom:3.0pt;margin-left:21pt;text-indent:-15.6pt'><b><span style='font-size:12.0pt;line-height:103%;font-family:"Arial Unicode MS",sans-serif'>□</span></b><b><span style='font-size:12.0pt;line-height:103%'> 제안서 평가 총괄표</span></b></p>
+
+	<div id="contentsTemp" style=""></div>
+<%--	<div id="_pHwpCtrl" style="height: 100%;border: 1px solid lightgray;"></div>--%>
 
 </div>
+
+<script>
+    _hwpPutData()
+</script>
 

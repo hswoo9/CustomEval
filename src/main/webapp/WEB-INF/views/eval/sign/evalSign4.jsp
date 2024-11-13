@@ -472,7 +472,7 @@
 </script>
 
 
-<div style="width: 40%;margin: 0 auto;">
+<div style="width: 85%;margin: 0 auto;">
 	<div id="signSave" style="display: none; width:78%;">
 		<%--		<input type="button" onclick="OnConnectDevice();" value="서명하기">--%>
 		<c:if test="${userInfo.EVAL_AVOID eq 'N'}">
@@ -485,9 +485,9 @@
 	</div>
 </div>
 
-<div id="summaryTable" style="display: none; margin-top: 50px;  padding-left: 30%;"></div>
+<div id="summaryTable" style="display: none; margin-top: 50px;  padding-left: 25%;"></div>
 
-<div id="contentsTemp" style="width: 580px; padding-left: 30%;">
+<div id="contentsTemp" style="width: 580px; padding-left: 25%;">
 	<TABLE border="1" cellspacing="0" cellpadding="0" style='width:580px; border-collapse:collapse;border:none;'>
 		<TR>
 			<TD valign="middle" bgcolor="#ffffff"  style='width:580px;height:70px;border-left:none;border-right:none;border-top:none;border-bottom:double #000000 2.0pt;padding:1.4pt 5.1pt 1.4pt 5.1pt'>

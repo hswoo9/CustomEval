@@ -215,18 +215,18 @@
 		//_pHwpCtrl.EditMode = 1;
 		var serverPath = "";
 		var hostname = window.location.hostname;
-		/*if(hostname.indexOf("localhost") > -1 || hostname.indexOf("127.0.0.1") > -1 || hostname.indexOf("1.233.95.140") > -1){
+		if(hostname.indexOf("localhost") > -1 || hostname.indexOf("127.0.0.1") > -1 || hostname.indexOf("1.233.95.140") > -1){
 			serverPath = "http://1.233.95.140:58090/";
 		}else{
 			serverPath = "http://one.epis.or.kr/"
-		}*/
-		if(hostname.indexOf("localhost") > -1){
+		}
+		/*if(hostname.indexOf("localhost") > -1){
 			serverPath = "C:/home"
 		}else if(hostname.indexOf("127.0.0.1") > -1 || hostname.indexOf("1.233.95.140") > -1){
 			serverPath = "http://1.233.95.140:58090/";
 		}else{
 			serverPath = "http://one.epis.or.kr/"
-		}
+		}*/
 
 		var hwpPath = "";
 		if('${userInfo.EVAL_JANG}' != ''){

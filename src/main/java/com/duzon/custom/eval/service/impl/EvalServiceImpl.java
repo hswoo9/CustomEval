@@ -236,7 +236,8 @@ public class EvalServiceImpl implements EvalService {
 
 
 
-		public Map<String, Object> setSignSetp(Map<String, Object> map) {
+	@Override
+	public Map<String, Object> setSignSetp(Map<String, Object> map) {
 			Map<String, Object> returnMap = new HashMap<String, Object>();
 
 			String step = String.valueOf(map.get("step"));
@@ -250,39 +251,51 @@ public class EvalServiceImpl implements EvalService {
 
 			// Step에 따른 파일 이름 매핑
 			String fileName;
+			String originFileExt  = "hwp";
 			switch (step) {
 				case "1":
 					fileName = "평가(심사)위원 위촉 확인 및 평가운영지침 준수 각서_"+evalId;
+					originFileExt  = "hwp";
 					break;
 				case "2":
 					fileName = "평가위원 사전의결사항_"+evalId;
+					originFileExt  = "hwp";
 					break;
 				case "3":
 					fileName = "사전접촉여부 확인(신고)서_"+evalId;
+					originFileExt  = "hwp";
 					break;
 				case "4":
 					fileName = "평가수당 지급 확인서_"+evalId;
+					originFileExt  = "hwp";
 					break;
 				case "5":
 					fileName = "평가위원 개인정보 수집·이용 동의서_"+evalId;
+					originFileExt  = "hwp";
 					break;
 				case "6":
 					fileName = "(평가표)위원별 제안서 평가표_"+evalId;
+					originFileExt  = "pdf";
 					break;
 				case "7":
 					fileName = "(평가표)업체별 제안서 평가집계표_"+evalId;
+					originFileExt  = "pdf";
 					break;
 				case "8":
 					fileName = "(평가표)제안서 평가 총괄표_"+evalId;
+					originFileExt  = "pdf";
 					break;
 				case "9":
 					fileName = "사전접촉여부 확인(신고)서 한번더_"+evalId;
+					originFileExt  = "hwp";
 					break;
 				case "10":
 					fileName = "평가위원장 가산금 지급 확인서_"+evalId;
+					originFileExt  = "hwp";
 					break;
 				default:
-					fileName = "기타"; // Default case for safety
+					fileName = "기타";
+					originFileExt  = "hwp";// Default case for safety
 			}
 
 
@@ -294,13 +307,35 @@ public class EvalServiceImpl implements EvalService {
 			if (!EgovStringUtil.nullConvert(map.get("signHwpFileData")).equals("")) {
 				try {
 
-					String originFileName = fileName;
-					String originFileExt  = "hwp";
+					/*String originFileName = fileName;
+					//String originFileExt  = "hwp";
 					String fileStr = EgovStringUtil.nullConvert(map.get("signHwpFileData"));
 					File file = File.createTempFile(originFileName, "." + originFileExt);
 					FileOutputStream lFileOutputStream = new FileOutputStream(file);
 					lFileOutputStream.write(fileStr.getBytes("UTF-8"));
-					lFileOutputStream.close();
+					lFileOutputStream.close();*/
+
+					String originFileName = fileName;
+					String fileStr = EgovStringUtil.nullConvert(map.get("signHwpFileData"));
+
+					if (fileStr.startsWith("data:") && fileStr.contains("base64,")) {
+						fileStr = fileStr.substring(fileStr.indexOf("base64,") + "base64,".length());
+					}
+
+					File file = File.createTempFile(originFileName, "." + originFileExt);
+
+					if ("hwp".equals(originFileExt)) {
+						FileOutputStream lFileOutputStream = new FileOutputStream(file);
+						// Base64 디코딩이 필요없다면, 그냥 fileStr을 UTF-8로 저장
+						lFileOutputStream.write(fileStr.getBytes("UTF-8"));
+						lFileOutputStream.close();
+					} else if ("pdf".equals(originFileExt)) {
+						fileStr = fileStr.replaceAll("[\\n\\r]", "");
+						byte[] decodedBytes = Base64.getDecoder().decode(fileStr); // Base64 디코딩
+						FileOutputStream lFileOutputStream = new FileOutputStream(file);
+						lFileOutputStream.write(decodedBytes);
+						lFileOutputStream.close();
+					}
 
 					String serverFilePath = "/home/upload/cust_eval/" + map.get("commissioner_seq").toString() + "/hwp/";
 					File newPath = new File(serverFilePath);
@@ -372,6 +407,8 @@ public class EvalServiceImpl implements EvalService {
 			returnMap.put("result", "success");
 			return returnMap;
 		}
+
+
 
 
 

@@ -94,15 +94,15 @@
 			// })
 
 			//pdf
-			/*html2canvas(document.getElementById("contentsTemp")).then(canvas => {
+			html2canvas(document.getElementById("contentsTemp")).then(canvas => {
 				const imgData = canvas.toDataURL("image/png");
 				const pdf = new jsPDF("p", "mm", "a4");
 
 				pdf.addImage(imgData, "PNG", 10, 10);
-				const pdfBlob = pdf.output("blob");
+				const pdfBase64 = pdf.output('datauristring');
 
-				signHwpFileData = pdfBlob;
-			});*/
+				signHwpFileData = pdfBase64;
+			});
 
 			//setTimeout(signSave, 600);
 			signSave();
@@ -350,6 +350,7 @@
 		_pHwpCtrl.Run("TableMergeCell");
 
 	}*/
+
 
 
 	function _hwpPutData(){

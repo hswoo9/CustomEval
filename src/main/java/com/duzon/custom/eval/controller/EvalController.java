@@ -1,5 +1,6 @@
 package com.duzon.custom.eval.controller;
 
+import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -493,13 +494,15 @@ public class EvalController {
 	 * yh
 	 * :양식단계별 저장
 	 */
-	@RequestMapping(value = "/eval/setSignSetp", method = RequestMethod.POST) 
+	@RequestMapping(value = "/eval/setSignSetp", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> setSignSetp(@RequestParam Map<String, Object> map) {
 		logger.debug("setSignSetp");
 
 		return evalService.setSignSetp(map);
 	}
+
+
 
 	@RequestMapping(value = "/eval/getEvalConfirmChk", method = RequestMethod.POST) 
 	@ResponseBody

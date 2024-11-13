@@ -87,8 +87,9 @@
 	function hwpView(e){
 		var serverPath = "";
 		var hostname = window.location.hostname;
+        debugger
 		if(hostname.indexOf("localhost") > -1 || hostname.indexOf("127.0.0.1") > -1 || hostname.indexOf("1.233.95.140") > -1){
-			serverPath = "http://1.233.95.140:58090/";
+			serverPath = "http://127.0.0.1:8080/";
 		}else{
 			serverPath = "http://one.epis.or.kr/"
 		}
@@ -105,7 +106,7 @@
 			serverPath = "http://one.epis.or.kr/"
 		}*/
 		// var hwpPath = "http://"+_g_serverName+":"+_g_serverPort+_g_contextPath_+"/common/getHwpFile?fileNm=step2";
-		var hwpPath = serverPath + "/upload/evalForm/step2.hwp";
+		var hwpPath = serverPath + "upload/evalForm/step2.hwp";
 		console.log("hwpPath : "+hwpPath);
 
 		_hwpOpen(hwpPath, "HWP");

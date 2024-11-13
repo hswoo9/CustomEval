@@ -18,6 +18,16 @@
 
 <title>업체별 제안서 평가집계표</title>
 
+
+<style>
+    @media (pointer:coarse) {
+        .th {
+            background-color : #8c8c8c !important;
+            color : white !important;
+        }
+    }
+</style>
+
 <script type="text/javascript">
 	$(function(){
 		$('.infoTbody').rowspan2(1); //rowspan2 - rowspan 순으로 실행시켜야 원하는 모양으로 나타남.
@@ -215,16 +225,16 @@
 			serverPath = "http://one.epis.or.kr/"
 		}
 
-		var hwpPath = serverPath + "/upload/evalForm/step8.hwp";
-		_hwpOpen(hwpPath, "HWP");
-
-		_pHwpCtrl.EditMode = 0;
-		_pHwpCtrl.SetToolBar(1, "TOOLBAR_MENU");
-		_pHwpCtrl.SetToolBar(1, "TOOLBAR_STANDARD");
-		_pHwpCtrl.ShowRibbon(false);
-		_pHwpCtrl.ShowCaret(false);
-		_pHwpCtrl.ShowStatusBar(false);
-		_pHwpCtrl.SetFieldViewOption(1);
+		// var hwpPath = serverPath + "/upload/evalForm/step8.hwp";
+		// _hwpOpen(hwpPath, "HWP");
+        //
+		// _pHwpCtrl.EditMode = 0;
+		// _pHwpCtrl.SetToolBar(1, "TOOLBAR_MENU");
+		// _pHwpCtrl.SetToolBar(1, "TOOLBAR_STANDARD");
+		// _pHwpCtrl.ShowRibbon(false);
+		// _pHwpCtrl.ShowCaret(false);
+		// _pHwpCtrl.ShowStatusBar(false);
+		// _pHwpCtrl.SetFieldViewOption(1);
 	}
 
 	function _hwpPutData(){
@@ -259,8 +269,8 @@
 	}
 </script>
 
-<div style="width: 80%;margin: 0 auto;">
-	<div id="signSave" style="display: none;">
+<div style="width: 75%;margin: 0 auto;">
+	<div id="signSave" style="">
 		<input type="hidden" onclick="evalAvoidPopup()" style="background-color: #dee4ea; border-color: black; border-width: thin;" value="기피신청">
 		<input type="button" onclick="signSaveBtn();" style="float:right; margin-left : 10px; background-color: #dee4ea; border-color: black; border-width: thin;" value="다음">
 		<input type="button" onclick="reloadBtn();" style="float:right; background-color: #dee4ea; border-color: black; border-width: thin;"  value="새로고침">
@@ -337,22 +347,22 @@
 					</TD>
 				</TR>
 				<TR>
-					<TD rowspan="2" colspan="3" valign="middle" style='width:350px;height:74px;border-left:solid #000000 0.9pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
+					<TD class="th" rowspan="2" colspan="3" valign="middle" style='width:350px;height:74px;border-left:solid #000000 0.9pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
 						<P CLASS=HStyle0 STYLE='text-align:center;line-height:150%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움"; font-size:11px;'>평가항목</SPAN></P>
 					</TD>
-					<TD rowspan="2" valign="middle" style='width:40px;height:74px;border-left:solid #000000 0.9pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
+					<TD class="th" rowspan="2" valign="middle" style='width:40px;height:74px;border-left:solid #000000 0.9pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
 						<P CLASS=HStyle0 STYLE='text-align:center;line-height:150%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움";'>배점</SPAN></P>
 					</TD>
-					<TD colspan="<%= currentUserCount %>" valign="middle" style='width : 450px; height:28px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
+					<TD class="th" colspan="<%= currentUserCount %>" valign="middle" style='width : 450px; height:28px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
 						<P CLASS=HStyle0 STYLE='text-align:center;line-height:130%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움";'>평가위원</SPAN></P>
 					</TD>
-					<TD rowspan="2" valign="middle" style='width:60px;height:74px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
+					<TD class="th" rowspan="2" valign="middle" style='width:60px;height:74px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
 						<P CLASS=HStyle0 STYLE='text-align:center;line-height:150%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움";'>합계</SPAN></P>
 					</TD>
-					<TD rowspan="2" valign="middle" style='width:60px;height:74px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.9pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
+					<TD class="th" rowspan="2" valign="middle" style='width:60px;height:74px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.9pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
 						<P CLASS=HStyle0 STYLE='text-align:center;line-height:150%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움";'>평균</SPAN></P>
 					</TD>
-					<TD rowspan="2" valign="middle" style='width:40px;height:74px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.9pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
+					<TD class="th" rowspan="2" valign="middle" style='width:40px;height:74px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.9pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
 						<P CLASS=HStyle0 STYLE='text-align:center;line-height:150%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움";'>비고</SPAN></P>
 					</TD>
 				</TR>
@@ -386,7 +396,7 @@
 					<c:set var="sss3" value="${result[0].colList[colIndex].score}" />
 					<c:set var="sss4" value="${result[0].colList[colIndex].item_name }" />
 					<TR>
-						<TD class=${result[0].colList[colIndex].eval_type } valign="middle" style='width:25px;height:30px;border-left:solid #000000 0.9pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt;text-align:center;'>
+						<TD class="th ${result[0].colList[colIndex].eval_type}"  valign="middle" style='width:25px;height:30px;border-left:solid #000000 0.9pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt;text-align:center;'>
 
 							${result[0].colList[colIndex].eval_type }<!-- 평가타입 -->
 
@@ -549,8 +559,8 @@
 					pageContext.setAttribute("end", end);
 				%>
 				<TR>
-					<TD colspan="3" valign="middle" style='height:33px;border-left:solid #000000 0.9pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.9pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
-						<P CLASS=HStyle0 STYLE='text-align:center;line-height:150%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>합&nbsp; 계</SPAN></P>
+					<TD class="th" colspan="3" valign="middle" style='height:33px;border-left:solid #000000 0.9pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.9pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
+						<P CLASS="HStyle0" STYLE='text-align:center;line-height:150%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>합&nbsp; 계</SPAN></P>
 					</TD>
 					<TD colspan="1" valign="middle" style='height:33px;border-left:solid #000000 0.9pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.9pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
 						<P CLASS=HStyle0 STYLE='text-align:center;line-height:150%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>100점</SPAN></P>
@@ -603,5 +613,5 @@
 
 	</div>
 
-	<div id="_pHwpCtrl" style="height: 100%;border: 1px solid lightgray;display : none;"></div>
+<%--	<div id="_pHwpCtrl" style="height: 100%;border: 1px solid lightgray;/* display : none; */"></div>--%>
 </div>

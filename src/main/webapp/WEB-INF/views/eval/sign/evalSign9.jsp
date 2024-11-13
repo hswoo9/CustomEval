@@ -215,15 +215,21 @@
 
 <style>
 	table tr th,td {border: 1px; border-style: solid; text-align: center; height: 40px; }
+
+    @media (pointer:coarse) {
+        .WordSection1 { width: 1100px !important;}
+        .hkTitle { width: 1100px !important;}
+        #hkTable { width: 1100px !important;}
+    }
 </style>
 
-<div class=WordSection1 style="width: 1400px; height: 1000px;padding-left: 200px;">
+<div class=WordSection1 style="width: 1400px; height: 1000px;">
 	<div id="signSave" style="width: 100%;">
 		<input type="hidden" onclick="evalAvoidPopup()" style="background-color: #dee4ea; border-color: black; border-width: thin;" value="기피신청">
 		<input type="button" onclick="signSaveBtn();" style="float:right; background-color: #dee4ea; border-color: black; border-width: thin;" value="다음">
 	</div>
 
-	<div align=center style="padding-top: 30px; width: 1400px;">
+	<div class="hkTitle" align=center style="padding-top: 30px; width: 1400px;">
 		<table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0 style='border-collapse:collapse;border:none'>
 			<tr style='height:28.3pt'>
 				<td style='width:241.35pt;border:none;border-bottom:double black 3.75pt;  background:white;'>
@@ -239,7 +245,7 @@
 	<p class=a style='margin-top:3.0pt;margin-right:0in;margin-bottom:3.0pt;margin-left:0in'>&nbsp;</p>
 	<p class=a style='margin-top:30px;margin-right:0in;margin-bottom:3.0pt;margin-left:15.6pt;text-indent:-15.6pt'><b><span style='font-size:12.0pt;line-height:103%;font-family:"Arial Unicode MS",sans-serif'>□</span></b><b><span style='font-size:12.0pt;line-height:103%'> 사전접촉 사실 확인(신고)서</span></b></p>
 
-	<table style="width: 1400px;">
+	<table style="width: 1400px;" id="hkTable">
 		<colgroup>
 			<col width="10%">
 			<col width="20%">

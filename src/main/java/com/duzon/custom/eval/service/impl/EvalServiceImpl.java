@@ -1,35 +1,30 @@
 package com.duzon.custom.eval.service.impl;
 
+import com.duzon.custom.attachFile.service.AttachFileService;
+import com.duzon.custom.common.utiles.CommFileUtil;
+import com.duzon.custom.common.utiles.EgovStringUtil;
+import com.duzon.custom.common.vo.PdfEcmFileVO;
+import com.duzon.custom.common.vo.PdfEcmMainVO;
+import com.duzon.custom.eval.dao.EvalDAO;
+import com.duzon.custom.eval.service.EvalService;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.pdf.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.nio.file.*;
 import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
-
-import com.duzon.custom.common.utiles.CommFileUtil;
-import com.duzon.custom.common.utiles.EgovStringUtil;
-import com.duzon.custom.common.vo.PdfEcmFileVO;
-import com.duzon.custom.common.vo.PdfEcmMainVO;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.pdf.*;
-import org.apache.commons.collections.map.HashedMap;
-import org.apache.commons.lang.RandomStringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.duzon.custom.attachFile.service.AttachFileService;
-import com.duzon.custom.eval.dao.EvalDAO;
-import com.duzon.custom.eval.service.EvalService;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import sun.misc.BASE64Decoder;
-
-import javax.imageio.ImageIO;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 
 @Service

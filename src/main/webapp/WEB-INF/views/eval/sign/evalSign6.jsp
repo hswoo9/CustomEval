@@ -81,23 +81,23 @@
 				alert("평가가 진행 중입니다.\n위원장은 모든 평가위원의 평가가 종료 된 후에 평가 저장이 가능합니다.");
 				return;
 			}
-			_pHwpCtrl.GetTextFile("HWPML2X", "", function (data) {
+			/*_pHwpCtrl.GetTextFile("HWPML2X", "", function (data) {
 				signHwpFileData = data;
-			})
+			})*/
 
 			//pdf
-			/*html2canvas(document.getElementById("contentsTemp")).then(canvas => {
+			html2canvas(document.getElementById("contentsTemp")).then(canvas => {
 				const imgData = canvas.toDataURL("image/png");
 				const pdf = new jsPDF("p", "mm", "a4");
 
 				pdf.addImage(imgData, "PNG", 10, 10);
-				const pdfBlob = pdf.output("blob");
+				const pdfBase64 = pdf.output('datauristring');
 
-				signHwpFileData = pdfBlob;
-			});*/
+				signHwpFileData = pdfBase64;
+			});
 
-			//setTimeout(signSave, 600);
-			signSave();
+			setTimeout(signSave, 600);
+			//signSave();
 		}
 	}
 
@@ -507,7 +507,7 @@
 				_pHwpCtrl.PutFieldText("date", date);
 			}
 
-			_hwpPutSignImg("sign", "${userInfo.SIGN_DIR }");
+			//_hwpPutSignImg("sign", "${userInfo.SIGN_DIR }");
 
 			$("#signSave").show();
 			//$("#contentsTemp").hide();

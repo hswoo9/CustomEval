@@ -180,7 +180,7 @@
 			console.log(pair[0], ":", pair[1]); // 키와 값 확인
 		}
 
-		debugger; // 이 부분에서 FormData를 디버그 가능
+
 
 		$.ajax({
 			url : "<c:url value='/eval/setSignSetp'/>",

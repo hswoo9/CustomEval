@@ -11,7 +11,71 @@
 <script type="text/javascript" src="http://10.10.10.112:8080/js/webhwpctrl.js"></script>--%>
 
 <title>평가수당</title>
+<style>
+	.modern-table-container {
+		width: 800px;
+		margin: 20px auto;
+		font-family: 'Noto Sans KR', sans-serif;
+	}
 
+	.modern-table {
+		width: 100%;
+		margin-bottom: 20px;
+		border-collapse: collapse;
+		background: white;
+		border: 2px solid #2c3e50;
+	}
+
+	.table-title {
+		background-color: #2c3e50;
+		color: white;
+		padding: 12px 15px;
+		font-size: 1.1em;
+		text-align: left;
+		border: none;
+	}
+
+	.modern-table td {
+		padding: 10px 15px;
+		border: 1px solid #ddd;
+	}
+
+	.modern-table .header {
+		background-color: #f8f9fa;
+		color: #2c3e50;
+		font-weight: 500;
+		width: 20%;
+		border: 1px solid #ddd;
+		text-align: center;
+	}
+
+	.modern-table .data {
+		width: 30%;
+		color: #34495e;
+		border: 1px solid #ddd;
+	}
+
+	.total-amount {
+		font-weight: bold;
+		color: #e74c3c;
+		font-size: 1.1em;
+	}
+
+	.modern-table tr {
+		border: 1px solid #ddd;
+	}
+
+	.modern-table tr:hover {
+		background-color: #f8f9fa;
+	}
+
+	@media (max-width: 820px) {
+		.modern-table-container {
+			width: 95%;
+			margin: 10px auto;
+		}
+	}
+</style>
 <script type="text/javascript">
 	var pageCode = 4;
 	var fileDownFlag = false;
@@ -110,7 +174,7 @@
 
 		// 테이블 HTML 생성
 		var tableHtml = `
-        <table border="1" cellspacing="0" cellpadding="0" style='width:580px; border-collapse:collapse; padding-left: 30%;'>
+        <!--<table border="1" cellspacing="0" cellpadding="0" style='width:580px; border-collapse:collapse; padding-left: 30%;'>
             <tr>
                 <td style="text-align: center; background-color: #e5e5ff; padding: 10px; width: 33%">평가비</td>
                 <td style="text-align: center; background-color: #e5e5ff; padding: 10px; width: 33%">교통비</td>
@@ -141,7 +205,61 @@
                 <td style="text-align: right; padding: 10px;" id="bankNo"></td>
                 <td style="text-align: right; padding: 10px;" id="ssn"></td>
             </tr>
-        </table>
+        </table>-->
+<div class="modern-table-container">
+      <!-- 개인 정보 섹션 -->
+      <table class="modern-table">
+        <tr>
+          <th colspan="4" class="table-title">개인 정보</th>
+        </tr>
+        <tr>
+          <td class="header">성명</td>
+          <td class="data" id="oNameCell"></td>
+          <td class="header">소속</td>
+          <td class="data" id="deptCell"></td>
+        </tr>
+        <tr>
+          <td class="header">주소</td>
+          <td class="data" colspan="3" id="addrCell"></td>
+        </tr>
+        <tr>
+          <td class="header">주민번호</td>
+          <td class="data" id="ssn"></td>
+          <td class="header">연락처</td>
+          <td class="data" id="phoneCell"></td>
+        </tr>
+      </table>
+
+      <!-- 계좌 정보 섹션 -->
+      <table class="modern-table">
+        <tr>
+          <th colspan="4" class="table-title">계좌 정보</th>
+        </tr>
+        <tr>
+          <td class="header">은행명</td>
+          <td class="data" id="bankName"></td>
+          <td class="header">계좌번호</td>
+          <td class="data" id="bankNo"></td>
+        </tr>
+      </table>
+
+      <!-- 비용 정보 섹션 -->
+      <table class="modern-table">
+        <tr>
+          <th colspan="4" class="table-title">비용 내역</th>
+        </tr>
+        <tr>
+          <td class="header" style="text-align: right">평가비</td>
+          <td class="data" id="evaluationFeeCell" style="text-align: right"></td>
+          <td class="header" style="text-align: right" >교통비</td>
+          <td class="data" id="transportFeeCell" style="text-align: right"></td>
+        </tr>
+        <tr>
+          <td class="header" colspan="2" style="text-align: right">총 합계</td>
+          <td class="data total-amount" colspan="2" id="totalFeeCell" style="text-align: right"></td>
+        </tr>
+      </table>
+    </div>
     `;
 
 		// summaryTable 요소가 존재하는지 확인
@@ -177,6 +295,9 @@
 		document.getElementById("modifyButton").style.display = "none";
 		document.getElementById("confirmButton").style.display = "none";
 		document.getElementById("nextButton").style.display = "inline-block";
+
+		document.getElementById("contentsTemp").style.display = "block";
+		document.getElementById("summaryTable").style.display = "none";
 	}
 
 	function confirmEvaluation() {
@@ -485,7 +606,7 @@
 	</div>
 </div>
 
-<div id="summaryTable" style="display: none; margin-top: 50px;  padding-left: 25%;"></div>
+<div id="summaryTable" style="display: none; margin-top: 50px;  "></div>
 
 <div id="contentsTemp" style="width: 580px; padding-left: 25%;">
 	<TABLE border="1" cellspacing="0" cellpadding="0" style='width:580px; border-collapse:collapse;border:none;'>

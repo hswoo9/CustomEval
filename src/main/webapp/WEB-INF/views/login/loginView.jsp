@@ -6,9 +6,19 @@
 <%@ taglib prefix="tiles"   uri="http://tiles.apache.org/tags-tiles" %>
 <jsp:useBean id="nowDate" class="java.util.Date" />
 <fmt:formatDate value="${nowDate}" var="nowDate" pattern="yyyy년  MM월  dd일" />
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="/manifest.json">
+
 
 <style>
 #login_b2_type .login_wrap .login_form_wrap form .inp1{margin:7px 0 0 0;padding:8px 10px;width:107px;border:1px solid #c9cac9;outline:none;background:#fff;font-size:15px;color:#4a4a4a;text-indent:0;}
+
+
+@media (pointer:coarse) {
+    /* custom css for "touch targets" */
+    #login_b2_type {top:150px;}
+}
 
 </style>
 
@@ -62,7 +72,9 @@ $(function(){
            </div>
        </div>
         <div class="copy" style="display:none;">Copyright DOUZONE ICT GROUP. All rights reserved.</div>
+
    </div>
+<%--<button type="button" class="k-button k-button-md k-button-solid k-button-solid-base" id="fullScreen" onclick="toggleFullscreen()">전체화면</button>--%>
    
 <script>
     var _g_contextPath_ = "${pageContext.request.contextPath}";
@@ -81,8 +93,26 @@ $(function(){
 	
 	$('#login_b2_type').css('left', left);
 	$('#login_b2_type').css('top', top);
-	
 });
+
+
+    function toggleFullscreen() {
+        if (!document.fullscreenElement) {
+            // 전체 화면이 아닐 때 전체 화면 모드로 전환
+            $("#fullScreen").text("축소화면");
+            document.documentElement.requestFullscreen()
+                .catch((err) => {
+                    console.error(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
+                });
+
+
+        } else {
+            $("#fullScreen").text("전체화면");
+
+            document.exitFullscreen();
+
+        }
+    }
 
 
 function actionLogin(){

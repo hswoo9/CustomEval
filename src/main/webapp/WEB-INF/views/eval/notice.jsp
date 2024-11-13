@@ -51,11 +51,22 @@
 
 </script>
 
+<style>
+    @media (pointer:coarse) {
+        /* custom css for "touch targets" */
+        #mainContent {padding-left: 0px !important; width: 100% !important;}
+
+        /*#mainContent {width: 600px !important;}*/
+        #notiContent, #subContent {width: 100% !important;}
+
+    }
+</style>
+
 <input type="hidden" id="hidEvalId" value=""/>
 <input type="hidden" id="hidEvalPw" value=""/>
 
 
-<div style="width: 1000px; padding-left: 25%;" >
+<div id="mainContent" style="width: 1000px; padding-left: 25%;" >
     <div id="signSave" style="width:100%;">
         <input type="button" onclick="evalAvoidPopup();" style=" background-color: #dee4ea; border-color: black; border-width: thin;" value="기피신청">
         <a href="#" onclick="nextPageBtn();" target="_self">
@@ -63,7 +74,7 @@
         </a>
     </div>
 
-    <TABLE border="1" cellspacing="0" cellpadding="0" style='width:1000px; border-collapse:collapse;border:none;'>
+    <TABLE id="subContent" border="1" cellspacing="0" cellpadding="0" style='width:1000px; border-collapse:collapse;border:none;'>
         <TR>
             <TD valign="middle" bgcolor="#ffffff"  style='width:439px;height:44px;border-left:none;border-right:none;border-top:none;border-bottom:double #000000 2.0pt;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
                 <P CLASS=HStyle0 STYLE='margin-bottom:5.0pt;text-align:center;'><SPAN STYLE='font-size:16.0pt;font-weight:bold;line-height:160%'>평가위원 유의사항(제9조의2제1항 관련)</SPAN></P>
@@ -75,7 +86,7 @@
     <P CLASS=HStyle0 STYLE='margin-bottom:5.0pt;text-align:center;'><BR></P>
 
     <P CLASS=HStyle0 STYLE='margin-bottom:5.0pt;text-align:center;'>
-    <TABLE border="1" cellspacing="0" cellpadding="0" style='width:1000px; border-collapse:collapse;border:none;'>
+    <TABLE id="notiContent" border="1" cellspacing="0" cellpadding="0" style='width:1000px; border-collapse:collapse;border:none;'>
         <TR>
             <TD valign="middle" style='width:632px;height:40px;padding:1.4pt 1.4pt 1.4pt 1.4pt; border:none'>
                 <P CLASS=HStyle0 STYLE='margin-left:3.0pt;margin-right:3.0pt;line-height:130%;text-align: right;border:none'>

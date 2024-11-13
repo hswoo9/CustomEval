@@ -11,6 +11,12 @@
 	width: 100px; height: 50px; font-size: 15px;
 }
 table tr th,td { font-size: 15px; }
+
+@media (pointer:coarse) {
+    /* custom css for "touch targets" */
+    .container, #subTitle {text-align: center;}
+    .sub_contents_wrap {width: 77% !important; min-width: 0px !important;}
+}
 </style>
 
 <script>
@@ -65,7 +71,7 @@ table tr th,td { font-size: 15px; }
 			
 			</table>		
 			
-			<div style="padding-top: 20px; text-align: center;">
+			<div style="padding-top: 20px; text-align: right;">
 				<input type="button" style="margin-bottom: 15px; background-color: #dee4ea; border-color: black; border-width: thin;" id="applyBtn" onclick="evalApply();" value="등록하기">
 			</div>
 			

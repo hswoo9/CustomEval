@@ -10,6 +10,12 @@
 <%--<script type="text/javascript" src="http://10.10.10.112:8080/js/hwpctrlapp/utils/util.js"></script>
 <script type="text/javascript" src="http://10.10.10.112:8080/js/webhwpctrl.js"></script>--%>
 
+<script type="text/javascript" src="<c:url value='/resources/js/html2canvas.min.js' />"></script>
+<script type="text/javascript" src="<c:url value='/resources/js/es6-promise.auto.js' />"></script>
+<script type="text/javascript" src="<c:url value='/resources/js/jspdf.min.js' />"></script>
+<script type="text/javascript" src="<c:url value='/resources/js/jquery-latest.min.js' />"></script>
+
+
 <script type="text/javascript">
 	var result = JSON.parse('${result}');
 	var rates = "${userInfo.RATES}" || "";
@@ -54,9 +60,18 @@
 
 	var signHwpFileData = "";
 	function signSaveBtn(){
-		_pHwpCtrl.GetTextFile("HWPML2X", "", function(data) {
+		/*_pHwpCtrl.GetTextFile("HWPML2X", "", function(data) {
 			signHwpFileData = data;
-		})
+		})*/
+		html2canvas(document.getElementById("contentsTemp")).then(canvas => {
+			const imgData = canvas.toDataURL("image/png");
+			const pdf = new jsPDF("p", "mm", "a4");
+
+			pdf.addImage(imgData, "PNG", 10, 10);
+			const pdfBase64 = pdf.output('datauristring');
+
+			signHwpFileData = pdfBase64;
+		});
 
 		setTimeout(signSave, 600);
 	}
@@ -378,7 +393,7 @@
 			_hwpPutSignImg("sign", "${userInfo.SIGN_DIR }");
 
 			$("#signSave").show();
-			$("#contentsTemp").hide();
+			//$("#contentsTemp").hide();
 		})
 	}
 	/*function setItem(){
@@ -485,7 +500,7 @@
 		<input type="button" onclick="reloadBtn();" style="float:right; background-color: #dee4ea; border-color: black; border-width: thin;" value="새로고침">
 	</div>
 	<div id="contentsTemp" ></div>
-	<div id="_pHwpCtrl" style="height: 100%;border: 1px solid lightgray;"></div>
+	<div id="_pHwpCtrl" style="height: 100%;border: 1px solid lightgray; display: none;"></div>
 
 </div>
 

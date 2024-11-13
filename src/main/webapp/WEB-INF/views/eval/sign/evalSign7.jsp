@@ -11,6 +11,11 @@
 <%--<script type="text/javascript" src="http://10.10.10.112:8080/js/hwpctrlapp/utils/util.js"></script>
 <script type="text/javascript" src="http://10.10.10.112:8080/js/webhwpctrl.js"></script>--%>
 
+<script type="text/javascript" src="<c:url value='/resources/js/html2canvas.min.js' />"></script>
+<script type="text/javascript" src="<c:url value='/resources/js/es6-promise.auto.js' />"></script>
+<script type="text/javascript" src="<c:url value='/resources/js/jspdf.min.js' />"></script>
+<script type="text/javascript" src="<c:url value='/resources/js/jquery-latest.min.js' />"></script>
+
 <title>업체별 제안서 평가집계표</title>
 
 <script type="text/javascript">
@@ -18,7 +23,7 @@
 		$('.infoTbody').rowspan2(1); //rowspan2 - rowspan 순으로 실행시켜야 원하는 모양으로 나타남.
 		alert('"제안평가위원장은 \"제안서 평가 총괄표\" 및\n\"업체별 제안서 평가집계표\"에 이상이 없는지\n정확히 확인하여 주시기 바라며,\n저장버튼 클릭후에는 수정이 불가능 합니다"');
   		$('.infoTbody').rowspan(0);
-  		$("#contentsTemp").hide();
+  		//$("#contentsTemp").hide();
 	});
 
 	window.onload = function() {
@@ -30,7 +35,7 @@
 		});
 	};
 
-	var signHwpFileData = "";
+
 	
 	$.fn.rowspan = function(colIdx, isStats) {       
 		return this.each(function(){      
@@ -96,21 +101,76 @@
 				});     
 			});    
 		});  
-	}; 
-	
-	function signSaveBtn(){
-		_pHwpCtrl.GetTextFile("HWPML2X", "", function(data) {
-			signHwpFileData = data;
-		})
+	};
+	var signHwpFileData = "";
+	var signHwpFileDataList = [];
+	const totalDivs = ${getCompanyList.size()};
+	let processedDivs = 0;
 
-		setTimeout(signSave, 600);
+	function signSaveBtn(){
+		/*_pHwpCtrl.GetTextFile("HWPML2X", "", function(data) {
+			signHwpFileData = data;
+		})*/
+
+		//setTimeout(signSave, 600);
+
+		const divPrefix = "temp_";
+
+		signHwpFileDataList = [];
+		processedDivs = 0; // Reset processedDivs
+
+		for (let i = 1; i <= totalDivs; i++) {
+			const divId = divPrefix + i;
+			const element = document.getElementById(divId);
+			console.log("divId : ", divId);
+
+			if (element) {
+				html2canvas(element).then(canvas => {
+					const imgData = canvas.toDataURL("image/png");
+					const pdf = new jsPDF("p", "mm", "a4");
+					pdf.addImage(imgData, "PNG", 10, 10);
+
+					// PDF를 Base64로 인코딩하여 signHwpFileDataList에 추가
+					signHwpFileDataList.push(pdf.output("datauristring").split(",")[1]);
+
+					processedDivs++;
+
+					// 모든 div가 처리되었으면 signSave 호출
+					if (processedDivs === totalDivs) {
+						signSave();
+					}
+				});
+			} else {
+				processedDivs++;
+			}
+		}
 	}
 
 	function signSave(){
 		var formData = new FormData();
 		formData.append("commissioner_seq", "${userInfo.COMMISSIONER_SEQ}");
 		formData.append("step", "7");
-		formData.append("signHwpFileData", signHwpFileData);
+
+		console.log("signHwpFileDataList 확인:", signHwpFileDataList);
+
+		// signHwpFileDataList 배열을 FormData에 추가 (각 div에 대해 고유한 키로 추가)
+		/*signHwpFileDataList.forEach((data, index) => {
+			console.log("현재 index:", index); // 각 데이터의 index 확인
+			formData.append(`signHwpFileData_${index + 1}`, data);
+		});*/
+		for (let j = 0; j < signHwpFileDataList.length; j++) {
+
+			const data = signHwpFileDataList[j];  // 현재 index에 해당하는 데이터
+
+			formData.append("signHwpFileData_"+(j + 1), data);
+		}
+
+		console.log("FormData 내용 확인:");
+		for (let pair of formData.entries()) {
+			console.log(pair[0], ":", pair[1]); // 키와 값 확인
+		}
+
+		debugger; // 이 부분에서 FormData를 디버그 가능
 
 		$.ajax({
 			url : "<c:url value='/eval/setSignSetp'/>",
@@ -234,7 +294,7 @@
 
 		<c:forEach items="${getCompanyList }" var="companyList" varStatus="mainSt">
 
-		<div style="page-break-after: always;">
+		<div id="temp_${mainSt.index + 1}" style="page-break-after: always;">
 
 			<c:forEach var="t" begin="0" end="${endTableCount}">
 
@@ -543,5 +603,5 @@
 
 	</div>
 
-	<div id="_pHwpCtrl" style="height: 100%;border: 1px solid lightgray;/* display : none; */"></div>
+	<div id="_pHwpCtrl" style="height: 100%;border: 1px solid lightgray;display : none;"></div>
 </div>

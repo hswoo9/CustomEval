@@ -309,8 +309,75 @@ public class EvalServiceImpl implements EvalService {
 			// file 저장
 			map.put("attch_file_seq", fileName);
 
-			if (!EgovStringUtil.nullConvert(map.get("signHwpFileData")).equals("")) {
-				try {
+			if("7".equals(step)) {
+				int i = 1; // signHwpFileData_1, signHwpFileData_2 등을 순차적으로 처리하기 위한 변수
+				while (map.containsKey("signHwpFileData_" + i)) {
+					String fileStr = EgovStringUtil.nullConvert(map.get("signHwpFileData_" + i));
+
+					if (!fileStr.equals("")) {
+						try {
+							String originFileName = fileName + "_" + (char)('A' + (i-1)) +"업체";
+
+							// Base64 처리
+							if (fileStr.startsWith("data:") && fileStr.contains("base64,")) {
+								fileStr = fileStr.substring(fileStr.indexOf("base64,") + "base64,".length());
+							}
+
+							// 파일 생성
+							File file = File.createTempFile(originFileName, "." + originFileExt);
+
+							fileStr = fileStr.replaceAll("[\\n\\r]", "");
+							byte[] decodedBytes = Base64.getDecoder().decode(fileStr); // Base64 디코딩
+							FileOutputStream lFileOutputStream = new FileOutputStream(file);
+							lFileOutputStream.write(decodedBytes);
+							lFileOutputStream.close();
+
+
+							// 서버에 파일 저장
+							String serverFilePath = "/home/upload/cust_eval/" + map.get("commissioner_seq").toString() + "/hwp/";
+							File newPath = new File(serverFilePath);
+							if (!newPath.exists()) {
+								newPath.mkdirs();
+							}
+
+							Path path = Paths.get(serverFilePath + originFileName + "." + originFileExt);
+							Files.copy(new FileInputStream(file), path, new CopyOption[]{StandardCopyOption.REPLACE_EXISTING});
+
+							PdfEcmFileVO pdfEcmFileVO = new PdfEcmFileVO();
+							pdfEcmFileVO.setRep_id(originFileName);
+							pdfEcmFileVO.setComp_seq("1000");
+							pdfEcmFileVO.setDoc_id(originFileName);
+							pdfEcmFileVO.setDoc_no("001");
+							pdfEcmFileVO.setDoc_path("Z:/upload/epis/cust_eval/" + map.get("commissioner_seq") + "/hwp");
+							pdfEcmFileVO.setDoc_name(originFileName);
+							pdfEcmFileVO.setDoc_ext("hwp");
+							pdfEcmFileVO.setDoc_title("sign_" + step);
+
+							PdfEcmMainVO pdfEcmMainVO = new PdfEcmMainVO();
+
+							pdfEcmMainVO.setRep_id(fileName);
+							pdfEcmMainVO.setComp_seq("1000");
+							pdfEcmMainVO.setDept_seq("1");
+							pdfEcmMainVO.setEmp_seq("1");
+							pdfEcmMainVO.setPdf_path("Z:/upload/epis/cust_eval/" + map.get("commissioner_seq") + "/pdf");
+							pdfEcmMainVO.setPdf_name("PDF_" + originFileName);
+							pdfEcmMainVO.setStatus_cd("D0001");
+
+							evalDAO.insertPdfFile(pdfEcmFileVO);
+							evalDAO.insertPdfMain(pdfEcmMainVO);
+
+
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+					i++;
+				}
+
+			}else{
+
+				if (!EgovStringUtil.nullConvert(map.get("signHwpFileData")).equals("")) {
+					try {
 
 					/*String originFileName = fileName;
 					//String originFileExt  = "hwp";
@@ -320,68 +387,71 @@ public class EvalServiceImpl implements EvalService {
 					lFileOutputStream.write(fileStr.getBytes("UTF-8"));
 					lFileOutputStream.close();*/
 
-					String originFileName = fileName;
-					String fileStr = EgovStringUtil.nullConvert(map.get("signHwpFileData"));
+						String originFileName = fileName;
 
-					if (fileStr.startsWith("data:") && fileStr.contains("base64,")) {
-						fileStr = fileStr.substring(fileStr.indexOf("base64,") + "base64,".length());
-					}
+						String fileStr = EgovStringUtil.nullConvert(map.get("signHwpFileData"));
 
-					File file = File.createTempFile(originFileName, "." + originFileExt);
+						if (fileStr.startsWith("data:") && fileStr.contains("base64,")) {
+							fileStr = fileStr.substring(fileStr.indexOf("base64,") + "base64,".length());
+						}
 
-					if ("hwp".equals(originFileExt)) {
-						FileOutputStream lFileOutputStream = new FileOutputStream(file);
-						// Base64 디코딩이 필요없다면, 그냥 fileStr을 UTF-8로 저장
-						lFileOutputStream.write(fileStr.getBytes("UTF-8"));
-						lFileOutputStream.close();
-					} else if ("pdf".equals(originFileExt)) {
-						fileStr = fileStr.replaceAll("[\\n\\r]", "");
-						byte[] decodedBytes = Base64.getDecoder().decode(fileStr); // Base64 디코딩
-						FileOutputStream lFileOutputStream = new FileOutputStream(file);
-						lFileOutputStream.write(decodedBytes);
-						lFileOutputStream.close();
-					}
+						File file = File.createTempFile(originFileName, "." + originFileExt);
 
-					String serverFilePath = "/home/upload/cust_eval/" + map.get("commissioner_seq").toString() + "/hwp/";
-					File newPath = new File(serverFilePath);
-					if (!newPath.exists()) {
-						newPath.mkdirs();
-					}
+						if ("hwp".equals(originFileExt)) {
+							FileOutputStream lFileOutputStream = new FileOutputStream(file);
+							// Base64 디코딩이 필요없다면, 그냥 fileStr을 UTF-8로 저장
+							lFileOutputStream.write(fileStr.getBytes("UTF-8"));
+							lFileOutputStream.close();
+						} else if ("pdf".equals(originFileExt)) {
+							fileStr = fileStr.replaceAll("[\\n\\r]", "");
+							byte[] decodedBytes = Base64.getDecoder().decode(fileStr); // Base64 디코딩
+							FileOutputStream lFileOutputStream = new FileOutputStream(file);
+							lFileOutputStream.write(decodedBytes);
+							lFileOutputStream.close();
+						}
 
-					Path path = Paths.get(serverFilePath + fileName + "." + originFileExt);
-					Files.copy(new FileInputStream(file), path, new CopyOption[]{StandardCopyOption.REPLACE_EXISTING});
+						String serverFilePath = "/home/upload/cust_eval/" + map.get("commissioner_seq").toString() + "/hwp/";
+						File newPath = new File(serverFilePath);
+						if (!newPath.exists()) {
+							newPath.mkdirs();
+						}
+
+						Path path = Paths.get(serverFilePath + fileName + "." + originFileExt);
+						Files.copy(new FileInputStream(file), path, new CopyOption[]{StandardCopyOption.REPLACE_EXISTING});
 
 					/*CommFileUtil commFileUtil = new CommFileUtil();
 					commFileUtil.setServerSFSave(EgovStringUtil.nullConvert(map.get("signHwpFileData")), (String) map.get("commissioner_seq"), fileName, "hwp");*/
 
-					PdfEcmFileVO pdfEcmFileVO = new PdfEcmFileVO();
-					pdfEcmFileVO.setRep_id(fileName);
-					pdfEcmFileVO.setComp_seq("1000");
-					pdfEcmFileVO.setDoc_id(fileName);
-					pdfEcmFileVO.setDoc_no("001");
-					pdfEcmFileVO.setDoc_path("Z:/upload/epis/cust_eval/" + map.get("commissioner_seq") + "/hwp");
-					pdfEcmFileVO.setDoc_name(fileName);
-					pdfEcmFileVO.setDoc_ext("hwp");
-					pdfEcmFileVO.setDoc_title("sign_" + step);
+						PdfEcmFileVO pdfEcmFileVO = new PdfEcmFileVO();
+						pdfEcmFileVO.setRep_id(fileName);
+						pdfEcmFileVO.setComp_seq("1000");
+						pdfEcmFileVO.setDoc_id(fileName);
+						pdfEcmFileVO.setDoc_no("001");
+						pdfEcmFileVO.setDoc_path("Z:/upload/epis/cust_eval/" + map.get("commissioner_seq") + "/hwp");
+						pdfEcmFileVO.setDoc_name(fileName);
+						pdfEcmFileVO.setDoc_ext("hwp");
+						pdfEcmFileVO.setDoc_title("sign_" + step);
 
-					PdfEcmMainVO pdfEcmMainVO = new PdfEcmMainVO();
+						PdfEcmMainVO pdfEcmMainVO = new PdfEcmMainVO();
 
-					pdfEcmMainVO.setRep_id(fileName);
-					pdfEcmMainVO.setComp_seq("1000");
-					pdfEcmMainVO.setDept_seq("1");
-					pdfEcmMainVO.setEmp_seq("1");
-					pdfEcmMainVO.setPdf_path("Z:/upload/epis/cust_eval/" + map.get("commissioner_seq") + "/pdf");
-					pdfEcmMainVO.setPdf_name("PDF_" + fileName);
-					pdfEcmMainVO.setStatus_cd("D0001");
+						pdfEcmMainVO.setRep_id(fileName);
+						pdfEcmMainVO.setComp_seq("1000");
+						pdfEcmMainVO.setDept_seq("1");
+						pdfEcmMainVO.setEmp_seq("1");
+						pdfEcmMainVO.setPdf_path("Z:/upload/epis/cust_eval/" + map.get("commissioner_seq") + "/pdf");
+						pdfEcmMainVO.setPdf_name("PDF_" + fileName);
+						pdfEcmMainVO.setStatus_cd("D0001");
 
-					evalDAO.insertPdfFile(pdfEcmFileVO);
-					evalDAO.insertPdfMain(pdfEcmMainVO);
-				} catch (Exception e) {
-					e.printStackTrace();
+						evalDAO.insertPdfFile(pdfEcmFileVO);
+						evalDAO.insertPdfMain(pdfEcmMainVO);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				} else {
+					returnMap.put("result", "fail");
+					return returnMap;
 				}
-			} else {
-				returnMap.put("result", "fail");
-				return returnMap;
+
 			}
 
 			// 상태값 변경

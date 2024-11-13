@@ -24,21 +24,34 @@
 		color: inherit;
 		opacity: 1;
 	}
-	.top_box dl dt{font-size: 25px; }
+	.top_box dl dt{font-size: 18px; }
 	.top_box dl dd{margin-top: 3px;}
 	.top_box dl dd input{height: 45px; font-size: 15px;}
-	.com_ta table th, td{text-align: center; font-size: 25px; }
+	.com_ta table th, td{text-align: center; font-size: 18px; }
 	/*#listTable input {width: 100px; height: 45px; font-size: 20px;}*/
 	#listTable #th1, #th2, #th3{width: 200px;}
 	#listTable th{background-color: #28b4ea;}
 	.controll_btn button{width: 70px; height: 40px; font-size: 20px;}
 	.itemRadioTd{
 		justify-content: space-around;
-		font-size: 20px;
+		font-size: 15px;
 	}
 	.score{
 		margin-right: 5px;
 	}
+
+
+    @media (pointer:coarse) {
+        /* custom css for "touch targets" */
+        .sub_contents_wrap {width: 1100px !important; min-width: 1100px !important;}
+        dt {margin-left : 25px !important;}
+        .hkInput {width: 220px !important;}
+        .hkBtnCont {width : 1100px !important;}
+        .sub_contents_wrap {width: 1100px !important;}
+        .hkFootCont {width: 1100px !important;}
+        .comReMarkInput {width: 1050px !important;}
+        .hkFootSubCont {width: 1100px !important; min-width: 1100px !important;}
+    }
 </style>
 
 <div class="iframe_wrap" style="min-width:1400px">
@@ -59,19 +72,19 @@
 						사업명
 					</dt>
 					<dd style="line-height: 25px">
-						<input type="text" style="width: 250px;" readonly="readonly" value="${userInfo.TITLE }">
+						<input type="text" class="hkInput" style="width: 250px;" readonly="readonly" value="${userInfo.TITLE }">
 					</dd>
 					<dt style="margin-left:100px;">
 						평가자
 					</dt>
 					<dd style="line-height: 25px">
-						<input type="text" readonly="readonly" value="${userInfo.NAME }">
+						<input type="text" class="hkInput" readonly="readonly" value="${userInfo.NAME }">
 					</dd>
 					<dt style="margin-left:100px;">
 						평가일자
 					</dt>
 					<dd style="line-height: 25px">
-						<input type="text" readonly="readonly" value="${nowDate }">
+						<input type="text" class="hkInput" readonly="readonly" value="${nowDate }">
 					</dd>
 				</dl>
 			</div>
@@ -83,7 +96,7 @@
 
 
 
-	<div class="right_div" style="height:70px;">
+	<div class="right_div hkBtnCont" style="height:70px;">
 		<div class="controll_btn p10">
 
 			<button type="button" class="evalButton" onclick="evalAvoidPopup()" style="width: 120px; float:left; background-color: #dee4ea; border-color: black; border-width: thin;">기피신청</button>
@@ -308,7 +321,7 @@
 						/*html2 += '<span style="font-size:25px; margin-bottom:10px;">'  + compResult[j].display_title + '</span>';
 
 						$("#displayTitle").html(html2);*/
-						html += '<div><span style="font-size:25px; margin-bottom:10px; padding-bottom: 15px">'  + compResult[j].display_title + '</span>';
+						html += '<div><span style="font-size:18px; margin-bottom:10px; padding-bottom: 15px">'  + compResult[j].display_title + '</span>';
 						html += '<span id="successMessage'+compResult[j].eval_company_seq+'" style="font-size:25px; margin-left:10px; margin-bottom:10px; padding-bottom: 15px; display: none;"> 저장완료</span></div>';
 
 						html += '<div class="com_ta">';
@@ -321,12 +334,12 @@
 						html += '<tr class="itemTr">';
 
 						html += '<tr>';
-						html += '	<th colspan="3" id="th1" style="width: 75%; padding: 15px">제안평가 평가항목</th>';
+						html += '	<th colspan="3" id="th1" style="width: 65%; padding: 15px">제안평가 평가항목</th>';
 						html += '	<th colspan="5">평가점수</th>';
 						html += '</tr>';
 						html += '<tr>';
-						html += '	<th style="width:8%;">평가</th>';
-						html += '	<th style="width:20%;">대분류</th>';
+						html += '	<th style="width:10%;">평가</th>';
+						html += '	<th style="width:15%;">대분류</th>';
 						html += '	<th>중분류</th>';
 						html += '	<td>A</td>';
 						html += '	<td>B</td>';
@@ -393,10 +406,10 @@
 					var list = companyRemarkList[j];
 					var remark = list.remark ? list.remark : '';
 
-						html += '<div class="left_div" style="padding-top: 15px;">' +
+						html += '<div class="left_div hkFootCont" style="padding-top: 15px;">' +
 								'<p class="tit_p mt5 mb10" style="font-size: 20px;">평가의견</p>' +
 								'</div>' +
-								'<div class="sub_contents_wrap" style="min-width:1500px; min-height: 0px; padding-bottom: 5px">' +
+								'<div class="sub_contents_wrap hkFootSubCont" style="min-width:1500px; min-height: 0px; padding-bottom: 5px">' +
 								'<div class="com_ta">' +
 								'<table style="width: 100%;">' +
 								'<tr class="evalIndex' + j + '" style="' + (j > companyRemarkList.length ? 'display:none;' : '') + '">' +

@@ -104,8 +104,8 @@
 				signHwpFileData = pdfBase64;
 			});
 
-			//setTimeout(signSave, 600);
-			signSave();
+			setTimeout(signSave, 600);
+			//signSave();
 		}
 	}
 
@@ -113,6 +113,7 @@
 		var formData = new FormData();
 		formData.append("commissioner_seq", "${userInfo.COMMISSIONER_SEQ}");
 		formData.append("step", "6");
+		formData.append("signHwpFileData", signHwpFileData);
 
 		$.ajax({
 			url : "<c:url value='/eval/setSignSetp'/>",

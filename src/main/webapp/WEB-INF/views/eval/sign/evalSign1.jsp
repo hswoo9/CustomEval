@@ -89,7 +89,7 @@
 		var hostname = window.location.hostname;
         debugger
 		if(hostname.indexOf("localhost") > -1 || hostname.indexOf("127.0.0.1") > -1 || hostname.indexOf("1.233.95.140") > -1){
-			serverPath = "http://127.0.0.1:8080/";
+			serverPath = "http://1.233.95.140:58090/";
 		}else{
 			serverPath = "http://one.epis.or.kr/"
 		}
@@ -157,7 +157,7 @@
 
 </script>
 
-<div style="width: 50%;margin: 0 auto;">
+<div style="width: 85%;margin: 0 auto;">
 	<div id="signSave" style="display: none;display: flex;justify-content: space-between;">
 		<div>
 			<input type="hidden" id="jangBlindChk" name="jangBlindChk">

@@ -161,8 +161,8 @@
 
 	function createSummaryTable() {
 		// 입력된 값을 변수에 저장
-		var evaluationFee = $('#evaluationFee').val() || '0';
-		var transportFee = $('#transportFee').val() || '0';
+		var evaluationFee = parseInt($('#evaluationFee').val() || '0', 10);
+		var transportFee = parseInt($('#transportFee').val() || '0', 10);
 		var totalFee = $('#totalFee').val() || '0';
 		var dept = $('#dept').val() || '';
 		var oName = $('#oName').val() || '';
@@ -206,6 +206,10 @@
                 <td style="text-align: right; padding: 10px;" id="ssn"></td>
             </tr>
         </table>-->
+<div class="title-container" style="margin-left: 45%">
+    <h1 style="font-size: x-large;">평가수당 지급 확인</h1>
+</div>
+
 <div class="modern-table-container">
       <!-- 개인 정보 섹션 -->
       <table class="modern-table">
@@ -249,13 +253,13 @@
           <th colspan="4" class="table-title">비용 내역</th>
         </tr>
         <tr>
-          <td class="header" style="text-align: right">평가비</td>
+          <td class="header" style="text-align: center">평가비</td>
           <td class="data" id="evaluationFeeCell" style="text-align: right"></td>
-          <td class="header" style="text-align: right" >교통비</td>
+          <td class="header" style="text-align: center" >교통비</td>
           <td class="data" id="transportFeeCell" style="text-align: right"></td>
         </tr>
         <tr>
-          <td class="header" colspan="2" style="text-align: right">총 합계</td>
+          <td class="header" colspan="2" style="text-align: center">총 합계</td>
           <td class="data total-amount" colspan="2" id="totalFeeCell" style="text-align: right"></td>
         </tr>
       </table>
@@ -270,8 +274,8 @@
 			summaryTable.style.display = "block"; // 테이블이 보이도록 설정
 
 			// 각 셀에 값 삽입
-			document.getElementById('evaluationFeeCell').innerHTML = evaluationFee + ' 원';
-			document.getElementById('transportFeeCell').innerHTML = transportFee + ' 원';
+			document.getElementById('evaluationFeeCell').innerHTML = evaluationFee.toLocaleString() + ' 원';
+			document.getElementById('transportFeeCell').innerHTML = transportFee.toLocaleString() + ' 원';
 			document.getElementById('totalFeeCell').innerHTML = totalFee + ' 원';
 			document.getElementById('deptCell').innerHTML = dept;
 			document.getElementById('oNameCell').innerHTML = oName;
@@ -785,7 +789,7 @@
 			</TD>
 			<TD valign="middle" style='width:91px;height:62px;border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
 				(인)
-				<span id="signVal"><img alt="(인)" id="sign" src="${userInfo.SIGN_DIR}" style="position: absolute; text-align: center; transform: translate(-46px, -28px);width: 76px"></span>
+				<span id="signVal"><img alt="(인)" id="sign" src="${userInfo.SIGN_DIR}" style="position: absolute; text-align: center; transform: translate(-46px, -28px);width: 76px; margin-top:27px;"></span>
 			</TD>
 		</TR>
 	</TABLE>

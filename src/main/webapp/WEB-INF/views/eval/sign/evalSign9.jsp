@@ -309,7 +309,7 @@
 			<td colspan="2" style="border: none; text-align: left;padding-left: 35px;">
 				(인)
 				<span id="signVal">
-						<img alt="(인)" id="sign" src="${userInfo.SIGN_DIR}" style="position: absolute; text-align: center; transform: translate(-51px, -27px);width: 76px">
+						<img alt="(인)" id="sign" src="${userInfo.SIGN_DIR}" style="position: absolute; text-align: center; transform: translate(-51px, -27px);width: 76px; margin-top:27px;">
 					</span>
 			</td>
 		</tr>

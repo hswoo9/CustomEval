@@ -74,11 +74,29 @@
 		/*_pHwpCtrl.GetTextFile("HWPML2X", "", function(data) {
 			signHwpFileData = data;
 		})*/
-		html2canvas(document.getElementById("contentsTemp")).then(canvas => {
+		html2canvas(document.getElementById("contentsTemp"),{ scale: 2 }).then(canvas => {
 			const imgData = canvas.toDataURL("image/png");
-			const pdf = new jsPDF("p", "mm", "a4");
+			const pdf = new jsPDF("l", "mm", "a4");
 
-			pdf.addImage(imgData, "PNG", 10, 10);
+            const pdfWidth = pdf.internal.pageSize.getWidth();
+            const pdfHeight = pdf.internal.pageSize.getHeight();
+
+            const imgWidth = canvas.width * 0.2645;
+            const imgHeight = canvas.height * 0.2645;
+
+
+            const scaleFactor = 1.2;
+
+            const scale = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight) * scaleFactor;
+            const imgScaledWidth = imgWidth * scale;
+            const imgScaledHeight = imgHeight * scale;
+
+            const xOffset = (pdfWidth - imgScaledWidth) / 2
+
+
+            pdf.addImage(imgData, "PNG", xOffset, 10, imgScaledWidth, imgScaledHeight);
+
+			//pdf.addImage(imgData, "PNG", 10, 10);
 			const pdfBase64 = pdf.output('datauristring');
 
 			signHwpFileData = pdfBase64;

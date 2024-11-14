@@ -137,7 +137,19 @@
 			if (element) {
 				html2canvas(element).then(canvas => {
 					const imgData = canvas.toDataURL("image/png");
-					const pdf = new jsPDF("p", "mm", "a4");
+					const pdf = new jsPDF("l", "mm", "a4");
+
+					/*const pdfWidth = pdf.internal.pageSize.getWidth();
+					const pdfHeight = pdf.internal.pageSize.getHeight();
+					const imgWidth = canvas.width * 0.2645;
+					const imgHeight = canvas.height * 0.2645;
+
+					const scale = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
+					const imgScaledWidth = imgWidth * scale;
+					const imgScaledHeight = imgHeight * scale;
+
+
+					pdf.addImage(imgData, "PNG", 0, 10, imgScaledWidth, imgScaledHeight);*/
 					pdf.addImage(imgData, "PNG", 10, 10);
 
 					// PDF를 Base64로 인코딩하여 signHwpFileDataList에 추가

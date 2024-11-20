@@ -17,6 +17,38 @@
 
 
 <style>
+    #contentsTemp {
+        margin-top : 10px;
+        max-width: 100%;
+        width: 1000px;
+        height: auto;
+        overflow: visible;
+    }
+
+    /*데스크탑 환경*/
+    @media (min-width: 1024px) {
+        #contentsTemp {
+            width: 1000px;
+            font-size: 16px;
+        }
+    }
+
+    /* 패드 환경 (세로 화면, 작은 화면) */
+    @media (max-width: 1024px) and (orientation: portrait) {
+        #contentsTemp {
+            width: 90%;
+            font-size: 12px;
+        }
+    }
+
+    /*모바일 환경(최소 화면 크기)*/
+    @media (max-width: 768px) {
+        #contentsTemp {
+            width: 100%;
+            font-size: 12px;
+        }
+    }
+
     th {
         background-color : #8c8c8c;
         color : white;
@@ -74,7 +106,9 @@
 		/*_pHwpCtrl.GetTextFile("HWPML2X", "", function(data) {
 			signHwpFileData = data;
 		})*/
-		html2canvas(document.getElementById("contentsTemp"),{ scale: 2 }).then(canvas => {
+        const width = window.innerWidth;
+
+		/*html2canvas(document.getElementById("contentsTemp"),{ scale: 2 }).then(canvas => {
 			const imgData = canvas.toDataURL("image/png");
 			const pdf = new jsPDF("l", "mm", "a4");
 
@@ -102,7 +136,74 @@
 			signHwpFileData = pdfBase64;
 		});
 
-		setTimeout(signSave, 600);
+		setTimeout(signSave, 600);*/
+
+        if (width >= 1024) {
+            html2canvas(document.getElementById("contentsTemp"),{
+                scale: 2
+            }).then(canvas => {
+                const imgData = canvas.toDataURL("image/png");
+                const pdf = new jsPDF("l", "mm", "a4");
+
+                const pdfWidth = pdf.internal.pageSize.getWidth();
+                const pdfHeight = pdf.internal.pageSize.getHeight();
+                const imgWidth = canvas.width * 0.2645;
+                const imgHeight = canvas.height * 0.2645;
+
+                //캡쳐된 이미지를 0.8배 키워줌
+                const scaleFactor = 0.8;
+
+                const scale = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight) * scaleFactor;
+                const imgScaledWidth = imgWidth * scale;
+                const imgScaledHeight = imgHeight * scale;
+
+                const xOffset = (pdfWidth - imgScaledWidth) / 2
+
+
+                pdf.addImage(imgData, "PNG", xOffset, 10, imgScaledWidth, imgScaledHeight);
+                //pdf.addImage(imgData, "PNG", 10, 10);
+                const pdfBase64 = pdf.output('datauristring');
+
+                signHwpFileData = pdfBase64;
+            });
+
+            setTimeout(signSave, 600);
+
+        }else if(width < 1024){
+
+            //pdf
+            html2canvas(document.getElementById("contentsTemp"),{
+                //scale: 2 * devicePixelRatio,
+                scale: window.devicePixelRatio || 1, // 패드의 DPI 기반 스케일 조정
+                useCORS: true
+            }).then(canvas => {
+                const imgData = canvas.toDataURL("image/png");
+                const pdf = new jsPDF("l", "mm", "a4");
+
+                const pdfWidth = pdf.internal.pageSize.getWidth();
+                const pdfHeight = pdf.internal.pageSize.getHeight();
+                const imgWidth = canvas.width * 0.2645;
+                const imgHeight = canvas.height * 0.2645;
+
+                const scaleFactor = 0.8;
+
+                const scale = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight) * scaleFactor;
+                const imgScaledWidth = imgWidth * scale;
+                const imgScaledHeight = imgHeight * scale;
+
+                const xOffset = (pdfWidth - imgScaledWidth) / 2
+
+
+                pdf.addImage(imgData, "PNG", xOffset, 10, imgScaledWidth, imgScaledHeight);
+                //pdf.addImage(imgData, "PNG", 10, 10);
+                const pdfBase64 = pdf.output('datauristring');
+
+                signHwpFileData = pdfBase64;
+            });
+
+            setTimeout(signSave, 600);
+            //signSave();
+        }
 	}
 
 	function signSave(){
@@ -213,14 +314,14 @@
 		var html = '';
 		for (var t = 0; t < tableCount; t++) {
 			var currentCompanyCount = Math.min(companyCount - t * maxCompaniesPerTable, maxCompaniesPerTable);
-			html += '<table style="border:1px solid black; border-collapse: collapse; width: 1150px; table-layout: fixed; margin: auto;">';
+			html += '<table style="border:1px solid black; border-collapse: collapse; width: 100%; table-layout: fixed; margin: auto;">';
 
 			html += '<thead>';
 			html += '<tr>';
-			html += '<th rowspan="2" colspan="3" style="border:1px solid black; border-collapse: collapse; width: 430px; text-align; center;">평가항목</th>';
-			html += '<th rowspan="2" style="border:1px solid black; border-collapse: collapse; width: 40px; text-align; center;">배점</th>';
-			html += '<th colspan="' + currentCompanyCount + '" style="border:1px solid black; border-collapse: collapse; width: 510px; text-align; center; padding-top: 5px; padding-bottom: 5px">제안업체</th>';
-			html += '<th rowspan="2" style="border:1px solid black; border-collapse: collapse; width:50px; text-align; center;">비고</th>';
+			html += '<th rowspan="2" colspan="3" style="border:1px solid black; border-collapse: collapse; width: 43%; text-align; center;">평가항목</th>';
+			html += '<th rowspan="2" style="border:1px solid black; border-collapse: collapse; width: 5%; text-align; center;">배점</th>';
+			html += '<th colspan="' + currentCompanyCount + '" style="border:1px solid black; border-collapse: collapse; width: 47%; text-align; center; padding-top: 5px; padding-bottom: 5px">제안업체</th>';
+			html += '<th rowspan="2" style="border:1px solid black; border-collapse: collapse; width:5%; text-align; center;">비고</th>';
 			html += '</tr>';
 
 			html += '<tr>';

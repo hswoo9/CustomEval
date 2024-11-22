@@ -162,7 +162,7 @@
 		<div>
 			<input type="hidden" id="jangBlindChk" name="jangBlindChk">
 	<%--		<input type="button" onclick="OnConnectDevice();" value="서명하기">--%>
-			<input type="button" onclick="evalAvoidPopup()" style="background-color: #dee4ea; border-color: black; border-width: thin;" value="기피신청">
+			<input type="button" onclick="evalAvoidPopup()" style="background-color: #dee4ea; border-color: black; font-weight : bold; color: red; border-width: thin;" value="기피신청">
 		</div>
 
 		<div>

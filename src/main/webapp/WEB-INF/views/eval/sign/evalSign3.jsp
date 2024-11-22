@@ -199,7 +199,7 @@
 <div class=WordSection1 style="width: 1400px; height: 1000px;padding-left: 200px;">
 	<div id="signSave" style="width:100%;">
 		<div>
-			<input type="hidden" onclick="evalAvoidPopup()" style="background-color: #dee4ea; border-color: black; border-width: thin;" value="기피신청">
+			<input type="hidden" onclick="evalAvoidPopup()" style="background-color: #dee4ea; border-color: black; font-weight : bold; color: red; border-width: thin;" value="기피신청">
 			<input type="button" onclick="signSaveBtn();" style="float:right; background-color: #dee4ea; border-color: black; border-width: thin;" value="다음">
 		</div>
 	</div>

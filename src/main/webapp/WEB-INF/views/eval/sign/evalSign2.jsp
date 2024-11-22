@@ -322,6 +322,8 @@
 		$("#signSave").show();
 	}
 
+
+
 	function minuteChange(e){
 		if($(e).attr("id") == "minute1"){
 			_hwpPutText("sign_2_minute1", $(e).val());
@@ -338,8 +340,8 @@
 <div style="width: 75%;margin: 0 auto;">
 	<div id="signSave" style="display: none;display: flex;justify-content: space-between;">
 		<div>
-			<input type="button" onclick="evalAvoidPopup()" style="background-color: #dee4ea; border-color: black; border-width: thin;" value="기피신청">
-			<sapn style="padding-left: 10px;">※업체별 시간 입력 가이드</sapn>
+			<input type="button" onclick="evalAvoidPopup()" style="background-color: #dee4ea; border-color: black; font-weight : bold; color: red; border-width: thin;" value="기피신청">
+			<%--<sapn style="padding-left: 10px;">※업체별 시간 입력 가이드</sapn>--%>
 		</div>
 		<div>
 			제안발표

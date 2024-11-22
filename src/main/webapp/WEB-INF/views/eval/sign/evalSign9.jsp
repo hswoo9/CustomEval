@@ -54,20 +54,32 @@
 
 			// 체크된 상태가 '있다'인 경우 확인 창을 띄움
 			var contactCheck = false;
-			for (var i = 0; i < jsonData.length; i++) {
-				var chk = $('select[name="chkData[]"] option:selected')[i].value;
+			var isValid = true;
 
-				if (chk == '있다') {
+			$("#hkTable tbody tr").each(function() {
+				var row = $(this);
+				var chkData = row.find("select[name='chkData[]']").val();
+				var contactor = row.find("input[name='contactor[]']").val();
+				var contents = row.find("input[name='contents[]']").val();
+
+				if (chkData === "있다") {
 					contactCheck = true;
-					break;
+					if (contactor.trim() === "" || contents.trim() === "") {
+						alert("사전접촉이 '있다'로 선택된 행에서 접촉자 및 세부내용을 모두 입력해야 합니다.");
+						isValid = false;
+						return false;
+					}
 				}
+			});
+
+			if (!isValid) {
+				return;
 			}
 
-			if (contactCheck) {
-				if (!confirm("사전접촉이 '있다'로 선택하셨습니다. 맞으면 확인, 틀리면 취소 버튼을 클릭해주시길 바랍니다.")) {
-					return;
-				}
+			if (contactCheck && !confirm("사전접촉이 '있다'로 선택하셨습니다. 맞으면 확인, 틀리면 취소 버튼을 클릭해주시길 바랍니다.")) {
+				return;
 			}
+
 
 			// 저장 로직
 			for (var i = 0; i < jsonData.length; i++) {

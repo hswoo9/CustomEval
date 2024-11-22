@@ -770,7 +770,7 @@
 			</TD>
 			<TD valign="middle" style='width:91px;height:62px;border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
 				(인)
-				<span id="signVal"><img alt="(인)" id="sign" src="${userInfo.SIGN_DIR}" style="position: absolute; text-align: center; transform: translate(-46px, -28px);width: 76px; margin-top:27px;"></span>
+				<span id="signVal"><img alt="(인)" id="sign" src="${userInfo.SIGN_DIR}" style="position: absolute; text-align: center; transform: translate(-46px, -28px);width: 75px; margin-top:5px;"></span>
 			</TD>
 		</TR>
 	</TABLE>

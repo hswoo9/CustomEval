@@ -653,57 +653,35 @@
             <P CLASS=HStyle0 STYLE='text-align:center;'><SPAN STYLE='font-size:12.0pt;font-family:"한양중고딕,한컴돋움";font-weight:bold;line-height:160%'>합&nbsp;&nbsp; 계</SPAN></P>
             </TD>--%>
 		</TR>
-		<%--<TR>
-            <TD valign="middle" style='width:186px;height:31px;border-left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 1.1pt;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
-                <P CLASS=HStyle0 STYLE='margin-right:5.0pt;text-align:right;'>
-                    <SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>
-                        내부 규정에 따름
-                        &lt;%&ndash;<c:choose>
-                            <c:when test="${userInfo.EVAL_AVOID eq 'Y'}">
-                                50,000원
-                                &lt;%&ndash;<fmt:formatNumber type="number" maxFractionDigits="3" value="${userInfo.EVAL_PAY }"/>&ndash;%&gt;
-                            </c:when>
-                            <c:otherwise>
-                                내부 규정에 따름
-                            </c:otherwise>
-                        </c:choose>&ndash;%&gt;
-                    </SPAN>
-                </P>
-            </TD>
-            <TD valign="middle" style='width:186px;height:31px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 1.1pt;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
-                <P CLASS=HStyle0 STYLE='margin-right:5.0pt;text-align:right;'>
-                    <SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>
-                        내부 규정에 따름
-        &lt;%&ndash;				<fmt:formatNumber type="number" maxFractionDigits="3" value="${userInfo.TRANS_PAY }" />원&ndash;%&gt;
-                    </SPAN>
-                </P>
-            </TD>
-            <TD valign="middle" style='width:186px;height:31px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 1.1pt;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
-                <P CLASS=HStyle0 STYLE='margin-right:5.0pt;text-align:right;'>
-                    <SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>
-                        내부 규정에 따름
-        &lt;%&ndash;				<fmt:formatNumber type="number" maxFractionDigits="3" value="${userInfo.TRANS_PAY }" />원&ndash;%&gt;
-                    </SPAN>
-                </P>
-            </TD>
-            &lt;%&ndash;<TD valign="middle" style='width:186px;height:31px;border-left:solid #000000 0.4pt;border-right:solid #000000 1.1pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 1.1pt;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
-            <P CLASS=HStyle0 STYLE='margin-right:5.0pt;text-align:right;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>내부 규정에 따름</SPAN></P>
-            </TD>&ndash;%&gt;
-        </TR>--%>
 		<TR>
-			<TD valign="middle" style='width:186px;height:31px;border-left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt; text-align: right;'>
-				<input type="text" id="evaluationFee" style="width: 90%; text-align: right; box-sizing: border-box; border: none;" placeholder="평가비를 입력하세요." oninput="updateTotal()" />
+			<TD valign="middle" style='width:186px;height:31px;border-left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt; text-align: right;'>
+				<input type="text" id="evaluationFee" style="width: 90%; text-align: right; box-sizing: border-box; border: none; height: 100%;" placeholder="평가비를 입력하세요." oninput="updateTotal()" />
 				<SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>원</SPAN>
 			</TD>
-			<TD valign="middle" style='width:186px;height:31px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt; text-align: right;'>
-				<input type="text" id="transportFee" style="width: 90%; text-align: right; box-sizing: border-box; border: none;" readonly />
+
+			<TD valign="middle" style='width:186px;height:31px;border-left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt; text-align: right; white-space: nowrap;'>
+				<select id="region" style="width: 80px; margin-right: 16px;">
+					<option value="------">회사주소지 선택</option>
+					<option value="서울/경기">서울/경기</option>
+					<option value="강원영동">강원(영동)</option>
+					<option value="강원영서">강원(영서)</option>
+					<option value="대전/충청">대전/충청</option>
+					<option value="전북">전북</option>
+					<option value="광주/전남">광주/전남</option>
+					<option value="대구/경북">대구/경북</option>
+					<option value="부산/경남">부산/경남</option>
+					<option value="제주">제주</option>
+				</select>
+				<input type="text" id="transportFee" style="width: 35%; text-align: right; box-sizing: border-box; border: none; height: 31px;" readonly />
 				<SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>원</SPAN>
 			</TD>
+
 			<TD valign="middle" style='width:186px;height:31px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt; text-align: right;'>
-				<input type="text" id="totalFee" style="width: 90%; text-align: right; box-sizing: border-box; border: none;" readonly />
+				<input type="text" id="totalFee" style="width: 90%; text-align: right; box-sizing: border-box; border: none; height: 31px;" readonly />
 				<SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>원</SPAN>
 			</TD>
 		</TR>
+
 	</TABLE></P>
 	<P CLASS=HStyle0 STYLE='margin-top:5.0pt;text-align:center;line-height:130%;'></P>
 
@@ -741,18 +719,7 @@
 				<P CLASS=HStyle34 STYLE='margin-top:3.0pt;line-height:160%;'><SPAN STYLE='font-size:11.0pt;font-family:"휴먼명조";line-height:160%'>○ 소속기관 주소 : </SPAN></P>
 			</TD>
 			<TD colspan="4" valign="middle" style='width:417px;height:22px;border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
-				<select id="region" >
-					<option value="------">------</option>
-					<option value="서울/경기">서울/경기</option>
-					<option value="강원영동">강원(영동)</option>
-					<option value="강원영서">강원(영서)</option>
-					<option value="대전/충청">대전/충청</option>
-					<option value="전북">전북</option>
-					<option value="광주/전남">광주/전남</option>
-					<option value="대구/경북">대구/경북</option>
-					<option value="부산/경남">부산/경남</option>
-					<option value="제주">제주</option>
-				</select>
+
 				<input type="text" style="width: 198px;" id="addr" value="" placeholder="그 외 주소 입력">
 			</TD>
 		</TR>
@@ -880,7 +847,7 @@
 		}
 
 		document.getElementById("transportFee").value = transportFee;
-		updateTotal(); // 교통비 업데이트 후 총합 업데이트 호출
+		updateTotal();
 	}
 
 	function updateTotal() {
@@ -899,7 +866,7 @@
 			var transportFee = parseInt(transportFeeInput.value.replace(/,/g, '') || 0);
 			var totalFee = evaluationFee + transportFee;
 
-			totalFeeInput.value = totalFee.toLocaleString(); // 천 단위 구분 기호 추가
+			totalFeeInput.value = totalFee.toLocaleString();
 		}
 	}
 

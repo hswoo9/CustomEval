@@ -799,7 +799,7 @@
 	}
 
 	function saveBtn(){
-		if(confirm('평가를 확정하시겠습니까?')){
+		//if(confirm('평가를 확정하시겠습니까?')){
 			/*var result = true;
 			if("${userInfo.EVAL_JANG}" == "Y"){
 				result = getCommissionerChk();
@@ -859,7 +859,7 @@
 
 			dataSave(saveData);
 
-		}
+		//}
 	}
 
 	//전체 저장 시 유효성체크 함수

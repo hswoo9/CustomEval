@@ -601,7 +601,7 @@
 	<div id="signSave" style="display: none; width:78%;">
 		<%--		<input type="button" onclick="OnConnectDevice();" value="서명하기">--%>
 		<c:if test="${userInfo.EVAL_AVOID eq 'N'}">
-			<input type="hidden" onclick="showModalPop()" style="background-color: #dee4ea; border-color: black; border-width: thin;" value="기피신청">
+			<input type="hidden" onclick="showModalPop()" style="background-color: #dee4ea; border-color: black; font-weight : bold; color: red; border-width: thin;" value="기피신청">
 		</c:if>
 		<input type="button" id="nextButton" onclick="showModifyConfirmButtons();" style="float:right; margin-left:10px; background-color: #dee4ea; border-color: black; border-width: thin;" value="다음">
 		<input type="button" id="confirmButton" style="float:right; margin-left:10px; background-color: #dee4ea; border-color: black; border-width: thin; display: none;" value="확정" onclick="confirmEvaluation();">

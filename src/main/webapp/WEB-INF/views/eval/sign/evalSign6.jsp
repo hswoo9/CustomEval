@@ -54,6 +54,11 @@
         background-color : #8c8c8c;
         color : white;
     }
+
+	#cell {
+		background-color : #8c8c8c;
+		color : white;
+	}
 </style>
 
 <title>위원별 제안서 평가표</title>
@@ -453,6 +458,9 @@
 		var html = '';
 		for (var t = 0; t < tableCount; t++) {
 			var currentCompanyCount = Math.min(companyCount - t * maxCompaniesPerTable, maxCompaniesPerTable); // 현재 표에 들어갈 제안업체 수
+			html += '<div style="width:100%; padding-bottom: 35px; text-align: center; padding-top: 50px;">';
+			html +=	 '<h4 style="font-size: 30px;">위원별 제안서 평가표</h4>';
+			html +=  '</div>';
 			html += '<table style="border:1px solid black; border-collapse: collapse; width: 100%; table-layout: fixed; margin : auto;">';
 
 			html += '<thead>';
@@ -488,7 +496,7 @@
 				html += '<td rowspan="' + qualityGroupArray[i].length + '" style="border:1px solid black; width: 150px; border-collapse: collapse; text-align: center;">' + qualityGroupArray[i][0].item_name + '<br>(' + totalScore + '점)</td>';
 				for (var j = 0; j < qualityGroupArray[i].length; j++) {
 					html += '<td style="border:1px solid black; border-collapse: collapse; width: 250px;">' + qualityGroupArray[i][j].item_medium_name + '</td>';
-					html += '<td style="border:1px solid black; border-collapse: collapse; text-align: center;">' + qualityGroupArray[i][j].score + '</td>';
+					html += '<td id="cell" style="border:1px solid black; border-collapse: collapse; text-align: center;">' + qualityGroupArray[i][j].score + '</td>';
 					for (var h = t * maxCompaniesPerTable; h < t * maxCompaniesPerTable + currentCompanyCount; h++) {
 
 						var matchingResultScore = '';
@@ -533,7 +541,7 @@
 				html += '<td rowspan="' + quantityGroupArray[i].length + '" style="border:1px solid black; border-collapse: collapse; text-align: center;">' + quantityGroupArray[i][0].item_name + '<br>(' + totalScore + '점)</td>';
 				for (var j = 0; j < quantityGroupArray[i].length; j++) {
 					html += '<td style="border:1px solid black; border-collapse: collapse;">' + quantityGroupArray[i][j].item_medium_name + '</td>';
-					html += '<td style="border:1px solid black; border-collapse: collapse; text-align: center;">' + quantityGroupArray[i][j].score + '</td>';
+					html += '<td id = "cell" style="border:1px solid black; border-collapse: collapse; text-align: center;">' + quantityGroupArray[i][j].score + '</td>';
 					for (var h = t * maxCompaniesPerTable; h < t * maxCompaniesPerTable + currentCompanyCount; h++) {
 
 						var matchingResultScore = '';
@@ -555,7 +563,7 @@
 
 			// 합계 부분
 			html += '<th colspan="3" style="border:1px solid black; border-collapse: collapse;text-align:center;">합계</th>';
-			html += '<td style="border:1px solid black; border-collapse: collapse;text-align:center;">100</td>';
+			html += '<td id= "cell" style="border:1px solid black; border-collapse: collapse;text-align:center;">100</td>';
 			for (var i = t * maxCompaniesPerTable; i < t * maxCompaniesPerTable + currentCompanyCount; i++) {
 				var totalScoreSum = totalToFixed(getCompanyTotal[i].real_score);
 				html += '<td style="border:1px solid black; border-collapse: collapse;text-align:center;">' + totalScoreSum + '</td>';
@@ -651,7 +659,7 @@
 </script>
 <div style="width: 80%;margin: 0 auto;">
 	<div id="signSave">
-		<input type="button" onclick="evalAvoidPopup()" style="background-color: #dee4ea; border-color: black; border-width: thin;" value="기피신청">
+		<input type="button" onclick="evalAvoidPopup()" style="background-color: #dee4ea; border-color: black; font-weight : bold; color: red; border-width: thin;" value="기피신청">
 		<input type="button" onclick="signSaveBtn();" style="float:right; background-color: #dee4ea; border-color: black; border-width: thin; margin-left: 5px;" value="평가확정">
 		<input type="button" onclick="evalModBtn();" style="float:right; background-color: #dee4ea; border-color: black; border-width: thin;" value="평가 수정">
 	</div>

@@ -111,7 +111,7 @@
 <div style="width: 75%;margin: 0 auto;">
 	<div id="signSave" style="display: none;">
 		<div>
-			<input type="button" onclick="evalAvoidPopup()" style="background-color: #dee4ea; border-color: black; border-width: thin;" value="기피신청">
+			<input type="button" onclick="evalAvoidPopup()" style="background-color: #dee4ea; border-color: black; font-weight : bold; color: red; border-width: thin;" value="기피신청">
 			<input type="button" onclick="signSaveBtn();" style="float:right; background-color: #dee4ea; border-color: black; border-width: thin;" value="다음">
 		</div>
 	</div>

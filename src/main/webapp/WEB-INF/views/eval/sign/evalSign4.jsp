@@ -128,6 +128,20 @@
 			return;
 		}
 
+		if (/\d/.test($('#dept').val())) {
+			alert('소속에 숫자를 입력할 수 없습니다.');
+			return;
+		}
+
+		if (/\d/.test($('#bank_name').val())) {
+			alert('은행명에 숫자를 입력할 수 없습니다.');
+			return;
+		}
+
+		if (/[^\d\s]/.test($('#bank_no').val())) {
+			alert('계좌번호에 문자를 입력할 수 없습니다.');
+			return;
+		}
 		/*if (!flag || (p1 + p2).length !== 13) {
             alert('주민등록번호를 확인해 주세요.');
             return;
@@ -143,7 +157,7 @@
 			return;
 		}
 
-		alert("작성하신 평가수당을 확인 하시고 확정/수정 버튼을 눌러주시기 바랍니다.")
+		/*alert("작성하신 평가수당을 확인 하시고 확정/수정 버튼을 눌러주시기 바랍니다.")*/
 
 		createSummaryTable();
 
@@ -282,7 +296,7 @@
 			document.getElementById('addrCell').innerHTML = addr;
 			document.getElementById('bankName').innerHTML = bankName;
 			document.getElementById('bankNo').innerHTML = bankNo;
-			document.getElementById('ssn').innerHTML = ssn1 + ssn2;
+			document.getElementById('ssn').innerHTML = ssn1 + '-' + ssn2;
 		} else {
 			console.error("summaryTable 요소를 찾을 수 없습니다.");
 		}

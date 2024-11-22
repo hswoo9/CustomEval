@@ -314,6 +314,9 @@
 		var html = '';
 		for (var t = 0; t < tableCount; t++) {
 			var currentCompanyCount = Math.min(companyCount - t * maxCompaniesPerTable, maxCompaniesPerTable);
+            html += '<div style="width:100%; padding-bottom: 35px; text-align: center; padding-top: 50px;">';
+            html +=	 '<h4 style="font-size: 30px;">위원별 제안서 평가표</h4>';
+            html +=  '</div>';
 			html += '<table style="border:1px solid black; border-collapse: collapse; width: 100%; table-layout: fixed; margin: auto;">';
 
 			html += '<thead>';
@@ -631,8 +634,8 @@
 </div>
 
 <div style="width: 100%;">
-    <p class=a style='margin-top:30px;margin-bottom:3.0pt;margin-left:21pt;text-indent:-15.6pt'><b><span style='font-size:12.0pt;line-height:103%;font-family:"Arial Unicode MS",sans-serif'>□</span></b><b><span style='font-size:12.0pt;line-height:103%'> 제안서 평가 총괄표</span></b></p>
-
+    <%--<p class=a style='margin-top:30px;margin-bottom:3.0pt;margin-left:21pt;text-indent:-15.6pt'><b><span style='font-size:12.0pt;line-height:103%;font-family:"Arial Unicode MS",sans-serif'>□</span></b><b><span style='font-size:12.0pt;line-height:103%'> 제안서 평가 총괄표</span></b></p>
+--%>
 	<div id="contentsTemp" style=""></div>
 <%--	<div id="_pHwpCtrl" style="height: 100%;border: 1px solid lightgray;"></div>--%>
 

@@ -293,7 +293,7 @@
 	<div id="signSave" style="">
 		<input type="hidden" onclick="evalAvoidPopup()" style="background-color: #dee4ea; border-color: black; font-weight : bold; color: red; border-width: thin;" value="기피신청">
 		<input type="button" onclick="signSaveBtn();" style="float:right; margin-left : 10px; background-color: #dee4ea; border-color: black; border-width: thin;" value="다음">
-		<input type="button" onclick="reloadBtn();" style="float:right; background-color: #dee4ea; border-color: black; border-width: thin;"  value="새로고침">
+		<%--<input type="button" onclick="reloadBtn();" style="float:right; background-color: #dee4ea; border-color: black; border-width: thin;"  value="새로고침">--%>
 	</div>
  	<div style="width:100%; padding-bottom: 35px; text-align: center; padding-top: 50px;">
 		<h4 style="font-size: 30px;">업체별 제안서 평가집계표</h4>
@@ -616,7 +616,7 @@
 				</TR>
 				<TR>
 					<TD colspan="7" valign="bottom" style='height:28px;'>
-						<P CLASS=HStyle0 STYLE='line-height:180%;'>* 평가위원이 5인을 초과하는 경우 <b>세부</b>평가항목별 점수의 최고‧최저 점수를 제외</P>
+						<P CLASS=HStyle0 STYLE='line-height:180%;'>* 평가위원이 5인을 초과하는 경우 세부평가항목별 점수의 최고‧최저 점수를 제외</P>
 					</TD>
 				</TR>
 				<TR>

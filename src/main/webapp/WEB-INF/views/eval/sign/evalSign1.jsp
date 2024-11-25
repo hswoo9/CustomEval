@@ -139,14 +139,14 @@
 		_hwpPutText("postion", postion);
 		_hwpPutText("name", name);
 
-		//_hwpPutSignImg("sign", "${userInfo.SIGN_DIR }");
+		_hwpPutSignImg("sign", "${userInfo.SIGN_DIR }");
 
-		var serverPath = "<%= request.getScheme() %>://" +
+		/*var serverPath = "<%= request.getScheme() %>://" +
 				"<%= request.getServerName() %>:" +
 				"<%= request.getServerPort() %>" +
 				"<%= request.getContextPath() %>";
 		var hwpPath = serverPath + "/upload/evalForm/sign/2128_sign.png";
-		_hwpPutSignImg("sign", hwpPath);
+		_hwpPutSignImg("sign", hwpPath);*/
 
 		$("#signSave").show();
 	}

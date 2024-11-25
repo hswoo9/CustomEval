@@ -341,11 +341,11 @@
 						html += '	<th style="width:10%;">평가</th>';
 						html += '	<th style="width:15%;">대분류</th>';
 						html += '	<th>중분류</th>';
-						html += '	<td>A</td>';
-						html += '	<td>B</td>';
-						html += '	<td>C</td>';
-						html += '	<td>D</td>';
-						html += '	<td>E</td>';
+						html += '	<td>매우우수(A)</td>';
+						html += '	<td>우수(B)</td>';
+						html += '	<td>보통(C)</td>';
+						html += '	<td>미흡(D)</td>';
+						html += '	<td>매우미흡(E)</td>';
 						html += '</tr>';
 
 						//$("#dataScore").html(html2);

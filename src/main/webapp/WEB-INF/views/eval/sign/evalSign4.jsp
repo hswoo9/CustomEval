@@ -175,9 +175,9 @@
 
 	function createSummaryTable() {
 		// 입력된 값을 변수에 저장
-		var evaluationFee = parseInt($('#evaluationFee').val() || '0', 10);
-		var transportFee = parseInt($('#transportFee').val() || '0', 10);
-		var totalFee = $('#totalFee').val() || '0';
+		var evaluationFee = parseInt($('#evaluationFee').val().replace(/,/g, '') || '0', 10);
+		var transportFee = parseInt($('#transportFee').text().replace(/[^0-9]/g, '') || '0', 10);
+		var totalFee = evaluationFee + transportFee;
 		var dept = $('#dept').val() || '';
 		var oName = $('#oName').val() || '';
 		var addr = $('#addr').val() || '';
@@ -290,7 +290,7 @@
 			// 각 셀에 값 삽입
 			document.getElementById('evaluationFeeCell').innerHTML = evaluationFee.toLocaleString() + ' 원';
 			document.getElementById('transportFeeCell').innerHTML = transportFee.toLocaleString() + ' 원';
-			document.getElementById('totalFeeCell').innerHTML = totalFee + ' 원';
+			document.getElementById('totalFeeCell').innerHTML = totalFee.toLocaleString() + ' 원';
 			document.getElementById('deptCell').innerHTML = dept;
 			document.getElementById('oNameCell').innerHTML = oName;
 			document.getElementById('addrCell').innerHTML = addr;
@@ -362,9 +362,10 @@
 		var ob5 = $('#bank_no').val();
 		var ob6 = $('#addr').val();
 		var ob7 = $('#oName').val();
-		var ob8 = document.getElementById("evaluationFee").value.replace(/,/g, '') || 0; // 평가비
-		var ob9 = document.getElementById("transportFee").value.replace(/,/g, '') || 0; // 교통비
-		var ob10 = Number(ob8) + Number(ob9); // 합계
+		var ob7 = $('#oName').val();
+		var ob8 = document.getElementById("evaluationFee").value.replace(/,/g, '') || 0;
+		var ob9 = document.getElementById("transportFee").innerText.replace(/[^0-9]/g, '') || 0;
+		var ob10 = Number(ob8) + Number(ob9);
 
 		_hwpPutText("dept", ob2);
 		/*if($("input[name='publicOrProtected']:checked").val() == "Y"){
@@ -393,7 +394,7 @@
 		formData.append("commissioner_seq", "${userInfo.COMMISSIONER_SEQ}");
 		formData.append("step", "4");
 		formData.append("oName", $('#oName').val());
-		formData.append("totalFee", $('#totalFee').val());
+		formData.append("totalFee", $('#totalFee').text());
 		formData.append("birth_date", $('#num').val());
 		formData.append("org_name", $('#dept').val());
 		formData.append("region", $('#region').val());
@@ -612,7 +613,7 @@
 
 
 <div style="width: 85%;margin: 0 auto;">
-	<div id="signSave" style="display: none; width:78%;">
+	<div id="signSave" style=" width:78%;">
 		<%--		<input type="button" onclick="OnConnectDevice();" value="서명하기">--%>
 		<c:if test="${userInfo.EVAL_AVOID eq 'N'}">
 			<input type="hidden" onclick="showModalPop()" style="background-color: #dee4ea; border-color: black; font-weight : bold; color: red; border-width: thin;" value="기피신청">
@@ -655,12 +656,12 @@
 		</TR>
 		<TR>
 			<TD valign="middle" style='width:186px;height:31px;border-left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt; text-align: right;'>
-				<input type="text" id="evaluationFee" style="width: 90%; text-align: right; box-sizing: border-box; border: none; height: 100%;" placeholder="평가비를 입력하세요." oninput="updateTotal()" />
+				<input type="text" id="evaluationFee" style="width: 90%; text-align: right; box-sizing: border-box; border: none;" placeholder="평가비를 입력하세요." oninput="updateTotal()" />
 				<SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>원</SPAN>
 			</TD>
 
-			<TD valign="middle" style='width:186px;height:31px;border-left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt; text-align: right; white-space: nowrap;'>
-				<select id="region" style="width: 80px; margin-right: 16px;">
+			<TD valign="middle" style='width:186px;height:31px;border-left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt; text-align: right;'>
+				<select id="region" style="width: 80px; margin-right: 5px;" onchange="updateTransportFee()">
 					<option value="------">회사주소지 선택</option>
 					<option value="서울/경기">서울/경기</option>
 					<option value="강원영동">강원(영동)</option>
@@ -672,16 +673,13 @@
 					<option value="부산/경남">부산/경남</option>
 					<option value="제주">제주</option>
 				</select>
-				<input type="text" id="transportFee" style="width: 35%; text-align: right; box-sizing: border-box; border: none; height: 31px;" readonly />
-				<SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>원</SPAN>
+				<span id="transportFee" style="width: 35%; text-align: right; box-sizing: border-box; border: none;">0 원</span>
 			</TD>
 
 			<TD valign="middle" style='width:186px;height:31px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt; text-align: right;'>
-				<input type="text" id="totalFee" style="width: 90%; text-align: right; box-sizing: border-box; border: none; height: 31px;" readonly />
-				<SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>원</SPAN>
+				<span id="totalFee" style="width: 90%; text-align: right; box-sizing: border-box;">0 원</span>
 			</TD>
 		</TR>
-
 	</TABLE></P>
 	<P CLASS=HStyle0 STYLE='margin-top:5.0pt;text-align:center;line-height:130%;'></P>
 
@@ -846,27 +844,27 @@
 			transportFee = 50000;
 		}
 
-		document.getElementById("transportFee").value = transportFee;
+		document.getElementById("transportFee").innerText = transportFee.toLocaleString() + ' 원';
 		updateTotal();
 	}
 
 	function updateTotal() {
 		var dept = document.getElementById("dept").value;
 		var evaluationFeeInput = document.getElementById("evaluationFee");
-		var transportFeeInput = document.getElementById("transportFee");
-		var totalFeeInput = document.getElementById("totalFee");
+		var transportFeeSpan = document.getElementById("transportFee");
+		var totalFeeSpan = document.getElementById("totalFee");
 
 		// 소속에 따라 값 변경
 		if (dept === "농림수산식품교육문화정보원" || dept === "농정원") {
 			evaluationFeeInput.value = "-";
-			transportFeeInput.value = "-";
-			totalFeeInput.value = "-";
+			transportFeeSpan.innerText = "-";
+			totalFeeSpan.innerText = "-";
 		} else {
 			var evaluationFee = parseInt(evaluationFeeInput.value.replace(/,/g, '') || 0);
-			var transportFee = parseInt(transportFeeInput.value.replace(/,/g, '') || 0);
+			var transportFee = parseInt(transportFeeSpan.innerText.replace(/[^0-9]/g, '') || 0);
 			var totalFee = evaluationFee + transportFee;
 
-			totalFeeInput.value = totalFee.toLocaleString();
+			totalFeeSpan.innerText = totalFee.toLocaleString() + ' 원';
 		}
 	}
 

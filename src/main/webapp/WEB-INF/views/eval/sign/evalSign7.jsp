@@ -390,7 +390,7 @@
 				<TR>
 					<%--<c:forEach items="${result[0].list }" var="userList">--%>
 					<c:forEach var="index" items="${indices}">
-						<TD valign="middle" style='width:<%= 450 / currentUserCount %>px;height:46px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
+						<TD valign="middle" style='width:<%= 450 / currentUserCount %>px;height:46px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;background-color : #8c8c8c;color:white;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
 							<P CLASS=HStyle0 STYLE='text-align:center;line-height:130%;'>
 								<c:choose>
 									<c:when test="${userInfo.EVAL_BLIND_YN eq 'Y'}">
@@ -416,7 +416,7 @@
 					<c:set var="sss3" value="${result[0].colList[colIndex].score}" />
 					<c:set var="sss4" value="${result[0].colList[colIndex].item_name }" />
 					<TR>
-						<TD class="th ${result[0].colList[colIndex].eval_type}"  valign="middle" style='width:25px;height:30px;border-left:solid #000000 0.9pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt;text-align:center; background-color : #8c8c8c;color:white; '>
+						<TD class="th ${result[0].colList[colIndex].eval_type}"  valign="middle" style='width:25px;height:30px;border-left:solid #000000 0.9pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt;text-align:center; '>
 
 							${result[0].colList[colIndex].eval_type }<!-- 평가타입 -->
 
@@ -582,11 +582,11 @@
 					<TD class="th" colspan="3" valign="middle" style='height:33px;border-left:solid #000000 0.9pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.9pt;padding:1.4pt 1.4pt 1.4pt 1.4pt;background-color : #8c8c8c;color:white;'>
 						<P CLASS="HStyle0" STYLE='text-align:center;line-height:150%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>합&nbsp; 계</SPAN></P>
 					</TD>
-					<TD colspan="1" valign="middle" style='height:33px;border-left:solid #000000 0.9pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.9pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
+					<TD colspan="1" valign="middle" style='height:33px;border-left:solid #000000 0.9pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.9pt;background-color : #8c8c8c;color:white;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
 						<P CLASS=HStyle0 STYLE='text-align:center;line-height:150%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>100점</SPAN></P>
 					</TD>
 					<c:forEach items="${result[mainSt.index].list}" var="userList" begin="${begin}" end="${end}"  >
-						<TD valign="middle" style='height:33px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.9pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
+						<TD valign="middle" style='height:33px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.9pt;background-color : #8c8c8c;color:white;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
 							<P CLASS=HStyle0 STYLE='text-align:center;line-height:150%;'>
 								<SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>
 									<c:choose>
@@ -604,13 +604,13 @@
 							</P>
 						</TD>
 					</c:forEach>
-					<TD valign="middle" style='height:33px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.9pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.9pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
+					<TD valign="middle" style='height:33px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.9pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.9pt;background-color : #8c8c8c;color:white;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
 						<P CLASS=HStyle0 STYLE='text-align:center;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움"'><fmt:formatNumber value="${result[mainSt.index].sumList[mainSt.index].TOTAL_ITEM_SUM}" pattern=".####"/></SPAN></P>
 					</TD>
-					<TD valign="middle" style='height:33px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.9pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.9pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
+					<TD valign="middle" style='height:33px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.9pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.9pt;background-color : #8c8c8c;color:white;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
 						<P CLASS=HStyle0 STYLE='text-align:center;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움"'><fmt:formatNumber value="${result[mainSt.index].sumList[mainSt.index].TOTAL_SUM}" pattern=".####"/></SPAN></P>
 					</TD>
-					<TD valign="middle" style='height:33px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.9pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.9pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
+					<TD valign="middle" style='height:33px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.9pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.9pt;background-color : #8c8c8c;color:white;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
 						<P CLASS=HStyle0 STYLE='text-align:center;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움"'> - </SPAN></P>
 					</TD>
 				</TR>

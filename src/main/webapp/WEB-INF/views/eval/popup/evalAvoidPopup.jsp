@@ -7,7 +7,7 @@
 <%@ taglib prefix="fmt"  uri="http://java.sun.com/jsp/jstl/fmt"%>
 <script>
 function cancelBtn(){
-	if(confirm("평가기피 신청하시겠습니까?")){
+	if(confirm("기피신청을 확정할 경우, 평가에서 제외되며 다시 참여하실 수 없습니다. 그래도 진행하시겠습니까?")){
 		var data ={};
 
 		data.eval_avoid_txt = $('input:radio[name=avoidReason]:checked').val();

@@ -60,6 +60,24 @@
         #notiContent, #subContent {width: 100% !important;}
 
     }
+
+    html, body {
+        overflow-y: scroll !important;
+        scrollbar-width: auto !important;
+        -ms-overflow-style: scrollbar !important; }
+
+    ::-webkit-scrollbar {
+        width: 8px; /* 스크롤바 너비 */
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: #888; /* 스크롤바 색상 */
+        border-radius: 3px; /* 스크롤바 모서리 둥글게 */
+    }
+
+    ::-webkit-scrollbar-track {
+        background: #f1f1f1; /* 스크롤바 배경 */
+    }
 </style>
 
 <input type="hidden" id="hidEvalId" value=""/>

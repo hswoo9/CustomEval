@@ -23,6 +23,11 @@
 	background: #f1f1f1;
 }</style>
 <script>
+
+	window.onload = function () {
+		window.scrollTo(0, 0);
+	};
+
 function cancelBtn(){
 	if(confirm("기피신청을 확정할 경우, 평가에서 제외되며 다시 참여하실 수 없습니다. 그래도 진행하시겠습니까?")){
 		var data ={};

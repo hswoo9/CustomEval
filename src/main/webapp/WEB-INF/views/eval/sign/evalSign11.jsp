@@ -28,6 +28,12 @@
     }
 </style>
 
+<script>
+    window.onload = function () {
+        window.scrollTo(0, 0);
+    };
+</script>
+
 <body name="0" style="background-image:url('/upload/img/logo/epis/IMG_COMP_LOGIN_BANNER_B_epis.png?1589091744978');background-size:cover;">
 
 

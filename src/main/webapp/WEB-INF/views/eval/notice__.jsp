@@ -7,6 +7,9 @@
 <%@ taglib prefix="fmt"  uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <script>
+	window.onload = function () {
+		window.scrollTo(0, 0);
+	};
 
 $(function(){
 	

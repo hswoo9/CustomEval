@@ -77,6 +77,10 @@ $(function(){
 <%--<button type="button" class="k-button k-button-md k-button-solid k-button-solid-base" id="fullScreen" onclick="toggleFullscreen()">전체화면</button>--%>
    
 <script>
+    window.onload = function () {
+        window.scrollTo(0, 0);
+    };
+
     var _g_contextPath_ = "${pageContext.request.contextPath}";
 var left = window.innerWidth / 2 - 283;
 var top = window.innerHeight / 2 - 183;

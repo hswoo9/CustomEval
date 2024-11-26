@@ -46,6 +46,10 @@
 </style>
 
 <script type="text/javascript">
+	window.onload = function () {
+		window.scrollTo(0, 0);
+	};
+
 	$(function(){
 		$('.infoTbody').rowspan2(1); //rowspan2 - rowspan 순으로 실행시켜야 원하는 모양으로 나타남.
 		alert('"제안평가위원장은 \"제안서 평가 총괄표\" 및\n\"업체별 제안서 평가집계표\"에 이상이 없는지\n정확히 확인하여 주시기 바라며,\n저장버튼 클릭후에는 수정이 불가능 합니다"');

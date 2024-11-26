@@ -31,6 +31,10 @@
 	background: #f1f1f1;
 }</style>
 <script type="text/javascript">
+	window.onload = function () {
+		window.scrollTo(0, 0);
+	};
+
 $(function(){
 	
 	hwpView();

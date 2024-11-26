@@ -37,6 +37,10 @@ html, body {
 </style>
 
 <script>
+	window.onload = function () {
+		window.scrollTo(0, 0);
+	};
+
 	window.onload = function() {
 		history.pushState(null, null, window.location.href);
 		history.pushState(null, null, window.location.href);

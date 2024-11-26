@@ -23,6 +23,10 @@
 	background: #f1f1f1;
 }</style>
 <script>
+	window.onload = function () {
+		window.scrollTo(0, 0);
+	};
+
 	$(function(){
 		$("#"+$("#jangBlindChk", opener.parent.document).val()).prop("checked", "checked");
 	});

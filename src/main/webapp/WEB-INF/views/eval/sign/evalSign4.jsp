@@ -93,6 +93,10 @@
 	}
 </style>
 <script type="text/javascript">
+	window.onload = function () {
+		window.scrollTo(0, 0);
+	};
+
 	var pageCode = 4;
 	var fileDownFlag = false;
 

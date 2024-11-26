@@ -82,6 +82,10 @@
     }
 </style>
 <script type="text/javascript">
+    window.onload = function () {
+        window.scrollTo(0, 0);
+    };
+
 	var result = JSON.parse('${result}');
 	var rates = "${userInfo.RATES}" || "";
 	var qualitativeGroups = JSON.parse('${qualitativeGroups}');

@@ -166,6 +166,10 @@ html, body {
 </form>
 
 <script>
+	window.onload = function () {
+		window.scrollTo(0, 0);
+	};
+
 var rates = ${userInfo.RATES};
 $(function(){
 	

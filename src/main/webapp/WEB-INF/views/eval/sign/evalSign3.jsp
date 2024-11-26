@@ -13,6 +13,10 @@
 <title>사전접촉여부</title>
 
 <script type="text/javascript">
+	window.onload = function () {
+		window.scrollTo(0, 0);
+	};
+
 	$(function(){
 		window.onbeforeunload = function (event) {
 			if (typeof event == 'undefined') {

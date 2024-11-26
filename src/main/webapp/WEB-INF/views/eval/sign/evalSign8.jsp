@@ -346,7 +346,7 @@
 		for (var t = 0; t < tableCount; t++) {
 			var currentCompanyCount = Math.min(companyCount - t * maxCompaniesPerTable, maxCompaniesPerTable);
             html += '<div style="width:100%; padding-bottom: 35px; text-align: center; padding-top: 50px;">';
-            html +=	 '<h4 style="font-size: 30px;">위원별 제안서 평가표</h4>';
+            html +=	 '<h4 style="font-size: 30px;">제안서 평가 총괄표</h4>';
             html +=  '</div>';
 			html += '<table style="border:1px solid black; border-collapse: collapse; width: 100%; table-layout: fixed; margin: auto;">';
 

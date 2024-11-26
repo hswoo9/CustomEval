@@ -486,7 +486,8 @@
 		var total_pay = Number(eval_pay) + Number(trans_pay); // 합계
 		var date = "${nowDate}";
 
-		_hwpPutText("title1", title1);
+		//_hwpPutText("title1", title1);
+		_hwpPutText("toptitle",title1);
 		_hwpPutText("title2", title2);
 		_hwpPutText("title3", title3);
 		_hwpPutText("name", name);

@@ -886,7 +886,7 @@
 	//전체 저장 시 유효성체크 함수
 	function validateScores() {
 		var scoreRadios = document.querySelectorAll('input.score');
-		debugger
+
 		var checkedGroups = {};
 
 		scoreRadios.forEach(function(radio) {

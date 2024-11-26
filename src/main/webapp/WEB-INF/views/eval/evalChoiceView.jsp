@@ -17,6 +17,23 @@ table tr th,td { font-size: 15px; }
     .container, #subTitle {text-align: center;}
     .sub_contents_wrap {width: 77% !important; min-width: 0px !important;}
 }
+html, body {
+	overflow-y: scroll !important;
+	scrollbar-width: auto !important;
+	-ms-overflow-style: scrollbar !important; }
+
+::-webkit-scrollbar {
+	width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: #888;
+	border-radius: 3px;
+}
+
+::-webkit-scrollbar-track {
+	background: #f1f1f1;
+}
 </style>
 
 <script>

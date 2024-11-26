@@ -63,6 +63,23 @@
         background-color : #8c8c8c;
         color : white;
     }
+    html, body {
+        overflow-y: scroll !important;
+        scrollbar-width: auto !important;
+        -ms-overflow-style: scrollbar !important; }
+
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: #888;
+        border-radius: 3px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
 </style>
 <script type="text/javascript">
 	var result = JSON.parse('${result}');

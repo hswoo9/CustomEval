@@ -9,7 +9,23 @@
 
 <style>
     #login_b2_type .login_wrap .login_form_wrap form .inp1{margin:7px 0 0 0;padding:8px 10px;width:107px;border:1px solid #c9cac9;outline:none;background:#fff;font-size:15px;color:#4a4a4a;text-indent:0;}
+    html, body {
+        overflow-y: scroll !important;
+        scrollbar-width: auto !important;
+        -ms-overflow-style: scrollbar !important; }
 
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: #888;
+        border-radius: 3px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
 </style>
 
 <body name="0" style="background-image:url('/upload/img/logo/epis/IMG_COMP_LOGIN_BANNER_B_epis.png?1589091744978');background-size:cover;">

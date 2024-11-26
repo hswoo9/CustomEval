@@ -7,7 +7,23 @@
 <%@ taglib prefix="fmt"  uri="http://java.sun.com/jsp/jstl/fmt"%>
 <jsp:useBean id="nowDate" class="java.util.Date" />
 <fmt:formatDate value="${nowDate}" var="nowDate" pattern="yyyy.  MM.  dd." />
+<style>html, body {
+	overflow-y: scroll !important;
+	scrollbar-width: auto !important;
+	-ms-overflow-style: scrollbar !important; }
 
+::-webkit-scrollbar {
+	width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: #888;
+	border-radius: 3px;
+}
+
+::-webkit-scrollbar-track {
+	background: #f1f1f1;
+}</style>
 <script type="text/javascript">
 $(function(){
 	

@@ -17,7 +17,23 @@
 		margin: 20px auto;
 		font-family: 'Noto Sans KR', sans-serif;
 	}
+	html, body {
+		overflow-y: scroll !important;
+		scrollbar-width: auto !important;
+		-ms-overflow-style: scrollbar !important; }
 
+	::-webkit-scrollbar {
+		width: 8px;
+	}
+
+	::-webkit-scrollbar-thumb {
+		background-color: #888;
+		border-radius: 3px;
+	}
+
+	::-webkit-scrollbar-track {
+		background: #f1f1f1;
+	}
 	.modern-table {
 		width: 100%;
 		margin-bottom: 20px;

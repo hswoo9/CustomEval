@@ -9,6 +9,23 @@
 .sub_contents_wrap .com_ta th, td{text-align: center;}
 .sub_contents_wrap .com_ta tfoot td {color: blue;}
 .com_ta table th{padding-right: 0px;}
+html, body {
+	overflow-y: scroll !important;
+	scrollbar-width: auto !important;
+	-ms-overflow-style: scrollbar !important; }
+
+::-webkit-scrollbar {
+	width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: #888;
+	border-radius: 3px;
+}
+
+::-webkit-scrollbar-track {
+	background: #f1f1f1;
+}
 </style>
 
 

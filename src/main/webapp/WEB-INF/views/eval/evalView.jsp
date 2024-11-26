@@ -52,6 +52,23 @@
         .comReMarkInput {width: 1050px !important;}
         .hkFootSubCont {width: 1100px !important; min-width: 1100px !important;}
     }
+	html, body {
+		overflow-y: scroll !important;
+		scrollbar-width: auto !important;
+		-ms-overflow-style: scrollbar !important; }
+
+	::-webkit-scrollbar {
+		width: 8px;
+	}
+
+	::-webkit-scrollbar-thumb {
+		background-color: #888;
+		border-radius: 3px;
+	}
+
+	::-webkit-scrollbar-track {
+		background: #f1f1f1;
+	}
 </style>
 
 <div class="iframe_wrap" style="min-width:1400px">

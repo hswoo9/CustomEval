@@ -10,7 +10,23 @@
 <%--<script type="text/javascript" src="http://10.10.10.112:8080/js/hwpctrlapp/utils/util.js"></script>
 <script type="text/javascript" src="http://10.10.10.112:8080/js/webhwpctrl.js"></script>--%>
 <title>평가위원 개인정보 수집·이용 동의서</title>
+<style>html, body {
+	overflow-y: scroll !important;
+	scrollbar-width: auto !important;
+	-ms-overflow-style: scrollbar !important; }
 
+::-webkit-scrollbar {
+	width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: #888;
+	border-radius: 3px;
+}
+
+::-webkit-scrollbar-track {
+	background: #f1f1f1;
+}</style>
 <script type="text/javascript">
 
 	window.onload = function() {

@@ -194,6 +194,23 @@
 
 <style>
 	table tr th,td {border: 1px; border-style: solid; text-align: center; height: 40px; }
+	html, body {
+		overflow-y: scroll !important;
+		scrollbar-width: auto !important;
+		-ms-overflow-style: scrollbar !important; }
+
+	::-webkit-scrollbar {
+		width: 8px;
+	}
+
+	::-webkit-scrollbar-thumb {
+		background-color: #888;
+		border-radius: 3px;
+	}
+
+	::-webkit-scrollbar-track {
+		background: #f1f1f1;
+	}
 </style>
 
 <div class=WordSection1 style="width: 1400px; height: 1000px;padding-left: 200px;">

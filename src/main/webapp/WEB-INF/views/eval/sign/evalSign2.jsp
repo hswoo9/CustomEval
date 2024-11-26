@@ -11,7 +11,23 @@
 <script type="text/javascript" src="http://10.10.10.112:8080/js/webhwpctrl.js"></script>--%>
 
 <title>사전 결의사항</title>
+<style>html, body {
+	overflow-y: scroll !important;
+	scrollbar-width: auto !important;
+	-ms-overflow-style: scrollbar !important; }
 
+::-webkit-scrollbar {
+	width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: #888;
+	border-radius: 3px;
+}
+
+::-webkit-scrollbar-track {
+	background: #f1f1f1;
+}</style>
 <div class="pop_wrap_dir" id="loadingPop" style="width: 443px;">
 	<div class="pop_con">
 		<table class="fwb ac" style="width:100%;">

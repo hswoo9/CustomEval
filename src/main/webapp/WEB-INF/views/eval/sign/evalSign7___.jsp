@@ -9,7 +9,23 @@
 <fmt:formatDate value="${nowDate}" var="nowDate" pattern="yyyy년  MM월  dd일" />
 
 <title>업체별 제안서 평가집계표</title>
+<style>html, body {
+	overflow-y: scroll !important;
+	scrollbar-width: auto !important;
+	-ms-overflow-style: scrollbar !important; }
 
+::-webkit-scrollbar {
+	width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: #888;
+	border-radius: 3px;
+}
+
+::-webkit-scrollbar-track {
+	background: #f1f1f1;
+}</style>
 <script type="text/javascript">
 
 // var getCompanyList = JSON.parse('${getCompanyList}');

@@ -458,9 +458,11 @@ public class EvalServiceImpl implements EvalService {
 			} else if (step.equals("4")) {
 				// 수당 개인정보 업데이트
 				evalDAO.setCommDetailUpdate(map);
-			} else if (step.equals("8")) {
 				// 평가확정
 				evalDAO.setEvalJangConfirm(map);
+			} else if (step.equals("8")) {
+				// 평가확정
+				//evalDAO.setEvalJangConfirm(map);
 
 				if (map.get("join_select_type").equals("Y")) {
 					evalDAO.setPurcReqUpdate(map);
@@ -1029,6 +1031,23 @@ public class EvalServiceImpl implements EvalService {
 
 		for(Map<String, Object> commissioner : commissionerList){
 			if(commissioner.get("eval_save").equals("N") || commissioner.get("sign_6").equals("N")){
+				returnBoolean = false;
+			}
+		}
+
+		returnMap.put("commissionerChk", returnBoolean);
+
+		return returnMap;
+	}
+
+	@Override
+	public Map<String, Object> getCommissionerChk2(Map<String, Object> params) {
+		Map<String, Object> returnMap = new HashMap<>();
+		boolean returnBoolean = true;
+		List<Map<String, Object>> commissionerList = evalDAO.getCommissionerChk2(params);
+
+		for(Map<String, Object> commissioner : commissionerList){
+			if(commissioner.get("eval_save").equals("N") || commissioner.get("sign_4").equals("N")){
 				returnBoolean = false;
 			}
 		}

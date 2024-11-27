@@ -69,6 +69,7 @@ public interface EvalService {
 
 	void setScoreData(Map<String, Object> params);
 	Map<String, Object> getCommissionerChk(Map<String, Object> params);
+	Map<String, Object> getCommissionerChk2(Map<String, Object> params);
 	Map<String, Object> getEvalAvoidFailChk(Map<String, Object> params);
 
 	void setEvalCommissionerBlindUpd(Map<String, Object> params);

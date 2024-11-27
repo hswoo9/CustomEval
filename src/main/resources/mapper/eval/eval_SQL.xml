@@ -849,6 +849,18 @@
 		    ATTEND_YN = "Y" AND EVAL_AVOID = "N" AND CONTACT = "N" AND ACTIVE = "Y"
 	</select>
 
+	<select id="getCommissionerChk2" parameterType="map" resultType="map">
+		SELECT
+			*
+		FROM CUST_EPIS.DJ_EVAL_COMMISSIONER
+		WHERE
+			COMMITTEE_SEQ = #{committee_seq}
+		  AND
+			COMMISSIONER_SEQ != #{commissioner_seq}
+		  AND
+			ATTEND_YN = "Y" AND EVAL_AVOID = "N" AND CONTACT = "N" AND ACTIVE = "Y"
+	</select>
+
 	<select id="getEvalAvoidFailChk" parameterType="map" resultType="map">
 		/* getEvalAvoidCountChk */
 		SELECT FN_EVAL_AVOID_FAIL_CHECK(#{COMMITTEE_SEQ}) AS avoidFailChk;

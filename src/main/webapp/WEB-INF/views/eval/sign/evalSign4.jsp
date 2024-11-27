@@ -132,6 +132,15 @@
                 alert("평가자료를 다운로드 해주세요.");
             }
         }*/
+	$(document).ready(function() {
+		$('#bank_name').on('input', function() {
+			this.value = this.value.replace(/\d/g, ''); // 숫자 제거
+		});
+
+		$('#bank_no').on('input', function() {
+			this.value = this.value.replace(/[^\d]/g, ''); // 문자 제거
+		});
+	});
 
 	function showModifyConfirmButtons() {
 		var p1 = $('#num1').val();
@@ -153,7 +162,7 @@
 			return;
 		}
 
-		if (/\d/.test($('#bank_name').val())) {
+/*		if (/\d/.test($('#bank_name').val())) {
 			alert('은행명에 숫자를 입력할 수 없습니다.');
 			return;
 		}
@@ -161,7 +170,7 @@
 		if (/[^\d\s]/.test($('#bank_no').val())) {
 			alert('계좌번호에 문자를 입력할 수 없습니다.');
 			return;
-		}
+		}*/
 		/*if (!flag || (p1 + p2).length !== 13) {
             alert('주민등록번호를 확인해 주세요.');
             return;

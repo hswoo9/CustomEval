@@ -470,10 +470,10 @@ public class EvalServiceImpl implements EvalService {
 				// 수당 개인정보 업데이트
 				evalDAO.setCommDetailUpdate(map);
 				// 평가확정
-				//evalDAO.setEvalJangConfirm(map);
+				evalDAO.setEvalJangConfirm(map);
 			} else if (step.equals("8")) {
 				// 평가확정
-				evalDAO.setEvalJangConfirm(map);
+				// evalDAO.setEvalJangConfirm(map);
 
 				if (map.get("join_select_type").equals("Y")) {
 					evalDAO.setPurcReqUpdate(map);

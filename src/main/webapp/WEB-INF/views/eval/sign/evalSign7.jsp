@@ -316,9 +316,11 @@
 		<input type="button" onclick="signSaveBtn();" style="float:right; margin-left : 10px; background-color: #dee4ea; border-color: black; border-width: thin;" value="다음">
 		<input type="hidden" onclick="reloadBtn();" style="float:right; background-color: #dee4ea; border-color: black; border-width: thin;"  value="새로고침">
 	</div>
+	<!--
  	<div style="width:100%; padding-bottom: 35px; text-align: center; padding-top: 50px;">
 		<h4 style="font-size: 30px;">업체별 제안서 평가집계표</h4>
 	</div>
+	-->
 	<div id="contentsTemp" >
 
 		<c:set var="userCount" value="${result[0].list.size()}" />
@@ -347,7 +349,12 @@
 
 		<div id="temp_${mainSt.index + 1}" style="page-break-after: always;">
 
+
 			<c:forEach var="t" begin="0" end="${endTableCount}">
+
+				<div style="width:100%; padding-bottom: 35px; text-align: center; padding-top: 50px;">
+					<h4 style="font-size: 20px;">업체별 제안서 평가집계표_${companyList.display_title}</h4>
+				</div>
 
 				<%
 					int currentIndex = Integer.parseInt(pageContext.getAttribute("t").toString());

@@ -201,6 +201,13 @@
 		formData.append("step", "2");
 		formData.append("signHwpFileData", signHwpFileData);
 
+		if('${userInfo.EVAL_JANG}' != ''){
+			if('${userInfo.EVAL_JANG}' == "Y"){
+				formData.append("jangYN", "Y");
+			}
+		}
+
+
 		$.ajax({
 			url : "<c:url value='/eval/setSignSetp'/>",
 			type : "POST",
@@ -220,6 +227,8 @@
 			}
 		})
 	}
+
+
 	/** TODO. 데이터, PDF 서버 저장 */
 
 	function setSign(imgData){

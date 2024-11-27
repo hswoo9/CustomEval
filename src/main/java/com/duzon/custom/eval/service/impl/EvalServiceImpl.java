@@ -238,138 +238,145 @@ public class EvalServiceImpl implements EvalService {
 
 	@Override
 	public Map<String, Object> setSignSetp(Map<String, Object> map) {
-			Map<String, Object> returnMap = new HashMap<String, Object>();
+		Map<String, Object> returnMap = new HashMap<String, Object>();
 
-			String step = String.valueOf(map.get("step"));
+		String step = String.valueOf(map.get("step"));
 
-			map.put("col_nm", "sign_" + step);
-			map.put("col_file", "sign_" + step + "_file_seq");
 
-			Map<String, Object> comSeq = new HashMap<String, Object>();
-			comSeq.put("commissioner_seq",map.get("commissioner_seq"));
-			String evalId = evalDAO.getCommissionerSeqEvalId(comSeq);
+		map.put("col_nm", "sign_" + step);
+		map.put("col_file", "sign_" + step + "_file_seq");
 
-			// Step에 따른 파일 이름 매핑
-			String fileName;
-			String originFileExt  = "hwp";
-			switch (step) {
-				case "1":
-					fileName = "평가(심사)위원 위촉 확인 및 평가운영지침 준수 각서_"+evalId;
-					originFileExt  = "hwp";
-					break;
-				case "2":
-					fileName = "평가위원 사전의결사항_"+evalId;
-					originFileExt  = "hwp";
-					break;
-				case "3":
-					fileName = "사전접촉여부 확인(신고)서_"+evalId;
-					originFileExt  = "hwp";
-					break;
-				case "4":
-					fileName = "평가수당 지급 확인서_"+evalId;
-					originFileExt  = "hwp";
-					break;
-				case "5":
-					fileName = "평가위원 개인정보 수집·이용 동의서_"+evalId;
-					originFileExt  = "hwp";
-					break;
-				case "6":
-					fileName = "(평가표)위원별 제안서 평가표_"+evalId;
-					originFileExt  = "pdf";
-					break;
-				case "7":
-					fileName = "(평가표)업체별 제안서 평가집계표_"+evalId;
-					originFileExt  = "pdf";
-					break;
-				case "8":
-					fileName = "(평가표)제안서 평가 총괄표_"+evalId;
-					originFileExt  = "pdf";
-					break;
-				case "9":
-					fileName = "사전접촉여부 확인(신고)서 한번더_"+evalId;
-					originFileExt  = "hwp";
-					break;
-				case "10":
-					fileName = "평가위원장 가산금 지급 확인서_"+evalId;
-					originFileExt  = "hwp";
-					break;
-				default:
-					fileName = "기타";
-					originFileExt  = "hwp";// Default case for safety
+		Map<String, Object> comSeq = new HashMap<String, Object>();
+		comSeq.put("commissioner_seq", map.get("commissioner_seq"));
+		String evalId = evalDAO.getCommissionerSeqEvalId(comSeq);
+
+		if (map.containsKey("jangYN")) {
+			step += "_jang";
+		}
+
+		// Step에 따른 파일 이름 매핑
+		String fileName;
+		String originFileExt = "hwp";
+		switch (step) {
+			case "1":
+				fileName = "평가(심사)위원 위촉 확인 및 평가운영지침 준수 각서_" + evalId;
+				originFileExt = "hwp";
+				break;
+			case "2":
+				fileName = "평가위원별 사전의결사항";
+				originFileExt = "hwp";
+				break;
+			case "2_jang":
+				fileName = "평가위원 사전의결사항";
+				originFileExt = "hwp";
+				break;
+			case "3":
+				fileName = "사전접촉여부 확인(신고)서_" + evalId;
+				originFileExt = "hwp";
+				break;
+			case "4":
+				fileName = "평가수당 지급 확인서_" + evalId;
+				originFileExt = "hwp";
+				break;
+			case "5":
+				fileName = "평가위원 개인정보 수집·이용 동의서_" + evalId;
+				originFileExt = "hwp";
+				break;
+			case "6":
+				fileName = "(평가표)위원별 제안서 평가표_" + evalId;
+				originFileExt = "pdf";
+				break;
+			case "7":
+				fileName = "(평가표)업체별 제안서 평가집계표_";
+				originFileExt = "pdf";
+				break;
+			case "8":
+				fileName = "(평가표)제안서 평가 총괄표_" + evalId;
+				originFileExt = "pdf";
+				break;
+			case "9":
+				fileName = "사전접촉여부 확인(신고)서 한번더_" + evalId;
+				originFileExt = "hwp";
+				break;
+			case "10":
+				fileName = "평가위원장 가산금 지급 확인서_" + evalId;
+				originFileExt = "hwp";
+				break;
+			default:
+				fileName = "기타";
+				originFileExt = "hwp";// Default case for safety
+		}
+
+
+		// file 저장
+		map.put("attch_file_seq", fileName);
+
+		if ("7".equals(step)) {
+			int i = 1; // signHwpFileData_1, signHwpFileData_2 등을 순차적으로 처리하기 위한 변수
+			while (map.containsKey("signHwpFileData_" + i)) {
+				String fileStr = EgovStringUtil.nullConvert(map.get("signHwpFileData_" + i));
+
+				if (!fileStr.equals("")) {
+					try {
+						String originFileName = fileName + (char) ('A' + (i - 1)) + "업체";
+
+						// Base64 처리
+						if (fileStr.startsWith("data:") && fileStr.contains("base64,")) {
+							fileStr = fileStr.substring(fileStr.indexOf("base64,") + "base64,".length());
+						}
+
+						// 파일 생성
+						File file = File.createTempFile(originFileName, "." + originFileExt);
+
+						fileStr = fileStr.replaceAll("[\\n\\r]", "");
+						byte[] decodedBytes = Base64.getDecoder().decode(fileStr); // Base64 디코딩
+						FileOutputStream lFileOutputStream = new FileOutputStream(file);
+						lFileOutputStream.write(decodedBytes);
+						lFileOutputStream.close();
+
+
+						// 서버에 파일 저장
+						String serverFilePath = "/home/upload/cust_eval/" + map.get("commissioner_seq").toString() + "/hwp/";
+						File newPath = new File(serverFilePath);
+						if (!newPath.exists()) {
+							newPath.mkdirs();
+						}
+
+						Path path = Paths.get(serverFilePath + originFileName + "." + originFileExt);
+						Files.copy(new FileInputStream(file), path, new CopyOption[]{StandardCopyOption.REPLACE_EXISTING});
+
+						PdfEcmFileVO pdfEcmFileVO = new PdfEcmFileVO();
+						pdfEcmFileVO.setRep_id(originFileName);
+						pdfEcmFileVO.setComp_seq("1000");
+						pdfEcmFileVO.setDoc_id(originFileName);
+						pdfEcmFileVO.setDoc_no("001");
+						pdfEcmFileVO.setDoc_path("Z:/upload/epis/cust_eval/" + map.get("commissioner_seq") + "/hwp");
+						pdfEcmFileVO.setDoc_name(originFileName);
+						pdfEcmFileVO.setDoc_ext("hwp");
+						pdfEcmFileVO.setDoc_title("sign_" + step);
+
+						PdfEcmMainVO pdfEcmMainVO = new PdfEcmMainVO();
+
+						pdfEcmMainVO.setRep_id(fileName);
+						pdfEcmMainVO.setComp_seq("1000");
+						pdfEcmMainVO.setDept_seq("1");
+						pdfEcmMainVO.setEmp_seq("1");
+						pdfEcmMainVO.setPdf_path("Z:/upload/epis/cust_eval/" + map.get("commissioner_seq") + "/pdf");
+						pdfEcmMainVO.setPdf_name("PDF_" + originFileName);
+						pdfEcmMainVO.setStatus_cd("D0001");
+
+						evalDAO.insertPdfFile(pdfEcmFileVO);
+						evalDAO.insertPdfMain(pdfEcmMainVO);
+
+
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+				i++;
 			}
 
-
-
-
-			// file 저장
-			map.put("attch_file_seq", fileName);
-
-			if("7".equals(step)) {
-				int i = 1; // signHwpFileData_1, signHwpFileData_2 등을 순차적으로 처리하기 위한 변수
-				while (map.containsKey("signHwpFileData_" + i)) {
-					String fileStr = EgovStringUtil.nullConvert(map.get("signHwpFileData_" + i));
-
-					if (!fileStr.equals("")) {
-						try {
-							String originFileName = fileName + "_" + (char)('A' + (i-1)) +"업체";
-
-							// Base64 처리
-							if (fileStr.startsWith("data:") && fileStr.contains("base64,")) {
-								fileStr = fileStr.substring(fileStr.indexOf("base64,") + "base64,".length());
-							}
-
-							// 파일 생성
-							File file = File.createTempFile(originFileName, "." + originFileExt);
-
-							fileStr = fileStr.replaceAll("[\\n\\r]", "");
-							byte[] decodedBytes = Base64.getDecoder().decode(fileStr); // Base64 디코딩
-							FileOutputStream lFileOutputStream = new FileOutputStream(file);
-							lFileOutputStream.write(decodedBytes);
-							lFileOutputStream.close();
-
-
-							// 서버에 파일 저장
-							String serverFilePath = "/home/upload/cust_eval/" + map.get("commissioner_seq").toString() + "/hwp/";
-							File newPath = new File(serverFilePath);
-							if (!newPath.exists()) {
-								newPath.mkdirs();
-							}
-
-							Path path = Paths.get(serverFilePath + originFileName + "." + originFileExt);
-							Files.copy(new FileInputStream(file), path, new CopyOption[]{StandardCopyOption.REPLACE_EXISTING});
-
-							PdfEcmFileVO pdfEcmFileVO = new PdfEcmFileVO();
-							pdfEcmFileVO.setRep_id(originFileName);
-							pdfEcmFileVO.setComp_seq("1000");
-							pdfEcmFileVO.setDoc_id(originFileName);
-							pdfEcmFileVO.setDoc_no("001");
-							pdfEcmFileVO.setDoc_path("Z:/upload/epis/cust_eval/" + map.get("commissioner_seq") + "/hwp");
-							pdfEcmFileVO.setDoc_name(originFileName);
-							pdfEcmFileVO.setDoc_ext("hwp");
-							pdfEcmFileVO.setDoc_title("sign_" + step);
-
-							PdfEcmMainVO pdfEcmMainVO = new PdfEcmMainVO();
-
-							pdfEcmMainVO.setRep_id(fileName);
-							pdfEcmMainVO.setComp_seq("1000");
-							pdfEcmMainVO.setDept_seq("1");
-							pdfEcmMainVO.setEmp_seq("1");
-							pdfEcmMainVO.setPdf_path("Z:/upload/epis/cust_eval/" + map.get("commissioner_seq") + "/pdf");
-							pdfEcmMainVO.setPdf_name("PDF_" + originFileName);
-							pdfEcmMainVO.setStatus_cd("D0001");
-
-							evalDAO.insertPdfFile(pdfEcmFileVO);
-							evalDAO.insertPdfMain(pdfEcmMainVO);
-
-
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-					}
-					i++;
-				}
-
-			}else{
+		}else{
 
 				if (!EgovStringUtil.nullConvert(map.get("signHwpFileData")).equals("")) {
 					try {
@@ -447,6 +454,10 @@ public class EvalServiceImpl implements EvalService {
 					return returnMap;
 				}
 
+			}
+
+			if (step.endsWith("_jang")) {
+				step = step.replace("_jang", "");
 			}
 
 			// 상태값 변경

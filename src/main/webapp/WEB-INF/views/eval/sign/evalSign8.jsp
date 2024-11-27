@@ -359,9 +359,12 @@
 			html += '</tr>';
 
 			html += '<tr>';
-			for (var i = 0; i < currentCompanyCount; i++) {
+			/*for (var i = 0; i < currentCompanyCount; i++) {
 				html += '<td id="cell" style="border:1px solid black; border-collapse: collapse; text-align: center; width : ' + (510 / currentCompanyCount) + 'px">' + String.fromCharCode(65 + t * maxCompaniesPerTable + i) + '</td>';
-			}
+			}*/
+            for (var i = 0; i < currentCompanyCount; i++) {
+                html += '<td id="cell" style="border:1px solid black; border-collapse: collapse; text-align: center; ">' + String.fromCharCode(65 + t * maxCompaniesPerTable + i) + '</td>';
+            }
 			html += '</tr>';
 			html += '</thead>';
 
@@ -656,15 +659,16 @@
 
 
 </script>
-
-<div id="signSave" style="float:right">
+<div style="width: 80%;margin: 0 auto;">
+<%--<div id="signSave" style="float:right">--%>
+    <div id="signSave" >
     <%--		<input type="button" onclick="OnConnectDevice();" value="서명하기">--%>
     <input type="hidden" onclick="evalAvoidPopup()" style="background-color: #dee4ea; border-color: black; font-weight : bold; color: red; border-width: thin;" value="기피신청">
     <input type="button" onclick="signSaveBtn();" style="float:right; margin-left:10px; background-color: #dee4ea; border-color: black; border-width: thin;" value="다음">
     <input type="hidden" onclick="reloadBtn();" style="float:right; background-color: #dee4ea; border-color: black; border-width: thin;" value="새로고침">
 </div>
 
-<div style="width: 100%;">
+
     <%--<p class=a style='margin-top:30px;margin-bottom:3.0pt;margin-left:21pt;text-indent:-15.6pt'><b><span style='font-size:12.0pt;line-height:103%;font-family:"Arial Unicode MS",sans-serif'>□</span></b><b><span style='font-size:12.0pt;line-height:103%'> 제안서 평가 총괄표</span></b></p>
 --%>
 	<div id="contentsTemp" style=""></div>

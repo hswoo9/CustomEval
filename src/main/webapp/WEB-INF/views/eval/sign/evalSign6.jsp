@@ -492,8 +492,11 @@
 			html += '</tr>';
 
 			html += '<tr>';
-			for (var i = 0; i < currentCompanyCount; i++) {
+			/*for (var i = 0; i < currentCompanyCount; i++) {
 				html += '<td id="cell" style="border:1px solid black; border-collapse: collapse; text-align: center; width : ' + (450 / currentCompanyCount) + 'px">' + String.fromCharCode(65 + t * maxCompaniesPerTable + i) + '</td>';
+			}*/
+			for (var i = 0; i < currentCompanyCount; i++) {
+				html += '<td id="cell" style="border:1px solid black; border-collapse: collapse; text-align: center; ">' + String.fromCharCode(65 + t * maxCompaniesPerTable + i) + '</td>';
 			}
 			html += '</tr>';
 			html += '</thead>';
@@ -687,151 +690,7 @@
 		<h4 style="font-size: 30px;">위원별 제안서 평가표</h4>
 	</div>--%>
 	<div id="contentsTemp">
-		<%--<SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>테스트중입니다.</SPAN>--%>
-		<%--<c:forEach items="${getCompanyList }" var="companyList" varStatus="mainSt">
-			<TABLE style="margin:0 auto">
-				<TR>
-					<TD colspan="2" valign="bottom" style='width:103px;height:28px;'>
-						<P CLASS=HStyle0 STYLE='line-height:180%;'>▣ 제안업체명 :
-							<SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>${companyList.display_title}</SPAN>
-						</P>
-					</TD>
-					<TD colspan="${result[0].list.size()+2}" valign="bottom" style='width:80px;height:28px;'>
-						<P CLASS=HStyle0 STYLE='text-align:right;line-height:180%;'>평가일자 :${nowDate} </P>
-					</TD>
-				</TR>
-				<TR>
-					<TD rowspan="2" colspan="2" valign="middle" style='width:270px;height:74px;border-left:solid #000000 0.9pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
-						<P CLASS=HStyle0 STYLE='text-align:center;line-height:150%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>평가항목</SPAN></P>
-					</TD>
-					<TD colspan="${result[0].list.size() }" valign="middle" style='width:300px;height:28px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
-						<P CLASS=HStyle0 STYLE='text-align:center;line-height:130%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>평가위원</SPAN></P>
-					</TD>
-						&lt;%&ndash;					<TD rowspan="2" valign="middle" style='width:40px;height:74px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>&ndash;%&gt;
-						&lt;%&ndash;						<P CLASS=HStyle0 STYLE='text-align:center;line-height:150%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>합계</SPAN></P>&ndash;%&gt;
-						&lt;%&ndash;					</TD>&ndash;%&gt;
-					<TD rowspan="2" valign="middle" style='width:40px;height:74px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.9pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
-						<P CLASS=HStyle0 STYLE='text-align:center;line-height:150%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>평균</SPAN></P>
-					</TD>
-				</TR>
-				<!-- 평가위원 이름 -->
-				<TR>
-					<c:forEach items="${result[0].list }" var="userList">
-						<TD valign="middle" style='width: ${300/result[0].list.size()}px;height:46px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
-							<P CLASS=HStyle0 STYLE='text-align:center;line-height:130%;'>
-								<c:choose>
-									<c:when test="${userInfo.EVAL_BLIND_YN eq 'Y'}">
-										<SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>${fn:substring(userList.NAME, 0, 1)}**</SPAN>
-									</c:when>
-									<c:otherwise>
-										<SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>${userList.NAME }</SPAN>
-									</c:otherwise>
-								</c:choose>
-							</P>
-						</TD>
-					</c:forEach>
-				</TR>
-				<!-- 점수 (아이템)-->
-				<c:forEach items="${result[0].colList }" var="itemList" varStatus="colst">
-					<c:set var="sss" value="ITME_SCORE_${itemList.item_seq }" />
-					<TR>
-						<TD valign="middle" style='width:229px;height:30px;border-left:solid #000000 0.9pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
-							<P CLASS=HStyle0 STYLE='text-align:left;line-height:150%;'>
-								<SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>${itemList.item_name }</SPAN>
-							</P>
-						</TD>
-						<TD valign="middle" style='width:41px;height:30px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
-							<P CLASS=HStyle0 STYLE='text-align:center;line-height:150%;'>
-								<SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>
-									<c:choose>
-										<c:when test="${itemList.score == null || itemList.score == 0}">
-											-
-										</c:when>
-										<c:otherwise>
-											<fmt:formatNumber value="${itemList.score}" pattern=".####"/>
-										</c:otherwise>
-									</c:choose>
-								</SPAN>
-							</P>
-						</TD>
 
-						<c:forEach items="${result[mainSt.index].list }" var="userList" varStatus="st">
-							<TD valign="middle" style='height:30px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
-								<P CLASS=HStyle0 STYLE='text-align:center;line-height:150%;'>
-									<SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>
-										<c:choose>
-											<c:when test="${userList[sss] == null || userList[sss] == 0}">
-												-
-											</c:when>
-											<c:otherwise>
-												<fmt:formatNumber value="${userList[sss]}" pattern=".####"/>
-											</c:otherwise>
-										</c:choose>
-									</SPAN>
-								</P>
-							</TD>
-						</c:forEach>
-
-						<TD valign="middle" style='height:30px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.9pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
-							<P CLASS=HStyle0 STYLE='text-align:center;'>
-								<SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>
-									<c:choose>
-										<c:when test="${result[mainSt.index].sumList[mainSt.index][sss] == null || result[mainSt.index].sumList[mainSt.index][sss] == 0}">
-											-
-										</c:when>
-										<c:otherwise>
-											<fmt:formatNumber value="${result[mainSt.index].sumList[mainSt.index][sss]}" pattern=".####"/>
-										</c:otherwise>
-									</c:choose>
-								</SPAN>
-							</P>
-						</TD>
-					</TR>
-				</c:forEach>
-				<!-- 합계 -->
-				<TR>
-					<TD colspan="2" valign="middle" style='width:128px;height:33px;border-left:solid #000000 0.9pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.9pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
-						<P CLASS=HStyle0 STYLE='text-align:center;line-height:150%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>합&nbsp; 계 (100점)</SPAN></P>
-					</TD>
-					<c:forEach items="${result[mainSt.index].list}" var="userList">
-						<TD valign="middle" style='height:33px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.9pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
-							<P CLASS=HStyle0 STYLE='text-align:center;line-height:150%;'>
-								<SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>
-									<c:choose>
-										<c:when test="${userList.scoreSum == null}">
-											-
-										</c:when>
-										<c:when test="${userList.scoreSum == 0}">
-											-
-										</c:when>
-										<c:otherwise>
-											<fmt:formatNumber value="${userList.scoreSum}" pattern=".####"/>
-										</c:otherwise>
-									</c:choose>
-								</SPAN>
-							</P>
-						</TD>
-					</c:forEach>
-						&lt;%&ndash;					<TD valign="middle" style='height:33px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.9pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>&ndash;%&gt;
-						&lt;%&ndash;						<P CLASS=HStyle0 STYLE='text-align:center;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>&nbsp;</SPAN></P>&ndash;%&gt;
-						&lt;%&ndash;					</TD>&ndash;%&gt;
-					<TD valign="middle" style='height:33px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.9pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.9pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
-						<P CLASS=HStyle0 STYLE='text-align:center;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움"'><fmt:formatNumber value="${result[mainSt.index].sumList[mainSt.index].TOTAL_SUM}" pattern=".####"/></SPAN></P>
-					</TD>
-				</TR>
-				<TR>
-					<TD colspan="4" valign="bottom" style='width:103px;height:28px;'>
-						<P CLASS=HStyle0 STYLE='line-height:180%;'>* 평가위원이 5인을 초과하는 경우 <b>세부</b>평가항목별 점수의 최고‧최저 점수를 제외</P>
-					</TD>
-				</TR>
-				<TR>
-					<TD colspan="4" valign="bottom" style='width:80px;height:28px;'>
-						<P CLASS=HStyle0 STYLE='text-align:left;line-height:180%;'>** 소수점 다섯째 자리에서 반올림</P>
-					</TD>
-				</TR>
-			</TABLE>
-			<br>
-		</c:forEach>--%>
 
 	</div>
 <%--	<div id="_pHwpCtrl" style="height: 100%;border: 1px solid lightgray; display: none;"></div>--%>

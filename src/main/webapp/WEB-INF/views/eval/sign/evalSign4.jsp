@@ -383,6 +383,7 @@
 			alert('주소를 입력해 주세요.');
 			return
 		}*/
+		var title1 = "「${userInfo.TITLE } 사업」평가수당 지급 확인서";
 
 		var ob1 = $('#num1').val() + $('#num2').val();
 		var ob2 = $('#dept').val();
@@ -396,6 +397,7 @@
 		var ob9 = document.getElementById("transportFee").innerText.replace(/[^0-9]/g, '') || 0;
 		var ob10 = Number(ob8) + Number(ob9);
 
+		_hwpPutText("title1", title1);
 		_hwpPutText("dept", ob2);
 		/*if($("input[name='publicOrProtected']:checked").val() == "Y"){
 			_hwpPutText("num", p1 + '-*******');
@@ -495,8 +497,8 @@
 		var total_pay = Number(eval_pay) + Number(trans_pay); // 합계
 		var date = "${nowDate}";
 
-		//_hwpPutText("title1", title1);
-		_hwpPutText("toptitle",title1);
+		_hwpPutText("title1", title1);
+		//_hwpPutText("toptitle",title1);
 		_hwpPutText("title2", title2);
 		_hwpPutText("title3", title3);
 		_hwpPutText("name", name);

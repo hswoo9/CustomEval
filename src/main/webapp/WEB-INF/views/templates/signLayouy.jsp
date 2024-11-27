@@ -245,7 +245,9 @@
 			_pHwpCtrl.MoveToField(fieldName, true, true, false);
 			_pHwpCtrl.InsertBackgroundPicture("SelectedCellDelete", 0, 0, 0, 0, 0, 0, 0);
 			_pHwpCtrl.PutFieldText(fieldName, val);
-			_pHwpCtrl.MoveToField("toptitle", true, true, false);
+			if(_pHwpCtrl.FieldExist("toptitle" )) {
+				_pHwpCtrl.MoveToField("toptitle", true, true, false);
+			}
 		}
 	}
 
@@ -262,7 +264,9 @@
 					0,
 					100
 			);
-			_pHwpCtrl.MoveToField("toptitle", true, true, false);
+			if(_pHwpCtrl.FieldExist("toptitle" )) {
+				_pHwpCtrl.MoveToField("toptitle", true, true, false);
+			}
 		}
 	}
 

@@ -608,6 +608,12 @@ public class EvalController {
 		return evalService.getCommissionerChk(map);
 	}
 
+	@RequestMapping(value = "/eval/getCommissionerChk2")
+	@ResponseBody
+	public Map<String, Object> getCommissionerChk2(@RequestParam Map<String, Object> map) {
+		return evalService.getCommissionerChk2(map);
+	}
+
 	/**
 	 * :평가위원 서명파일 다운로드
 	 * @throws Exception

@@ -347,11 +347,54 @@
 		document.getElementById("summaryTable").style.display = "none";
 	}
 
-	function confirmEvaluation() {
+	/*function confirmEvaluation() {
 		if (confirm("이대로 평가수당을 확정시키겠습니까?")) {
 			signSaveBtn();
 		}
+	}*/
+
+	function confirmEvaluation() {
+		if (confirm("이대로 평가수당을 확정시키겠습니까?")) {
+			var result = true;
+			console.log("초기 result 값:", result);
+
+			if ("${userInfo.EVAL_JANG}" == "Y") {
+				result = getCommissionerChk2();
+				console.log("getCommissionerChk2() 호출 후 result 값:", result);
+			}
+
+			if (!result) {
+				alert("평가가 진행 중입니다. \n위원장은 모든 평가위원의 평가가 종료 된 후에 저장이 가능합니다.");
+				return;
+			}
+
+			signSaveBtn();
+		}
 	}
+
+	function getCommissionerChk2() {
+		var commissionerChk = true;
+		$.ajax({
+			url: "<c:url value='/eval/getCommissionerChk2' />",
+			data: {
+				committee_seq: '${userInfo.COMMITTEE_SEQ}',
+				commissioner_seq: '${userInfo.COMMISSIONER_SEQ}'
+			},
+			type: 'POST',
+			dataType: "json",
+			async: false,
+			success: function(result) {
+				console.log("AJAX 결과:", result);
+				commissionerChk = result.commissionerChk;
+			},
+			error: function(xhr, status, error) {
+				console.error("AJAX 오류:", status, error);
+				commissionerChk = false;
+			}
+		});
+		return commissionerChk;
+	}
+
 
 	var signHwpFileData = "";
 	function signSaveBtn(){
@@ -392,7 +435,7 @@
 		var ob5 = $('#bank_no').val();
 		var ob6 = $('#addr').val();
 		var ob7 = $('#oName').val();
-		var ob7 = $('#oName').val();
+		/*var ob7 = $('#oName').val();*/
 		var ob8 = document.getElementById("evaluationFee").value.replace(/,/g, '') || 0;
 		var ob9 = document.getElementById("transportFee").innerText.replace(/[^0-9]/g, '') || 0;
 		var ob10 = Number(ob8) + Number(ob9);
@@ -404,6 +447,7 @@
 		}else{
 			_hwpPutText("num", '******-*******');
 		}*/
+		_hwpPutText("oName", ob7);
 		_hwpPutText("eval_pay", ob8);
 		_hwpPutText("trans_pay", ob9);
 		_hwpPutText("total_pay", ob10);

@@ -58,7 +58,7 @@
 		AND C.ACTIVE = 'Y'
 		JOIN CUST_EPIS.DJ_COMMISSIONER_DETAIL E
         ON C.COMMISSIONER_POOL_SEQ = E.COMMISSIONER_POOL_SEQ
-        WHERE A.EVAL_ID = #{evalId} AND D.TITLE =#{evalTitle}
+        WHERE A.EVAL_ID = #{evalId} AND D.TITLE =#{evalTitle} AND REPLACE(A.EVAL_PHONE, '-', '') =#{phone}
 		AND A.ACTIVE = 'Y'
 		AND A.CONFIRM_YN = 'Y'
 		/*AND A.ATTEND_YN = 'Y'*/
@@ -478,13 +478,20 @@
 	/*setRankCode*/
 		CALL SP_DJ_EVAL_RESULT_RANK(#{COMMITTEE_SEQ})
 	</update>
-	
+
 	<update id="setEvalJangConfirm" parameterType="map">
-	/*setEvalJangConfirm*/
-		UPDATE DJ_EVAL_COMMITTEE SET 
-		JANG_CONFIRM_YN = 'Y' 
-		, STEP = 'S' 
-		WHERE COMMITTEE_SEQ = #{committee_seq}
+		/*setEvalJangConfirm*/
+		UPDATE DJ_EVAL_COMMITTEE
+		SET
+			JANG_CONFIRM_YN = 'Y',
+			STEP = 'S'
+		WHERE
+				COMMITTEE_SEQ IN (
+				SELECT COMMITTEE_SEQ
+				FROM DJ_EVAL_COMMISSIONER
+				WHERE COMMISSIONER_SEQ = #{commissioner_seq}
+				  AND EVAL_JANG = 'Y'
+			)
 	</update>
 	
 	<select id="getEvalCompany" parameterType="map" resultType="map">

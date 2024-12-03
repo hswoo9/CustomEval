@@ -53,7 +53,7 @@ public class LoginController {
 		
 		return "/login/loginView";
 	}
-	
+
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String login(HttpServletRequest request, HttpServletResponse response, EvalLoginVO evalLoginVO){
 		
@@ -63,6 +63,7 @@ public class LoginController {
 		int cnt = loginService.getLoginChk(evalLoginVO);
 		map.put("evalId", evalLoginVO.getId());
         /*map.put("evalPw", evalLoginVO.getPw());*/
+		map.put("phone", evalLoginVO.getPhone());
 		map.put("evalTitle", evalLoginVO.getTitle());
 		
 		//로그인처리

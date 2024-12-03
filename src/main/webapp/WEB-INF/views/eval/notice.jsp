@@ -15,7 +15,7 @@
 
     function openPop(){
         var name = "popup test";
-        var option = "width = 340, height = 400, top = 100, left = 200, location = no"
+        var option = "width = 1200, height = 400, top = 100, left = 200, location = no"
         var popup = window.open(_g_contextPath_ + '/eval/popEvalSign?evalId=' + $("#hidEvalId").val() + '&evalPw=' + $("#hidEvalPw").val() + "&commissioner_seq=${userInfo.COMMISSIONER_SEQ}", name, option);
     }
 

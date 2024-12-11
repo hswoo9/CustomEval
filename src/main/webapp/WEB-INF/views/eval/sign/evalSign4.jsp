@@ -559,7 +559,7 @@
 		var num2 = $('#num2').val();
 		var bank_no = $('#bank_no').val();
 
-		_hwpPutText("num", num1 + '-' + num2);
+		_hwpPutText("num", num1 + "-" + num2);
 		_hwpPutText("bank_no", bank_no);
 
 		_hwpPutSignImg("sign", "${userInfo.SIGN_DIR }");

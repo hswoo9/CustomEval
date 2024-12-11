@@ -765,7 +765,7 @@
 	<P CLASS=HStyle0 STYLE='margin-top:5.0pt;text-align:center;line-height:130%;'></P>
 
 	<P CLASS=HStyle34 STYLE='margin-top:3.0pt;line-height:160%;'>
-	<P CLASS=HStyle34 style="color:red; font-size: 16px;"> * 사업담당자 확인 후 입력 필수</P>
+	<P CLASS=HStyle34 style="color:red; font-size: 12px;"> * 농정원 사업담당자 확인 필수</P>
 	<TABLE border="1" cellspacing="0" cellpadding="0" style='width:580px; border-collapse:collapse;border:none;'>
 		<TR>
 			<TD colspan="3" valign="middle" style='width:163px;height:22px;border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>

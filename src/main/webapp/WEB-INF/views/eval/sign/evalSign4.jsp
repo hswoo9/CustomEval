@@ -710,8 +710,10 @@
 	<TABLE border="1" cellspacing="0" cellpadding="0" style='width:580px; border-collapse:collapse;border:none;'>
 		<TR>
 			<TD valign="middle" bgcolor="#ffffff"  style='width:580px;height:70px;border-left:none;border-right:none;border-top:none;border-bottom:double #000000 2.0pt;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
-				<P CLASS=HStyle0 STYLE='text-align:center;'><SPAN STYLE='font-size:17.0pt;font-weight:bold;line-height:160%'>「${userInfo.TITLE } 사업」평가수당 지급 확인서</SPAN></P>
-				<%--<P CLASS=HStyle0 STYLE='text-align:center;'><SPAN STYLE='font-size:17.0pt;font-weight:bold;line-height:160%'>평가수당 지급 확인서</SPAN></P>--%>
+				<P CLASS="HStyle0" STYLE="text-align:center;">
+					 <SPAN STYLE="font-size:17.0pt;font-weight:bold;line-height:160%">「${userInfo.TITLE} 사업」</SPAN><br>
+					 <SPAN STYLE="font-size:17.0pt;font-weight:bold;line-height:160%">평가수당 지급 확인</SPAN>
+				</P>
 			</TD>
 		</TR>
 	</TABLE>

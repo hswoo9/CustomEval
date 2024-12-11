@@ -742,7 +742,7 @@
 			</TD>
 
 			<TD valign="middle" style='width:186px;height:31px;border-left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt; text-align: right;'>
-				<select id="region" style="width: 80px; margin-right: 5px;" onchange="updateTransportFee()">
+				<select id="region" style="width: 110px; margin-right: 5px;" onchange="updateTransportFee()">
 					<option value="------">회사주소지 선택</option>
 					<option value="서울/경기">서울/경기</option>
 					<option value="강원영동">강원(영동)</option>

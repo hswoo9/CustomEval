@@ -10,6 +10,9 @@
 <fmt:formatDate value="${nowDate}" var="nowDate" pattern="yyyy-MM-dd" />
 
 <style>
+	.small-text {
+		font-size: 14px;
+	}
 	input[type="radio"]:disabled {
 		pointer-events: none;
 		opacity: 1;
@@ -355,18 +358,18 @@
 						html += '<tr class="itemTr">';
 
 						html += '<tr>';
-						html += '	<th colspan="3" id="th1" style="width: 65%; padding: 15px">제안평가 평가항목</th>';
-						html += '	<th colspan="5">평가점수</th>';
+						html += '	<th colspan="3" id="th1" style="width: 70%; padding: 15px">제안평가 평가항목</th>';
+						html += '	<th colspan="5" style="width: 30%;">평가점수</th>';
 						html += '</tr>';
 						html += '<tr>';
 						html += '	<th style="width:10%;">평가</th>';
 						html += '	<th style="width:15%;">대분류</th>';
 						html += '	<th>중분류</th>';
-						html += '	<td>매우우수(A)</td>';
-						html += '	<td>우수(B)</td>';
-						html += '	<td>보통(C)</td>';
-						html += '	<td>미흡(D)</td>';
-						html += '	<td>매우미흡(E)</td>';
+						html += '	<td style="font-size:12px;">매우우수(A)</td>';
+						html += '	<td style="font-size:12px;">우수(B)</td>';
+						html += '	<td style="font-size:12px;">보통(C)</td>';
+						html += '	<td style="font-size:12px;">미흡(D)</td>';
+						html += '	<td style="font-size:12px;">매우미흡(E)</td>';
 						html += '</tr>';
 
 						//$("#dataScore").html(html2);
@@ -394,21 +397,21 @@
 								var disabledAttr = item.item_name === "상생기업" ? "disabled" : "";
 
 								html += '    <td class="itemRadioTd">';
-								html += '        <label class="radio-label"><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" data-comp-seq="' + compResult[j].eval_company_seq + '" onclick="radioClickEvent(' + compResult[j].eval_company_seq + ');" value="' + result[i].score_1 + '" ' + (result[i].COMMISSIONER_SCORE == result[i].score_1 ? "checked" : "") + ' ' + disabledAttr + ' />' + result[i].score_1 + '</label>';
+								html += '        <label class="radio-label small-text"><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" data-comp-seq="' + compResult[j].eval_company_seq + '" onclick="radioClickEvent(' + compResult[j].eval_company_seq + ');" value="' + result[i].score_1 + '" ' + (result[i].COMMISSIONER_SCORE == result[i].score_1 ? "checked" : "") + ' ' + disabledAttr + ' />' + result[i].score_1 + '</label>';
 								html += '    </td>';
 								html += '    <td class="itemRadioTd">';
-								html += '        <label class="radio-label"><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" data-comp-seq="' + compResult[j].eval_company_seq + '" onclick="radioClickEvent(' + compResult[j].eval_company_seq + ');" value="' + result[i].score_2 + '" ' + (result[i].COMMISSIONER_SCORE == result[i].score_2 ? "checked" : "") + ' ' + disabledAttr + ' />' + result[i].score_2 + '</label>';
+								html += '        <label class="radio-label small-text"><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" data-comp-seq="' + compResult[j].eval_company_seq + '" onclick="radioClickEvent(' + compResult[j].eval_company_seq + ');" value="' + result[i].score_2 + '" ' + (result[i].COMMISSIONER_SCORE == result[i].score_2 ? "checked" : "") + ' ' + disabledAttr + ' />' + result[i].score_2 + '</label>';
 								html += '    </td>';
 								html += '    <td class="itemRadioTd">';
-								html += '        <label class="radio-label"><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" data-comp-seq="' + compResult[j].eval_company_seq + '" onclick="radioClickEvent(' + compResult[j].eval_company_seq + ');" value="' + result[i].score_3 + '" ' + (result[i].COMMISSIONER_SCORE == result[i].score_3 ? "checked" : "") + ' ' + disabledAttr + ' />' + result[i].score_3 + '</label>';
+								html += '        <label class="radio-label small-text"><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" data-comp-seq="' + compResult[j].eval_company_seq + '" onclick="radioClickEvent(' + compResult[j].eval_company_seq + ');" value="' + result[i].score_3 + '" ' + (result[i].COMMISSIONER_SCORE == result[i].score_3 ? "checked" : "") + ' ' + disabledAttr + ' />' + result[i].score_3 + '</label>';
 								html += '    </td>';
 								html += '    <td class="itemRadioTd">';
 								var score_4_display = result[i].score_4 != null ? result[i].score_4 : '-';
-								html += '        <label class="radio-label"><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" data-comp-seq="' + compResult[j].eval_company_seq + '" onclick="radioClickEvent(' + compResult[j].eval_company_seq + ');" value="' + result[i].score_4 + '" ' + (result[i].COMMISSIONER_SCORE == result[i].score_4 ? "checked" : "") + ' ' + disabledAttr + ' />' + score_4_display + '</label>';
+								html += '        <label class="radio-label small-text"><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" data-comp-seq="' + compResult[j].eval_company_seq + '" onclick="radioClickEvent(' + compResult[j].eval_company_seq + ');" value="' + result[i].score_4 + '" ' + (result[i].COMMISSIONER_SCORE == result[i].score_4 ? "checked" : "") + ' ' + disabledAttr + ' />' + score_4_display + '</label>';
 								html += '    </td>';
 								html += '    <td class="itemRadioTd">';
 								var score_5_display = result[i].score_5 != null ? result[i].score_5 : '-';
-								html += '        <label class="radio-label"><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" data-comp-seq="' + compResult[j].eval_company_seq + '" onclick="radioClickEvent(' + compResult[j].eval_company_seq + ');" value="' + result[i].score_5 + '" ' + (result[i].COMMISSIONER_SCORE == result[i].score_5 ? "checked" : "") + ' ' + disabledAttr + ' />' + score_5_display + '</label>';
+								html += '        <label class="radio-label small-text"><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" data-comp-seq="' + compResult[j].eval_company_seq + '" onclick="radioClickEvent(' + compResult[j].eval_company_seq + ');" value="' + result[i].score_5 + '" ' + (result[i].COMMISSIONER_SCORE == result[i].score_5 ? "checked" : "") + ' ' + disabledAttr + ' />' + score_5_display + '</label>';
 								html += '    </td>';
 								html += '</tr>';
 							}

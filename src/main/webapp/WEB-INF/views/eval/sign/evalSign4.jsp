@@ -136,9 +136,12 @@
 		$('#bank_name').on('input', function() {
 			this.value = this.value.replace(/\d/g, ''); // 숫자 제거
 		});
-
 		$('#bank_no').on('input', function() {
-			this.value = this.value.replace(/[^\d]/g, ''); // 문자 제거
+			this.value = this.value.replace(/[^-\d]/g, ''); // 숫자와 '-' 이외의 문자 제거
+		});
+		$('#evaluationFee').on('input', function() {
+			let numericValue = this.value.replace(/[^\d]/g, '');
+			this.value = numberWithCommas(numericValue);
 		});
 	});
 

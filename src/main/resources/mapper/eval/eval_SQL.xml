@@ -959,4 +959,20 @@
 		  AND ACTIVE = 'Y'
 	</update>
 
+	<select id="getDuplId" parameterType="map" resultType="map">
+		SELECT
+			COMMISSIONER_SEQ,
+		    EVAL_ID,
+		    EVAL_PHONE
+		FROM CUST_EPIS.DJ_EVAL_COMMISSIONER
+		WHERE COMMITTEE_SEQ = (
+		    SELECT COMMITTEE_SEQ
+		    FROM CUST_EPIS.DJ_EVAL_COMMISSIONER
+		    WHERE COMMISSIONER_SEQ = #{commissioner_seq}
+			)
+		AND ACTIVE = 'Y'
+		GROUP BY COMMISSIONER_SEQ
+		ORDER BY COMMISSIONER_SEQ
+	</select>
+
 </mapper>

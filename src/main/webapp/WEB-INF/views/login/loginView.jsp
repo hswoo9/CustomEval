@@ -20,9 +20,19 @@
     #login_b2_type {top:150px;}
 }
 
+/*body {
+    background-image: url('/resources/Images/03.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+}*/
+
 </style>
 
+
+
 <body name="0" style="background-image:url('/upload/img/logo/epis/IMG_COMP_LOGIN_BANNER_B_epis.png?1589091744978');background-size:cover;">
+
 
 <script>
 $(function(){

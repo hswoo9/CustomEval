@@ -249,6 +249,31 @@ public class EvalServiceImpl implements EvalService {
 		Map<String, Object> comSeq = new HashMap<String, Object>();
 		comSeq.put("commissioner_seq", map.get("commissioner_seq"));
 		String evalId = evalDAO.getCommissionerSeqEvalId(comSeq);
+		List<Map<String, Object>> duplIdList = evalDAO.getDuplId(comSeq);
+
+
+		if (duplIdList != null && !duplIdList.isEmpty()) {
+			Map<String, Integer> nameCountMap = new HashMap<>();
+
+			// 이름 중복 여부 확인
+			for (Map<String, Object> item : duplIdList) {
+				String currentEvalId = String.valueOf(item.get("EVAL_ID"));
+				nameCountMap.put(currentEvalId, nameCountMap.getOrDefault(currentEvalId, 0) + 1);
+			}
+
+			for (Map<String, Object> item : duplIdList) {
+				String commissionerSeq = String.valueOf(item.get("COMMISSIONER_SEQ"));
+				String currentEvalId = String.valueOf(item.get("EVAL_ID"));
+				String evalPhone = String.valueOf(item.get("EVAL_PHONE"));
+
+				if (nameCountMap.get(currentEvalId) > 1 &&
+						currentEvalId.equals(evalId) &&
+						commissionerSeq.equals(String.valueOf(comSeq.get("commissioner_seq")))) {
+					evalId = currentEvalId + "(" + evalPhone.substring(evalPhone.length() - 4) + ")";
+					break;
+				}
+			}
+		}
 
 		if (map.containsKey("jangYN")) {
 			step += "_jang";

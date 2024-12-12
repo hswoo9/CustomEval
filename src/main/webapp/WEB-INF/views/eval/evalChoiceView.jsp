@@ -76,7 +76,7 @@ html, body {
 					<th>이름</th>
 				</tr>
 				
-				<c:forEach items="${commissionerList }" var="list">
+				<%--<c:forEach items="${commissionerList }" var="list">
 					<c:if test="${list.eval_avoid ne 'Y'}">
 						<tr>
 							<td style="text-align: center;">
@@ -86,6 +86,35 @@ html, body {
 								<input type="hidden" id="commissioner_pool_seq" value="${list.commissioner_pool_seq }">
 							</td>
 							<td>${list.NAME }</td>
+						</tr>
+					</c:if>
+				</c:forEach>--%>
+
+				<c:forEach var="list" items="${commissionerList}">
+					<c:if test="${list.eval_avoid ne 'Y'}">
+						<!-- 동명이인 체크를 위한 변수 설정 -->
+						<c:set var="isDuplicate" value="false" />
+						<c:forEach var="compareList" items="${commissionerList}">
+							<c:if test="${list.NAME == compareList.NAME && list != compareList}">
+								<c:set var="isDuplicate" value="true" />
+							</c:if>
+						</c:forEach>
+
+						<tr>
+							<td style="text-align: center;">
+								<input type="checkbox" value="${list.commissioner_seq}" class="commChk" style="width: 30px; height: 30px;">
+								<input type="hidden" id="comm_nmae" value="${list.NAME}">
+								<input type="hidden" id="committee_seq" value="${list.committee_seq}">
+								<input type="hidden" id="commissioner_pool_seq" value="${list.commissioner_pool_seq}">
+							</td>
+
+							<!-- 이름 옆에 전화번호 뒷자리 추가 -->
+							<td>
+									${list.NAME}
+								<c:if test="${isDuplicate}">
+									(${list.eval_phone.substring(list.eval_phone.length() - 4)})
+								</c:if>
+							</td>
 						</tr>
 					</c:if>
 				</c:forEach>

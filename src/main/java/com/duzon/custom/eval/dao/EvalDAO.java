@@ -245,5 +245,9 @@ public class EvalDAO extends AbstractDAO{
 		update("eval.setEvalJangNo", map);
 	}
 
+	public List<Map<String, Object>> getDuplId(Map<String, Object> params){
+		return selectList("eval.getDuplId", params);
+	}
+
 
 }

@@ -80,6 +80,10 @@
     ::-webkit-scrollbar-track {
         background: #f1f1f1;
     }
+
+    table {
+        font-family:"한양중고딕","한컴돋움",sans-serif;
+    }
 </style>
 <script type="text/javascript">
     window.onload = function () {
@@ -95,6 +99,7 @@
 	var list = colListArray.colList;
 
 	console.log("result",result);
+    console.log("rates",rates);
 	console.log("collist",list);
 	console.log("result list",comList);
 
@@ -348,7 +353,7 @@
             html += '<div style="width:100%; padding-bottom: 35px; text-align: center; padding-top: 50px;">';
             html +=	 '<h4 style="font-size: 30px;">제안서 평가 총괄표</h4>';
             html +=  '</div>';
-			html += '<table style="border:1px solid black; border-collapse: collapse; width: 100%; table-layout: fixed; margin: auto;">';
+			html += '<table style="border:1px solid black; border-collapse: collapse; width: 100%; margin: auto;">';
 
 			html += '<thead>';
 			html += '<tr>';
@@ -370,7 +375,7 @@
 
 
 			html += '<tbody>';
-			html += '<th rowspan="' + numberOfquality + '" style="border:1px solid black; border-collapse: collapse; width: 40px; text-align: center; margin : 5px">정성<br>평가</th>';
+			html += '<th rowspan="' + numberOfquality + '" style="border:1px solid black; border-collapse: collapse; width:5%; text-align: center; margin : 5px">정성<br>평가</th>';
 
 			//정성평가
 			var qualityGroupArray = [];
@@ -387,10 +392,10 @@
 				for (var j = 0; j < qualityGroupArray[i].length; j++) {
 					totalScore += qualityGroupArray[i][j].score;
 				}
-				html += '<td  rowspan="' + qualityGroupArray[i].length + '" style="border:1px solid black; border-collapse: collapse; text-align: center; padding-top: 5px; padding-bottom: 5px; width: 100px;">' + qualityGroupArray[i][0].item_name + '<br>(' + totalScore + '점)</td>';
+				html += '<td  rowspan="' + qualityGroupArray[i].length + '" style="border:1px solid black; border-collapse: collapse; text-align: center; width : 15%; padding-top: 5px; padding-bottom: 5px;">' + qualityGroupArray[i][0].item_name + '<br>(' + totalScore + '점)</td>';
 				for (var j = 0; j < qualityGroupArray[i].length; j++) {
 					var qualityScore = qksdhffla(qualityGroupArray[i][j].score);
-					html += '<td  style="border:1px solid black; border-collapse: collapse; width: 100px; padding-top: 5px; padding-bottom: 5px">' + qualityGroupArray[i][j].item_medium_name + '</td>';
+					html += '<td  style="border:1px solid black; border-collapse: collapse; padding-top: 5px; padding-bottom: 5px">' + qualityGroupArray[i][j].item_medium_name + '</td>';
 					html += '<td  style="border:1px solid black; border-collapse: collapse; text-align: center;">' + qualityScore + '</td>';
 					for (var h = t * maxCompaniesPerTable; h < t * maxCompaniesPerTable + currentCompanyCount; h++) {
 
@@ -497,7 +502,7 @@
 
 			//환산점수
 			html += '<tr>';
-			html += '<th id="thcell" colspan="4" style="border:1px solid black; border-collapse: collapse; text-align: center; padding-top: 5px; padding-bottom: 5px">환산점수( %)</th>';
+			html += '<th id="thcell" colspan="4" style="border:1px solid black; border-collapse: collapse; text-align: center; padding-top: 5px; padding-bottom: 5px">환산점수('+ rates +'%)</th>';
 			for (var i = t * maxCompaniesPerTable; i < t * maxCompaniesPerTable + currentCompanyCount; i++) {
 				var convertedScore = qksdhffla(comList[i].TOTAL_SUM * (rates / 100));
 				html += '<td id="cell" style="border:1px solid black; border-collapse: collapse; text-align: center;">' + convertedScore + '</td>';

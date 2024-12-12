@@ -75,6 +75,10 @@
 		background-color : #8c8c8c;
 		color : white;
 	}
+
+	table {
+		font-family:"한양중고딕","한컴돋움",sans-serif;
+	}
 </style>
 
 <title>위원별 제안서 평가표</title>

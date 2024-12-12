@@ -459,6 +459,7 @@
 		//_hwpPutText("bank_name", ob4);
 		_hwpPutText("bank_name", ob3);
 		_hwpPutText("bank_no", ob5);
+		_hwpPutImage("sign", "${userInfo.SIGN_DIR}");
 
 		_pHwpCtrl.GetTextFile("HWPML2X", "", function(data) {
 			signHwpFileData = data;
@@ -505,10 +506,9 @@
 		});
 	}
 
-	function setSign(imgData){
+	function setSign(imgData) {
 		$('#sign').attr('src', 'data:image/png;base64,' + imgData);
 		_hwpPutImage("sign", "C:\\SignData\\Temp.png");
-
 	}
 
 	//한글뷰어
@@ -537,22 +537,24 @@
 		var title1 = "「${userInfo.TITLE } 사업」평가수당 지급 확인서";
 		var title2 = " ◈ (수집·이용목적)「${userInfo.TITLE }」제안 평가비 지급 증빙";
 		var title3 = " ◈ (고유식별정보 수집·이용목적)「${userInfo.TITLE } 사업」제안 평가비 지급 증빙을 위한 실명 확인";
-		var name = "${userInfo.NAME }";
+		var oName = $('#oName').val();
 		var bank_name = "${userInfo.BANK_NAME }";
 		var eval_pay = document.getElementById("evaluationFee").value.replace(/,/g, '') || 0; // 평가비
 		var trans_pay = document.getElementById("transportFee").value.replace(/,/g, '') || 0; // 교통비
-		var total_pay = Number(eval_pay) + Number(trans_pay); // 합계
+		var total_pay = document.getElementById("evaluationFee").value.replace(/,/g, '') || 0 +
+				document.getElementById("transportFee").innerText.replace(/[^0-9]/g, '') || 0;
 		var date = "${nowDate}";
 
 		_hwpPutText("title1", title1);
 		//_hwpPutText("toptitle",title1);
 		_hwpPutText("title2", title2);
 		_hwpPutText("title3", title3);
-		_hwpPutText("name", name);
+		_hwpPutText("oName", oName);
 		_hwpPutText("date", date);
 		_hwpPutText("eval_pay", numberWithCommas(eval_pay) + '원');
 		_hwpPutText("trans_pay", numberWithCommas(trans_pay) + '원');
 		_hwpPutText("total_pay", numberWithCommas(total_pay) + '원');
+		_hwpPutSignImg("sign", "${userInfo.SIGN_DIR }");
 
 		// 주민등록번호와 계좌번호 추가
 		var num1 = $('#num1').val();

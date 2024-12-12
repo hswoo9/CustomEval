@@ -136,9 +136,12 @@
 		$('#bank_name').on('input', function() {
 			this.value = this.value.replace(/\d/g, ''); // 숫자 제거
 		});
-
 		$('#bank_no').on('input', function() {
-			this.value = this.value.replace(/[^\d]/g, ''); // 문자 제거
+			this.value = this.value.replace(/[^-\d]/g, ''); // 숫자와 '-' 이외의 문자 제거
+		});
+		$('#evaluationFee').on('input', function() {
+			let numericValue = this.value.replace(/[^\d]/g, '');
+			this.value = numberWithCommas(numericValue);
 		});
 	});
 
@@ -456,6 +459,7 @@
 		//_hwpPutText("bank_name", ob4);
 		_hwpPutText("bank_name", ob3);
 		_hwpPutText("bank_no", ob5);
+		_hwpPutImage("sign", "${userInfo.SIGN_DIR}");
 
 		_pHwpCtrl.GetTextFile("HWPML2X", "", function(data) {
 			signHwpFileData = data;
@@ -502,10 +506,9 @@
 		});
 	}
 
-	function setSign(imgData){
+	function setSign(imgData) {
 		$('#sign').attr('src', 'data:image/png;base64,' + imgData);
 		_hwpPutImage("sign", "C:\\SignData\\Temp.png");
-
 	}
 
 	//한글뷰어
@@ -534,29 +537,31 @@
 		var title1 = "「${userInfo.TITLE } 사업」평가수당 지급 확인서";
 		var title2 = " ◈ (수집·이용목적)「${userInfo.TITLE }」제안 평가비 지급 증빙";
 		var title3 = " ◈ (고유식별정보 수집·이용목적)「${userInfo.TITLE } 사업」제안 평가비 지급 증빙을 위한 실명 확인";
-		var name = "${userInfo.NAME }";
+		var oName = $('#oName').val();
 		var bank_name = "${userInfo.BANK_NAME }";
 		var eval_pay = document.getElementById("evaluationFee").value.replace(/,/g, '') || 0; // 평가비
 		var trans_pay = document.getElementById("transportFee").value.replace(/,/g, '') || 0; // 교통비
-		var total_pay = Number(eval_pay) + Number(trans_pay); // 합계
+		var total_pay = document.getElementById("evaluationFee").value.replace(/,/g, '') || 0 +
+				document.getElementById("transportFee").innerText.replace(/[^0-9]/g, '') || 0;
 		var date = "${nowDate}";
 
 		_hwpPutText("title1", title1);
 		//_hwpPutText("toptitle",title1);
 		_hwpPutText("title2", title2);
 		_hwpPutText("title3", title3);
-		_hwpPutText("name", name);
+		_hwpPutText("oName", oName);
 		_hwpPutText("date", date);
 		_hwpPutText("eval_pay", numberWithCommas(eval_pay) + '원');
 		_hwpPutText("trans_pay", numberWithCommas(trans_pay) + '원');
 		_hwpPutText("total_pay", numberWithCommas(total_pay) + '원');
+		_hwpPutSignImg("sign", "${userInfo.SIGN_DIR }");
 
 		// 주민등록번호와 계좌번호 추가
 		var num1 = $('#num1').val();
 		var num2 = $('#num2').val();
 		var bank_no = $('#bank_no').val();
 
-		_hwpPutText("num", num1 + '-' + num2);
+		_hwpPutText("num", num1 + "-" + num2);
 		_hwpPutText("bank_no", bank_no);
 
 		_hwpPutSignImg("sign", "${userInfo.SIGN_DIR }");
@@ -707,8 +712,10 @@
 	<TABLE border="1" cellspacing="0" cellpadding="0" style='width:580px; border-collapse:collapse;border:none;'>
 		<TR>
 			<TD valign="middle" bgcolor="#ffffff"  style='width:580px;height:70px;border-left:none;border-right:none;border-top:none;border-bottom:double #000000 2.0pt;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
-				<P CLASS=HStyle0 STYLE='text-align:center;'><SPAN STYLE='font-size:17.0pt;font-weight:bold;line-height:160%'>「${userInfo.TITLE } 사업」평가수당 지급 확인서</SPAN></P>
-				<%--<P CLASS=HStyle0 STYLE='text-align:center;'><SPAN STYLE='font-size:17.0pt;font-weight:bold;line-height:160%'>평가수당 지급 확인서</SPAN></P>--%>
+				<P CLASS="HStyle0" STYLE="text-align:center;">
+					 <SPAN STYLE="font-size:17.0pt;font-weight:bold;line-height:160%">「${userInfo.TITLE} 사업」</SPAN><br>
+					 <SPAN STYLE="font-size:17.0pt;font-weight:bold;line-height:160%">평가수당 지급 확인</SPAN>
+				</P>
 			</TD>
 		</TR>
 	</TABLE>
@@ -737,7 +744,7 @@
 			</TD>
 
 			<TD valign="middle" style='width:186px;height:31px;border-left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt; text-align: right;'>
-				<select id="region" style="width: 80px; margin-right: 5px;" onchange="updateTransportFee()">
+				<select id="region" style="width: 110px; margin-right: 5px;" onchange="updateTransportFee()">
 					<option value="------">회사주소지 선택</option>
 					<option value="서울/경기">서울/경기</option>
 					<option value="강원영동">강원(영동)</option>
@@ -760,7 +767,7 @@
 	<P CLASS=HStyle0 STYLE='margin-top:5.0pt;text-align:center;line-height:130%;'></P>
 
 	<P CLASS=HStyle34 STYLE='margin-top:3.0pt;line-height:160%;'>
-	<P CLASS=HStyle34 style="color:red; font-size: 16px;"> * 사업담당자 확인 후 입력 필수</P>
+	<P CLASS=HStyle34 style="color:red; font-size: 12px;"> * 농정원 사업담당자 확인 필수</P>
 	<TABLE border="1" cellspacing="0" cellpadding="0" style='width:580px; border-collapse:collapse;border:none;'>
 		<TR>
 			<TD colspan="3" valign="middle" style='width:163px;height:22px;border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>

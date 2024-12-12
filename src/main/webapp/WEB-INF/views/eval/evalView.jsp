@@ -397,21 +397,36 @@
 								var disabledAttr = item.item_name === "상생기업" ? "disabled" : "";
 
 								html += '    <td class="itemRadioTd">';
-								html += '        <label class="radio-label small-text"><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" data-comp-seq="' + compResult[j].eval_company_seq + '" onclick="radioClickEvent(' + compResult[j].eval_company_seq + ');" value="' + result[i].score_1 + '" ' + (result[i].COMMISSIONER_SCORE == result[i].score_1 ? "checked" : "") + ' ' + disabledAttr + ' />' + result[i].score_1 + '</label>';
+								html += '        <label class="radio-label small-text" style="display: inline-block; text-align: center;">';
+								html += '            <span style="display: block;">' + result[i].score_1 + '</span>';  <!-- 숫자를 위로 -->
+								html += '            <input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" data-comp-seq="' + compResult[j].eval_company_seq + '" onclick="radioClickEvent(' + compResult[j].eval_company_seq + ');" value="' + result[i].score_1 + '" ' + (result[i].COMMISSIONER_SCORE == result[i].score_1 ? "checked" : "") + ' ' + disabledAttr + ' />';
+								html += '        </label>';
 								html += '    </td>';
 								html += '    <td class="itemRadioTd">';
-								html += '        <label class="radio-label small-text"><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" data-comp-seq="' + compResult[j].eval_company_seq + '" onclick="radioClickEvent(' + compResult[j].eval_company_seq + ');" value="' + result[i].score_2 + '" ' + (result[i].COMMISSIONER_SCORE == result[i].score_2 ? "checked" : "") + ' ' + disabledAttr + ' />' + result[i].score_2 + '</label>';
+								html += '        <label class="radio-label small-text" style="display: inline-block; text-align: center;">';
+								html += '            <span style="display: block;">' + result[i].score_2 + '</span>';  <!-- 숫자를 위로 -->
+								html += '            <input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" data-comp-seq="' + compResult[j].eval_company_seq + '" onclick="radioClickEvent(' + compResult[j].eval_company_seq + ');" value="' + result[i].score_2 + '" ' + (result[i].COMMISSIONER_SCORE == result[i].score_2 ? "checked" : "") + ' ' + disabledAttr + ' />';
+								html += '        </label>';
 								html += '    </td>';
 								html += '    <td class="itemRadioTd">';
-								html += '        <label class="radio-label small-text"><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" data-comp-seq="' + compResult[j].eval_company_seq + '" onclick="radioClickEvent(' + compResult[j].eval_company_seq + ');" value="' + result[i].score_3 + '" ' + (result[i].COMMISSIONER_SCORE == result[i].score_3 ? "checked" : "") + ' ' + disabledAttr + ' />' + result[i].score_3 + '</label>';
+								html += '        <label class="radio-label small-text" style="display: inline-block; text-align: center;">';
+								html += '            <span style="display: block;">' + result[i].score_3 + '</span>';  <!-- 숫자를 위로 -->
+								html += '            <input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" data-comp-seq="' + compResult[j].eval_company_seq + '" onclick="radioClickEvent(' + compResult[j].eval_company_seq + ');" value="' + result[i].score_3 + '" ' + (result[i].COMMISSIONER_SCORE == result[i].score_3 ? "checked" : "") + ' ' + disabledAttr + ' />';
+								html += '        </label>';
 								html += '    </td>';
 								html += '    <td class="itemRadioTd">';
 								var score_4_display = result[i].score_4 != null ? result[i].score_4 : '-';
-								html += '        <label class="radio-label small-text"><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" data-comp-seq="' + compResult[j].eval_company_seq + '" onclick="radioClickEvent(' + compResult[j].eval_company_seq + ');" value="' + result[i].score_4 + '" ' + (result[i].COMMISSIONER_SCORE == result[i].score_4 ? "checked" : "") + ' ' + disabledAttr + ' />' + score_4_display + '</label>';
+								html += '        <label class="radio-label small-text" style="display: inline-block; text-align: center;">';
+								html += '            <span style="display: block;">' + score_4_display + '</span>';  <!-- 숫자를 위로 -->
+								html += '            <input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" data-comp-seq="' + compResult[j].eval_company_seq + '" onclick="radioClickEvent(' + compResult[j].eval_company_seq + ');" value="' + result[i].score_4 + '" ' + (result[i].COMMISSIONER_SCORE == result[i].score_4 ? "checked" : "") + ' ' + disabledAttr + ' />';
+								html += '        </label>';
 								html += '    </td>';
 								html += '    <td class="itemRadioTd">';
 								var score_5_display = result[i].score_5 != null ? result[i].score_5 : '-';
-								html += '        <label class="radio-label small-text"><input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" data-comp-seq="' + compResult[j].eval_company_seq + '" onclick="radioClickEvent(' + compResult[j].eval_company_seq + ');" value="' + result[i].score_5 + '" ' + (result[i].COMMISSIONER_SCORE == result[i].score_5 ? "checked" : "") + ' ' + disabledAttr + ' />' + score_5_display + '</label>';
+								html += '        <label class="radio-label small-text" style="display: inline-block; text-align: center;">';
+								html += '            <span style="display: block;">' + score_5_display + '</span>';  <!-- 숫자를 위로 -->
+								html += '            <input type="radio" ev_seq="' + result[i].item_seq + '" class="score" name="score' + i + '" data-comp-seq="' + compResult[j].eval_company_seq + '" onclick="radioClickEvent(' + compResult[j].eval_company_seq + ');" value="' + result[i].score_5 + '" ' + (result[i].COMMISSIONER_SCORE == result[i].score_5 ? "checked" : "") + ' ' + disabledAttr + ' />';
+								html += '        </label>';
 								html += '    </td>';
 								html += '</tr>';
 							}

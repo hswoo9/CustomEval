@@ -245,7 +245,7 @@
         </TR>
     </TABLE>
 
-    <TABLE border="1" cellspacing="0" cellpadding="0" style='width:1000px; border-collapse:collapse;border:none; margin-top:20px;'>
+    <TABLE id="notiContent" border="1" cellspacing="0" cellpadding="0" style='width:1000px; border-collapse:collapse;border:none; margin-top:20px;'>
         <caption style="text-align: left; font-size:13.0pt; color: red; font-weight: bold;">기피사유</caption>
         <TR>
             <TD valign="middle" style='width:632px;height:40px;border-left:solid #000000 1.1pt;border-right:solid #000000 1.1pt;border-top:solid #aeaeae 0.6pt;border-bottom:solid #aeaeae 0.6pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>

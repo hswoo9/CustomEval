@@ -180,6 +180,22 @@
 
 					pdf.addImage(imgData, "PNG", xOffset, 10, imgScaledWidth, imgScaledHeight);
 					//pdf.addImage(imgData, "PNG", 10, 10);
+
+					// 테이블 간 페이지 나누기
+					var tables = document.querySelectorAll("#contentsTemp table");
+					tables.forEach((table, index) => {
+						if (index > 0) {
+							pdf.addPage(); // 새 페이지 추가
+						}
+						// 각 테이블을 이미지로 변환 후 PDF에 추가
+						html2canvas(table, {
+							scale: 2
+						}).then(tableCanvas => {
+							const tableImgData = tableCanvas.toDataURL("image/png");
+							pdf.addImage(tableImgData, "PNG", xOffset, 10, imgScaledWidth, imgScaledHeight);
+						});
+					});
+
 					const pdfBase64 = pdf.output('datauristring');
 
 					signHwpFileData = pdfBase64;
@@ -214,6 +230,22 @@
 
 				pdf.addImage(imgData, "PNG", xOffset, 10, imgScaledWidth, imgScaledHeight);
 				//pdf.addImage(imgData, "PNG", 10, 10);
+
+				// 테이블 간 페이지 나누기
+				var tables = document.querySelectorAll("#contentsTemp table");
+				tables.forEach((table, index) => {
+					if (index > 0) {
+						pdf.addPage(); // 새 페이지 추가
+					}
+					// 각 테이블을 이미지로 변환 후 PDF에 추가
+					html2canvas(table, {
+						scale: 2
+					}).then(tableCanvas => {
+						const tableImgData = tableCanvas.toDataURL("image/png");
+						pdf.addImage(tableImgData, "PNG", xOffset, 10, imgScaledWidth, imgScaledHeight);
+					});
+				});
+
 				const pdfBase64 = pdf.output('datauristring');
 
 				signHwpFileData = pdfBase64;
@@ -480,13 +512,13 @@
 		var tableCount = Math.ceil(companyCount / maxCompaniesPerTable); // 필요한 표의 개수 계산
 
 		var html = '';
+		html += '<div style="width:100%; padding-bottom: 35px; text-align: center; padding-top: 50px;">';
+		html +=	 '<h4 style="font-size: 30px;">위원별 제안서 평가표</h4>';
+		html +=  '</div>';
 		for (var t = 0; t < tableCount; t++) {
 			var currentCompanyCount = Math.min(companyCount - t * maxCompaniesPerTable, maxCompaniesPerTable); // 현재 표에 들어갈 제안업체 수
-			html += '<div style="width:100%; padding-bottom: 35px; text-align: center; padding-top: 50px;">';
-			html +=	 '<h4 style="font-size: 30px;">위원별 제안서 평가표</h4>';
-			html +=  '</div>';
-			html += '<table style="border:1px solid black; border-collapse: collapse; width: 100%; table-layout: fixed; margin : auto;">';
 
+			html += '<table style="border:1px solid black; border-collapse: collapse; width: 100%; table-layout: fixed; margin : auto; margin-bottom: 100px;">';
 			html += '<thead>';
 			html += '<tr>';
 			html += '<th id="thcell" rowspan="2" colspan="3" style="border:1px solid black; border-collapse: collapse; width: 43%; text-align; center;">평가항목</th>';

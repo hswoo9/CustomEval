@@ -335,7 +335,9 @@
 		T.*,
 		#{userCnt} AS USER_CNT,
 		SUM(T.SUM_SCORE) AS TOTAL_ITEM_SUM,
-		SUM(T.SUM_SCORE) / #{userCntTotal} AS TOTAL_SUM,
+		<foreach collection="colList" item="col" separator="+">
+			MAX(CASE WHEN T.ITEM_SEQ = #{col.item_seq} THEN T.SUM_SCORE / #{userCntTotal} END)
+		</foreach> AS TOTAL_SUM,
 		<foreach collection="colList" item="col" separator=",">
 			MAX(CASE WHEN T.ITEM_SEQ = #{col.item_seq} THEN T.SUM_SCORE END) AS ITME_SUM_SCORE_#{col.item_seq},
 			MAX(CASE WHEN T.ITEM_SEQ = #{col.item_seq} THEN T.SUM_SCORE / #{userCntTotal} END) AS ITME_SCORE_#{col.item_seq}

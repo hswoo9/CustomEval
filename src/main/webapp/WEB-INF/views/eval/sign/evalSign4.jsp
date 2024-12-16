@@ -439,11 +439,15 @@
 		var ob6 = $('#addr').val();
 		var ob7 = $('#oName').val();
 		/*var ob7 = $('#oName').val();*/
-		var ob8 = document.getElementById("evaluationFee").value.replace(/,/g, '') || 0;
-		var ob9 = document.getElementById("transportFee").innerText.replace(/[^0-9]/g, '') || 0;
-		var ob10 = Number(ob8) + Number(ob9);
+        // 평가비 처리 (input value)
+        var ob8 = document.getElementById("evaluationFee").value.replace(/[^0-9]/g, '') || "0";
+        // 교통비 처리 (span innerText)
+        var ob9 = document.getElementById("transportFee").innerText.replace(/[^0-9]/g, '') || "0";
+        // 합계 계산
+        var ob10 = parseInt(ob8) + parseInt(ob9);
 
-		_hwpPutText("title1", title1);
+
+        _hwpPutText("title1", title1);
 		_hwpPutText("dept", ob2);
 		/*if($("input[name='publicOrProtected']:checked").val() == "Y"){
 			_hwpPutText("num", p1 + '-*******');
@@ -451,9 +455,9 @@
 			_hwpPutText("num", '******-*******');
 		}*/
 		_hwpPutText("oName", ob7);
-		_hwpPutText("eval_pay", ob8);
-		_hwpPutText("trans_pay", ob9);
-		_hwpPutText("total_pay", ob10);
+        _hwpPutText("eval_pay", numberWithCommas(ob8) + '원');
+		_hwpPutText("trans_pay", numberWithCommas(ob9) + '원');
+		_hwpPutText("total_pay", numberWithCommas(ob10.toString()) + '원');
 		_hwpPutText("addr", ob6);
 		_hwpPutText("num", ob1);
 		//_hwpPutText("bank_name", ob4);
@@ -539,10 +543,9 @@
 		var title3 = " ◈ (고유식별정보 수집·이용목적)「${userInfo.TITLE } 사업」제안 평가비 지급 증빙을 위한 실명 확인";
 		var oName = $('#oName').val();
 		var bank_name = "${userInfo.BANK_NAME }";
-		var eval_pay = document.getElementById("evaluationFee").value.replace(/,/g, '') || 0; // 평가비
-		var trans_pay = document.getElementById("transportFee").value.replace(/,/g, '') || 0; // 교통비
-		var total_pay = document.getElementById("evaluationFee").value.replace(/,/g, '') || 0 +
-				document.getElementById("transportFee").innerText.replace(/[^0-9]/g, '') || 0;
+        var eval_pay = parseInt(document.getElementById("evaluationFee").value.replace(/,/g, ''), 10) || 0; // 평가비 숫자 변환
+        var trans_pay = parseInt(document.getElementById("transportFee").innerText.replace(/[^0-9]/g, ''), 10) || 0; // 교통비 숫자 변환
+        var total_pay = eval_pay + trans_pay;
 		var date = "${nowDate}";
 
 		_hwpPutText("title1", title1);
@@ -739,7 +742,7 @@
 		</TR>
 		<TR>
 			<TD valign="middle" style='width:186px;height:31px;border-left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt; text-align: right;'>
-				<input type="text" id="evaluationFee" style="width: 90%; text-align: right; box-sizing: border-box; border: none;" placeholder="평가비를 입력하세요." oninput="updateTotal()" />
+				<input type="text" id="evaluationFee" style="width: 90%; text-align: right; box-sizing: border-box; border: none;" placeholder="평가비를 입력하세요." value="${userInfo.ALLOWANCE}" oninput="updateTotal()" />
 				<SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>원</SPAN>
 			</TD>
 

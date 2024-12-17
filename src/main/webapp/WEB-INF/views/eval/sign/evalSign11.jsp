@@ -34,7 +34,7 @@
     };
 </script>
 
-<body name="0" style="background-image:url('/upload/img/logo/epis/IMG_COMP_LOGIN_BANNER_B_epis.png?1589091744978');background-size:cover;">
+<body name="0" style="background-image:url('/resources/Images/main.jpg');background-size:cover;">
 
 
 <div id="login_b2_type" style="top: 20% !important; left: 28% !important;">

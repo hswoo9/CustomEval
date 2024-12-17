@@ -138,15 +138,8 @@
 	const totalDivs = ${getCompanyList.size()};
 	let processedDivs = 0;
 
-	function signSaveBtn(){
-		/*_pHwpCtrl.GetTextFile("HWPML2X", "", function(data) {
-			signHwpFileData = data;
-		})*/
-
-		//setTimeout(signSave, 600);
-
+	function signSaveBtn() {
 		const divPrefix = "temp_";
-
 		signHwpFileDataList = [];
 		processedDivs = 0; // Reset processedDivs
 
@@ -155,41 +148,88 @@
 			const element = document.getElementById(divId);
 			console.log("divId : ", divId);
 
-			if (element) {
 
+			if (element) {
 				const scaleFactor = window.devicePixelRatio || 2;
 
-				html2canvas(element, { scale: scaleFactor }).then(canvas => {
-					const imgData = canvas.toDataURL("image/png");
-					const pdf = new jsPDF("l", "mm", "a4");
+				// 각 temp_i에 대해 header와 contenttable_j 처리
+				const contentTables = [];
+				const contentTableCount = element.getElementsByClassName("infoTbody").length; // temp_i 내의 contenttable 개수
 
-					const pdfWidth = pdf.internal.pageSize.getWidth();
-					const pdfHeight = pdf.internal.pageSize.getHeight();
-					const imgWidth = canvas.width * 0.2645;
-					const imgHeight = canvas.height * 0.2645;
+				// header 추가
+				const headerId = "header_"+i;
+				const header = document.getElementById(headerId); // temp_i의 header
 
-					const scaleFactor = 0.8;
+				const pdf = new jsPDF("l", "mm", "a4");
 
-					const scale = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight) * scaleFactor;
-					const imgScaledWidth = imgWidth * scale;
-					const imgScaledHeight = imgHeight * scale;
+				// header를 첫 페이지에 추가
+				if (header) {
+					html2canvas(header, { scale: scaleFactor }).then(canvas => {
+						const imgData = canvas.toDataURL("image/png");
+						const pdfWidth = pdf.internal.pageSize.getWidth();
+						const pdfHeight = pdf.internal.pageSize.getHeight();
+						const imgWidth = canvas.width * 0.2645;
+						const imgHeight = canvas.height * 0.2645;
 
-					const xOffset = (pdfWidth - imgScaledWidth) / 2
+						const scale = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight) * 0.8;
+						const imgScaledWidth = imgWidth * scale;
+						const imgScaledHeight = imgHeight * scale;
+						const xOffset = (pdfWidth - imgScaledWidth) / 2;
+						const yOffset = 0.5;
 
+						// 첫 번째 페이지에 header 추가
+						pdf.addImage(imgData, "PNG", xOffset, yOffset, imgScaledWidth, imgScaledHeight);
+					});
+				}
 
-					pdf.addImage(imgData, "PNG", xOffset, 10, imgScaledWidth, imgScaledHeight);
+				// 각 contenttable_j 처리
 
-					//pdf.addImage(imgData, "PNG", 10, 10);
-
-					// PDF를 Base64로 인코딩하여 signHwpFileDataList에 추가
-					signHwpFileDataList.push(pdf.output("datauristring").split(",")[1]);
-
-					processedDivs++;
-
-					// 모든 div가 처리되었으면 signSave 호출
-					if (processedDivs === totalDivs) {
-						signSave();
+				for (let j = 1; j <= contentTableCount; j++) {
+					const contentTableId = "contenttable_" + i + "_" + j;
+					const contentTable = document.getElementById(contentTableId); // 예: contenttable_1_1
+					if (contentTable) {
+						contentTables.push(contentTable);
 					}
+				}
+
+				// contentTable을 페이지마다 추가
+				contentTables.forEach((contentTable, index) => {
+					html2canvas(contentTable, { scale: scaleFactor }).then(canvas => {
+						const imgData = canvas.toDataURL("image/png");
+						const pdfWidth = pdf.internal.pageSize.getWidth();
+						const pdfHeight = pdf.internal.pageSize.getHeight();
+						const imgWidth = canvas.width * 0.2645;
+						const imgHeight = canvas.height * 0.2645;
+
+						const scale = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight) * 0.8;
+						const imgScaledWidth = imgWidth * scale;
+						const imgScaledHeight = imgHeight * scale;
+						const xOffset = (pdfWidth - imgScaledWidth) / 2;
+						var yOffset = 10;
+
+
+						// 페이지 추가 전에 첫 페이지에는 header가 이미 추가된 상태
+						if (index === 0) {
+							yOffset = 15;
+						} else {
+							if (index > 0) {
+								pdf.addPage(); // 두 번째 테이블부터는 새 페이지에 추가
+								yOffset = 10;  // 새 페이지는 Y 좌표 초기화
+							}
+						}
+
+						pdf.addImage(imgData, "PNG", xOffset, yOffset, imgScaledWidth, imgScaledHeight);
+
+						// 마지막 contentTable의 경우에만 signHwpFileDataList에 추가
+
+						if (index === contentTables.length - 1) {
+							signHwpFileDataList.push(pdf.output("datauristring").split(",")[1]);
+							processedDivs++;
+							if (processedDivs === totalDivs) {
+								signSave();
+							}
+						}
+					});
 				});
 			} else {
 				processedDivs++;
@@ -202,13 +242,8 @@
 		formData.append("commissioner_seq", "${userInfo.COMMISSIONER_SEQ}");
 		formData.append("step", "7");
 
-		console.log("signHwpFileDataList 확인:", signHwpFileDataList);
+		//console.log("signHwpFileDataList 확인:", signHwpFileDataList);
 
-		// signHwpFileDataList 배열을 FormData에 추가 (각 div에 대해 고유한 키로 추가)
-		/*signHwpFileDataList.forEach((data, index) => {
-			console.log("현재 index:", index); // 각 데이터의 index 확인
-			formData.append(`signHwpFileData_${index + 1}`, data);
-		});*/
 		for (let j = 0; j < signHwpFileDataList.length; j++) {
 
 			const data = signHwpFileDataList[j];  // 현재 index에 해당하는 데이터
@@ -216,10 +251,10 @@
 			formData.append("signHwpFileData_"+(j + 1), data);
 		}
 
-		console.log("FormData 내용 확인:");
-		for (let pair of formData.entries()) {
+		//console.log("FormData 내용 확인:");
+		/*for (let pair of formData.entries()) {
 			console.log(pair[0], ":", pair[1]); // 키와 값 확인
-		}
+		}*/
 
 
 
@@ -349,12 +384,13 @@
 
 		<div id="temp_${mainSt.index + 1}" style="page-break-after: always;">
 
+			<div id="header_${mainSt.index + 1}" class="header" style="width:100%; padding-bottom: 35px; text-align: center; padding-top: 50px;">
+				<h4 style="font-size: 20px;">업체별 제안서 평가집계표_${companyList.display_title}</h4>
+			</div>
 
-			<c:forEach var="t" begin="0" end="${endTableCount}">
+			<c:forEach var="t" begin="0" end="${endTableCount}" varStatus="tableMainSt">
 
-				<div style="width:100%; padding-bottom: 35px; text-align: center; padding-top: 50px;">
-					<h4 style="font-size: 20px;">업체별 제안서 평가집계표_${companyList.display_title}</h4>
-				</div>
+
 
 				<%
 					int currentIndex = Integer.parseInt(pageContext.getAttribute("t").toString());
@@ -383,7 +419,7 @@
 
 			<%--</c:forEach>--%>
 
-			<TABLE class="infoTbody" style="margin:0;">
+			<TABLE id="contenttable_${mainSt.index + 1}_${tableMainSt.index + 1}" class="infoTbody" style="margin:0;">
 				<TR>
 					<TD colspan="3" valign="bottom" style='width:250px; height:28px;'>
 						<P CLASS=HStyle0 STYLE='line-height:180%;'>▣ 제안업체명 :

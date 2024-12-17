@@ -171,7 +171,8 @@
 						const imgWidth = canvas.width * 0.2645;
 						const imgHeight = canvas.height * 0.2645;
 
-						const scale = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight) * 0.8;
+
+						const scale = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight) * 0.5;
 						const imgScaledWidth = imgWidth * scale;
 						const imgScaledHeight = imgHeight * scale;
 						const xOffset = (pdfWidth - imgScaledWidth) / 2;
@@ -207,10 +208,8 @@
 						const xOffset = (pdfWidth - imgScaledWidth) / 2;
 						var yOffset = 10;
 
-
-						// 페이지 추가 전에 첫 페이지에는 header가 이미 추가된 상태
 						if (index === 0) {
-							yOffset = 15;
+							yOffset = 20;
 						} else {
 							if (index > 0) {
 								pdf.addPage(); // 두 번째 테이블부터는 새 페이지에 추가

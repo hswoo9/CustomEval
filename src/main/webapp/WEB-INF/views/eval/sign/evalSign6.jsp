@@ -18,7 +18,7 @@
 <script type="text/javascript" src="<c:url value='/resources/js/jquery-latest.min.js' />"></script>
 
 <style>
-    #contentsTemp {
+	#contentsTemp {
 		margin-top : 10px;
 		max-width: 100%;
 		width: 1000px;
@@ -66,10 +66,10 @@
 		}
 	}
 
-    #thcell {
-        background-color : #8c8c8c;
-        color : white;
-    }
+	#thcell {
+		background-color : #8c8c8c;
+		color : white;
+	}
 
 	#cell {
 		background-color : #8c8c8c;
@@ -97,6 +97,7 @@
 		});
 	};
 
+
 	var list = JSON.parse('${list}');
 	var getCompanyList = JSON.parse('${getCompanyList}');
 	var getCompanyRemarkList = JSON.parse('${getCompanyRemarkList}');
@@ -121,22 +122,25 @@
 		}
 	}
 
-/*	console.log("list",list);
-	console.log("getCompanyList",getCompanyList);
-	console.log("getCompanyRemarkList",getCompanyRemarkList);
-	console.log("itemList",itemList);
-	console.log("getCompanyTotal",getCompanyTotal);
-	console.log("qualitativeGroups",qualitativeGroups);
-	console.log("quantitativeGroups",quantitativeGroups);
+	/*	console.log("list",list);
+        console.log("getCompanyList",getCompanyList);
+        console.log("getCompanyRemarkList",getCompanyRemarkList);
+        console.log("itemList",itemList);
+        console.log("getCompanyTotal",getCompanyTotal);
+        console.log("qualitativeGroups",qualitativeGroups);
+        console.log("quantitativeGroups",quantitativeGroups);
 
-	console.log("numberOfquality",numberOfquality);
-	console.log("numberOfquantity",numberOfquantity);*/
+        console.log("numberOfquality",numberOfquality);
+        console.log("numberOfquantity",numberOfquantity);*/
 
-/* 	$(function(){
-		alert('"제안평가 위원님은 본인의 평가가 이상이 없는지 확인하시고\n이상이 있으면 수정하여 주시기 바라며,\n저장버튼 클릭후에는 수정이 불가능 합니다"');
-	}); */
+	/* 	$(function(){
+            alert('"제안평가 위원님은 본인의 평가가 이상이 없는지 확인하시고\n이상이 있으면 수정하여 주시기 바라며,\n저장버튼 클릭후에는 수정이 불가능 합니다"');
+        }); */
+
+
 
 	var signHwpFileData = "";
+
 	function signSaveBtn(){
 		if (confirm('평가확정 이후에는 점수를 수정하실 수 없습니다. 그래도 확정하시겠습니까?')) {
 			var result = true;
@@ -148,113 +152,131 @@
 				alert("평가가 진행 중입니다.\n위원장은 모든 평가위원의 평가가 종료 된 후에 평가 저장이 가능합니다.");
 				return;
 			}
-			// _pHwpCtrl.GetTextFile("HWPML2X", "", function (data) {
-			// 	signHwpFileData = data;
-			// })
+
 
 			const width = window.innerWidth;
 
+			const header = document.getElementById("header");
+
 			console.log("width",width);
 
+			var companyCount = getCompanyTotal.length;
+			var maxCompaniesPerTable = 9; // 표 당 최대 9개의 제안업체
+			var tableCount = Math.ceil(companyCount / maxCompaniesPerTable); // 필요한 표의 개수 계산
+
+			const pdf = new jsPDF("l", "mm", "a4");
+			const pdfWidth = pdf.internal.pageSize.getWidth();
+			const pdfHeight = pdf.internal.pageSize.getHeight();
+
+
 			if (width >= 1024) {
-				html2canvas(document.getElementById("contentsTemp"),{
-					scale: 2
-				}).then(canvas => {
-					const imgData = canvas.toDataURL("image/png");
-					const pdf = new jsPDF("l", "mm", "a4");
 
-					const pdfWidth = pdf.internal.pageSize.getWidth();
-					const pdfHeight = pdf.internal.pageSize.getHeight();
-					const imgWidth = canvas.width * 0.2645;
-					const imgHeight = canvas.height * 0.2645;
-
-					//캡쳐된 이미지를 0.8배 키워줌
-					const scaleFactor = 0.8;
+				html2canvas(header, { scale: 2 }).then(headerCanvas => {
+					const imgData = headerCanvas.toDataURL("image/png");
+					const imgWidth = headerCanvas.width * 0.2645;
+					const imgHeight = headerCanvas.height * 0.2645;
+					const scaleFactor = 0.5;
 
 					const scale = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight) * scaleFactor;
 					const imgScaledWidth = imgWidth * scale;
 					const imgScaledHeight = imgHeight * scale;
 
 					const xOffset = (pdfWidth - imgScaledWidth) / 2
+					const yOffset = 0.5;
 
+					pdf.addImage(imgData, "PNG", xOffset, yOffset, imgScaledWidth, imgScaledHeight);
 
-					pdf.addImage(imgData, "PNG", xOffset, 10, imgScaledWidth, imgScaledHeight);
-					//pdf.addImage(imgData, "PNG", 10, 10);
+					processTables(0, tableCount, pdf, imgScaledHeight + 20, () => {
+						const pdfBase64 = pdf.output("datauristring");
+						signHwpFileData = pdfBase64;
 
-					// 테이블 간 페이지 나누기
-					var tables = document.querySelectorAll("#contentsTemp table");
-					tables.forEach((table, index) => {
-						if (index > 0) {
-							pdf.addPage(); // 새 페이지 추가
-						}
-						// 각 테이블을 이미지로 변환 후 PDF에 추가
-						html2canvas(table, {
-							scale: 2
-						}).then(tableCanvas => {
-							const tableImgData = tableCanvas.toDataURL("image/png");
-							pdf.addImage(tableImgData, "PNG", xOffset, 10, imgScaledWidth, imgScaledHeight);
-						});
+						// 저장 호출
+						setTimeout(signSave, 600);
+
 					});
-
-					const pdfBase64 = pdf.output('datauristring');
-
-					signHwpFileData = pdfBase64;
 				});
 
-				setTimeout(signSave, 600);
+
 
 			}else if(width < 1024){
 
-			//pdf
-			html2canvas(document.getElementById("contentsTemp"),{
-				//scale: 2 * devicePixelRatio,
-				scale: window.devicePixelRatio || 1, // 패드의 DPI 기반 스케일 조정
-				useCORS: true
-			}).then(canvas => {
-				const imgData = canvas.toDataURL("image/png");
-				const pdf = new jsPDF("l", "mm", "a4");
+				//pdf
+				html2canvas(header, { scale: 2 }).then(headerCanvas => {
+					const imgData = headerCanvas.toDataURL("image/png");
 
-				const pdfWidth = pdf.internal.pageSize.getWidth();
-				const pdfHeight = pdf.internal.pageSize.getHeight();
-				const imgWidth = canvas.width * 0.2645;
-				const imgHeight = canvas.height * 0.2645;
+					const imgWidth = headerCanvas.width * 0.2645;
+					const imgHeight = headerCanvas.height * 0.2645;
+					const scaleFactor = 0.5;
 
-				const scaleFactor = 0.8;
+					const scale = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight) * scaleFactor;
+					const imgScaledWidth = imgWidth * scale;
+					const imgScaledHeight = imgHeight * scale;
 
-				const scale = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight) * scaleFactor;
-				const imgScaledWidth = imgWidth * scale;
-				const imgScaledHeight = imgHeight * scale;
+					const xOffset = (pdfWidth - imgScaledWidth) / 2
+					const yOffset = 0.5;
 
-				const xOffset = (pdfWidth - imgScaledWidth) / 2
+					//pdf.addImage(imgData, "PNG", 0, 10, headerWidth, headerHeight);
+					pdf.addImage(imgData, "PNG", xOffset, yOffset, imgScaledWidth, imgScaledHeight);
 
+					processTables(0, tableCount, pdf, imgScaledHeight + 20, () => {
+						const pdfBase64 = pdf.output("datauristring");
+						signHwpFileData = pdfBase64;
 
-				pdf.addImage(imgData, "PNG", xOffset, 10, imgScaledWidth, imgScaledHeight);
-				//pdf.addImage(imgData, "PNG", 10, 10);
-
-				// 테이블 간 페이지 나누기
-				var tables = document.querySelectorAll("#contentsTemp table");
-				tables.forEach((table, index) => {
-					if (index > 0) {
-						pdf.addPage(); // 새 페이지 추가
-					}
-					// 각 테이블을 이미지로 변환 후 PDF에 추가
-					html2canvas(table, {
-						scale: 2
-					}).then(tableCanvas => {
-						const tableImgData = tableCanvas.toDataURL("image/png");
-						pdf.addImage(tableImgData, "PNG", xOffset, 10, imgScaledWidth, imgScaledHeight);
+						// 저장 호출
+						setTimeout(signSave, 600);
 					});
 				});
 
-				const pdfBase64 = pdf.output('datauristring');
-
-				signHwpFileData = pdfBase64;
-			});
-
-			setTimeout(signSave, 600);
-			//signSave();
 			}
+
 		}
+	}
+
+	function processTables(index, tableCount, pdf, offsetY, callback) {
+		if (index >= tableCount) {
+			callback();
+			return;
+		}
+
+		const tableId = "contenttable_" + index;
+		const table = document.getElementById(tableId);
+
+		html2canvas(table, { scale: 2 }).then(canvas => {
+			const imgData = canvas.toDataURL("image/png");
+
+			const pdfWidth = pdf.internal.pageSize.getWidth();
+			const pdfHeight = pdf.internal.pageSize.getHeight();
+			const imgWidth = canvas.width * 0.2645;
+			const imgHeight = canvas.height * 0.2645;
+
+			//캡쳐된 이미지를 0.8배 키워줌
+			const scaleFactor = 0.8;
+
+			const scale = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight) * scaleFactor;
+			const imgScaledWidth = imgWidth * scale;
+			const imgScaledHeight = imgHeight * scale;
+
+			const xOffset = (pdfWidth - imgScaledWidth) / 2
+			//const yOffset = 10;
+
+
+
+
+			if (index === 0) {
+				offsetY = 15;
+			} else {
+				if (index > 0) {
+					pdf.addPage(); // 두 번째 테이블부터는 새 페이지에 추가
+					offsetY = 10;  // 새 페이지는 Y 좌표 초기화
+				}
+			}
+
+
+			pdf.addImage(imgData, "PNG", xOffset, offsetY, imgScaledWidth, imgScaledHeight);
+
+			// 다음 테이블 처리
+			processTables(index + 1, tableCount, pdf, offsetY, callback);
+		});
 	}
 
 	function signSave(){
@@ -346,7 +368,7 @@
 
 		// var hwpPath = serverPath + "/upload/evalForm/step7.hwp";
 		// _hwpOpen(hwpPath, "HWP");
-        //
+		//
 		// _pHwpCtrl.EditMode = 0;
 		// _pHwpCtrl.SetToolBar(1, "TOOLBAR_MENU");
 		// _pHwpCtrl.SetToolBar(1, "TOOLBAR_STANDARD");
@@ -389,116 +411,116 @@
 
 		$("#signSave").show();
 	}*/
-/*
-	function setItem(){
-		//채우기
-		for (var i = 0; i < getCompanyList.length; i++) {
-			_hwpPutText("company{{"+i+"}}", getCompanyList[i].display_title);
-			_hwpPutText("company_sub{{"+i+"}}", getCompanyList[i].display_title);
-			_hwpPutText("total{{"+i+"}}", totalToFixed(getCompanyTotal[i].real_score));
-		}
+	/*
+        function setItem(){
+            //채우기
+            for (var i = 0; i < getCompanyList.length; i++) {
+                _hwpPutText("company{{"+i+"}}", getCompanyList[i].display_title);
+                _hwpPutText("company_sub{{"+i+"}}", getCompanyList[i].display_title);
+                _hwpPutText("total{{"+i+"}}", totalToFixed(getCompanyTotal[i].real_score));
+            }
 
-		for (var i = 0; i < itemList.length; i++) {
-			_hwpPutText("item1{{"+i+"}}", itemList[i].item_name);
-			_hwpPutText("item2{{"+i+"}}", itemList[i].item_name);
-			_hwpPutText("item3{{"+i+"}}", itemList[i].item_name);
-			_hwpPutText("score1{{"+i+"}}", String(itemList[i].score));
-			_hwpPutText("score2{{"+i+"}}", String(itemList[i].score));
-			_hwpPutText("score3{{"+i+"}}", String(itemList[i].score));
-		}
+            for (var i = 0; i < itemList.length; i++) {
+                _hwpPutText("item1{{"+i+"}}", itemList[i].item_name);
+                _hwpPutText("item2{{"+i+"}}", itemList[i].item_name);
+                _hwpPutText("item3{{"+i+"}}", itemList[i].item_name);
+                _hwpPutText("score1{{"+i+"}}", String(itemList[i].score));
+                _hwpPutText("score2{{"+i+"}}", String(itemList[i].score));
+                _hwpPutText("score3{{"+i+"}}", String(itemList[i].score));
+            }
 
-		for (var i = 0; i < getCompanyRemarkList.length; i++) {
-			_hwpPutText("remark{{"+i+"}}", getCompanyRemarkList[i].remark);
-		}
+            for (var i = 0; i < getCompanyRemarkList.length; i++) {
+                _hwpPutText("remark{{"+i+"}}", getCompanyRemarkList[i].remark);
+            }
 
-		//항목
-		for (var i = itemList.length; i < 30; i++) {
-			_pHwpCtrl.MoveToField("item1{{"+itemList.length+"}}");
-			_pHwpCtrl.Run("TableDeleteRow");
-			_pHwpCtrl.MoveToField("item2{{"+itemList.length+"}}");
-			_pHwpCtrl.Run("TableDeleteRow");
-			_pHwpCtrl.MoveToField("item3{{"+itemList.length+"}}");
-			_pHwpCtrl.Run("TableDeleteRow");
-		}
+            //항목
+            for (var i = itemList.length; i < 30; i++) {
+                _pHwpCtrl.MoveToField("item1{{"+itemList.length+"}}");
+                _pHwpCtrl.Run("TableDeleteRow");
+                _pHwpCtrl.MoveToField("item2{{"+itemList.length+"}}");
+                _pHwpCtrl.Run("TableDeleteRow");
+                _pHwpCtrl.MoveToField("item3{{"+itemList.length+"}}");
+                _pHwpCtrl.Run("TableDeleteRow");
+            }
 
-		//비고
-		for (var i = getCompanyRemarkList.length; i < 10; i++) {
-			_pHwpCtrl.MoveToField("remark{{"+getCompanyRemarkList.length+"}}");
-			_pHwpCtrl.Run("TableDeleteRow");
-		}
+            //비고
+            for (var i = getCompanyRemarkList.length; i < 10; i++) {
+                _pHwpCtrl.MoveToField("remark{{"+getCompanyRemarkList.length+"}}");
+                _pHwpCtrl.Run("TableDeleteRow");
+            }
 
-		//기관 점수 각각 등록
-		var cnt = 0;
-		var index = 0;
-		var companyId = '';
+            //기관 점수 각각 등록
+            var cnt = 0;
+            var index = 0;
+            var companyId = '';
 
-		var pageCnt = getCompanyList.length / 10;
-		if(pageCnt <= 1){
-			_pHwpCtrl.MoveToField("rowTable{{2}}");
-			_pHwpCtrl.Run("TableDeleteRow");
-			_pHwpCtrl.MoveToField("rowTable{{1}}");
-			_pHwpCtrl.Run("TableDeleteRow");
-		}else if(pageCnt <= 2){
-			_pHwpCtrl.MoveToField("rowTable{{2}}");
-			_pHwpCtrl.Run("TableDeleteRow");
-		}
+            var pageCnt = getCompanyList.length / 10;
+            if(pageCnt <= 1){
+                _pHwpCtrl.MoveToField("rowTable{{2}}");
+                _pHwpCtrl.Run("TableDeleteRow");
+                _pHwpCtrl.MoveToField("rowTable{{1}}");
+                _pHwpCtrl.Run("TableDeleteRow");
+            }else if(pageCnt <= 2){
+                _pHwpCtrl.MoveToField("rowTable{{2}}");
+                _pHwpCtrl.Run("TableDeleteRow");
+            }
 
-		for (var i = 0; i < list.length; i++) {
-			if(list[i].EVAL_COMPANY_SEQ != companyId){
-				companyId = list[i].EVAL_COMPANY_SEQ;
-				cnt++;
-				index = 0;
-			}
-			_hwpPutText("score_"+cnt+"{{"+index+"}}", String(list[i].RESULT_SCORE));
-			index++;
-		}
+            for (var i = 0; i < list.length; i++) {
+                if(list[i].EVAL_COMPANY_SEQ != companyId){
+                    companyId = list[i].EVAL_COMPANY_SEQ;
+                    cnt++;
+                    index = 0;
+                }
+                _hwpPutText("score_"+cnt+"{{"+index+"}}", String(list[i].RESULT_SCORE));
+                index++;
+            }
 
-		//셀 병합
+            //셀 병합
 
-		//company
-		_pHwpCtrl.MoveToField("company{{"+(getCompanyList.length - 1)+"}}");
-		_pHwpCtrl.Run("TableCellBlock");
-		_pHwpCtrl.Run("TableCellBlockExtend");
-		for (var i = 0; i < 10 - getCompanyList.length; i++) {
-			_pHwpCtrl.Run("TableRightCellAppend");
-		}
-		_pHwpCtrl.Run("TableMergeCell");
+            //company
+            _pHwpCtrl.MoveToField("company{{"+(getCompanyList.length - 1)+"}}");
+            _pHwpCtrl.Run("TableCellBlock");
+            _pHwpCtrl.Run("TableCellBlockExtend");
+            for (var i = 0; i < 10 - getCompanyList.length; i++) {
+                _pHwpCtrl.Run("TableRightCellAppend");
+            }
+            _pHwpCtrl.Run("TableMergeCell");
 
-		//score
-		for (var a = 0; a < list.length + 1; a++) {
-			_pHwpCtrl.MoveToField("score_" + getCompanyRemarkList.length);
-			_pHwpCtrl.Run("TableCellBlock");
-			if (a != 0) {
-				for (var l = 1; l < list.length - (list.length - a); l++) {
-					_pHwpCtrl.Run("TableLowerCell");
-				}
-			}
-			_pHwpCtrl.Run("TableCellBlockExtend");
-			_pHwpCtrl.Run("TableColEnd");
+            //score
+            for (var a = 0; a < list.length + 1; a++) {
+                _pHwpCtrl.MoveToField("score_" + getCompanyRemarkList.length);
+                _pHwpCtrl.Run("TableCellBlock");
+                if (a != 0) {
+                    for (var l = 1; l < list.length - (list.length - a); l++) {
+                        _pHwpCtrl.Run("TableLowerCell");
+                    }
+                }
+                _pHwpCtrl.Run("TableCellBlockExtend");
+                _pHwpCtrl.Run("TableColEnd");
 
-			_pHwpCtrl.Run("TableMergeCell");
-		}
+                _pHwpCtrl.Run("TableMergeCell");
+            }
 
-		_pHwpCtrl.MoveToField("score_" + (parseInt(getCompanyRemarkList.length) - 1));
-		_pHwpCtrl.Run("TableCellBlock");
-		_pHwpCtrl.Run("TableCellBlockExtend");
+            _pHwpCtrl.MoveToField("score_" + (parseInt(getCompanyRemarkList.length) - 1));
+            _pHwpCtrl.Run("TableCellBlock");
+            _pHwpCtrl.Run("TableCellBlockExtend");
 
-		for (var l = 1; l < itemList.length; l++) {
-			_pHwpCtrl.Run("TableLowerCell");
-		}
-		_pHwpCtrl.Run("TableDistributeCellWidth");
+            for (var l = 1; l < itemList.length; l++) {
+                _pHwpCtrl.Run("TableLowerCell");
+            }
+            _pHwpCtrl.Run("TableDistributeCellWidth");
 
 
-		//total
-		_pHwpCtrl.MoveToField("total{{" + (getCompanyRemarkList.length -1 ) + "}}");
-		_pHwpCtrl.Run("TableCellBlock");
-		_pHwpCtrl.Run("TableCellBlockExtend");
-		for (var i = 0; i < 10 - getCompanyRemarkList.length; i++) {
-			_pHwpCtrl.Run("TableRightCellAppend");
-		}
-		_pHwpCtrl.Run("TableMergeCell");
+            //total
+            _pHwpCtrl.MoveToField("total{{" + (getCompanyRemarkList.length -1 ) + "}}");
+            _pHwpCtrl.Run("TableCellBlock");
+            _pHwpCtrl.Run("TableCellBlockExtend");
+            for (var i = 0; i < 10 - getCompanyRemarkList.length; i++) {
+                _pHwpCtrl.Run("TableRightCellAppend");
+            }
+            _pHwpCtrl.Run("TableMergeCell");
 
-	}*/
+        }*/
 
 
 
@@ -512,13 +534,13 @@
 		var tableCount = Math.ceil(companyCount / maxCompaniesPerTable); // 필요한 표의 개수 계산
 
 		var html = '';
-		html += '<div style="width:100%; padding-bottom: 35px; text-align: center; padding-top: 50px;">';
+		html += '<div id="header" style="width:100%; padding-bottom: 35px; text-align: center; padding-top: 50px;">';
 		html +=	 '<h4 style="font-size: 30px;">위원별 제안서 평가표</h4>';
 		html +=  '</div>';
 		for (var t = 0; t < tableCount; t++) {
 			var currentCompanyCount = Math.min(companyCount - t * maxCompaniesPerTable, maxCompaniesPerTable); // 현재 표에 들어갈 제안업체 수
 
-			html += '<table style="border:1px solid black; border-collapse: collapse; width: 100%; table-layout: fixed; margin : auto; margin-bottom: 100px;">';
+			html += '<table id="contenttable_'+t+'" style="border:1px solid black; border-collapse: collapse; width: 100%; table-layout: fixed; margin : auto; margin-bottom: 100px;">';
 			html += '<thead>';
 			html += '<tr>';
 			html += '<th id="thcell" rowspan="2" colspan="3" style="border:1px solid black; border-collapse: collapse; width: 43%; text-align; center;">평가항목</th>';
@@ -645,7 +667,7 @@
 
 
 		$("#contentsTemp").append(html);
-        $("#signSave").show();
+		$("#signSave").show();
 
 
 		<%--_pHwpCtrl.SetTextFile($('#contentsTemp').html(), "HTML", "insertfile", function(){--%>
@@ -729,12 +751,16 @@
 
 
 	</div>
-<%--	<div id="_pHwpCtrl" style="height: 100%;border: 1px solid lightgray; display: none;"></div>--%>
+	<%--	<div id="_pHwpCtrl" style="height: 100%;border: 1px solid lightgray; display: none;"></div>--%>
 </div>
 
 
+
 <script>
-    _hwpPutData()
+	_hwpPutData()
+
+
+
 </script>
 <%--<object classid="CLSID:1DEAD10F-9EBF-4599-8F00-92714483A9C9" codebase="<c:url value='/resources/activex/NEOSLauncher.cab'></c:url>#version=1,0,0,4" id="uploader"  style="display:none;" >--%>
 <%--</object>--%>

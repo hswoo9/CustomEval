@@ -22,6 +22,9 @@ public class EvalDAO extends AbstractDAO{
 		return (Map<String, Object>) selectOne("eval.getEvalchk", map);
 	}
 
+	public List<Map<String, Object>> getevalNotice(Map<String, Object> map) {
+		return selectList("eval.getevalNotice", map);
+	}
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> getResultList(Map<String, Object> map) {
 		return selectList("eval.getResultList", map);

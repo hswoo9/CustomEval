@@ -560,6 +560,7 @@ public class EvalController {
 	public String notice(HttpServletRequest request, Model model) {
 		Map<String, Object> map = (Map<String, Object>) request.getSession().getAttribute("evalLoginVO");
 		map = evalService.getEvalchk(map);
+		List<Map<String, Object>> noticeList = evalService.getevalNotice(map);
 
 		if (map != null && "Y".equals(map.get("SIGN_4"))) {
 			return "/eval/sign/evalSign11";
@@ -567,6 +568,8 @@ public class EvalController {
 //		logger.debug(request);
 		//로그인 기본 정보가져오기
 		model.addAttribute("userInfo", map);
+
+		model.addAttribute("noticeList", noticeList);
 
 		return "/eval/notice";
 	}

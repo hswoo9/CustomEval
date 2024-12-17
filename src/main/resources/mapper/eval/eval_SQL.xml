@@ -978,4 +978,9 @@
 		ORDER BY COMMISSIONER_SEQ
 	</select>
 
+	<select id="getevalNotice" parameterType="map" resultType="map">
+		SELECT NOTICE_CONTENT, ACTIVE, NOTICE_ITEM
+		FROM CUST_EPIS.DJ_EVAL_NOTICE
+		WHERE ACTIVE = 'Y';
+	</select>
 </mapper>

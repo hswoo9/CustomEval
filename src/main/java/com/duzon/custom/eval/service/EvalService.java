@@ -17,6 +17,8 @@ public interface EvalService {
 
 	Map<String, Object> getEvalchk(Map<String, Object> map);
 
+	List<Map<String, Object>> getevalNotice(Map<String, Object> map);
+
 	List<Map<String, Object>> getResultList(Map<String, Object> map);
 
 	List<Map<String, Object>> getCompanyList(Map<String, Object> map);

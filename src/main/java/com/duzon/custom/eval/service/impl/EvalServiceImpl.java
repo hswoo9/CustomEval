@@ -89,6 +89,11 @@ public class EvalServiceImpl implements EvalService {
 	}
 
 	@Override
+	public List<Map<String, Object>> getevalNotice(Map<String, Object> map) {
+		return evalDAO.getevalNotice(map);
+	}
+
+	@Override
 	public List<Map<String, Object>> getResultList(Map<String, Object> map) {
 		return evalDAO.getResultList(map);
 	}

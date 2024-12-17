@@ -117,7 +117,19 @@
                 </P>
             </TD>
         </TR>
-        <TR>
+    <c:forEach var="notice" items="${noticeList}">
+        <c:if test="${notice['NOTICE_ITEM'] == 1}">
+            <TR>
+                <TD valign="middle" style='width:632px;height:40px;border-left:solid #000000 1.1pt;border-right:solid #000000 1.1pt;border-top:solid #aeaeae 0.6pt;border-bottom:solid #aeaeae 0.6pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
+                    <P CLASS=HStyle0 STYLE='margin-left:3.0pt;margin-right:3.0pt;line-height:130%;'>
+                        <input type="checkbox" id="chk${loop.index}" name="chk" value="Y">
+                        <SPAN STYLE='font-size:13.0pt;line-height:130%'>&#9642;${notice['NOTICE_CONTENT']}</SPAN>
+                    </P>
+                </TD>
+            </TR>
+        </c:if>
+    </c:forEach>
+       <%-- <TR>
             <TD valign="middle" style='width:632px;height:40px;border-left:solid #000000 1.1pt;border-right:solid #000000 1.1pt;border-top:solid #000000 1.1pt;border-bottom:solid #aeaeae 0.6pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
                 <P CLASS=HStyle0 STYLE='margin-left:3.0pt;margin-right:3.0pt;line-height:130%;'>
                     <input type="checkbox" id="chk01" name="chk" value="Y">
@@ -242,7 +254,7 @@
                     <input type="checkbox" id="chk18" name="chk" value="Y">
                     <SPAN STYLE='font-size:13.0pt;line-height:130%'>&#9642;정성 필수 제안 사항 평가 시 업체 제안 내용이 수요기관의 제안 요청 사항을 반영하였는지 충분히 검토하여 평가한다.</SPAN></P>
             </TD>
-        </TR>
+        </TR>--%>
     </TABLE>
 
     <TABLE id="notiContent" border="1" cellspacing="0" cellpadding="0" style='width:1000px; border-collapse:collapse;border:none; margin-top:20px;'>
@@ -253,7 +265,7 @@
                     <SPAN STYLE='font-size:13.0pt;line-height:130% ;color: red;"'>기피사유에 해당하는 평가위원께서는 기피신청을 해주시기 바랍니다.</SPAN></P>
             </TD>
         </TR>
-        <TR>
+       <%-- <TR>
             <TD valign="middle" style='width:632px;height:40px;border-left:solid #000000 1.1pt;border-right:solid #000000 1.1pt;border-top:solid #aeaeae 0.6pt;border-bottom:solid #aeaeae 0.6pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
                 <P CLASS=HStyle0 STYLE='margin-left:3.0pt;margin-right:3.0pt;line-height:130%;'>
                     <SPAN STYLE='font-size:13.0pt;line-height:130% ;color: red;"'>&#9642;평가위원이 당해 평가 대상과 관련 전년도 1월 1일부터 현재까지 하도급을 포함하여 용역, 자문, 연구 등을 수행한 경우</SPAN></P>
@@ -276,7 +288,19 @@
                 <P CLASS=HStyle0 STYLE='margin-left:3.0pt;margin-right:3.0pt;line-height:130%;'>
                     <SPAN STYLE='font-size:13.0pt;line-height:130%; color: red;'>&#9642;그 밖에 제1호부터 제3호까지에 준하는 경우로서 기타 공정한 평가를 수행할 수 없다고 판단하는 경우</SPAN></P>
             </TD>
-        </TR>
+        </TR>--%>
+        <c:forEach var="notice" items="${noticeList}">
+            <c:if test="${notice['NOTICE_ITEM'] == 2}">
+                <TR>
+                    <TD valign="middle" style='width:632px;height:40px;border-left:solid #000000 1.1pt;border-right:solid #000000 1.1pt;border-top:solid #aeaeae 0.6pt;border-bottom:solid #aeaeae 0.6pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
+                        <P CLASS=HStyle0 STYLE='margin-left:3.0pt;margin-right:3.0pt;line-height:130%;'>
+                            <input type="checkbox" id="chk${loop.index}" name="chk" value="Y">
+                            <SPAN STYLE='font-size:13.0pt;line-height:130%; color: red;'>&#9642;${notice['NOTICE_CONTENT']}</SPAN>
+                        </P>
+                    </TD>
+                </TR>
+            </c:if>
+        </c:forEach>
     </TABLE>
 
 

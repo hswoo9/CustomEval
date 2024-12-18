@@ -34,7 +34,7 @@
     };
 </script>
 
-<body name="0" style="background-image:url('/resources/Images/main.jpg');background-size:cover;">
+<body name="0" style="background-image:url(<c:url value='/resources/Images/main.jpg'/>);background-size:cover;">
 
 
 <div id="login_b2_type" style="top: 20% !important; left: 28% !important;">

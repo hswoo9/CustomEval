@@ -433,7 +433,7 @@
 		}*/
 		var title1 = "「${userInfo.TITLE } 사업」평가수당 지급 확인서";
 
-		var ob1 = $('#num1').val() + $('#num2').val();
+		var ob1 = $('#num1').val() + '-' + $('#num2').val();
 		var ob2 = $('#dept').val();
 		var ob3 = $('#bank_name').val();
 		//var ob4 = $('#bank_name option:checked').text();

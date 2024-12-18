@@ -358,18 +358,18 @@
 						html += '<tr class="itemTr">';
 
 						html += '<tr>';
-						html += '	<th colspan="3" id="th1" style="width: 70%; padding: 15px">제안평가 평가항목</th>';
-						html += '	<th colspan="5" style="width: 30%;">평가점수</th>';
+						html += '	<th colspan="3" id="th1" style="width: 65%; padding: 15px">제안평가 평가항목</th>';
+						html += '	<th colspan="5" style="width: 35%;">평가점수</th>';
 						html += '</tr>';
 						html += '<tr>';
 						html += '	<th style="width:10%;">평가</th>';
 						html += '	<th style="width:15%;">대분류</th>';
 						html += '	<th>중분류</th>';
-						html += '	<td style="font-size:12px;">매우우수(A)</td>';
-						html += '	<td style="font-size:12px;">우수(B)</td>';
-						html += '	<td style="font-size:12px;">보통(C)</td>';
-						html += '	<td style="font-size:12px;">미흡(D)</td>';
-						html += '	<td style="font-size:12px;">매우미흡(E)</td>';
+						html += '	<td style="font-size:11px;">매우우수(A)</td>';
+						html += '	<td style="font-size:11px;">우수(B)</td>';
+						html += '	<td style="font-size:11px;">보통(C)</td>';
+						html += '	<td style="font-size:11px;">미흡(D)</td>';
+						html += '	<td style="font-size:11px;">매우미흡(E)</td>';
 						html += '</tr>';
 
 						//$("#dataScore").html(html2);

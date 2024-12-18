@@ -136,8 +136,10 @@
 		$('#bank_name').on('input', function() {
 			this.value = this.value.replace(/\d/g, ''); // 숫자 제거
 		});
-		$('#bank_no').on('input', function() {
-			this.value = this.value.replace(/[^-\d]/g, ''); // 숫자와 '-' 이외의 문자 제거
+		$('#bank_no').on('input', function () {
+			this.value = this.value
+					.replace(/[^0-9-]/g, '')
+					.replace(/-{2,}/g, '-')
 		});
 		$('#evaluationFee').on('input', function() {
 			let numericValue = this.value.replace(/[^\d]/g, '');

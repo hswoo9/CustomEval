@@ -38,12 +38,17 @@
 
 <script>
 $(function(){
+    if('${message}' != ''){
+        customAlert('${message}', 'success').then(() => {
 
-	if('${message}' != ''){
-		//alert('${message}');
-        swal('${message}');
-	}
-	
+        });
+
+        /*customConfirm('${message}', 'info').then((flag) => {
+            if(flag){
+                alert("true");
+            }
+        });*/
+    }
 });
 
 </script>

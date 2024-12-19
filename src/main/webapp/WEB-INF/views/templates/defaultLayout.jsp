@@ -33,8 +33,8 @@
 	<script type="text/javascript" src="<c:url value='/resources/js/kendoui/jquery.min.js'/>"></script>
 	<script type="text/javascript" src="<c:url value='/resources/js/kendoui/kendo.all.min.js'/>"></script>
 	<script type="text/javascript" src="<c:url value='/resources/js/kendoui/cultures/kendo.culture.ko-KR.min.js'/>"></script>
-	
 
+	<script type="text/javascript" src="<c:url value='/resources/js/common/sweetalert.min.js'/>"></script>
 
 </head>
 

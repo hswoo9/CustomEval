@@ -11,6 +11,8 @@
 <link rel="manifest" href="/manifest.json">
 
 
+
+
 <style>
 #login_b2_type .login_wrap .login_form_wrap form .inp1{margin:7px 0 0 0;padding:8px 10px;width:107px;border:1px solid #c9cac9;outline:none;background:#fff;font-size:15px;color:#4a4a4a;text-indent:0;}
 
@@ -38,7 +40,8 @@
 $(function(){
 
 	if('${message}' != ''){
-		alert('${message}');
+		//alert('${message}');
+        swal('${message}');
 	}
 	
 });

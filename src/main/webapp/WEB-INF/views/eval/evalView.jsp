@@ -656,12 +656,15 @@
 			type : 'POST',
 			success: function(result){
 				if(flag != null && flag == 'Y'){
-					alert(message);
+					if('${message}' != ''){
+						customAlert('${message}', 'success').then(() => {
+
+						});
 					if(load == 'Y'){
 						location.reload();
 					}
 				}
-			}
+			}}
 		});
 
 	}
@@ -673,7 +676,7 @@
 			var data = getData();
 
 			if(data.flag){
-				alert('입력되지 않은 항목이 있습니다.');
+				customAlert('입력되지 않은 항목이 있습니다.', 'warning');
 				return
 			}
 
@@ -723,12 +726,12 @@
 		})
 
 		if(!flag){
-			alert("체크되지 않은 부분이 있습니다. 모두 체크해주세요.");
+			customAlert("체크되지 않은 부분이 있습니다. 모두 체크해주세요.", "warning");
 			$(focusTarget).focus();
 			return;
 		}
 		else if ($('.evalIndex'+evalCnt+' .comReMarkInput').val().length < 0 || $('.evalIndex'+evalCnt+' .comReMarkInput').val().length > 400){
-			alert("평가의견은 400자 이하로 입력해주세요.");
+			customAlert("평가의견은 400자 이하로 입력해주세요.", "warning");
 			return;
 		}
 
@@ -794,7 +797,7 @@
 		var textareas = document.querySelectorAll('textarea[data-comp-seq="' + companySeq + '"]');
 
 		if (groupsCount != checkedButtons) {
-			alert('체크되지 않은 부분이 있습니다. 모두 체크해주세요.');
+			customAlert('체크되지 않은 부분이 있습니다. 모두 체크해주세요.', "warning");
 			return;
 		}
 
@@ -804,7 +807,7 @@
 			var value = textarea.value;
 
 			if (value.length < 0 || value.length > 400) {
-				alert('평가의견은 400자 이하로 입력해주세요.');
+				customAlert('평가의견은 400자 이하로 입력해주세요.', "warning");
 				isValid = false;
 				return;
 			}
@@ -822,14 +825,14 @@
 			data : data,
 			success:function(response){
 				if (response.status === 'success') {
-					alert(data.displayTitle + ' 저장되었습니다.');
+					customAlert(data.displayTitle + ' 저장되었습니다.', 'success');
 					showSuccessMessage(companySeq);
 				} else {
-					alert('저장에 실패했습니다.');
+					customAlert('저장에 실패했습니다.', 'error');
 				}
 			},
 			error : function(e){
-				alert('오류가 발생하였습니다. 관리자에게 문의해주세요.');
+				customAlert('오류가 발생하였습니다. 관리자에게 문의해주세요.', 'error');
 				return;
 			}
 		});
@@ -935,7 +938,7 @@
 
 		for (var group in checkedGroups) {
 			if (!checkedGroups[group]) {
-				alert("평가되지 않은 항목이 있습니다.");
+				customAlert("평가되지 않은 항목이 있습니다.", "warning");
 				return false;
 			}
 		}
@@ -951,7 +954,7 @@
 			var remark = remarks[i].value.trim();
 
 			if (remark.length < 0 || remark.length > 400) {
-				alert("평가의견은 400자 이하로 입력해주세요.");
+				customAlert("평가의견은 400자 이하로 입력해주세요.", "warning");
 				return false;
 			}
 		}

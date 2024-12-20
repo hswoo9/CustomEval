@@ -203,37 +203,37 @@ function evalApply(){
 	console.log("data : ",data);
 	
 	if(data.commissioner_seq == null){
-		alert('평가위원장을 선택해 주세요.');
+		customAlert('평가위원장을 선택해 주세요.', 'success').then(() => {
+
+		});
+		/*alert('평가위원장을 선택해 주세요.');*/
 		return
 	}
 
-	if(confirm('등록하시겠습니까?')){
-		
-		$.ajax({
-	        url: "<c:url value='/eval/setCommSave' />",
-	        data: data,
-	        type: 'POST',
-	        dataType : 'text',
-	        success: function(result){
-
-	        	if(result == 'Y'){
-	        		location.href = "<c:url value='/eval/evalView' />";	
-	        	}else if(result == 'O'){
-					alert('동점자가 있습니다. 다시 투표해주세요.');
-					location.reload();
-				}else{
-	        		evalApplyData = data;
-	        		timeIn = setInterval(getEvalJang, 1000);
-	        	}
-	        
-	        },
-	        beforeSend: function () {
-	        	$('#loadingPop').data("kendoWindow").open();
-	        },
-	    });
-		
-		
-	}
+	if (customConfirm('등록하시겠습니까?', 'success').then((value) => {
+		if (value) { // "예"를 눌렀을 때만 실행
+			$.ajax({
+				url: "<c:url value='/eval/setCommSave' />",
+				data: data,
+				type: 'POST',
+				dataType: 'text',
+				success: function (result) {
+					if (result === 'Y') {
+						location.href = "<c:url value='/eval/evalView' />";
+					} else if (result === 'O') {
+						alert('동점자가 있습니다. 다시 투표해주세요.');
+						location.reload();
+					} else {
+						evalApplyData = data;
+						timeIn = setInterval(getEvalJang, 1000);
+					}
+				},
+				beforeSend: function () {
+					$('#loadingPop').data("kendoWindow").open();
+				},
+			});
+		}
+	}));
 	
 }
 

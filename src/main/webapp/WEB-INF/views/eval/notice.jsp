@@ -7,6 +7,20 @@
 <%@ taglib prefix="fmt"  uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <script>
+    $(function(){
+        if('${message}' != ''){
+            customAlert('${message}', 'success').then(() => {
+
+            });
+
+            /*customConfirm('${message}', 'info').then((flag) => {
+            if(flag){
+                alert("true");
+            }
+        });*/
+        }
+    });
+
     window.onload = function () {
         window.scrollTo(0, 0);
     };
@@ -40,7 +54,10 @@
             }
 
         }else{
-            alert("체크되지 않은 항목이 있습니다. 다시 확인바랍니다.");
+            customAlert("체크되지 않은 항목이 있습니다. 다시 확인바랍니다.", 'success').then(() => {
+
+            });
+            /*alert("체크되지 않은 항목이 있습니다. 다시 확인바랍니다.");*/
         }
     }
 

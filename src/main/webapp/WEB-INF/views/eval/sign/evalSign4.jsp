@@ -136,8 +136,10 @@
 		$('#bank_name').on('input', function() {
 			this.value = this.value.replace(/\d/g, ''); // 숫자 제거
 		});
-		$('#bank_no').on('input', function() {
-			this.value = this.value.replace(/[^-\d]/g, ''); // 숫자와 '-' 이외의 문자 제거
+		$('#bank_no').on('input', function () {
+			this.value = this.value
+					.replace(/[^0-9-]/g, '')
+					.replace(/-{2,}/g, '-')
 		});
 		$('#evaluationFee').on('input', function() {
 			let numericValue = this.value.replace(/[^\d]/g, '');
@@ -431,7 +433,7 @@
 		}*/
 		var title1 = "「${userInfo.TITLE } 사업」평가수당 지급 확인서";
 
-		var ob1 = $('#num1').val() + $('#num2').val();
+		var ob1 = $('#num1').val() + '-' + $('#num2').val();
 		var ob2 = $('#dept').val();
 		var ob3 = $('#bank_name').val();
 		//var ob4 = $('#bank_name option:checked').text();
@@ -742,7 +744,7 @@
 		</TR>
 		<TR>
 			<TD valign="middle" style='width:186px;height:31px;border-left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt; text-align: right;'>
-				<input type="text" id="evaluationFee" style="width: 90%; text-align: right; box-sizing: border-box; border: none;" placeholder="평가비를 입력하세요." value="${userInfo.ALLOWANCE}" oninput="updateTotal()" />
+				<input type="text" id="evaluationFee" style="width: 90%; text-align: right; box-sizing: border-box; border: none;" placeholder="평가비를 입력하세요." value="<fmt:formatNumber value='${userInfo.ALLOWANCE}' type='number' groupingUsed='true' />" oninput="updateTotal()" />
 				<SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>원</SPAN>
 			</TD>
 

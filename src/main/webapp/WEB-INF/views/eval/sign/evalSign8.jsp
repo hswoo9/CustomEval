@@ -99,7 +99,37 @@
         font-family:"한양중고딕","한컴돋움",sans-serif;
     }
 </style>
+<script type="text/javascript" src="<c:url value='/resources/js/common/sweetalert.min.js'/>"></script>
+
 <script type="text/javascript">
+    function customAlert(msg, icon) {
+        return swal({
+            title: '',
+            text: msg,
+            type: '',
+            icon: icon == '' ? 'success' : icon,
+            closeOnClickOutside : false,
+            button: '확인'
+        })
+    }
+
+    function customConfirm(msg, icon) {
+        return swal({
+            title: '',
+            text: msg,
+            type: '',
+            icon: icon == '' ? 'info' : icon,
+            buttons: {
+                agree: {
+                    text : "예",
+                    value : true
+                },
+                cancel: "아니요"
+            },
+            closeOnClickOutside : false
+        })
+    }
+
     window.onload = function () {
         window.scrollTo(0, 0);
     };
@@ -287,14 +317,18 @@
             async : false,
             success : function(data) {
                 if(data.result != "success") {
-                    alert("문서저장시 오류가 발생했습니다. 시스템관리자한테 문의 하세요.");
+                    customAlert("문서저장시 오류가 발생했습니다. 시스템관리자한테 문의 하세요.", "error").then(() => {
+
+                    });
                     return false ;
                 } else {
                     location.reload();
                 }
             },
             error : function(request, status, error) {
-                alert("문서저장시 오류가 발생했습니다. 시스템관리자한테 문의 하세요.");
+                customAlert("문서저장시 오류가 발생했습니다. 시스템관리자한테 문의 하세요.", "error").then(() => {
+
+                });
                 return false ;
             }
         })

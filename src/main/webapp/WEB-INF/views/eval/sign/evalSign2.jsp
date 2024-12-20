@@ -40,8 +40,35 @@
 	</div>
 	<!-- //pop_con -->
 </div>
-
+<script type="text/javascript" src="<c:url value='/resources/js/common/sweetalert.min.js'/>"></script>
 <script type="text/javascript">
+	function customAlert(msg, icon) {
+		return swal({
+			title: '',
+			text: msg,
+			type: '',
+			icon: icon == '' ? 'success' : icon,
+			closeOnClickOutside : false,
+			button: '확인'
+		})
+	}
+
+	function customConfirm(msg, icon) {
+		return swal({
+			title: '',
+			text: msg,
+			type: '',
+			icon: icon == '' ? 'info' : icon,
+			buttons: {
+				agree: {
+					text : "예",
+					value : true
+				},
+				cancel: "아니요"
+			},
+			closeOnClickOutside : false
+		})
+	}
 	window.onload = function () {
 		window.scrollTo(0, 0);
 	};
@@ -122,10 +149,14 @@
 		// 성공여부 변수
 
 		if (comboBox === "") {
-			alert("제안업체별 제안발표 분을 선택해주세요.");
+			customAlert("제안업체별 제안발표 분을 선택해주세요.", "warning"). then(() => {
+
+			});
 			return;
 		} else if (comboBox1 === "") {
-			alert("제안업체별 질의응답 분을 선택해주세요.");
+			customAlert("제안업체별 질의응답 분을 선택해주세요.", "warning"). then(() => {
+
+			});
 			return;
 		}
 

@@ -221,7 +221,9 @@ function evalApply(){
 					if (result === 'Y') {
 						location.href = "<c:url value='/eval/evalView' />";
 					} else if (result === 'O') {
-						alert('동점자가 있습니다. 다시 투표해주세요.');
+						customAlert('동점자가 있습니다. 다시 투표해주세요.', 'warning').then(() => {
+
+						});
 						location.reload();
 					} else {
 						evalApplyData = data;

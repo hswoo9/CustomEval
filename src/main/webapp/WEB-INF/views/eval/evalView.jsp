@@ -656,13 +656,11 @@
 			type : 'POST',
 			success: function(result){
 				if(flag != null && flag == 'Y'){
-					if('${message}' != ''){
-						customAlert('${message}', 'success').then(() => {
+						customAlert('저장되었습니다.', 'success').then(() => {
 
 						});
 					if(load == 'Y'){
 						location.reload();
-					}
 				}
 			}}
 		});

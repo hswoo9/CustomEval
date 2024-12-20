@@ -12,7 +12,36 @@
 
 <title>사전접촉여부</title>
 
+<script type="text/javascript" src="<c:url value='/resources/js/common/sweetalert.min.js'/>"></script>
+
 <script type="text/javascript">
+	function customAlert(msg, icon) {
+		return swal({
+			title: '',
+			text: msg,
+			type: '',
+			icon: icon == '' ? 'success' : icon,
+			closeOnClickOutside : false,
+			button: '확인'
+		})
+	}
+
+	function customConfirm(msg, icon) {
+		return swal({
+			title: '',
+			text: msg,
+			type: '',
+			icon: icon == '' ? 'info' : icon,
+			buttons: {
+				agree: {
+					text : "예",
+					value : true
+				},
+				cancel: "아니요"
+			},
+			closeOnClickOutside : false
+		})
+	}
 	window.onload = function () {
 		window.scrollTo(0, 0);
 	};
@@ -54,58 +83,63 @@
 	var flag = 'N';
 
 	function signSaveBtn() {
-		if(confirm('사전접촉여부는 추후 수정이 불가능 합니다. 확정하시겠습니까?')) {
+		if (customConfirm('사전접촉여부는 추후 수정이 불가능 합니다. 확정하시겠습니까?', 'success').then((value) => {
+			if (value) {
+				// 체크된 상태가 '있다'인 경우 확인 창을 띄움
+				var contactCheck = false;
+				var isValid = true;
 
-			// 체크된 상태가 '있다'인 경우 확인 창을 띄움
-			var contactCheck = false;
-			var isValid = true;
+				$("#hkTable tbody tr").each(function() {
+					var row = $(this);
+					var chkData = row.find("select[name='chkData[]']").val();
+					var contactor = row.find("input[name='contactor[]']").val();
+					var contents = row.find("input[name='contents[]']").val();
 
-			$("#hkTable tbody tr").each(function() {
-				var row = $(this);
-				var chkData = row.find("select[name='chkData[]']").val();
-				var contactor = row.find("input[name='contactor[]']").val();
-				var contents = row.find("input[name='contents[]']").val();
+					if (chkData === "있다") {
+						contactCheck = true;
+						if (contactor.trim() === "" || contents.trim() === "") {
+							customAlert("사전접촉이 '있다'로 선택된 행에서 접촉자 및 세부내용을 모두 입력해야 합니다.", "warning").then(() => {
 
-				if (chkData === "있다") {
-					contactCheck = true;
-					if (contactor.trim() === "" || contents.trim() === "") {
-						alert("사전접촉이 '있다'로 선택된 행에서 접촉자 및 세부내용을 모두 입력해야 합니다.");
-						isValid = false;
-						return false;
+							});
+							isValid = false;
+							return false;
+						}
 					}
-				}
-			});
+				});
 
-			if (!isValid) {
-				return;
-			}
-
-			if (contactCheck && !confirm("사전접촉이 '있다'로 선택하셨습니다. 맞으면 확인, 틀리면 취소 버튼을 클릭해주시길 바랍니다.")) {
-				return;
-			}
-
-
-			// 저장 로직
-			for (var i = 0; i < jsonData.length; i++) {
-				var chk = $('select[name="chkData[]"] option:selected')[i].value;
-
-				if (chk == '있다') {
-					flag = 'Y';
+				if (!isValid) {
+					return;
 				}
 
-				_hwpPutText("contactor{{" + i + "}}", $('input[name="contactor[]"]')[i].value);
-				_hwpPutText("inputDate{{" + i + "}}", $('input[name="inputDate[]"]')[i].value.replace(/-/gi, ""));
-				_hwpPutText("chk{{" + i + "}}", chk);
-				_hwpPutText("contents{{" + i + "}}", $('input[name="contents[]"]')[i].value);
+				if (contactCheck && !customConfirm("사전접촉이 '있다'로 선택하셨습니다. 맞으면 확인, 틀리면 취소 버튼을 클릭해주시길 바랍니다.").then(() => {
+
+				})) {
+					return;
+				}
+
+				// 저장 로직
+				for (var i = 0; i < jsonData.length; i++) {
+					var chk = $('select[name="chkData[]"] option:selected')[i].value;
+
+					if (chk == '있다') {
+						flag = 'Y';
+					}
+
+					_hwpPutText("contactor{{" + i + "}}", $('input[name="contactor[]"]')[i].value);
+					_hwpPutText("inputDate{{" + i + "}}", $('input[name="inputDate[]"]')[i].value.replace(/-/gi, ""));
+					_hwpPutText("chk{{" + i + "}}", chk);
+					_hwpPutText("contents{{" + i + "}}", $('input[name="contents[]"]')[i].value);
+				}
+
+				_pHwpCtrl.GetTextFile("HWPML2X", "", function (data) {
+					signHwpFileData = data;
+				});
+
+				setTimeout(signSave, 600);
 			}
-
-			_pHwpCtrl.GetTextFile("HWPML2X", "", function (data) {
-				signHwpFileData = data;
-			})
-
-			setTimeout(signSave, 600);
-		}
+		}));
 	}
+
 
 	function signSave() {
 		var formData = new FormData();
@@ -125,7 +159,6 @@
 			success: function(data) {
 				if (data.result != "success") {
 					alert("문서저장시 오류가 발생했습니다. 시스템관리자한테 문의 하세요.");
-					return false;
 				} else {
 					location.reload();
 				}

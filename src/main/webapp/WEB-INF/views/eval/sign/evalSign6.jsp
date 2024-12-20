@@ -97,8 +97,36 @@
 </style>
 
 <title>위원별 제안서 평가표</title>
+<script type="text/javascript" src="<c:url value='/resources/js/common/sweetalert.min.js'/>"></script>
 
 <script type="text/javascript">
+	function customAlert(msg, icon) {
+		return swal({
+			title: '',
+			text: msg,
+			type: '',
+			icon: icon == '' ? 'success' : icon,
+			closeOnClickOutside : false,
+			button: '확인'
+		})
+	}
+
+	function customConfirm(msg, icon) {
+		return swal({
+			title: '',
+			text: msg,
+			type: '',
+			icon: icon == '' ? 'info' : icon,
+			buttons: {
+				agree: {
+					text : "예",
+					value : true
+				},
+				cancel: "아니요"
+			},
+			closeOnClickOutside : false
+		})
+	}
 	window.onload = function () {
 		window.scrollTo(0, 0);
 	};
@@ -156,96 +184,89 @@
 
 	var signHwpFileData = "";
 
-	function signSaveBtn(){
-		if (confirm('평가확정 이후에는 점수를 수정하실 수 없습니다. 그래도 확정하시겠습니까?')) {
-			var result = true;
-			if("${userInfo.EVAL_JANG}" == "Y"){
-				result = getCommissionerChk();
-			}
+	function signSaveBtn() {
+		customConfirm('평가확정 이후에는 점수를 수정하실 수 없습니다. 그래도 확정하시겠습니까?', 'warning').then((willConfirm) => {
+			if (willConfirm) {
+				var result = true;
+				if ("${userInfo.EVAL_JANG}" == "Y") {
+					result = getCommissionerChk();
+				}
 
-			if(!result){
-				customAlert("평가가 진행 중입니다.\n위원장은 모든 평가위원의 평가가 종료 된 후에 평가 저장이 가능합니다.", "warning");
-				return;
-			}
-
-
-			const width = window.innerWidth;
-
-			const header = document.getElementById("header");
-
-			console.log("width",width);
-
-			var companyCount = getCompanyTotal.length;
-			var maxCompaniesPerTable = 9; // 표 당 최대 9개의 제안업체
-			var tableCount = Math.ceil(companyCount / maxCompaniesPerTable); // 필요한 표의 개수 계산
-
-			const pdf = new jsPDF("l", "mm", "a4");
-			const pdfWidth = pdf.internal.pageSize.getWidth();
-			const pdfHeight = pdf.internal.pageSize.getHeight();
-
-
-			if (width >= 1024) {
-
-				html2canvas(header, { scale: 2 }).then(headerCanvas => {
-					const imgData = headerCanvas.toDataURL("image/png");
-					const imgWidth = headerCanvas.width * 0.2645;
-					const imgHeight = headerCanvas.height * 0.2645;
-					const scaleFactor = 0.5;
-
-					const scale = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight) * scaleFactor;
-					const imgScaledWidth = imgWidth * scale;
-					const imgScaledHeight = imgHeight * scale;
-
-					const xOffset = (pdfWidth - imgScaledWidth) / 2
-					const yOffset = 0.5;
-
-					pdf.addImage(imgData, "PNG", xOffset, yOffset, imgScaledWidth, imgScaledHeight);
-
-					processTables(0, tableCount, pdf, imgScaledHeight + 20, () => {
-						const pdfBase64 = pdf.output("datauristring");
-						signHwpFileData = pdfBase64;
-
-						// 저장 호출
-						setTimeout(signSave, 600);
+				if (!result) {
+					customAlert("평가가 진행 중입니다.\n위원장은 모든 평가위원의 평가가 종료 된 후에 평가 저장이 가능합니다.", "warning").then(() => {
 
 					});
-				});
+					return;
+				}
 
+				const width = window.innerWidth;
+				const header = document.getElementById("header");
 
+				console.log("width", width);
 
-			}else if(width < 1024){
+				var companyCount = getCompanyTotal.length;
+				var maxCompaniesPerTable = 9; // 표 당 최대 9개의 제안업체
+				var tableCount = Math.ceil(companyCount / maxCompaniesPerTable); // 필요한 표의 개수 계산
 
-				//pdf
-				html2canvas(header, { scale: 2 }).then(headerCanvas => {
-					const imgData = headerCanvas.toDataURL("image/png");
+				const pdf = new jsPDF("l", "mm", "a4");
+				const pdfWidth = pdf.internal.pageSize.getWidth();
+				const pdfHeight = pdf.internal.pageSize.getHeight();
 
-					const imgWidth = headerCanvas.width * 0.2645;
-					const imgHeight = headerCanvas.height * 0.2645;
-					const scaleFactor = 0.5;
+				if (width >= 1024) {
+					html2canvas(header, { scale: 2 }).then(headerCanvas => {
+						const imgData = headerCanvas.toDataURL("image/png");
+						const imgWidth = headerCanvas.width * 0.2645;
+						const imgHeight = headerCanvas.height * 0.2645;
+						const scaleFactor = 0.5;
 
-					const scale = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight) * scaleFactor;
-					const imgScaledWidth = imgWidth * scale;
-					const imgScaledHeight = imgHeight * scale;
+						const scale = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight) * scaleFactor;
+						const imgScaledWidth = imgWidth * scale;
+						const imgScaledHeight = imgHeight * scale;
 
-					const xOffset = (pdfWidth - imgScaledWidth) / 2
-					const yOffset = 0.5;
+						const xOffset = (pdfWidth - imgScaledWidth) / 2
+						const yOffset = 0.5;
 
-					//pdf.addImage(imgData, "PNG", 0, 10, headerWidth, headerHeight);
-					pdf.addImage(imgData, "PNG", xOffset, yOffset, imgScaledWidth, imgScaledHeight);
+						pdf.addImage(imgData, "PNG", xOffset, yOffset, imgScaledWidth, imgScaledHeight);
 
-					processTables(0, tableCount, pdf, imgScaledHeight + 20, () => {
-						const pdfBase64 = pdf.output("datauristring");
-						signHwpFileData = pdfBase64;
+						processTables(0, tableCount, pdf, imgScaledHeight + 20, () => {
+							const pdfBase64 = pdf.output("datauristring");
+							signHwpFileData = pdfBase64;
 
-						// 저장 호출
-						setTimeout(signSave, 600);
+							// 저장 호출
+							setTimeout(signSave, 600);
+						});
 					});
-				});
+				} else if (width < 1024) {
+					// pdf
+					html2canvas(header, { scale: 2 }).then(headerCanvas => {
+						const imgData = headerCanvas.toDataURL("image/png");
 
+						const imgWidth = headerCanvas.width * 0.2645;
+						const imgHeight = headerCanvas.height * 0.2645;
+						const scaleFactor = 0.5;
+
+						const scale = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight) * scaleFactor;
+						const imgScaledWidth = imgWidth * scale;
+						const imgScaledHeight = imgHeight * scale;
+
+						const xOffset = (pdfWidth - imgScaledWidth) / 2
+						const yOffset = 0.5;
+
+						pdf.addImage(imgData, "PNG", xOffset, yOffset, imgScaledWidth, imgScaledHeight);
+
+						processTables(0, tableCount, pdf, imgScaledHeight + 20, () => {
+							const pdfBase64 = pdf.output("datauristring");
+							signHwpFileData = pdfBase64;
+
+							// 저장 호출
+							setTimeout(signSave, 600);
+						});
+					});
+				}
 			}
-
-		}
+		});
 	}
+
 
 	function processTables(index, tableCount, pdf, offsetY, callback) {
 		if (index >= tableCount) {

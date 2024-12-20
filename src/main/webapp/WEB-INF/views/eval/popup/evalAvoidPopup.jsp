@@ -22,41 +22,70 @@
 ::-webkit-scrollbar-track {
 	background: #f1f1f1;
 }</style>
+
+<script type="text/javascript" src="<c:url value='/resources/js/common/sweetalert.min.js'/>"></script>
+
 <script>
+	function customAlert(msg, icon) {
+		return swal({
+			title: '',
+			text: msg,
+			type: '',
+			icon: icon == '' ? 'success' : icon,
+			closeOnClickOutside : false,
+			button: '확인'
+		})
+	}
+
+	function customConfirm(msg, icon) {
+		return swal({
+			title: '',
+			text: msg,
+			type: '',
+			icon: icon == '' ? 'info' : icon,
+			buttons: {
+				agree: {
+					text : "예",
+					value : true
+				},
+				cancel: "아니요"
+			},
+			closeOnClickOutside : false
+		})
+	}
 
 	window.onload = function () {
 		window.scrollTo(0, 0);
 	};
 
-function cancelBtn(){
-	if(confirm("기피신청을 확정할 경우, 평가에서 제외되며 다시 참여하실 수 없습니다. 그래도 진행하시겠습니까?")){
-		var data ={};
+	function cancelBtn() {
+		customConfirm("기피신청을 확정할 경우, 평가에서 제외되며 다시 참여하실 수 없습니다. 그래도 진행하시겠습니까?", "warning").then((willConfirm) => {
+			if (willConfirm) {
+				var data = {};
 
-		data.eval_avoid_txt = $('input:radio[name=avoidReason]:checked').val();
+				data.eval_avoid_txt = $('input:radio[name=avoidReason]:checked').val();
 
-		if(data.eval_avoid_txt == 'other'){
-			data.eval_avoid_txt = $('#otherTxt').val();
-		}
+				if (data.eval_avoid_txt == 'other') {
+					data.eval_avoid_txt = $('#otherTxt').val();
+				}
 
-		$.ajax({
-			url: "<c:url value='/eval/evalAvoid' />",
-			data : data,
-			type : 'POST',
-			success: function(){
-				alert("처리 되었습니다.");
-				//opener.parent.location.href = _g_contextPath_ + "/";
-				//opener.parent.location.href = "<c:url value='/eval/goEvalAvoid'/>";
-				opener.parent.location.href = "<c:url value='/eval/evalView'/>";
-
-				window.close();
-
-			},
-			error : function(){
-				alert("처리 중 오류가 발생했습니다. 시스템관리자에게 문의 하세요.");
+				$.ajax({
+					url: "<c:url value='/eval/evalAvoid' />",
+					data: data,
+					type: 'POST',
+					success: function () {
+						customAlert("처리 되었습니다.").then(() => {
+							opener.parent.location.href = "<c:url value='/eval/evalView'/>";
+							window.close();
+						});
+					},
+					error: function () {
+						customAlert("처리 중 오류가 발생했습니다. 시스템관리자에게 문의 하세요.").then(() => {});
+					}
+				});
 			}
-		});
+		})
 	}
-}
 </script>
 
 

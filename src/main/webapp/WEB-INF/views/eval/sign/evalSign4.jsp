@@ -92,7 +92,37 @@
 		}
 	}
 </style>
+
+<script type="text/javascript" src="<c:url value='/resources/js/common/sweetalert.min.js'/>"></script>
+
 <script type="text/javascript">
+	function customAlert(msg, icon) {
+		return swal({
+			title: '',
+			text: msg,
+			type: '',
+			icon: icon == '' ? 'success' : icon,
+			closeOnClickOutside : false,
+			button: '확인'
+		})
+	}
+
+	function customConfirm(msg, icon) {
+		return swal({
+			title: '',
+			text: msg,
+			type: '',
+			icon: icon == '' ? 'info' : icon,
+			buttons: {
+				agree: {
+					text : "예",
+					value : true
+				},
+				cancel: "아니요"
+			},
+			closeOnClickOutside : false
+		})
+	}
 	window.onload = function () {
 		window.scrollTo(0, 0);
 	};
@@ -153,17 +183,23 @@
 		var flag = isKorJumin(p1, p2);
 
 		if (p1.length == 0 || p2.length == 0) {
-			alert('주민등록 번호를 입력해 주세요.');
+			customAlert('주민등록 번호를 입력해 주세요.', 'warning').then(() => {
+
+			});
 			return;
 		}
 
 		if ($('#dept').val().length == 0) {
-			alert('소속을 입력해 주세요.');
+			customAlert('소속을 입력해 주세요.', 'warning').then(() => {
+
+			});
 			return;
 		}
 
 		if (/\d/.test($('#dept').val())) {
-			alert('소속에 숫자를 입력할 수 없습니다.');
+			customAlert('소속에 숫자를 입력할 수 없습니다.', 'warning').then(() => {
+
+			});
 			return;
 		}
 
@@ -187,7 +223,9 @@
         }*/
 
 		if ($('#addr').val().length == 0) {
-			alert('주소를 입력해 주세요.');
+			customAlert('주소를 입력해 주세요.', 'warning').then(() => {
+
+			});
 			return;
 		}
 
@@ -359,22 +397,28 @@
 	}*/
 
 	function confirmEvaluation() {
-		if (confirm("이대로 평가수당을 확정시키겠습니까?")) {
-			var result = true;
-			console.log("초기 result 값:", result);
+		customConfirm("이대로 평가수당을 확정시키겠습니까?", "warning").then((willConfirm) => {
+			console.log("willConfirm:", willConfirm);
 
-			if ("${userInfo.EVAL_JANG}" == "Y") {
-				result = getCommissionerChk2();
-				console.log("getCommissionerChk2() 호출 후 result 값:", result);
+			if (willConfirm) {
+				var result = true;
+				console.log("초기 result 값:", result);
+
+				if ("${userInfo.EVAL_JANG}" == "Y") {
+					result = getCommissionerChk2();
+					console.log("getCommissionerChk2() 호출 후 result 값:", result);
+				}
+
+				if (!result) {
+					customAlert("평가가 진행 중입니다. \n위원장은 모든 평가위원의 평가가 종료 된 후에 저장이 가능합니다.", "warning").then(() => {
+						console.log("Alert closed, returning from function.");
+					});
+					return;
+				}
+
+				signSaveBtn();
 			}
-
-			if (!result) {
-				alert("평가가 진행 중입니다. \n위원장은 모든 평가위원의 평가가 종료 된 후에 저장이 가능합니다.");
-				return;
-			}
-
-			signSaveBtn();
-		}
+		})
 	}
 
 	function getCommissionerChk2() {
@@ -499,14 +543,18 @@
 			async : false,
 			success : function(data) {
 				if(data.result != "success") {
-					alert("문서저장시 오류가 발생했습니다. 시스템관리자한테 문의 하세요.");
+					customAlert("문서저장시 오류가 발생했습니다. 시스템관리자한테 문의 하세요.", "error").then(() => {
+
+					});
 					return false ;
 				} else {
 					location.reload();
 				}
 			},
 			error : function(request, status, error) {
-				alert("문서저장시 오류가 발생했습니다. 시스템관리자한테 문의 하세요.");
+				customAlert("문서저장시 오류가 발생했습니다. 시스템관리자한테 문의 하세요.", "error").then(() => {
+
+				});
 				return false ;
 			}
 		});
@@ -680,7 +728,7 @@
 		} else {
 			$("#disagree").prop("checked", true);
 			$("#agree").prop("checked", false);
-			alert("(동의 거부권리 안내) 본 개인정보 수집·이용에 대한 동의를\n거부할 수 있으나, 이 경우 정부 예산회계 처리가 불가하여\n수당지급이 곤란할 수 있습니다.");
+			customAlert("(동의 거부권리 안내) 본 개인정보 수집·이용에 대한 동의를\n거부할 수 있으나, 이 경우 정부 예산회계 처리가 불가하여\n수당지급이 곤란할 수 있습니다.", "warning");
 		}
 	}
 
@@ -691,7 +739,7 @@
 		} else {
 			$("#disagree2").prop("checked", true);
 			$("#agree2").prop("checked", false);
-			alert("(동의 거부권리 안내) 본 개인정보 수집·이용에 대한 동의를\n거부할 수 있으나, 이 경우 정부 예산회계 처리가 불가하여\n수당지급이 곤란할 수 있습니다.");
+			customAlert("(동의 거부권리 안내) 본 개인정보 수집·이용에 대한 동의를\n거부할 수 있으나, 이 경우 정부 예산회계 처리가 불가하여\n수당지급이 곤란할 수 있습니다.", "warning");
 		}
 	}
 

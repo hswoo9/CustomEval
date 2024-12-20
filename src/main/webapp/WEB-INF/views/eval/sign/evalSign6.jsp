@@ -674,7 +674,7 @@
 			html += '</tr>';
 
 			// 제안업체 평가의견
-			html += '<td  rowspan="' + currentCompanyCount + '" style="border:1px solid black; border-collapse: collapse;text-align:center; height: 27px; font-weight: bold;width:5%;"><p class="HStyle0"><span class="hs">평가의견</span></p></td>';
+			html += '<td  rowspan="' + currentCompanyCount + '" style="border:1px solid black; border-collapse: collapse;text-align:center; height: 27px; font-weight: bold;width:5%;"><p class="HStyle0"><span class="hs">평가<br>의견</span></p></td>';
 			for (var i = t * maxCompaniesPerTable; i < t * maxCompaniesPerTable + currentCompanyCount; i++) {
 				html += '<td style="border:1px solid black; border-collapse: collapse; text-align: center;"><p class="HStyle0"><span class="hs">' + String.fromCharCode(65 + i) + '</spam></p></td>';
 				html += '<td colspan="' + (currentCompanyCount + 3) + '" style="border:1px solid black; border-collapse: collapse; height: 27px; padding: 1px;"><p class="HStyle0"><span class="hs">' + getCompanyRemarkList[i].remark + '</span></p></td>';

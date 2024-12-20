@@ -15,10 +15,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.nio.file.*;
@@ -63,6 +66,13 @@ public class EvalServiceImpl implements EvalService {
 			Files.copy(new FileInputStream(lOutFile), path, new CopyOption[]{StandardCopyOption.REPLACE_EXISTING});
 			System.out.println("===================[ 5 ]====================");
 			String signDir = "http:\\\\1.233.95.140:58090\\upload\\cust_eval\\" + fileName.replaceAll("_sign", "") + "\\sign\\" + fileName + ".png";
+
+			HttpServletRequest servletRequest = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+
+			if(servletRequest.getServerName().contains("10.10.10.114") || servletRequest.getServerName().contains("one.epis.or.kr")) {
+				signDir = "http:\\\\10.10.10.114\\upload\\cust_eval\\" + fileName.replaceAll("_sign", "") + "\\sign\\" + fileName + ".png";
+			}
+
 			map.put("signDir", signDir.toString().replace("\\\\", "//").replace("\\", "/"));
 
 			/*CommFileUtil commFileUtil = new CommFileUtil();

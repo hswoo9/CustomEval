@@ -574,6 +574,10 @@
 		//_pHwpCtrl.EditMode = 1;
 
 		var hwpPath = "http://1.233.95.140:58090/upload/evalForm/step5.hwp";
+        var originPath = window.location.origin;
+
+        hwpPath = originPath + "/upload/evalForm/step5.hwp";
+
 		_hwpOpen(hwpPath, "HWP");
 
 		_pHwpCtrl.EditMode = 0;

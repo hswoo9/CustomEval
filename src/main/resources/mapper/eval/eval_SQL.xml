@@ -452,7 +452,7 @@
 	/*getItemColList*/
 		<!-- SELECT * FROM DJ_EVAL_COMMITTEE_ITEM WHERE COMMITTEE_SEQ = #{COMMITTEE_SEQ} AND ACTIVE = 'Y' -->
 		
-		select 
+		<!-- select
         item_seq, 
         committee_seq, 
         item_name, 
@@ -474,7 +474,34 @@
 		FROM DJ_EVAL_COMMITTEE_ITEM A
 		LEFT JOIN (SELECT *,SUM(SCORE) AS SUM_SCORE FROM DJ_EVAL_COMMITTEE_ITEM WHERE COMMITTEE_SEQ = #{COMMITTEE_SEQ} AND ACTIVE = 'Y' GROUP BY ITEM_NAME ORDER BY ITEM_SEQ) B
 		ON A.ITEM_SEQ = B.ITEM_SEQ
-		WHERE A.COMMITTEE_SEQ = #{COMMITTEE_SEQ} AND A.ACTIVE = 'Y') T
+		WHERE A.COMMITTEE_SEQ = #{COMMITTEE_SEQ} AND A.ACTIVE = 'Y') T -->
+
+		SELECT
+		item_seq,
+		committee_seq,
+		item_name,
+		item_medium_name,
+		item_small_name,
+		score,
+		active,
+		eval_type,
+		create_date,
+		score_1,
+		score_2,
+		score_3,
+		score_4,
+		score_5,
+		(
+		SELECT SUM(SCORE)
+		FROM DJ_EVAL_COMMITTEE_ITEM sub
+		WHERE sub.item_seq &lt;= main.item_seq
+		AND sub.COMMITTEE_SEQ = main.COMMITTEE_SEQ
+		AND sub.ACTIVE = 'Y'
+		) AS big_item_sum_score
+		FROM DJ_EVAL_COMMITTEE_ITEM main
+		WHERE COMMITTEE_SEQ = #{COMMITTEE_SEQ}
+		AND ACTIVE = 'Y'
+		ORDER BY item_seq
 	</select>
 	
 	<update id="setRankCode" parameterType="map">

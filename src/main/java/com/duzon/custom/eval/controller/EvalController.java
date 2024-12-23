@@ -656,7 +656,7 @@ public class EvalController {
 			path = "/home" + path;
 			System.out.println("***********path : "+path);
 		}else{
-			path = "/data" + path;
+			path = "/nas1" + path;
 		}
 
 		return path;

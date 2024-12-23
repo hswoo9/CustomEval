@@ -351,6 +351,13 @@ public class EvalServiceImpl implements EvalService {
 		// file 저장
 		map.put("attch_file_seq", fileName);
 
+		String url = "/home/upload/cust_eval/";
+		HttpServletRequest servletRequest = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+
+		if(servletRequest.getServerName().contains("10.10.10.114") || servletRequest.getServerName().contains("one.epis.or.kr")) {
+			url = "/nas1/upload/cust_eval/";
+		}
+
 		if ("7".equals(step)) {
 			int i = 1; // signHwpFileData_1, signHwpFileData_2 등을 순차적으로 처리하기 위한 변수
 			while (map.containsKey("signHwpFileData_" + i)) {
@@ -376,7 +383,7 @@ public class EvalServiceImpl implements EvalService {
 
 
 						// 서버에 파일 저장
-						String serverFilePath = "/home/upload/cust_eval/" + map.get("commissioner_seq").toString() + "/hwp/";
+						String serverFilePath = url + map.get("commissioner_seq").toString() + "/hwp/";
 						File newPath = new File(serverFilePath);
 						if (!newPath.exists()) {
 							newPath.mkdirs();
@@ -390,7 +397,7 @@ public class EvalServiceImpl implements EvalService {
 						pdfEcmFileVO.setComp_seq("1000");
 						pdfEcmFileVO.setDoc_id(originFileName);
 						pdfEcmFileVO.setDoc_no("001");
-						pdfEcmFileVO.setDoc_path("Z:/upload/epis/cust_eval/" + map.get("commissioner_seq") + "/hwp");
+						pdfEcmFileVO.setDoc_path("Z:/upload/cust_eval/" + map.get("commissioner_seq") + "/hwp");
 						pdfEcmFileVO.setDoc_name(originFileName);
 						pdfEcmFileVO.setDoc_ext("hwp");
 						pdfEcmFileVO.setDoc_title("sign_" + step);
@@ -401,7 +408,7 @@ public class EvalServiceImpl implements EvalService {
 						pdfEcmMainVO.setComp_seq("1000");
 						pdfEcmMainVO.setDept_seq("1");
 						pdfEcmMainVO.setEmp_seq("1");
-						pdfEcmMainVO.setPdf_path("Z:/upload/epis/cust_eval/" + map.get("commissioner_seq") + "/pdf");
+						pdfEcmMainVO.setPdf_path("Z:/upload/cust_eval/" + map.get("commissioner_seq") + "/pdf");
 						pdfEcmMainVO.setPdf_name("PDF_" + originFileName);
 						pdfEcmMainVO.setStatus_cd("D0001");
 
@@ -452,7 +459,7 @@ public class EvalServiceImpl implements EvalService {
 							lFileOutputStream.close();
 						}
 
-						String serverFilePath = "/home/upload/cust_eval/" + map.get("commissioner_seq").toString() + "/hwp/";
+						String serverFilePath = url + map.get("commissioner_seq").toString() + "/hwp/";
 						File newPath = new File(serverFilePath);
 						if (!newPath.exists()) {
 							newPath.mkdirs();
@@ -469,7 +476,7 @@ public class EvalServiceImpl implements EvalService {
 						pdfEcmFileVO.setComp_seq("1000");
 						pdfEcmFileVO.setDoc_id(fileName);
 						pdfEcmFileVO.setDoc_no("001");
-						pdfEcmFileVO.setDoc_path("Z:/upload/epis/cust_eval/" + map.get("commissioner_seq") + "/hwp");
+						pdfEcmFileVO.setDoc_path("Z:/upload/cust_eval/" + map.get("commissioner_seq") + "/hwp");
 						pdfEcmFileVO.setDoc_name(fileName);
 						pdfEcmFileVO.setDoc_ext("hwp");
 						pdfEcmFileVO.setDoc_title("sign_" + step);
@@ -480,7 +487,7 @@ public class EvalServiceImpl implements EvalService {
 						pdfEcmMainVO.setComp_seq("1000");
 						pdfEcmMainVO.setDept_seq("1");
 						pdfEcmMainVO.setEmp_seq("1");
-						pdfEcmMainVO.setPdf_path("Z:/upload/epis/cust_eval/" + map.get("commissioner_seq") + "/pdf");
+						pdfEcmMainVO.setPdf_path("Z:/upload/cust_eval/" + map.get("commissioner_seq") + "/pdf");
 						pdfEcmMainVO.setPdf_name("PDF_" + fileName);
 						pdfEcmMainVO.setStatus_cd("D0001");
 

@@ -365,11 +365,11 @@
 						html += '	<th style="width:10%;">평가</th>';
 						html += '	<th style="width:15%;">대분류</th>';
 						html += '	<th>중분류</th>';
-						html += '	<td style="font-size:11px;">매우우수(A)</td>';
-						html += '	<td style="font-size:11px;">우수(B)</td>';
-						html += '	<td style="font-size:11px;">보통(C)</td>';
-						html += '	<td style="font-size:11px;">미흡(D)</td>';
-						html += '	<td style="font-size:11px;">매우미흡(E)</td>';
+						html += '	<td style="font-size:14px;">매우우수<br>(A)</td>';
+						html += '	<td style="font-size:14px;">우수<br>(B)</td>';
+						html += '	<td style="font-size:14px;">보통<br>(C)</td>';
+						html += '	<td style="font-size:14px;">미흡<br>(D)</td>';
+						html += '	<td style="font-size:14px;">매우미흡<br>(E)</td>';
 						html += '</tr>';
 
 						//$("#dataScore").html(html2);
@@ -482,6 +482,11 @@
 
 				document.querySelectorAll('.comReMarkInput').forEach(function(textarea, index) {
 					textarea.addEventListener('input', function() {
+						// 한글, 숫자, 영어, 공백만 허용
+						var sanitizedValue = this.value.replace(/[^a-zA-Z0-9ㄱ-ㅎㅏ-ㅣ가-힣\s]/g, '');
+						this.value = sanitizedValue;
+
+						// 텍스트 길이 업데이트
 						var textLength = this.value.length;
 						document.getElementById('txtCnt_' + index).innerText = textLength;
 					});

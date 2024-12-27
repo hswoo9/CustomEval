@@ -27,7 +27,13 @@
 
 ::-webkit-scrollbar-track {
 	background: #f1f1f1;
-}</style>
+
+}
+
+.swal-overlay {
+	z-index: 10500 !important; /* 매우 높은 값으로 설정 */
+}
+</style>
 <div class="pop_wrap_dir" id="loadingPop" style="width: 443px;">
 	<div class="pop_con">
 		<table class="fwb ac" style="width:100%;">
@@ -90,6 +96,7 @@
 			actions: [],
 			close: false,
 			title: false,
+			zIndex: 1000
 		}).data("kendoWindow").center();
 
 		window.onbeforeunload = function (event) {
@@ -190,10 +197,12 @@
 					// alert("입력하지 않은 평가위원이 있습니다.");
 					// return;
 				}else if(result == "groupFail"){
-					alert("다른 값을 입력한 평가위원이 있습니다.\n데이터가 초기화됩니다.");
-					clearInterval(timeIn);
-					location.reload();
-					fnSetSignSetpChk2();
+					customAlert("다른 값을 입력한 평가위원이 있습니다.\n데이터가 초기화됩니다.", "warning")
+							.then(() => {
+								clearInterval(timeIn);
+								location.reload();
+								fnSetSignSetpChk2();
+							});
 				}else if(result == 'notFail'){
 					_pHwpCtrl.GetTextFile("HWPML2X", "", function(data) {
 						signHwpFileData = data;
@@ -403,22 +412,26 @@
 			<%--<sapn style="padding-left: 10px;">※업체별 시간 입력 가이드</sapn>--%>
 		</div>
 		<div>
-			제안발표
-			<select id="minute1" onchange="minuteChange(this)" style="width:50px;">
+			<span style="font-size:16px; margin-right:10px;">제안발표</span>
+			<select id="minute1" onchange="minuteChange(this)" style="width:80px; height:30px; font-size:14px; padding:5px;">
 				<option>선택</option>
 				<c:forEach var="minute" begin="5" step="5" end="200">
 					<option>${minute}</option>
 				</c:forEach>
 			</select>
 
-			질의응답
-			<select id="minute2" onchange="minuteChange(this)" style="width:50px;">
+			<span style="font-size:16px; margin-left:20px; margin-right:10px;">질의응답</span>
+			<select id="minute2" onchange="minuteChange(this)" style="width:80px; height:30px; font-size:14px; padding:5px;">
 				<option>선택</option>
 				<c:forEach var="minute" begin="5" step="5" end="200">
 					<option>${minute}</option>
 				</c:forEach>
 			</select>
-			<input type="button" onclick="signSaveBtn();" style="margin-left:23px; background-color: #dee4ea; border-color: black; border-width: thin;" value="다음">
+
+			<input type="button" onclick="signSaveBtn();"
+				   style="margin-left:23px; background-color: #dee4ea; border-color: black; border-width: thin;
+              font-size:14px; padding:0 15px; height:30px; width:60px; cursor:pointer; text-align: center;"
+				   value="다음">
 		</div>
 	</div>
 

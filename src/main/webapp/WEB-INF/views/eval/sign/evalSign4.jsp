@@ -314,9 +314,7 @@
         </tr>
         <tr>
           <td class="header">주민번호</td>
-          <td class="data" id="ssn"></td>
-          <td class="header">연락처</td>
-          <td class="data" id="phoneCell"></td>
+          <td class="data" colspan="3" id="ssn"></td>
         </tr>
       </table>
 

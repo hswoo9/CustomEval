@@ -323,19 +323,19 @@ public class EvalServiceImpl implements EvalService {
 				originFileExt = "hwp";
 				break;
 			case "6":
-				fileName = "(평가표)위원별 제안서 평가표_" + evalId;
+				fileName = "(평가표) 위원별 제안서 평가표_" + evalId;
 				originFileExt = "pdf";
 				break;
 			case "7":
-				fileName = "(평가표)업체별 제안서 평가집계표_";
+				fileName = "(평가표) 업체별 제안서 평가집계표_";
 				originFileExt = "pdf";
 				break;
 			case "8":
-				fileName = "(평가표)제안서 평가 총괄표_" + evalId;
+				fileName = "(평가표) 제안서 평가 총괄표_";
 				originFileExt = "pdf";
 				break;
 			case "9":
-				fileName = "사전접촉여부 확인(신고)서 한번더_" + evalId;
+				fileName = "사전접촉여부 확인(신고)서 _" + evalId;
 				originFileExt = "hwp";
 				break;
 			case "10":

@@ -27,7 +27,13 @@
 
 ::-webkit-scrollbar-track {
 	background: #f1f1f1;
-}</style>
+
+}
+
+.swal-overlay {
+	z-index: 10500 !important; /* 매우 높은 값으로 설정 */
+}
+</style>
 <div class="pop_wrap_dir" id="loadingPop" style="width: 443px;">
 	<div class="pop_con">
 		<table class="fwb ac" style="width:100%;">
@@ -90,6 +96,7 @@
 			actions: [],
 			close: false,
 			title: false,
+			zIndex: 1000
 		}).data("kendoWindow").center();
 
 		window.onbeforeunload = function (event) {
@@ -190,10 +197,12 @@
 					// alert("입력하지 않은 평가위원이 있습니다.");
 					// return;
 				}else if(result == "groupFail"){
-					alert("다른 값을 입력한 평가위원이 있습니다.\n데이터가 초기화됩니다.");
-					clearInterval(timeIn);
-					location.reload();
-					fnSetSignSetpChk2();
+					customAlert("다른 값을 입력한 평가위원이 있습니다.\n데이터가 초기화됩니다.", "warning")
+							.then(() => {
+								clearInterval(timeIn);
+								location.reload();
+								fnSetSignSetpChk2();
+							});
 				}else if(result == 'notFail'){
 					_pHwpCtrl.GetTextFile("HWPML2X", "", function(data) {
 						signHwpFileData = data;

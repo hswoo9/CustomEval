@@ -403,22 +403,26 @@
 			<%--<sapn style="padding-left: 10px;">※업체별 시간 입력 가이드</sapn>--%>
 		</div>
 		<div>
-			제안발표
-			<select id="minute1" onchange="minuteChange(this)" style="width:50px;">
+			<span style="font-size:16px; margin-right:10px;">제안발표</span>
+			<select id="minute1" onchange="minuteChange(this)" style="width:80px; height:30px; font-size:14px; padding:5px;">
 				<option>선택</option>
 				<c:forEach var="minute" begin="5" step="5" end="200">
 					<option>${minute}</option>
 				</c:forEach>
 			</select>
 
-			질의응답
-			<select id="minute2" onchange="minuteChange(this)" style="width:50px;">
+			<span style="font-size:16px; margin-left:20px; margin-right:10px;">질의응답</span>
+			<select id="minute2" onchange="minuteChange(this)" style="width:80px; height:30px; font-size:14px; padding:5px;">
 				<option>선택</option>
 				<c:forEach var="minute" begin="5" step="5" end="200">
 					<option>${minute}</option>
 				</c:forEach>
 			</select>
-			<input type="button" onclick="signSaveBtn();" style="margin-left:23px; background-color: #dee4ea; border-color: black; border-width: thin;" value="다음">
+
+			<input type="button" onclick="signSaveBtn();"
+				   style="margin-left:23px; background-color: #dee4ea; border-color: black; border-width: thin;
+              font-size:14px; padding:0 15px; height:30px; width:60px; cursor:pointer; text-align: center;"
+				   value="다음">
 		</div>
 	</div>
 

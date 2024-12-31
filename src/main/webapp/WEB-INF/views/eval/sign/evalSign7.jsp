@@ -718,6 +718,14 @@
 						<P CLASS=HStyle0 STYLE='text-align:left;line-height:180%;'>** 소수점 다섯째 자리에서 반올림</P>
 					</TD>
 				</TR>
+				<TR>
+					<TD colspan="8" valign="bottom" style='height:28px;'>
+						<P CLASS=HStyle0 STYLE='text-align: right; line-height:180%;'>
+							<SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>성명 : ${userInfo.NAME}</SPAN>
+							<IMG id="signatureImage" src="${userInfo.SIGN_DIR}" alt="서명 이미지" style="height:40px;"/>
+						</P>
+					</TD>
+				</TR>
 			</TABLE>
 
 			</c:forEach>
@@ -729,3 +737,17 @@
 
 <%--	<div id="_pHwpCtrl" style="height: 100%;border: 1px solid lightgray;/* display : none; */"></div>--%>
 </div>
+
+<script>
+
+	var userSign = "${userInfo.SIGN_DIR}" || "";
+	/*var signatureImage = document.getElementById("signatureImage");
+	if (userSign) {
+		signatureImage.src = userSign;
+	} else {
+		signatureImage.alt = "서명 이미지가 없습니다.";
+	}*/
+
+
+
+</script>

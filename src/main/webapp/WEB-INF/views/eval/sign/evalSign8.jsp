@@ -142,6 +142,10 @@
 
     var result = JSON.parse('${result}');
     var rates = "${userInfo.RATES}" || "";
+    var userTitle = "${userInfo.TITLE}" || "";
+    var userDate = "${nowDate}";
+    var userName = "${userInfo.NAME}" || "";
+    var userSign = "${userInfo.SIGN_DIR}" || "";
     var qualitativeGroups = JSON.parse('${qualitativeGroups}');
     var quantitativeGroups = JSON.parse('${quantitativeGroups}');
     var comList = result.list;
@@ -214,13 +218,25 @@
 
                 pdf.addImage(imgData, "PNG", xOffset, yOffset, imgScaledWidth, imgScaledHeight);
 
-                processTables(0, tableCount, pdf, imgScaledHeight + 20, () => {
+                /*processTables(0, tableCount, pdf, imgScaledHeight + 20, () => {
                     const pdfBase64 = pdf.output("datauristring");
                     signHwpFileData = pdfBase64;
 
                     // 저장 호출
                     setTimeout(signSave, 600);
+                });*/
+
+                processTables(0, tableCount, pdf, imgScaledHeight + 20, () => {
+                    const nameLabel = document.getElementById("nameLabel");
+                    captureNameLabel(nameLabel, pdf, () => {
+                        const pdfBase64 = pdf.output("datauristring");
+                        signHwpFileData = pdfBase64;
+
+                        // 저장 호출
+                        setTimeout(signSave, 600);
+                    });
                 });
+
             });
 
         }else if(width < 1024){
@@ -240,16 +256,27 @@
                 const xOffset = (pdfWidth - imgScaledWidth) / 2
                 const yOffset = 0.5;
 
-                //pdf.addImage(imgData, "PNG", 0, 10, headerWidth, headerHeight);
                 pdf.addImage(imgData, "PNG", xOffset, yOffset, imgScaledWidth, imgScaledHeight);
 
-                processTables(0, tableCount, pdf, imgScaledHeight + 20, () => {
+                /*processTables(0, tableCount, pdf, imgScaledHeight + 20, () => {
                     const pdfBase64 = pdf.output("datauristring");
                     signHwpFileData = pdfBase64;
 
                     // 저장 호출
                     setTimeout(signSave, 600);
+                });*/
+
+                processTables(0, tableCount, pdf, imgScaledHeight + 20, () => {
+                    const nameLabel = document.getElementById("nameLabel");
+                    captureNameLabel(nameLabel, pdf, () => {
+                        const pdfBase64 = pdf.output("datauristring");
+                        signHwpFileData = pdfBase64;
+
+                        // 저장 호출
+                        setTimeout(signSave, 600);
+                    });
                 });
+
             });
 
         }
@@ -286,7 +313,7 @@
 
 
             if (index === 0) {
-                offsetY = 15;
+                offsetY = 30;
             } else {
                 if (index > 0) {
                     pdf.addPage(); // 두 번째 테이블부터는 새 페이지에 추가
@@ -300,6 +327,30 @@
 
             // 다음 테이블 처리
             processTables(index + 1, tableCount, pdf, offsetY, callback);
+        });
+    }
+
+    function captureNameLabel(nameLabel, pdf, callback) {
+        html2canvas(nameLabel, { scale: 2 }).then(canvas => {
+            const imgData = canvas.toDataURL("image/png");
+            const imgWidth = canvas.width * 0.2645;
+            const imgHeight = canvas.height * 0.2645;
+
+            const pdfWidth = pdf.internal.pageSize.getWidth();
+            const pdfHeight = pdf.internal.pageSize.getHeight();
+            const scaleFactor = 0.5;
+
+            const scale = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight) * scaleFactor;
+            const imgScaledWidth = imgWidth * scale;
+            const imgScaledHeight = imgHeight * scale;
+
+            const xOffset = (pdfWidth - imgScaledWidth) / 2;
+            const yOffset = pdfHeight - imgScaledHeight - 10; // 마지막 페이지의 하단에서 약간 위로 조정
+
+            // 현재 페이지 하단에 추가
+            pdf.addImage(imgData, "PNG", xOffset, yOffset, imgScaledWidth, imgScaledHeight);
+
+            callback();
         });
     }
 
@@ -413,13 +464,16 @@
         var tableCount = Math.ceil(companyCount / maxCompaniesPerTable); // 필요한 표의 개수 계산
 
         var html = '';
-        html += '<div id="header" style="width:100%; padding-bottom: 35px; text-align: center; padding-top: 50px;">';
+        html += '<div id="header" style="width:100%; padding-bottom: 20px; text-align: center; padding-top: 50px;">';
         html +=	 '<h4 style="font-size: 20px;">제안서 평가 총괄표</h4>';
+        html += '<span style="float: left;">▣ 사업명 : '+userTitle+'</span>';
+        html += '<span style="float: right;">평가일자 : '+userDate+'</span>';
+        html += '<span style="float: right;"></span>';
         html +=  '</div>';
         for (var t = 0; t < tableCount; t++) {
             var currentCompanyCount = Math.min(companyCount - t * maxCompaniesPerTable, maxCompaniesPerTable);
 
-            html += '<table id="contenttable_'+t+'" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; width: 100%; margin: auto; margin-bottom: 100px;">';
+            html += '<table id="contenttable_'+t+'" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; width: 100%; margin: auto; margin-bottom: 50px;">';
 
             html += '<thead>';
             html += '<tr>';
@@ -602,6 +656,12 @@
             html += '</table>';
         }
 
+        html += '<div id ="nameLabel" style="text-align: right; margin-top: -50px; margin-bottom: 35px;">';
+        html += '<span>성명 : '+userName+'</span>';
+        html += '<span style="margin-right: 20px;"></span>';
+        html += '<img id="signatureImage" alt="서명 이미지" style="height:40px;"/>';
+        html += '</div>';
+
         $("#contentsTemp").append(html);
 
 
@@ -749,5 +809,12 @@
 
 <script>
     _hwpPutData()
+
+    var signatureImage = document.getElementById("signatureImage");
+    if (userSign) {
+        signatureImage.src = userSign;
+    } else {
+        signatureImage.alt = "서명 이미지가 없습니다.";
+    }
 </script>
 

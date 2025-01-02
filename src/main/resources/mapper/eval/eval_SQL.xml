@@ -643,6 +643,7 @@
 		, DOC_PATH
 		, DOC_NAME
 		, DOC_EXT
+		, DOC_TITLE
 		)VALUES(
 		#{rep_id}
 		, '1000'
@@ -651,6 +652,7 @@
 		, #{doc_path}
 		, #{doc_name}
 		, #{doc_ext}
+		, #{doc_title}
 		)
 	</insert>
 	

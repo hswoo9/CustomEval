@@ -393,18 +393,18 @@ public class EvalServiceImpl implements EvalService {
 						Files.copy(new FileInputStream(file), path, new CopyOption[]{StandardCopyOption.REPLACE_EXISTING});
 
 						PdfEcmFileVO pdfEcmFileVO = new PdfEcmFileVO();
-						pdfEcmFileVO.setRep_id(originFileName);
+						pdfEcmFileVO.setRep_id("eval_"+map.get("commissioner_seq").toString());
 						pdfEcmFileVO.setComp_seq("1000");
 						pdfEcmFileVO.setDoc_id(originFileName);
 						pdfEcmFileVO.setDoc_no("001");
 						pdfEcmFileVO.setDoc_path("Z:/upload/cust_eval/" + map.get("commissioner_seq") + "/hwp");
 						pdfEcmFileVO.setDoc_name(originFileName);
 						pdfEcmFileVO.setDoc_ext("hwp");
-						pdfEcmFileVO.setDoc_title("sign_" + step);
+						pdfEcmFileVO.setDoc_title(originFileName);
 
 						PdfEcmMainVO pdfEcmMainVO = new PdfEcmMainVO();
 
-						pdfEcmMainVO.setRep_id(fileName);
+						pdfEcmMainVO.setRep_id("eval_"+map.get("commissioner_seq").toString());
 						pdfEcmMainVO.setComp_seq("1000");
 						pdfEcmMainVO.setDept_seq("1");
 						pdfEcmMainVO.setEmp_seq("1");

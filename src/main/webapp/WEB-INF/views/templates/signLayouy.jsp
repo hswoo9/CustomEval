@@ -62,7 +62,8 @@
 			_g_contextPath_ = "${pageContext.request.contextPath}";
 
 			$(document).ready(function() {
-				_pHwpCtrl = BuildWebHwpCtrl("_pHwpCtrl", "http://218.158.231.42:8080/webhwpctrl/", function () {hwpView();});
+				//_pHwpCtrl = BuildWebHwpCtrl("_pHwpCtrl", "http://218.158.231.42:8080/webhwpctrl/", function () {hwpView();});
+				_pHwpCtrl = BuildWebHwpCtrl("_pHwpCtrl", "http://10.10.10.112:8080/webhwpctrl/", function () {hwpView();});
 				window.onresize();
 			})
 

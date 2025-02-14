@@ -81,9 +81,9 @@
 
 	$(function(){
 		$('.infoTbody').rowspan2(1); //rowspan2 - rowspan 순으로 실행시켜야 원하는 모양으로 나타남.
-		customAlert('"제안평가위원장은 \"제안서 평가 총괄표\" 및\n\"업체별 제안서 평가집계표\"에 이상이 없는지\n정확히 확인하여 주시기 바라며,\n저장버튼 클릭후에는 수정이 불가능 합니다"', 'success').then(() => {
+		/*customAlert('"제안평가위원장은 \"제안서 평가 총괄표\" 및\n\"업체별 제안서 평가집계표\"에 이상이 없는지\n정확히 확인하여 주시기 바라며,\n저장버튼 클릭후에는 수정이 불가능 합니다"', 'success').then(() => {
 
-		});
+		});*/
   		$('.infoTbody').rowspan(0);
   		//$("#contentsTemp").hide();
 	});
@@ -720,9 +720,13 @@
 				</TR>
 				<TR>
 					<TD colspan="8" valign="bottom" style='height:28px;'>
-						<P CLASS=HStyle0 STYLE='text-align: right; line-height:180%;'>
+						<P CLASS=HStyle0 STYLE='text-align: right; line-height:180%;display: inline-block;margin-left:75.5%;'>
 							<SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>성명 : ${userInfo.NAME}</SPAN>
-							<IMG id="signatureImage" src="${userInfo.SIGN_DIR}" alt="서명 이미지" style="height:40px;"/>
+							<DIV style="display: inline-block; position: relative;">
+								<IMG id="signatureImage" src="${userInfo.SIGN_DIR}"alt="서명 이미지" style="height:40px; position: relative; left: -30px;"/>
+								<SPAN style="position: absolute; top: 28%; left: 25%; transform: translateX(-50%); font-size: 14px;">(인)</SPAN>
+							</DIV>
+<%--							<IMG id="signatureImage" src="${userInfo.SIGN_DIR}" alt="서명 이미지" style="height:40px;"/>--%>
 						</P>
 					</TD>
 				</TR>

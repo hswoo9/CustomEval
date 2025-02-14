@@ -358,7 +358,49 @@ public class EvalServiceImpl implements EvalService {
 			url = "/nas1/upload/cust_eval/";
 		}
 
-		if ("7".equals(step)) {
+		if("6".equals(step) || "8".equals(step)){
+			if (!EgovStringUtil.nullConvert(map.get("signHwpFileData")).equals("")) {
+				try {
+					String originFileName = fileName;
+
+					String fileStr = EgovStringUtil.nullConvert(map.get("signHwpFileData"));
+
+					if (fileStr.startsWith("data:") && fileStr.contains("base64,")) {
+						fileStr = fileStr.substring(fileStr.indexOf("base64,") + "base64,".length());
+					}
+
+					File file = File.createTempFile(originFileName, "." + originFileExt);
+
+					if ("hwp".equals(originFileExt)) {
+						FileOutputStream lFileOutputStream = new FileOutputStream(file);
+						// Base64 디코딩이 필요없다면, 그냥 fileStr을 UTF-8로 저장
+						lFileOutputStream.write(fileStr.getBytes("UTF-8"));
+						lFileOutputStream.close();
+					} else if ("pdf".equals(originFileExt)) {
+						fileStr = fileStr.replaceAll("[\\n\\r]", "");
+						byte[] decodedBytes = Base64.getDecoder().decode(fileStr); // Base64 디코딩
+						FileOutputStream lFileOutputStream = new FileOutputStream(file);
+						lFileOutputStream.write(decodedBytes);
+						lFileOutputStream.close();
+					}
+
+					String serverFilePath = url + map.get("commissioner_seq").toString() + "/pdf/";
+					File newPath = new File(serverFilePath);
+					if (!newPath.exists()) {
+						newPath.mkdirs();
+					}
+
+					Path path = Paths.get(serverFilePath + fileName + "." + originFileExt);
+					Files.copy(new FileInputStream(file), path, new CopyOption[]{StandardCopyOption.REPLACE_EXISTING});
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			} else {
+				returnMap.put("result", "fail");
+				return returnMap;
+			}
+		}else if ("7".equals(step)) {
 			int i = 1; // signHwpFileData_1, signHwpFileData_2 등을 순차적으로 처리하기 위한 변수
 			while (map.containsKey("signHwpFileData_" + i)) {
 				String fileStr = EgovStringUtil.nullConvert(map.get("signHwpFileData_" + i));
@@ -383,7 +425,7 @@ public class EvalServiceImpl implements EvalService {
 
 
 						// 서버에 파일 저장
-						String serverFilePath = url + map.get("commissioner_seq").toString() + "/hwp/";
+						String serverFilePath = url + map.get("commissioner_seq").toString() + "/pdf/";
 						File newPath = new File(serverFilePath);
 						if (!newPath.exists()) {
 							newPath.mkdirs();
@@ -392,7 +434,7 @@ public class EvalServiceImpl implements EvalService {
 						Path path = Paths.get(serverFilePath + originFileName + "." + originFileExt);
 						Files.copy(new FileInputStream(file), path, new CopyOption[]{StandardCopyOption.REPLACE_EXISTING});
 
-						PdfEcmFileVO pdfEcmFileVO = new PdfEcmFileVO();
+						/*PdfEcmFileVO pdfEcmFileVO = new PdfEcmFileVO();
 						pdfEcmFileVO.setRep_id("eval_"+map.get("commissioner_seq").toString());
 						pdfEcmFileVO.setComp_seq("1000");
 						pdfEcmFileVO.setDoc_id(originFileName);
@@ -409,12 +451,12 @@ public class EvalServiceImpl implements EvalService {
 						pdfEcmMainVO.setDept_seq("1");
 						pdfEcmMainVO.setEmp_seq("1");
 						pdfEcmMainVO.setPdf_path("Z:/upload/cust_eval/" + map.get("commissioner_seq") + "/pdf");
-						pdfEcmMainVO.setPdf_name("PDF_" + originFileName);
+						pdfEcmMainVO.setPdf_name(originFileName);
+						//pdfEcmMainVO.setPdf_name("PDF_" + originFileName);
 						pdfEcmMainVO.setStatus_cd("D0001");
 
 						evalDAO.insertPdfFile(pdfEcmFileVO);
-						evalDAO.insertPdfMain(pdfEcmMainVO);
-
+						evalDAO.insertPdfMain(pdfEcmMainVO);*/
 
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -424,18 +466,8 @@ public class EvalServiceImpl implements EvalService {
 			}
 
 		}else{
-
 				if (!EgovStringUtil.nullConvert(map.get("signHwpFileData")).equals("")) {
 					try {
-
-					/*String originFileName = fileName;
-					//String originFileExt  = "hwp";
-					String fileStr = EgovStringUtil.nullConvert(map.get("signHwpFileData"));
-					File file = File.createTempFile(originFileName, "." + originFileExt);
-					FileOutputStream lFileOutputStream = new FileOutputStream(file);
-					lFileOutputStream.write(fileStr.getBytes("UTF-8"));
-					lFileOutputStream.close();*/
-
 						String originFileName = fileName;
 
 						String fileStr = EgovStringUtil.nullConvert(map.get("signHwpFileData"));
@@ -472,23 +504,22 @@ public class EvalServiceImpl implements EvalService {
 					commFileUtil.setServerSFSave(EgovStringUtil.nullConvert(map.get("signHwpFileData")), (String) map.get("commissioner_seq"), fileName, "hwp");*/
 
 						PdfEcmFileVO pdfEcmFileVO = new PdfEcmFileVO();
-						pdfEcmFileVO.setRep_id(fileName);
+						pdfEcmFileVO.setRep_id("eval_"+map.get("commissioner_seq").toString()+"_"+step);
 						pdfEcmFileVO.setComp_seq("1000");
-						pdfEcmFileVO.setDoc_id(fileName);
+						pdfEcmFileVO.setDoc_id("sign_" + step);
 						pdfEcmFileVO.setDoc_no("001");
 						pdfEcmFileVO.setDoc_path("Z:/upload/cust_eval/" + map.get("commissioner_seq") + "/hwp");
 						pdfEcmFileVO.setDoc_name(fileName);
 						pdfEcmFileVO.setDoc_ext("hwp");
-						pdfEcmFileVO.setDoc_title("sign_" + step);
+						pdfEcmFileVO.setDoc_title(fileName);
 
 						PdfEcmMainVO pdfEcmMainVO = new PdfEcmMainVO();
-
-						pdfEcmMainVO.setRep_id(fileName);
+						pdfEcmMainVO.setRep_id("eval_"+map.get("commissioner_seq").toString()+"_"+step);
 						pdfEcmMainVO.setComp_seq("1000");
 						pdfEcmMainVO.setDept_seq("1");
 						pdfEcmMainVO.setEmp_seq("1");
 						pdfEcmMainVO.setPdf_path("Z:/upload/cust_eval/" + map.get("commissioner_seq") + "/pdf");
-						pdfEcmMainVO.setPdf_name("PDF_" + fileName);
+						pdfEcmMainVO.setPdf_name(fileName);
 						pdfEcmMainVO.setStatus_cd("D0001");
 
 						evalDAO.insertPdfFile(pdfEcmFileVO);

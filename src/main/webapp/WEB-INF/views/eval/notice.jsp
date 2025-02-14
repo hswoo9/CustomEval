@@ -54,7 +54,7 @@
             }
 
         }else{
-            customAlert("체크되지 않은 항목이 있습니다. 다시 확인바랍니다.", 'warning')
+            customAlert("체크되지 않은 항목이 있습니다.\n다시 확인바랍니다.", 'warning')
             /*alert("체크되지 않은 항목이 있습니다. 다시 확인바랍니다.");*/
         }
     }
@@ -274,12 +274,12 @@
 
     <TABLE id="notiContent" border="1" cellspacing="0" cellpadding="0" style='width:1000px; border-collapse:collapse;border:none; margin-top:20px;'>
         <caption style="text-align: left; font-size:13.0pt; color: red; font-weight: bold;">기피사유</caption>
-        <TR>
+        <%--<TR>
             <TD valign="middle" style='width:632px;height:40px;border-left:solid #000000 1.1pt;border-right:solid #000000 1.1pt;border-top:solid #aeaeae 0.6pt;border-bottom:solid #aeaeae 0.6pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
                 <P CLASS=HStyle0 STYLE='margin-left:3.0pt;margin-right:3.0pt;line-height:130%;'>
                     <SPAN STYLE='font-size:13.0pt;line-height:130% ;color: red;"'>기피사유에 해당하는 평가위원께서는 기피신청을 해주시기 바랍니다.</SPAN></P>
             </TD>
-        </TR>
+        </TR>--%>
        <%-- <TR>
             <TD valign="middle" style='width:632px;height:40px;border-left:solid #000000 1.1pt;border-right:solid #000000 1.1pt;border-top:solid #aeaeae 0.6pt;border-bottom:solid #aeaeae 0.6pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
                 <P CLASS=HStyle0 STYLE='margin-left:3.0pt;margin-right:3.0pt;line-height:130%;'>
@@ -309,7 +309,7 @@
                 <TR>
                     <TD valign="middle" style='width:632px;height:40px;border-left:solid #000000 1.1pt;border-right:solid #000000 1.1pt;border-top:solid #aeaeae 0.6pt;border-bottom:solid #aeaeae 0.6pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
                         <P CLASS=HStyle0 STYLE='margin-left:3.0pt;margin-right:3.0pt;line-height:130%;'>
-                            <input type="checkbox" id="chk${loop.index}" name="chk" value="Y">
+                            <%--<input type="checkbox" id="chk${loop.index}" name="chk" value="Y">--%>
                             <SPAN STYLE='font-size:13.0pt;line-height:130%; color: red;'>&#9642;${notice['NOTICE_CONTENT']}</SPAN>
                         </P>
                     </TD>

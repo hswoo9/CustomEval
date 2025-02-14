@@ -729,7 +729,7 @@
 		})
 
 		if(!flag){
-			customAlert("체크되지 않은 부분이 있습니다. 모두 체크해주세요.", "warning");
+			customAlert("체크되지 않은 부분이 있습니다.\n모두 체크해주세요.", "warning");
 			$(focusTarget).focus();
 			return;
 		}
@@ -800,7 +800,7 @@
 		var textareas = document.querySelectorAll('textarea[data-comp-seq="' + companySeq + '"]');
 
 		if (groupsCount != checkedButtons) {
-			customAlert('체크되지 않은 부분이 있습니다. 모두 체크해주세요.', "warning");
+			customAlert('체크되지 않은 부분이 있습니다.\n모두 체크해주세요.', "warning");
 			return;
 		}
 
@@ -835,7 +835,7 @@
 				}
 			},
 			error : function(e){
-				customAlert('오류가 발생하였습니다. 관리자에게 문의해주세요.', 'error');
+				customAlert('오류가 발생하였습니다.\n관리자에게 문의해주세요.', 'error');
 				return;
 			}
 		});

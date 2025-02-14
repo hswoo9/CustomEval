@@ -62,10 +62,13 @@
 			_g_contextPath_ = "${pageContext.request.contextPath}";
 
 			$(document).ready(function() {
-				//_pHwpCtrl = BuildWebHwpCtrl("_pHwpCtrl", "http://218.158.231.42:8080/webhwpctrl/", function () {hwpView();});
-				_pHwpCtrl = BuildWebHwpCtrl("_pHwpCtrl", "http://10.10.10.112:8080/webhwpctrl/", function () {hwpView();});
+                if(location.host.indexOf("121.186.165.80") > -1 || location.host.indexOf("1.233.95.140") > -1){
+                    _pHwpCtrl = BuildWebHwpCtrl("_pHwpCtrl", "http://218.158.231.42:8080/webhwpctrl/", function () {hwpView();});
+                }else {
+                    _pHwpCtrl = BuildWebHwpCtrl("_pHwpCtrl", "http://10.10.10.112:8080/webhwpctrl/", function () {hwpView();});
+                }
 				window.onresize();
-			})
+			});
 
 			window.onresize = function () {resize()};
 

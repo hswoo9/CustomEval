@@ -43,6 +43,8 @@
 </div>
 
 <script>
+    var thickness = 10;
+
     (function(obj){
         obj.init();
         $(obj.onLoad);
@@ -52,6 +54,8 @@
         const ctx = canvas[0].getContext("2d");
         let drawble = false;
         let drawing = []; // 그림 저장 배열
+
+        ctx.lineWidth = thickness;
 
         // 공통 위치 계산 함수
         function getPosition(e) {
@@ -89,8 +93,10 @@
                 if (index === 0) {
                     ctx.beginPath();
                     ctx.moveTo(pos.X, pos.Y);
+                    ctx.lineWidth = thickness;
                 } else {
                     ctx.lineTo(pos.X, pos.Y);
+                    ctx.lineWidth = thickness;
                     ctx.stroke();
                 }
             });
@@ -106,6 +112,7 @@
                     drawble = true;
                     ctx.beginPath();
                     ctx.moveTo(pos.X, pos.Y);
+                    ctx.lineWidth = thickness;
                     drawing.push(pos);
                     break;
                 case "mousemove":
@@ -113,6 +120,7 @@
                     if (drawble) {
                         e.preventDefault(); // 터치 이동 시 스크롤 방지
                         ctx.lineTo(pos.X, pos.Y);
+                        ctx.lineWidth = thickness;
                         ctx.stroke();
                         drawing.push(pos);
                     }

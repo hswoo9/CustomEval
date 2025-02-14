@@ -243,16 +243,16 @@
 
 	<table style="width: 1400px;">
 		<colgroup>
-			<col width="10%">
 			<col width="20%">
+			<col width="10%">
 			<col width="15%">
 			<col width="15%">
 			<col width="40%">
 		</colgroup>
 		<thead>
 			<tr>
-				<th>확인</th>
 				<th>업체명</th>
+				<th>확인</th>
 				<th>사전 접촉자<br/>(업체측 관계자)</th>
 				<th>일시</th>
 				<th>세부내용</th>
@@ -261,13 +261,13 @@
 		<tbody>
 			<c:forEach var="item" items="${companyList}" varStatus="status">
 				<tr>
+					<td>${item.company_name}</td>
 					<td>
 						<select name="chkData[]" id="chkData${status.count}" style="width: 80px;" onchange="chkDataChange(this)">
 							<option value="없다" selected="selected">없다</option>
 							<option value="있다">있다</option>
 						</select>
 					</td>
-					<td>${item.company_name}</td>
 					<td>
 						<input type="text" name="contactor[]" id="contactor${status.count}" disabled>
 					</td>
@@ -304,7 +304,8 @@
 				<td colspan="2" style="border: none; text-align: left;padding-left: 35px;">
 					(인)
 					<span id="signVal">
-						<img alt="(인)" id="sign" src="${userInfo.SIGN_DIR}" style="position: absolute; text-align: center; transform: translate(-51px, -27px);width: 76px; margin-top:27px;">
+<%--						<img alt="(인)" id="sign" src="${userInfo.SIGN_DIR}" style="position: absolute; text-align: center; transform: translate(-51px, -27px);width: 76px; margin-top:27px;">--%>
+						<img alt="(인)" id="sign" src="${userInfo.SIGN_DIR}" style="position: absolute; text-align: center; transform: translate(-80px, -28px);width: 150px; margin-top:18px;">
 					</span>
 				</td>
 			</tr>

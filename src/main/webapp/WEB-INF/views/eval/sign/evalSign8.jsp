@@ -183,7 +183,7 @@
 
     $(function(){
         // 	OnConnectDevice();
-        customAlert('"제안평가위원장은 \"제안서 평가 총괄표\" 및\n\"업체별 제안서 평가집계표\"에 이상이 없는지\n정확히 확인하여 주시기 바라며,\n저장버튼 클릭후에는 수정이 불가능 합니다"', 'success');
+        // customAlert('"제안평가위원장은 \"제안서 평가 총괄표\" 및\n\"업체별 제안서 평가집계표\"에 이상이 없는지\n정확히 확인하여 주시기 바라며,\n저장버튼 클릭후에는 수정이 불가능 합니다"', 'success');
     });
 
     var signHwpFileData = "";
@@ -374,7 +374,7 @@
             async : false,
             success : function(data) {
                 if(data.result != "success") {
-                    customAlert("문서저장시 오류가 발생했습니다. 시스템관리자한테 문의 하세요.", "error").then(() => {
+                    customAlert("문서저장시 오류가 발생했습니다.\n시스템관리자한테 문의 하세요.", "error").then(() => {
 
                     });
                     return false ;
@@ -383,7 +383,7 @@
                 }
             },
             error : function(request, status, error) {
-                customAlert("문서저장시 오류가 발생했습니다. 시스템관리자한테 문의 하세요.", "error").then(() => {
+                customAlert("문서저장시 오류가 발생했습니다.\n시스템관리자한테 문의 하세요.", "error").then(() => {
 
                 });
                 return false ;
@@ -658,8 +658,12 @@
 
         html += '<div id ="nameLabel" style="text-align: right; margin-top: -50px; margin-bottom: 35px;">';
         html += '<span>성명 : '+userName+'</span>';
-        html += '<span style="margin-right: 20px;"></span>';
+        /*html += '<span style="margin-right: 20px;"></span>';
         html += '<img id="signatureImage" alt="서명 이미지" style="height:40px;"/>';
+        html += '</div>';*/
+        html += '<div style="display: inline-block; position: relative;">';
+        html += '<img id="signatureImage" alt="서명 이미지" style="height:40px; position: relative; left: -30px;"/>';
+        html += '<span style="position: absolute; top: 28%; left: 25%; transform: translateX(-50%); font-size: 14px;">(인)</span>';
         html += '</div>';
 
         $("#contentsTemp").append(html);

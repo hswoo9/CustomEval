@@ -59,7 +59,7 @@
 	};
 
 	function cancelBtn() {
-		customConfirm("기피신청을 확정할 경우, 평가에서 제외되며 다시 참여하실 수 없습니다. 그래도 진행하시겠습니까?", "warning").then((willConfirm) => {
+		customConfirm("기피신청을 확정할 경우, 평가에서 제외되며 다시 참여하실 수 없습니다.\n그래도 진행하시겠습니까?", "warning").then((willConfirm) => {
 			if (willConfirm) {
 				var data = {};
 
@@ -80,7 +80,7 @@
 						});
 					},
 					error: function () {
-						customAlert("처리 중 오류가 발생했습니다. 시스템관리자에게 문의 하세요.").then(() => {});
+						customAlert("처리 중 오류가 발생했습니다.\n시스템관리자에게 문의 하세요.").then(() => {});
 					}
 				});
 			}

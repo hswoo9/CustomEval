@@ -192,7 +192,7 @@
 	var signHwpFileData = "";
 
 	function signSaveBtn() {
-		customConfirm('평가확정 이후에는 점수를 수정하실 수 없습니다. 그래도 확정하시겠습니까?', 'warning').then((willConfirm) => {
+		customConfirm('평가확정 이후에는 점수를 수정하실 수 없습니다.\n그래도 확정하시겠습니까?', 'warning').then((willConfirm) => {
 			if (willConfirm) {
 				var result = true;
 				if ("${userInfo.EVAL_JANG}" == "Y") {
@@ -772,9 +772,15 @@
 
 		html += '<div id ="nameLabel" style="text-align: right; margin-top: -50px; margin-bottom: 35px;">';
 		html += '<span>성명 : '+userName+'</span>';
-		html += '<span style="margin-right: 20px;"></span>';
+		/*html += '<span style="margin-right: 20px;"></span>';
 		html += '<img id="signatureImage" alt="서명 이미지" style="height:40px;"/>';
-		html += '</div>';
+		html += '</div>';*/
+        html += '<div style="display: inline-block; position: relative;">';
+        html += '<img id="signatureImage" alt="서명 이미지" style="height:40px; position: relative; left: -30px;"/>';
+        html += '<span style="position: absolute; top: 28%; left: 25%; transform: translateX(-50%); font-size: 14px;">(인)</span>';
+        html += '</div>';
+
+
 
 
 		$("#contentsTemp").append(html);

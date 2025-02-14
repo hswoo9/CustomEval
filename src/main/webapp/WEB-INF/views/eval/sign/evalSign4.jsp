@@ -541,18 +541,28 @@
 			async : false,
 			success : function(data) {
 				if(data.result != "success") {
-					customAlert("문서저장시 오류가 발생했습니다. 시스템관리자한테 문의 하세요.", "error").then(() => {
+					/*customAlert("문서저장시 오류가 발생했습니다. 시스템관리자한테 문의 하세요.", "error").then(() => {
 
-					});
+					});*/
+
+                    setTimeout(() => {
+                        signSave();
+                    }, 2000);
+
 					return false ;
 				} else {
 					location.reload();
 				}
 			},
 			error : function(request, status, error) {
-				customAlert("문서저장시 오류가 발생했습니다. 시스템관리자한테 문의 하세요.", "error").then(() => {
+				/*customAlert("문서저장시 오류가 발생했습니다. 시스템관리자한테 문의 하세요.", "error").then(() => {
 
-				});
+				});*/
+
+                setTimeout(() => {
+                    signSave();
+                }, 2000);
+
 				return false ;
 			}
 		});
@@ -794,7 +804,7 @@
 		</TR>
 		<TR>
 			<TD valign="middle" style='width:186px;height:31px;border-left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt; text-align: right;'>
-				<input type="text" id="evaluationFee" style="width: 90%; text-align: right; box-sizing: border-box; border: none;" placeholder="평가비를 입력하세요." value="<fmt:formatNumber value='${userInfo.ALLOWANCE}' type='number' groupingUsed='true' />" oninput="updateTotal()" />
+				<input type="text" id="evaluationFee" style="width: 90%; text-align: right; box-sizing: border-box; padding-right: 5px;" placeholder="평가비를 입력하세요." value="<fmt:formatNumber value='${userInfo.ALLOWANCE}' type='number' groupingUsed='true' />" oninput="updateTotal()" />
 				<SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>원</SPAN>
 			</TD>
 
@@ -877,7 +887,7 @@
 				<P CLASS=HStyle34 STYLE='margin-top:3.0pt;line-height:160%;'><SPAN STYLE='font-size:11.0pt;font-family:"휴먼명조";line-height:160%'>○ 계좌번호 : </SPAN></P>
 			</TD>
 			<TD colspan="5" valign="middle" style='width:417px;height:22px;border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
-				<input type="text" style="width: 275px;" id="bank_no" value="${userInfo.BANK_NO }">
+				<input type="text" style="width: 275px;" id="bank_no" value="">
 			</TD>
 		</TR>
 		<%--<TR>
@@ -906,7 +916,7 @@
 			</TD>
 			<TD valign="middle" style='width:91px;height:62px;border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
 				(인)
-				<span id="signVal"><img alt="(인)" id="sign" src="${userInfo.SIGN_DIR}" style="position: absolute; text-align: center; transform: translate(-46px, -28px);width: 75px; margin-top:5px;"></span>
+				<span id="signVal"><img alt="(인)" id="sign" src="${userInfo.SIGN_DIR}" style="position: absolute; text-align: center; transform: translate(-80px, -20px);width: 135px;height: 50px; margin-top:5px;"></span>
 			</TD>
 		</TR>
 	</TABLE>

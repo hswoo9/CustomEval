@@ -386,9 +386,7 @@
 								/*html += '	<td>' + (item.item_medium_name ? item.item_medium_name : "") + '</td>';*/
 								if (item.item_name === "상생기업") {
 									html += '    <td>';
-									html += '        <div>상생기업 단독 또는 상생기업 컨소시엄</div>';
-									html += '        <div>상생기업이 아닌 중소기업을 포함함 컨소시엄</div>';
-									html += '        <div>상생기업이 아닌 일반 기업 단독</div>';
+									html += '        <div>상생기업/중소기업/일반기업</div>';
 									html += '    </td>';
 								} else {
 									html += '    <td>' + (item.item_medium_name ? item.item_medium_name : "") + '</td>';

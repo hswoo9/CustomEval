@@ -221,10 +221,10 @@ function evalApply(){
 					if (result === 'Y') {
 						location.href = "<c:url value='/eval/evalView' />";
 					} else if (result === 'O') {
+						$('#loadingPop').data("kendoWindow").close();
 						customAlert('동점자가 있습니다.\n다시 투표해주세요.', 'warning').then(() => {
-
+							location.reload();
 						});
-						location.reload();
 					} else {
 						evalApplyData = data;
 						timeIn = setInterval(getEvalJang, 1000);
@@ -252,21 +252,22 @@ function getEvalJang(){
         		clearInterval(timeIn);
         		location.href = "<c:url value='/eval/evalView' />";	
         	}else if(result == 'O'){
+				$('#loadingPop').data("kendoWindow").close();
 				customAlert('동점자가 있습니다.\n다시 투표해주세요.', 'warning').then(() => {
+					clearInterval(timeIn);
 
+					$.ajax({
+						url:"<c:url value='/eval/setEvalJangReSelected' />",
+						data: evalApplyData,
+						type: 'POST',
+						dataType: 'text',
+						success : function (){
+							//clearInterval(timeIn);
+							location.reload();
+						}
+					});
 				});
-				clearInterval(timeIn);
 
-				$.ajax({
-					url:"<c:url value='/eval/setEvalJangReSelected' />",
-					data: evalApplyData,
-					type: 'POST',
-					dataType: 'text',
-					success : function (){
-						//clearInterval(timeIn);
-						location.reload();
-					}
-				});
 				/*clearInterval(timeIn);
 				location.reload();*/
 			}

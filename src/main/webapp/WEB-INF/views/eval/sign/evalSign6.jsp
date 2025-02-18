@@ -627,17 +627,18 @@
 		var tableCount = Math.ceil(companyCount / maxCompaniesPerTable); // 필요한 표의 개수 계산
 
 		var html = '';
-		html += '<div id="header" style="width:100%; padding-bottom: 20px; text-align: center; padding-top: 50px;">';
+		html += '<div id="header" style="width:100%; max-width: 100%; padding-bottom: 5px; text-align: center; padding-top: 50px;">';
 		html +=	 '<h4 style="font-size: 20px;">위원별 제안서 평가표</h4>';
 		html += '<p style="text-align: left;">▣ 사업명 : '+userTitle+'</p>';
-		html += '<span style="float: left;">▣ 평가위원명 : '+userName+'</span>';
-		html += '<span style="float: right;">평가일자 : '+userDate+'</span>';
-		html += '<span style="float: right;"></span>';
-		html +=  '</div>';
+		html += '<p style="display: flex; justify-content: space-between;">';
+		html += '<span>▣ 평가위원명 : '+userName+'</span>';
+		html += '<span>평가일자 : '+userDate+'</span>';
+		html +=	'</p>';
+		html += '</div>';
 		for (var t = 0; t < tableCount; t++) {
 			var currentCompanyCount = Math.min(companyCount - t * maxCompaniesPerTable, maxCompaniesPerTable); // 현재 표에 들어갈 제안업체 수
 
-			html += '<table id="contenttable_'+t+'" style="width: 100%; margin : 0; margin-bottom: 50px;">';
+			html += '<table id="contenttable_'+t+'" style="width: 100%; max-width: 100%; margin : 0; margin-bottom: 50px;">';
 			html += '<thead>';
 			html += '<tr>';
 			html += '<th id="thcell" rowspan="2" colspan="3" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; width: 43%; text-align: center;"><p class="HStyle0" style="text-align:center;line-height:150%;"><span class="hs">평가항목</span></p></th>';
@@ -720,7 +721,7 @@
 				for (var j = 0; j < quantityGroupArray[i].length; j++) {
 					if (quantityGroupArray[i][0].item_name === "상생기업") {
 						html += '<td style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt;"><p class="HStyle0" style = "text-align:left;line-height:150%;"><span class="hs">';
-						html += '상생기업 단독 또는 상생기업<br>컨소시엄 상생기업이 아닌 중소기업을 포함한 컨소시엄<br>상생기업이 아닌 일반 기업 단독';
+						html += '상생기업/중소기업/일반기업';
 						html += '</span></p></td>';
 					}else {
 						html += '<td style="border-left:solid #000000 0.3pt;border-right:solid #000000 0.3pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt;"><p class="HStyle0" style="line-height:150%;"><span class="hs">' + quantityGroupArray[i][j].item_medium_name + '</span></p></td>';
@@ -770,7 +771,7 @@
 
 		}
 
-		html += '<div id ="nameLabel" style="text-align: right; margin-top: -50px; margin-bottom: 35px;">';
+		html += '<div id ="nameLabel" style="width: 100%; max-width: 100%; text-align: right; margin-top: -40px; margin-bottom: 35px;">';
 		html += '<span>성명 : '+userName+'</span>';
 		/*html += '<span style="margin-right: 20px;"></span>';
 		html += '<img id="signatureImage" alt="서명 이미지" style="height:40px;"/>';

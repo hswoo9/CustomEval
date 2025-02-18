@@ -533,9 +533,7 @@
 								<c:choose>
 									<c:when test="${result[0].colList[colIndex].item_name == '상생기업'}">
 									<SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>
-									상생기업 단독 또는 상생기업</br>
-										컨소시엄 상생기업이 아닌 중소기업을 포함한 컨소시엄</br>
-										상생기업이 아닌 일반 기업 단독
+									상생기업/중소기업/일반기업
 									</SPAN>
 									</c:when>
 									<c:otherwise>

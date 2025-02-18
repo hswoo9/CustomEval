@@ -26,6 +26,7 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.nio.file.*;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -616,6 +617,20 @@ public class EvalServiceImpl implements EvalService {
 		map.put("colList", col);
 
 		List<Map<String, Object>> list = evalDAO.getEvalConfirmData(map);
+
+		AtomicInteger counter = new AtomicInteger(1);
+
+		list.stream()
+				.filter(row -> !"-".equals(row.get("RANK").toString()))
+				.sorted((row1, row2) -> {
+					Double totalSum1 = (Double) row1.get("TOTAL_SUM");
+					Double totalSum2 = (Double) row2.get("TOTAL_SUM");
+					return totalSum2.compareTo(totalSum1);  // 내림차순 정렬
+				})
+				.forEach(row -> {
+					int currentRank = counter.getAndIncrement();
+					row.put("RANK", currentRank);
+				});
 
 		map.put("list", list);
 

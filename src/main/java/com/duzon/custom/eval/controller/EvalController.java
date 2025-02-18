@@ -118,6 +118,7 @@ public class EvalController {
 			if(map.get("EVAL_AVOID").equals("Y") && map.get("EVAL_AVOID_CHECK_YN").equals("N")){
 				logger.info("pageInfo ===== /eval/sign/evalAvoid11");
 				//기피신청 수당확인 페이지로 이동
+				model.addAttribute("avoidFlag", true);
 				return "/eval/sign/evalSign4";
 			}else if(map.get("EVAL_AVOID").equals("Y") && map.get("EVAL_AVOID_CHECK_YN").equals("Y")){
 				logger.info("pageInfo ===== /eval/sign/evalSign10");

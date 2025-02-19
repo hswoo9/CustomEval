@@ -43,7 +43,7 @@
 </div>
 
 <script>
-    var thickness = 10;
+    var thickness = 7;
 
     (function(obj){
         obj.init();

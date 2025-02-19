@@ -778,7 +778,7 @@
 		html += '</div>';*/
         html += '<div style="display: inline-block; position: relative;">';
         html += '<img id="signatureImage" alt="서명 이미지" style="height:40px; position: relative; left: -30px;"/>';
-        html += '<span style="position: absolute; top: 28%; left: 25%; transform: translateX(-50%); font-size: 14px;">(인)</span>';
+        html += '<span style="position: absolute; top: 28%; left: 25%; transform: translate(-50% , -20%); font-size: 14px;">(인)</span>';
         html += '</div>';
 
 

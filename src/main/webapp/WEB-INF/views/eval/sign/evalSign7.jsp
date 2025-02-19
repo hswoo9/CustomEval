@@ -738,14 +738,24 @@
 				</TR>
 				<TR>
 					<TD colspan="8" valign="bottom" style='height:28px;'>
-						<P CLASS=HStyle0 STYLE='text-align: right; line-height:180%;display: inline-block;margin-left:75.5%;'>
+						<P CLASS=HStyle0 STYLE='text-align: right; line-height:180%;display: inline-block;margin-left:37.7rem;'>
 							<SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>성명 : ${userInfo.NAME}</SPAN>
 							<DIV style="display: inline-block; position: relative;">
-								<IMG id="signatureImage" src="${userInfo.SIGN_DIR}"alt="서명 이미지" style="height:40px; position: relative; left: -30px;"/>
-								<SPAN style="position: absolute; top: 28%; left: 25%; transform: translateX(-50%); font-size: 14px;">(인)</SPAN>
+								<IMG id="signatureImage" src="${userInfo.SIGN_DIR}"alt="서명 이미지" style="height:40px; position: relative; left: -45px;"/>
+								<SPAN style="position: absolute; top: 28%; left: 18%; transform: translate(-50% , -20%); font-size: 14px;">(인)</SPAN>
 							</DIV>
 <%--							<IMG id="signatureImage" src="${userInfo.SIGN_DIR}" alt="서명 이미지" style="height:40px;"/>--%>
 						</P>
+
+							<%--<p class="HStyle0" style="text-align: right; line-height:180%; width: 100%; margin: 0;">
+								<span style="font-family:'한양중고딕', '한컴돋움';">성명 : ${userInfo.NAME}</span>
+								<span style="display: inline-block; position: relative; vertical-align: middle; margin-left: 10px;">
+							        <img id="signatureImage" src="${userInfo.SIGN_DIR}" alt="서명 이미지" style="height: 40px; vertical-align: middle; position: relative; left: -40px;">
+							        <span style="position: absolute; top: 50%; left: 20%; transform: translate(-50%, -50%); font-size: 14px;">
+							            (인)
+							        </span>
+                                </span>
+							</p>--%>
 					</TD>
 				</TR>
 			</TABLE>

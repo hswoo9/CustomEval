@@ -355,11 +355,11 @@
 									_hwpPutSignImg("sign" + i, data.signList[i].SIGN_DIR);
 								}
 							}else{
-								alert("오류가 발생했습니다. 시스템관리자한테 문의 하세요.");
+								//alert("오류가 발생했습니다. 시스템관리자한테 문의 하세요.");
 								return false ;
 							}
 						}else{
-							alert("오류가 발생했습니다. 시스템관리자한테 문의 하세요.");
+							//alert("오류가 발생했습니다. 시스템관리자한테 문의 하세요.");
 							return false ;
 						}
 					}

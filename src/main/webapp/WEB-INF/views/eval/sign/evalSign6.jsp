@@ -224,7 +224,7 @@
 						const imgData = headerCanvas.toDataURL("image/png");
 						const imgWidth = headerCanvas.width * 0.2645;
 						const imgHeight = headerCanvas.height * 0.2645;
-						const scaleFactor = 0.5;
+						const scaleFactor = 0.8;
 
 						const scale = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight) * scaleFactor;
 						const imgScaledWidth = imgWidth * scale;

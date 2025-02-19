@@ -84,6 +84,19 @@
 
 	function signSaveBtn() {
 		if (customConfirm('사전접촉여부는 추후 수정이 불가능 합니다.\n확정하시겠습니까?', 'success').then((value) => {
+
+			var result = true;
+			if ("${userInfo.EVAL_JANG}" == "Y") {
+				result = getCommissionerChk();
+			}
+
+			if (!result) {
+				customAlert("위원장은 모든 평가위원의 사전접촉여부가 확인된 후에 확정이 가능합니다.", "warning").then(() => {
+
+				});
+				return;
+			}
+
 			if (value) {
 				// 체크된 상태가 '있다'인 경우 확인 창을 띄움
 				var contactCheck = false;
@@ -140,6 +153,27 @@
 		}));
 	}
 
+	function getCommissionerChk(){
+		var commissionerChk = true;
+
+		$.ajax({
+			url: "<c:url value='/eval/getCommissionerChk' />",
+			data : {
+				committee_seq : '${userInfo.COMMITTEE_SEQ}',
+				commissioner_seq : '${userInfo.COMMISSIONER_SEQ}',
+				evalSign: "9",
+			},
+			type : 'POST',
+			dataType : "json",
+			async : false,
+			success: function(result){
+				console.log(result);
+				commissionerChk = result.commissionerChk;
+			}
+		});
+
+		return commissionerChk;
+	}
 
 	function signSave() {
 		var formData = new FormData();

@@ -1122,6 +1122,11 @@ public class EvalServiceImpl implements EvalService {
 			if(commissioner.get("eval_save").equals("N") || commissioner.get("sign_6").equals("N")){
 				returnBoolean = false;
 			}
+			if(params.containsKey("evalSign")) {
+				if(params.get("evalSign").equals("9") && commissioner.get("sign_9").equals("N")) {
+					returnBoolean = false;
+				}
+			}
 		}
 
 		returnMap.put("commissionerChk", returnBoolean);

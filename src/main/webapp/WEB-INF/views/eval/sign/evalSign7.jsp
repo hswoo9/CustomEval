@@ -740,11 +740,11 @@
 				</TR>
 				<TR>
 					<TD colspan="8" valign="bottom" style='height:28px;'>
-						<P CLASS=HStyle0 STYLE='text-align: right; line-height:180%;display: inline-block;margin-left:37.7rem;'>
+						<P CLASS=HStyle0 STYLE='text-align: right; line-height:180%;display: inline-block;margin-left:80%;'>
 							<SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>성명 : ${userInfo.NAME}</SPAN>
-							<DIV style="display: inline-block; position: relative;">
+							<DIV style="display: inline-block; position: relative; width: 0;">
 								<IMG id="signatureImage" src="${userInfo.SIGN_DIR}"alt="서명 이미지" style="height:40px; position: relative; left: -45px;"/>
-								<SPAN style="position: absolute; top: 28%; left: 18%; transform: translate(-50% , -20%); font-size: 14px;">(인)</SPAN>
+								<SPAN style="position: absolute; top: 21%; font-size: 14px;padding-left: 15px;">(인)</SPAN>
 							</DIV>
 <%--							<IMG id="signatureImage" src="${userInfo.SIGN_DIR}" alt="서명 이미지" style="height:40px;"/>--%>
 						</P>

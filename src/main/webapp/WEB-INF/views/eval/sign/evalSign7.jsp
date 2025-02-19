@@ -170,6 +170,8 @@
 	let processedDivs = 0;
 
 	function signSaveBtn() {
+        //$('#loading_spinner').show();
+
 		const divPrefix = "temp_";
 		signHwpFileDataList = [];
 		processedDivs = 0; // Reset processedDivs
@@ -285,8 +287,6 @@
 		/*for (let pair of formData.entries()) {
 			console.log(pair[0], ":", pair[1]); // 키와 값 확인
 		}*/
-
-
 
 		$.ajax({
 			url : "<c:url value='/eval/setSignSetp'/>",
@@ -515,8 +515,29 @@
 							${result[0].colList[colIndex].eval_type }<!-- 평가타입 -->
 
 						</TD>
-						<TD class=${result[0].colList[colIndex].eval_type } valign="middle" name="item_name" style='width:100px;height:30px;border-left:solid #000000 0.9pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt;text-align:center;'>
+						<c:choose>
+							<c:when test="${result[0].colList[colIndex].item_name == '상생기업'}">
+								<TD class="${result[0].colList[colIndex].eval_type }" valign="middle" name="item_name" style='width:100px;height:30px;border-left:solid #000000 0.9pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt;text-align:center;'>
+									${result[0].colList[colIndex].item_name }<br>(5점) <!-- 대분류 -->
+								</TD>
+							</c:when>
+							<c:otherwise>
+								<c:choose>
+									<c:when test='${result[0].colList[colIndex].row_span ne 1 and result[0].colList[colIndex].row_flag ne null}'>
+										<TD rowspan="${result[0].colList[colIndex].row_span -1}" class="${result[0].colList[colIndex].eval_type }" valign="middle" name="item_name" style='width:100px;height:30px;border-left:solid #000000 0.9pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt;text-align:center;'>
+												${result[0].colList[colIndex].item_name }<br>(${result[0].colList[colIndex].sum_score }점) <!-- 대분류 -->
+										</TD>
+									</c:when>
+									<c:otherwise>
+										<TD class="${result[0].colList[colIndex].eval_type }" valign="middle" name="item_name" style='width:100px;height:30px;border-left:solid #000000 0.9pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt;text-align:center;'>
+												${result[0].colList[colIndex].item_name }<br>(${result[0].colList[colIndex].sum_score }점) <!-- 대분류 -->
+										</TD>
+									</c:otherwise>
+								</c:choose>
+							</c:otherwise>
+						</c:choose>
 
+						<%--<TD class=${result[0].colList[colIndex].eval_type } valign="middle" name="item_name" style='width:100px;height:30px;border-left:solid #000000 0.9pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt;text-align:center;'>
 							<c:choose>
 								<c:when test="${result[0].colList[colIndex].item_name == '상생기업'}">
 									${result[0].colList[colIndex].item_name }<br>(5점) <!-- 대분류 -->
@@ -525,9 +546,8 @@
 									${result[0].colList[colIndex].item_name }<br>(${result[0].colList[colIndex].big_item_sum_score }점) <!-- 대분류 -->
 								</c:otherwise>
 							</c:choose>
+						</TD>--%>
 
-
-						</TD>
 						<TD valign="middle"  style='width:225px;height:30px;border-left:solid #000000 0.9pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
 							<P CLASS=HStyle0 STYLE='text-align:left;line-height:150%;'>
 								<c:choose>

@@ -499,7 +499,32 @@
 		WHERE sub.item_seq &lt;= main.item_seq
 		AND sub.COMMITTEE_SEQ = main.COMMITTEE_SEQ
 		AND sub.ACTIVE = 'Y'
-		) AS big_item_sum_score
+		) AS big_item_sum_score,
+		(
+		SELECT SUM(sub.score)
+		FROM DJ_EVAL_COMMITTEE_ITEM sub
+		WHERE sub.item_name = main.item_name
+		AND sub.COMMITTEE_SEQ = main.COMMITTEE_SEQ
+		AND sub.ACTIVE = 'Y'
+		) AS sum_score,
+		(
+		SELECT count(*)
+		FROM DJ_EVAL_COMMITTEE_ITEM sub
+		WHERE sub.item_name = main.item_name
+		AND sub.COMMITTEE_SEQ = main.COMMITTEE_SEQ
+		AND sub.ACTIVE = 'Y'
+		) AS row_span,
+		(
+		CASE WHEN item_seq = (
+					SELECT MIN(sub.item_seq)
+					FROM DJ_EVAL_COMMITTEE_ITEM sub
+					WHERE sub.item_name = main.item_name
+					AND sub.COMMITTEE_SEQ = main.COMMITTEE_SEQ
+					AND sub.ACTIVE = 'Y'
+				) THEN 1
+			 ELSE null
+		END
+		) AS row_flag
 		FROM DJ_EVAL_COMMITTEE_ITEM main
 		WHERE COMMITTEE_SEQ = #{COMMITTEE_SEQ}
 		AND ACTIVE = 'Y'

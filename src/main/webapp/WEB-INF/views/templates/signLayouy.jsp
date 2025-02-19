@@ -294,7 +294,19 @@
 		}
 		return conString ;
 	 }
- 
+
+     function btnLoadingStart(){
+         var $button = $('input[onclick="signSaveBtn();"]');
+         var originalText = '처리중';  // 원본 텍스트 ("처리중...") 저장
+         var dotCount = 1;  // 점의 초기 개수
+         var loadingInterval = setInterval(function() {
+             var dots = '.'.repeat(dotCount);  // 점을 dotCount 개수만큼 반복
+             $button.val(originalText + dots);  // 버튼 텍스트 업데이트
+
+             dotCount = (dotCount % 3) + 1;  // 점 개수를 1에서 3까지 반복
+
+         }, 500);  // 0.5초 간격으로 점 추가
+     }
 </script>
 
 
@@ -365,6 +377,10 @@
 	</div><!-- //iframe wrap -->
 </div>
 </div>
-
+<div id="loading_spinner">
+	<div class="cv_spinner">
+		<span class="spinner"></span>
+	</div>
+</div>
 </body>
 </html>

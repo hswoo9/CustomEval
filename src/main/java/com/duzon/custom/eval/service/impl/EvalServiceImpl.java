@@ -21,12 +21,12 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.nio.file.*;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -619,6 +619,10 @@ public class EvalServiceImpl implements EvalService {
 		List<Map<String, Object>> list = evalDAO.getEvalConfirmData(map);
 
 		AtomicInteger counter = new AtomicInteger(1);
+		AtomicInteger cnt = new AtomicInteger(0);
+
+		AtomicReference<Double> previousScore = new AtomicReference<>(null);
+		AtomicInteger previousRank = new AtomicInteger(0);
 
 		list.stream()
 				.filter(row -> !"-".equals(row.get("RANK").toString()))
@@ -628,8 +632,24 @@ public class EvalServiceImpl implements EvalService {
 					return totalSum2.compareTo(totalSum1);  // 내림차순 정렬
 				})
 				.forEach(row -> {
-					int currentRank = counter.getAndIncrement();
-					row.put("RANK", currentRank);
+					Double currentScore = (Double) row.get("TOTAL_SUM");
+
+					if (cnt.get() != 0) {
+						if (currentScore.equals(previousScore.get())) {
+							row.put("RANK", previousRank.get());
+						} else {
+							row.put("RANK", counter.get());
+							previousRank.set(counter.get());
+						}
+					} else {
+						row.put("RANK", counter.get());
+						previousRank.set(counter.get());
+					}
+
+					// 이전 점수를 현재 점수로 업데이트
+					previousScore.set(currentScore);
+					counter.incrementAndGet(); // 다음 순위 증가
+					cnt.set(1); // 최초 반복 후 고정
 				});
 
 		map.put("list", list);

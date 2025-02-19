@@ -98,6 +98,10 @@
 	</div><!-- //iframe wrap -->
 </div>
 </div>
-
+<div id="loading_spinner">
+	<div class="cv_spinner">
+		<span class="spinner"></span>
+	</div>
+</div>
 </body>
 </html>

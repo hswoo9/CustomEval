@@ -207,7 +207,7 @@
                 const imgData = headerCanvas.toDataURL("image/png");
                 const imgWidth = headerCanvas.width * 0.2645;
                 const imgHeight = headerCanvas.height * 0.2645;
-                const scaleFactor = 0.5;
+                const scaleFactor = 0.8;
 
                 const scale = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight) * scaleFactor;
                 const imgScaledWidth = imgWidth * scale;
@@ -247,7 +247,7 @@
 
                 const imgWidth = headerCanvas.width * 0.2645;
                 const imgHeight = headerCanvas.height * 0.2645;
-                const scaleFactor = 0.5;
+                const scaleFactor = 0.8;
 
                 const scale = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight) * scaleFactor;
                 const imgScaledWidth = imgWidth * scale;
@@ -338,7 +338,7 @@
 
             const pdfWidth = pdf.internal.pageSize.getWidth();
             const pdfHeight = pdf.internal.pageSize.getHeight();
-            const scaleFactor = 0.5;
+            const scaleFactor = 0.8;
 
             const scale = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight) * scaleFactor;
             const imgScaledWidth = imgWidth * scale;
@@ -547,66 +547,69 @@
             }
 
 
-            html += '<th rowspan="' + numberOfquantity + '" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center;">정량<br>평가</th>';
-            //정량평가
-            var quantityGroupArray = [];
-            for (var key in quantitativeGroups) {
-                if (quantitativeGroups.hasOwnProperty(key)) {
-                    quantityGroupArray.push(quantitativeGroups[key]);
+            if(numberOfquantity > 0) {
+                html += '<th rowspan="' + numberOfquantity + '" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center;">정량<br>평가</th>';
+                //정량평가
+                var quantityGroupArray = [];
+                for (var key in quantitativeGroups) {
+                    if (quantitativeGroups.hasOwnProperty(key)) {
+                        quantityGroupArray.push(quantitativeGroups[key]);
+                    }
                 }
-            }
 
-            //상생평가를 배열의 가장 뒤로 보내기
-            for (var i = 0; i < quantityGroupArray.length; i++) {
-                if (quantityGroupArray[i][0].item_name === "상생기업") {
-                    var saengsengItem = quantityGroupArray.splice(i, 1)[0];
-                    quantityGroupArray.push(saengsengItem);
-                    break;
-                }
-            }
-
-            for (var i = 0; i < quantityGroupArray.length; i++) {
-                var totalScore = 0;
-                for (var j = 0; j < quantityGroupArray[i].length; j++) {
-                    totalScore += quantityGroupArray[i][j].score;
-                }
-                html += '<td  rowspan="' + quantityGroupArray[i].length + '" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center; padding-top: 5px; padding-bottom: 5px"><p class="HStyle0"><span class="hs">' + quantityGroupArray[i][0].item_name + '<br>(' + totalScore + '점)</span></p></td>';
-                for (var j = 0; j < quantityGroupArray[i].length; j++) {
+                //상생평가를 배열의 가장 뒤로 보내기
+                for (var i = 0; i < quantityGroupArray.length; i++) {
                     if (quantityGroupArray[i][0].item_name === "상생기업") {
-                        html += '<td  style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; padding-top: 5px; padding-bottom: 5px"><p class="HStyle0" style = "text-align:left;line-height:150%;"><span class="hs">상생기업/중소기업/일반기업</span></p></td>';
-                    } else {
-                        html += '<td  style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; padding-top: 5px; padding-bottom: 5px"><p class="HStyle0" style="line-height:150%;"><span class="hs">' + quantityGroupArray[i][j].item_medium_name + '</span></p></td>';
+                        var saengsengItem = quantityGroupArray.splice(i, 1)[0];
+                        quantityGroupArray.push(saengsengItem);
+                        break;
                     }
-                    var quantityscore = qksdhffla(quantityGroupArray[i][j].score);
-                    html += '<td  style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center;"><p class="HStyle0"><span class="hs">' + quantityscore + '</span></p></td>';
-                    for (var h = t * maxCompaniesPerTable; h < t * maxCompaniesPerTable + currentCompanyCount; h++) {
+                }
 
-                        var matchingResultScore = '';
-                        for (var k = 0; k < list.length; k++) {
-                            if (list[k].item_seq === quantityGroupArray[i][j].item_seq) {
-
-                                var itemScoreKey = 'ITME_SCORE_' + quantityGroupArray[i][j].item_seq;
-
-                                //matchingResultScore = list[k].RESULT_SCORE;
-                                for (var key in comList[h]) {
-                                    if (key === itemScoreKey) {
-                                        matchingResultScore = qksdhffla(comList[h][key]);
-                                        break;
-                                    }
-                                }
-
-
-                                break;
-                            }
+                for (var i = 0; i < quantityGroupArray.length; i++) {
+                    var totalScore = 0;
+                    for (var j = 0; j < quantityGroupArray[i].length; j++) {
+                        totalScore += quantityGroupArray[i][j].score;
+                    }
+                    html += '<td  rowspan="' + quantityGroupArray[i].length + '" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center; padding-top: 5px; padding-bottom: 5px"><p class="HStyle0"><span class="hs">' + quantityGroupArray[i][0].item_name + '<br>(' + totalScore + '점)</span></p></td>';
+                    for (var j = 0; j < quantityGroupArray[i].length; j++) {
+                        if (quantityGroupArray[i][0].item_name === "상생기업") {
+                            html += '<td  style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; padding-top: 5px; padding-bottom: 5px"><p class="HStyle0" style = "text-align:left;line-height:150%;"><span class="hs">상생기업/중소기업/일반기업</span></p></td>';
+                        } else {
+                            html += '<td  style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; padding-top: 5px; padding-bottom: 5px"><p class="HStyle0" style="line-height:150%;"><span class="hs">' + quantityGroupArray[i][j].item_medium_name + '</span></p></td>';
                         }
+                        var quantityscore = qksdhffla(quantityGroupArray[i][j].score);
+                        html += '<td  style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center;"><p class="HStyle0"><span class="hs">' + quantityscore + '</span></p></td>';
+                        for (var h = t * maxCompaniesPerTable; h < t * maxCompaniesPerTable + currentCompanyCount; h++) {
 
-                        html += '<td style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center;" name="score" it_seq="' + quantityGroupArray[i][j].item_seq + '" data-comp-seq="' + comList[h].EVAL_COMPANY_SEQ + '"><p class="HStyle0"><span class="hs">' + matchingResultScore + '</span></p></td>';
+                            var matchingResultScore = '';
+                            for (var k = 0; k < list.length; k++) {
+                                if (list[k].item_seq === quantityGroupArray[i][j].item_seq) {
+
+                                    var itemScoreKey = 'ITME_SCORE_' + quantityGroupArray[i][j].item_seq;
+
+                                    //matchingResultScore = list[k].RESULT_SCORE;
+                                    for (var key in comList[h]) {
+                                        if (key === itemScoreKey) {
+                                            matchingResultScore = qksdhffla(comList[h][key]);
+                                            break;
+                                        }
+                                    }
+
+
+                                    break;
+                                }
+                            }
+
+                            html += '<td style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center;" name="score" it_seq="' + quantityGroupArray[i][j].item_seq + '" data-comp-seq="' + comList[h].EVAL_COMPANY_SEQ + '"><p class="HStyle0"><span class="hs">' + matchingResultScore + '</span></p></td>';
+                        }
+                        html += '<td style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center;"><p class="HStyle0"><span class="hs"></span></p></td>';
+                        html += '</tr>'
+                        html += '<tr>'
                     }
-                    html += '<td style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center;"><p class="HStyle0"><span class="hs"></span></p></td>';
-                    html += '</tr>'
-                    html += '<tr>'
                 }
             }
+
             //합계
             //html += '<tr>';
             html += '<th id="thcell" colspan="3" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center;"><p class="HStyle0"><span class="hs"></span></p>합&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;계</span></p></th>';
@@ -656,7 +659,7 @@
             html += '</table>';
         }
 
-        html += '<div id ="nameLabel" style="text-align: right; margin-top: -50px; margin-bottom: 35px;">';
+        html += '<div id ="nameLabel" style="text-align: right; margin-top: -40px; margin-bottom: 35px;">';
         html += '<span>성명 : '+userName+'</span>';
         /*html += '<span style="margin-right: 20px;"></span>';
         html += '<img id="signatureImage" alt="서명 이미지" style="height:40px;"/>';

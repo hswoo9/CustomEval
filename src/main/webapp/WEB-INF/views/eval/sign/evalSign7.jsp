@@ -43,6 +43,46 @@
 	::-webkit-scrollbar-track {
 		background: #f1f1f1;
 	}
+
+	#contentsTemp {
+		margin-top : 10px;
+		max-width: 100%;
+		width: 1000px;
+		height: auto;
+		overflow: visible;
+	}
+	/*데스크탑 환경*/
+	@media (min-width: 1024px) {
+		#contentsTemp {
+			width: 1000px;
+			font-size: 13px;
+		}
+	}
+
+	/* 패드 환경 (세로 화면, 작은 화면) */
+	@media (max-width: 1024px) and (orientation: portrait) {
+		#contentsTemp {
+			width: 90%;
+			font-size: 11px;
+		}
+	}
+
+	/*모바일 환경(최소 화면 크기)*/
+	@media (max-width: 768px) {
+		#contentsTemp {
+			width: 100%;
+			font-size: 11px;
+		}
+	}
+
+	table {
+		font-family:"한양중고딕","한컴돋움",sans-serif;
+	}
+
+	th {
+		font-weight: normal !important;
+	}
+
 </style>
 <script type="text/javascript" src="<c:url value='/resources/js/common/sweetalert.min.js'/>"></script>
 
@@ -205,7 +245,7 @@
 						const imgHeight = canvas.height * 0.2645;
 
 
-						const scale = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight) * 0.5;
+						const scale = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight) * 0.8;
 						const imgScaledWidth = imgWidth * scale;
 						const imgScaledHeight = imgHeight * scale;
 						const xOffset = (pdfWidth - imgScaledWidth) / 2;
@@ -736,8 +776,8 @@
 						<P CLASS=HStyle0 STYLE='text-align:left;line-height:180%;'>** 소수점 다섯째 자리에서 반올림</P>
 					</TD>
 				</TR>
-				<TR>
-					<TD colspan="8" valign="bottom" style='height:28px;'>
+				<TR style="text-align: right;">
+					<TD colspan="20" valign="bottom" style='height:28px;'>
 						<P CLASS=HStyle0 STYLE='text-align: right; line-height:180%;display: inline-block;margin-left:37.7rem;'>
 							<SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>성명 : ${userInfo.NAME}</SPAN>
 							<DIV style="display: inline-block; position: relative;">

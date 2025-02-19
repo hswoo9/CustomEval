@@ -210,7 +210,7 @@
 	let processedDivs = 0;
 
 	function signSaveBtn() {
-        //$('#loading_spinner').show();
+        $('#loading_spinner').show();
 
 		const divPrefix = "temp_";
 		signHwpFileDataList = [];
@@ -338,6 +338,7 @@
 			async : false,
 			success : function(data) {
 				if(data.result != "success") {
+                    $('#loading_spinner').hide();
 					alert("문서저장시 오류가 발생했습니다. 시스템관리자한테 문의 하세요.");
 					return false ;
 				} else {
@@ -345,6 +346,7 @@
 				}
 			},
 			error : function(request, status, error) {
+                $('#loading_spinner').hide();
 				alert("문서저장시 오류가 발생했습니다. 시스템관리자한테 문의 하세요.");
 				return false ;
 			}
@@ -776,13 +778,13 @@
 						<P CLASS=HStyle0 STYLE='text-align:left;line-height:180%;'>** 소수점 다섯째 자리에서 반올림</P>
 					</TD>
 				</TR>
-				<TR style="text-align: right;">
-					<TD colspan="20" valign="bottom" style='height:28px;'>
-						<P CLASS=HStyle0 STYLE='text-align: right; line-height:180%;display: inline-block;margin-left:37.7rem;'>
+				<TR>
+					<TD colspan="8" valign="bottom" style='height:28px;'>
+						<P CLASS=HStyle0 STYLE='text-align: right; line-height:180%;display: inline-block;margin-left:80%;'>
 							<SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>성명 : ${userInfo.NAME}</SPAN>
-							<DIV style="display: inline-block; position: relative;">
+							<DIV style="display: inline-block; position: relative; width: 0;">
 								<IMG id="signatureImage" src="${userInfo.SIGN_DIR}"alt="서명 이미지" style="height:40px; position: relative; left: -45px;"/>
-								<SPAN style="position: absolute; top: 28%; left: 18%; transform: translate(-50% , -20%); font-size: 14px;">(인)</SPAN>
+								<SPAN style="position: absolute; top: 21%; font-size: 14px;padding-left: 15px;">(인)</SPAN>
 							</DIV>
 <%--							<IMG id="signatureImage" src="${userInfo.SIGN_DIR}" alt="서명 이미지" style="height:40px;"/>--%>
 						</P>

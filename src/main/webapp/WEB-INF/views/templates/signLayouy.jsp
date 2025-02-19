@@ -62,7 +62,8 @@
 			_g_contextPath_ = "${pageContext.request.contextPath}";
 
 			$(document).ready(function() {
-                if(location.host.indexOf("121.186.165.80") > -1 || location.host.indexOf("1.233.95.140") > -1){
+                if(location.host.indexOf("127.0.0.1") > -1 || location.host.indexOf("localhost") > -1 ||
+	                location.host.indexOf("121.186.165.80") > -1 || location.host.indexOf("1.233.95.140") > -1){
                     _pHwpCtrl = BuildWebHwpCtrl("_pHwpCtrl", "http://218.158.231.42:8080/webhwpctrl/", function () {hwpView();});
                 }else {
                     _pHwpCtrl = BuildWebHwpCtrl("_pHwpCtrl", "http://10.10.10.112:8080/webhwpctrl/", function () {hwpView();});

@@ -212,7 +212,7 @@
 				console.log("width", width);
 
 				var companyCount = getCompanyTotal.length;
-				var maxCompaniesPerTable = 9; // 표 당 최대 9개의 제안업체
+				var maxCompaniesPerTable = 10; // 표 당 최대 10개의 제안업체
 				var tableCount = Math.ceil(companyCount / maxCompaniesPerTable); // 필요한 표의 개수 계산
 
 				const pdf = new jsPDF("l", "mm", "a4");
@@ -623,7 +623,7 @@
 
 		//var html = '';
 		var companyCount = getCompanyTotal.length;
-		var maxCompaniesPerTable = 9; // 표 당 최대 9개의 제안업체
+		var maxCompaniesPerTable = 10; // 표 당 최대 10개의 제안업체
 		var tableCount = Math.ceil(companyCount / maxCompaniesPerTable); // 필요한 표의 개수 계산
 
 		var html = '';

@@ -557,22 +557,25 @@
 							${result[0].colList[colIndex].eval_type }<!-- 평가타입 -->
 
 						</TD>
+
 						<c:choose>
 							<c:when test="${result[0].colList[colIndex].item_name == '상생기업'}">
-								<TD class="${result[0].colList[colIndex].eval_type }" valign="middle" name="item_name" style='width:100px;height:30px;border-left:solid #000000 0.9pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt;text-align:center;'>
-									${result[0].colList[colIndex].item_name }<br>(5점) <!-- 대분류 -->
+								<TD class="${result[0].colList[colIndex].eval_type}" valign="middle" name="item_name" style='width:100px;height:30px;border-left:solid #000000 0.9pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt;text-align:center;'>
+									${result[0].colList[colIndex].item_name}<br>(5점) <!-- 대분류 -->
 								</TD>
 							</c:when>
 							<c:otherwise>
+								<c:set var="rowSpan" value="${not empty result[0].colList[colIndex].row_span ? result[0].colList[colIndex].row_span : 1}" />
+
 								<c:choose>
-									<c:when test='${result[0].colList[colIndex].row_span ne 1 and result[0].colList[colIndex].row_flag ne null}'>
-										<TD rowspan="${result[0].colList[colIndex].row_span -1}" class="${result[0].colList[colIndex].eval_type }" valign="middle" name="item_name" style='width:100px;height:30px;border-left:solid #000000 0.9pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt;text-align:center;'>
-												${result[0].colList[colIndex].item_name }<br>(${result[0].colList[colIndex].sum_score }점) <!-- 대분류 -->
+									<c:when test='${rowSpan ne 1 && result[0].colList[colIndex].row_flag eq 1}'>
+										<TD rowspan="${rowSpanSet}" class="${result[0].colList[colIndex].eval_type}" valign="middle" name="item_name" style='width:100px;height:30px;border-left:solid #000000 0.9pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt;text-align:center;'>
+												${result[0].colList[colIndex].item_name}<br>(${result[0].colList[colIndex].sum_score}점) <!-- 대분류 -->
 										</TD>
 									</c:when>
 									<c:otherwise>
-										<TD class="${result[0].colList[colIndex].eval_type }" valign="middle" name="item_name" style='width:100px;height:30px;border-left:solid #000000 0.9pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt;text-align:center;'>
-												${result[0].colList[colIndex].item_name }<br>(${result[0].colList[colIndex].sum_score }점) <!-- 대분류 -->
+										<TD class="${result[0].colList[colIndex].eval_type}" valign="middle" name="item_name" style='width:100px;height:30px;border-left:solid #000000 0.9pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt;text-align:center;'>
+												${result[0].colList[colIndex].item_name}<br>(${result[0].colList[colIndex].sum_score}점) <!-- 대분류 -->
 										</TD>
 									</c:otherwise>
 								</c:choose>

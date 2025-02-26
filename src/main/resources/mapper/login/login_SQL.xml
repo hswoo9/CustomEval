@@ -11,8 +11,7 @@
 		  AND A.EVAL_ID = #{id}
 		  AND REPLACE(A.EVAL_PHONE, '-', '') = #{phone}
 		  AND B.TITLE =#{title}
-          AND A.EVAL_AVOID = "N"
-          AND A.ATTEND_YN = "Y"
+		  AND ((A.ATTEND_YN = 'Y' AND A.EVAL_AVOID='N') OR (A.ATTEND_YN='N' AND A.EVAL_AVOID='Y'))
           AND A.ACTIVE = "Y"
 	</select>
 

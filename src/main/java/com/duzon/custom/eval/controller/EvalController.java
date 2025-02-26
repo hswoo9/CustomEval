@@ -1,10 +1,7 @@
 package com.duzon.custom.eval.controller;
 
 import java.sql.Blob;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -675,7 +672,7 @@ public class EvalController {
 	}
 
 	private static Map<String, List<Map<String, Object>>> groupByItemName(List<Map<String, Object>> itemList) {
-		Map<String, List<Map<String, Object>>> groupedItems = new HashMap<>();
+		Map<String, List<Map<String, Object>>> groupedItems = new LinkedHashMap<>();
 
 		for (Map<String, Object> item : itemList) {
 			String itemName = (String) item.get("item_name");

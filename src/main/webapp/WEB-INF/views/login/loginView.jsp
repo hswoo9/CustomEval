@@ -78,9 +78,9 @@ $(function(){
                                    <span class="k-icon k-i-search k-button-icon"></span>
                                </button>
                          </div>
-                       <input type="text" class="inp engfix" id="userId" name="id" placeholder="이름 입력" value="">
+                       <input type="text" class="inp engfix" id="userId" name="id" placeholder="이름 입력" value="" autocomplete="off">
                        <%--<input type="password" class="inp engfix" id="userPw" name="pw" placeholder="비밀번호 입력" value="">--%>
-                       <input type="text" class="inp engfix" id="userPhone" name="phone" placeholder="전화번호 입력" value="" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                       <input type="text" class="inp engfix" id="userPhone" name="phone" placeholder="전화번호 입력" value="" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" autocomplete="off">
 
                        <div class="log_btn">
                            <input type="image" value="로그인" src="<c:url value='/resources/Images/btn/login_b2_type_btn.png' />" onclick="actionLogin();return false;">

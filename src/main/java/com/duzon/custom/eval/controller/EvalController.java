@@ -565,6 +565,11 @@ public class EvalController {
 		if (map != null && "Y".equals(map.get("SIGN_4"))) {
 			return "/eval/sign/evalSign11";
 		}
+
+		if(map != null && map.containsKey("SIGN_DIR") && !map.get("SIGN_DIR").equals("")) {
+			return "redirect:/eval/evalView";
+		}
+
 //		logger.debug(request);
 		//로그인 기본 정보가져오기
 		model.addAttribute("userInfo", map);

@@ -474,7 +474,7 @@
 
 
 				$("#dataScore").html(html);
-				// $('.listTable').rowspan2(1); //rowspan2 - rowspan 순으로 실행시켜야 원하는 모양으로 나타남.
+				$('.listTable').rowspan2(1); //rowspan2 - rowspan 순으로 실행시켜야 원하는 모양으로 나타남.
 		  		$('.listTable').rowspan(0);
 				//$("#dataTbody").html(html);
 

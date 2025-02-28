@@ -21,7 +21,7 @@
 	#contentsTemp {
 		margin-top : 10px;
 		max-width: 100%;
-		width: 1000px;
+		width: 1155px;
 		height: auto;
 		overflow: visible;
 	}
@@ -45,7 +45,7 @@
 	/*데스크탑 환경*/
 	@media (min-width: 1024px) {
 		#contentsTemp {
-			width: 1000px;
+			width: 1155px;
 			font-size: 13px;
 		}
 	}
@@ -53,7 +53,7 @@
 	/* 패드 환경 (세로 화면, 작은 화면) */
 	@media (max-width: 1024px) and (orientation: portrait) {
 		#contentsTemp {
-			width: 90%;
+			width: 1155px;
 			font-size: 11px;
 		}
 	}
@@ -206,6 +206,8 @@
 					return;
 				}
 
+                $('#loading_spinner').show();
+
 				const width = window.innerWidth;
 				const header = document.getElementById("header");
 
@@ -219,132 +221,108 @@
 				const pdfWidth = pdf.internal.pageSize.getWidth();
 				const pdfHeight = pdf.internal.pageSize.getHeight();
 
-				if (width >= 1024) {
-					html2canvas(header, { scale: 2 }).then(headerCanvas => {
-						const imgData = headerCanvas.toDataURL("image/png");
-						const imgWidth = headerCanvas.width * 0.2645;
-						const imgHeight = headerCanvas.height * 0.2645;
-						const scaleFactor = 0.8;
+				html2canvas(header, { scale: 2 }).then(headerCanvas => {
+					const imgData = headerCanvas.toDataURL("image/png");
+					const imgWidth = headerCanvas.width * 0.2645;
+					const imgHeight = headerCanvas.height * 0.2645;
+					const scaleFactor = 0.8;
 
-						const scale = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight) * scaleFactor;
-						const imgScaledWidth = imgWidth * scale;
-						const imgScaledHeight = imgHeight * scale;
+					const scale = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight) * scaleFactor;
+					const imgScaledWidth = imgWidth * scale;
+					const imgScaledHeight = imgHeight * scale;
 
-						const xOffset = (pdfWidth - imgScaledWidth) / 2
-						const yOffset = 0.5;
+					const xOffset = (pdfWidth - imgScaledWidth) / 2
+					const yOffset = 0.5;
 
-						pdf.addImage(imgData, "PNG", xOffset, yOffset, imgScaledWidth, imgScaledHeight);
-/*
-						processTables(0, tableCount, pdf, imgScaledHeight + 20, () => {
+					pdf.addImage(imgData, "PNG", xOffset, yOffset, imgScaledWidth, imgScaledHeight);
+
+					processTables(0, tableCount, pdf, imgScaledHeight + 20, () => {
+                        captureRemark(pdf, () => {
 							const pdfBase64 = pdf.output("datauristring");
 							signHwpFileData = pdfBase64;
 
-							// 저장 호출
-							setTimeout(signSave, 600);
-						});*/
-
-						processTables(0, tableCount, pdf, imgScaledHeight + 20, () => {
-							const nameLabel = document.getElementById("nameLabel");
-							captureNameLabel(nameLabel, pdf, () => {
-								const pdfBase64 = pdf.output("datauristring");
-								signHwpFileData = pdfBase64;
-
-								// 저장 호출
-								setTimeout(signSave, 600);
-							});
+	                        //pdf.save("test.pdf");
+	                        //$('#loading_spinner').hide();
+	                        // 저장 호출
+	                        setTimeout(signSave, 600);
 						});
-
 					});
-				} else if (width < 1024) {
-					// pdf
-					html2canvas(header, { scale: 2 }).then(headerCanvas => {
-						const imgData = headerCanvas.toDataURL("image/png");
 
-						const imgWidth = headerCanvas.width * 0.2645;
-						const imgHeight = headerCanvas.height * 0.2645;
-						const scaleFactor = 0.5;
-
-						const scale = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight) * scaleFactor;
-						const imgScaledWidth = imgWidth * scale;
-						const imgScaledHeight = imgHeight * scale;
-
-						const xOffset = (pdfWidth - imgScaledWidth) / 2
-						const yOffset = 0.5;
-
-						pdf.addImage(imgData, "PNG", xOffset, yOffset, imgScaledWidth, imgScaledHeight);
-
-						/*processTables(0, tableCount, pdf, imgScaledHeight + 20, () => {
+					/*processTables(0, tableCount, pdf, imgScaledHeight + 20, () => {
+						const nameLabel = document.getElementById("nameLabel");
+						captureNameLabel(nameLabel, pdf, () => {
 							const pdfBase64 = pdf.output("datauristring");
 							signHwpFileData = pdfBase64;
 
-							// 저장 호출
-							setTimeout(signSave, 600);
-						});*/
-
-						processTables(0, tableCount, pdf, imgScaledHeight + 20, () => {
-							const nameLabel = document.getElementById("nameLabel");
-							captureNameLabel(nameLabel, pdf, () => {
-								const pdfBase64 = pdf.output("datauristring");
-								signHwpFileData = pdfBase64;
-
-								// 저장 호출
-								setTimeout(signSave, 600);
-							});
+                            pdf.save("test.pdf");
+                            $('#loading_spinner').hide();
+                            // 저장 호출
+                            //setTimeout(signSave, 600);
 						});
+					});*/
 
-
-					});
-				}
+				});
 			}
 		});
 	}
 
 
 	function processTables(index, tableCount, pdf, offsetY, callback) {
-		if (index >= tableCount) {
-			callback();
-			return;
-		}
+        var lists = document.querySelectorAll(".pdf_page");
 
-		const tableId = "contenttable_" + index;
-		const table = document.getElementById(tableId);
+        const promises = Array.from(lists).map((list, i) => {
+            const isLastIteration = (i === lists.length - 1); //마지막 반복
 
-		html2canvas(table, { scale: 2 }).then(canvas => {
-			const imgData = canvas.toDataURL("image/png");
+            return html2canvas(list, { scale: 2 }).then(canvas => {
+                const imgData = canvas.toDataURL("image/png");
 
-			const pdfWidth = pdf.internal.pageSize.getWidth();
-			const pdfHeight = pdf.internal.pageSize.getHeight();
-			const imgWidth = canvas.width * 0.2645;
-			const imgHeight = canvas.height * 0.2645;
+                const pdfWidth = pdf.internal.pageSize.getWidth();
+                const pdfHeight = pdf.internal.pageSize.getHeight();
+                const imgWidth = canvas.width * 0.2645;
+                const imgHeight = canvas.height * 0.2645;
 
-			//캡쳐된 이미지를 0.8배 키워줌
-			const scaleFactor = 0.8;
+                //캡쳐된 이미지를 0.8배 키워줌
+                const scaleFactor = 0.8;
 
-			const scale = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight) * scaleFactor;
-			const imgScaledWidth = imgWidth * scale;
-			const imgScaledHeight = imgHeight * scale;
+                let scale;
+                let imgScaledWidth;
+                let imgScaledHeight;
 
-			const xOffset = (pdfWidth - imgScaledWidth) / 2
-			//const yOffset = 10;
+                //const yOffset = 10;
 
+                scale = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight) * scaleFactor;
+                imgScaledWidth = imgWidth * scale;
+                imgScaledHeight = imgHeight * scale;
 
+                const xOffset = (pdfWidth - imgScaledWidth) / 2
 
+	            console.log("pdfWidth", pdfWidth);
+	            console.log("pdfHeight", pdfHeight);
+	            console.log("imgWidth", imgWidth);
+	            console.log("imgHeight", imgHeight);
+	            console.log("scale", scale);
+	            console.log("imgScaledWidth", imgScaledWidth);
+	            console.log("imgScaledHeight", imgScaledHeight);
+	            console.log("xOffset", xOffset);
 
-			if (index === 0) {
-				offsetY = 30;
-			} else {
-				if (index > 0) {
-					pdf.addPage(); // 두 번째 테이블부터는 새 페이지에 추가
-					offsetY = 10;  // 새 페이지는 Y 좌표 초기화
-				}
-			}
+                if (i === 0) {
+                    offsetY = 32;
+                } else {
+                    if (i > 0) {
+                        pdf.addPage(); // 두 번째 테이블부터는 새 페이지에 추가
+                        offsetY = 10;  // 새 페이지는 Y 좌표 초기화
+                    }
+                }
 
+                pdf.addImage(imgData, "PNG", xOffset, offsetY, imgScaledWidth, imgScaledHeight);
 
-			pdf.addImage(imgData, "PNG", xOffset, offsetY, imgScaledWidth, imgScaledHeight);
+            });
+        });
 
-			// 다음 테이블 처리
-			processTables(index + 1, tableCount, pdf, offsetY, callback);
-		});
+        Promise.all(promises).then(() => {
+            callback();
+        });
+
 	}
 
 	function captureNameLabel(nameLabel, pdf, callback) {
@@ -365,10 +343,90 @@
 			const yOffset = pdfHeight - imgScaledHeight - 10; // 마지막 페이지의 하단에서 약간 위로 조정
 
 			// 현재 페이지 하단에 추가
-			pdf.addImage(imgData, "PNG", xOffset, yOffset, imgScaledWidth, imgScaledHeight);
+			//pdf.addImage(imgData, "PNG", xOffset, yOffset, imgScaledWidth, imgScaledHeight);
 
 			callback();
 		});
+	}
+
+    function captureRemark(pdf, callback) {
+        var lists = document.querySelectorAll(".remark_pdf_page");
+        var nameLabel = document.querySelectorAll(".nameLabel")[0];
+
+        let signImgData = null;
+        let signImgWidth;
+        let signImgHeight;
+
+
+        html2canvas(nameLabel, {scale: 2}).then(canvas => {
+            signImgData = canvas.toDataURL("image/png");
+
+            const imgWidth = canvas.width * 0.2645;
+            const imgHeight = canvas.height * 0.2645;
+
+            const pdfWidth = pdf.internal.pageSize.getWidth();
+            const pdfHeight = pdf.internal.pageSize.getHeight();
+            const scaleFactor = 0.8;
+
+            const scale = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight) * scaleFactor;
+            signImgWidth = imgWidth * scale;
+            signImgHeight = imgHeight * scale;
+        });
+
+        let yOffset;
+        let previousImageHeight = 0;
+
+        const promises = Array.from(lists).map((list, i) => {
+            return html2canvas(list, {scale: 2}).then(canvas => {
+                const isLastIteration = (i === lists.length - 1); //마지막 반복
+
+                const imgData = canvas.toDataURL("image/png");
+
+                const pdfWidth = pdf.internal.pageSize.getWidth();
+                const pdfHeight = pdf.internal.pageSize.getHeight();
+                const imgWidth = canvas.width * 0.2645;
+                const imgHeight = canvas.height * 0.2645;
+
+                const scaleFactor = 0.8;
+
+                const scale = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight) * scaleFactor;
+                const imgScaledWidth = imgWidth * scale;
+                const imgScaledHeight = imgHeight * scale;
+
+                const xOffset = (pdfWidth - imgScaledWidth) / 2;
+
+                if (i === 0) {
+                    pdf.addPage();
+                    yOffset = 0.5;
+                } else {
+                    if (i > 0) {
+                        //pdf.addPage(); // 두 번째 테이블부터는 새 페이지에 추가
+                        yOffset += previousImageHeight;
+                    }
+                }
+
+                if ((yOffset + 30) + imgScaledHeight > pdfHeight) {
+                    if (signImgData) {
+                        pdf.addImage(signImgData, "PNG", xOffset, yOffset + 5, signImgWidth, signImgHeight); //서명
+                    }
+
+                    pdf.addPage();
+                    yOffset = 20;
+                }
+
+                pdf.addImage(imgData, "PNG", xOffset, yOffset, imgScaledWidth, imgScaledHeight);
+
+                if (isLastIteration && signImgData) {
+                    pdf.addImage(signImgData, "PNG", xOffset, yOffset + imgScaledHeight + 5, signImgWidth, signImgHeight);
+                }
+
+                previousImageHeight = imgScaledHeight;
+            });
+        });
+
+        Promise.all(promises).then(() => {
+            callback();
+        });
 	}
 
 
@@ -387,6 +445,7 @@
 			processData: false,
 			async : false,
 			success : function(data) {
+                $('#loading_spinner').hide();
 				if(data.result != "success") {
 					alert("문서저장시 오류가 발생했습니다. 시스템관리자한테 문의 하세요.");
 					return false ;
@@ -395,6 +454,7 @@
 				}
 			},
 			error : function(request, status, error) {
+                $('#loading_spinner').hide();
 				alert("문서저장시 오류가 발생했습니다. 시스템관리자한테 문의 하세요.");
 				return false ;
 			}
@@ -626,6 +686,25 @@
 		var maxCompaniesPerTable = 10; // 표 당 최대 10개의 제안업체
 		var tableCount = Math.ceil(companyCount / maxCompaniesPerTable); // 필요한 표의 개수 계산
 
+        // 정성평가 부분
+        var qualityGroupArray = [];
+        for (var key in qualitativeGroups) {
+            if (qualitativeGroups.hasOwnProperty(key)) {
+                for(var item in qualitativeGroups[key]){
+                    qualityGroupArray.push(qualitativeGroups[key][item]);
+                }
+                //qualityGroupArray.push(qualitativeGroups[key]);
+            }
+        }
+
+        for (var key in quantitativeGroups) {
+            if (quantitativeGroups.hasOwnProperty(key)) {
+                for(var item in quantitativeGroups[key]) {
+                    qualityGroupArray.push(quantitativeGroups[key][item]);
+                }
+            }
+        }
+
 		var html = '';
 		html += '<div id="header" style="width:100%; max-width: 100%; padding-bottom: 5px; text-align: center; padding-top: 50px;">';
 		html +=	 '<h4 style="font-size: 20px;">위원별 제안서 평가표</h4>';
@@ -635,147 +714,155 @@
 		html += '<span>평가일자 : '+userDate+'</span>';
 		html +=	'</p>';
 		html += '</div>';
-		for (var t = 0; t < tableCount; t++) {
-			var currentCompanyCount = Math.min(companyCount - t * maxCompaniesPerTable, maxCompaniesPerTable); // 현재 표에 들어갈 제안업체 수
 
-			html += '<table id="contenttable_'+t+'" style="width: 100%; max-width: 100%; margin : 0; margin-bottom: 50px;">';
-			html += '<thead>';
-			html += '<tr>';
-			html += '<th id="thcell" rowspan="2" colspan="3" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; width: 43%; text-align: center;"><p class="HStyle0" style="text-align:center;line-height:150%;"><span class="hs">평가항목</span></p></th>';
-			html += '<th id="thcell" rowspan="2" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; width: 5%; text-align: center;"><p class="HStyle0" style="text-align:center;line-height:150%;"><span class="hs">배점</span></p></th>';
-			html += '<th id="thcell" colspan="' + currentCompanyCount + '" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; width: 47%; text-align: center;"><p class="HStyle0" style="text-align:center;line-height:130%;"><span class="hs">제안업체</span></p></th>';
-			html += '<th id="thcell" rowspan="2" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; width: 5%; text-align: center;"><p class="HStyle0" style="text-align:center;line-height:150%;"><span class="hs">비고</span></p></th>';
-			html += '</tr>';
+        var groupLength = qualityGroupArray.length;
+        var groupDivision = Math.trunc(groupLength / 12);
+        var startIndex = 0;
+        var endIndex = 11;
+        var rowSpan = 12;
+        var firstFlag = true;
 
-			html += '<tr>';
-			/*for (var i = 0; i < currentCompanyCount; i++) {
-				html += '<td id="cell" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center; width : ' + (450 / currentCompanyCount) + 'px">' + String.fromCharCode(65 + t * maxCompaniesPerTable + i) + '</td>';
-			}*/
-			for (var i = 0; i < currentCompanyCount; i++) {
-				html += '<td id="cell" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center;"><p class="HStyle0" style="text-align:center;line-height:130%;"><span class="hs">' + String.fromCharCode(65 + t * maxCompaniesPerTable + i) + '</span></p></td>';
-			}
-			html += '</tr>';
-			html += '</thead>';
+        for(var x = 0; x < groupDivision; x++) {
+            if(x == (groupDivision - 1)){
+                rowSpan--;
+            }
 
-			html += '<tbody>';
-			html += '<th rowspan="' + numberOfquality + '" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt;text-align:center;  width:5% !important;">정성<br>평가</th>';
+            if(!firstFlag){
+                startIndex = 12;
+                endIndex = endIndex + startIndex;
+            }
 
-			// 정성평가 부분
-			var qualityGroupArray = [];
-			for (var key in qualitativeGroups) {
-				if (qualitativeGroups.hasOwnProperty(key)) {
-					qualityGroupArray.push(qualitativeGroups[key]);
-				}
-			}
-			for (var i = 0; i < qualityGroupArray.length; i++) {
-				for (var j = 0; j < qualityGroupArray[i].length; j++) {
-					html += '<td style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; width: 150px; height: 30px; text-align: center;"><p class="HStyle0"><span class="hs">' + qualityGroupArray[i][j].item_name + '</span></p></td>';
-					html += '<td style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; width: 250px;"><p class="HStyle0" style="text-align:left;line-height:150%;"><span class="hs">' + qualityGroupArray[i][j].item_medium_name + '</span></p></td>';
-					html += '<td style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center;"><p class="HStyle0" style="line-height:150%;"><span class="hs">' + qualityGroupArray[i][j].score + '</span></p></td>';
-					for (var h = t * maxCompaniesPerTable; h < t * maxCompaniesPerTable + currentCompanyCount; h++) {
+            for (var t = 0; t < tableCount; t++) {
+                var currentCompanyCount = Math.min(companyCount - t * maxCompaniesPerTable, maxCompaniesPerTable); // 현재 표에 들어갈 제안업체 수
 
-						var matchingResultScore = '';
-						for (var k = 0; k < list.length; k++) {
-							if (list[k].ITEM_SEQ === qualityGroupArray[i][j].item_seq &&
-									list[k].EVAL_COMPANY_SEQ === getCompanyTotal[h].EVAL_COMPANY_SEQ) {
-								matchingResultScore = totalToFixed(list[k].RESULT_SCORE);
-								break;
-							}
-						}
+                html += '<div class="pdf_page">'
+                html += '<table id="contenttable_'+t+'" style="width: 100%; max-width: 100%; margin : 0; margin-bottom: 50px;">';
+                html += '<thead>';
+                html += '<tr>';
+                html += '<th id="thcell" rowspan="2" colspan="3" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; width: 43%; text-align: center;"><p class="HStyle0" style="text-align:center;line-height:150%;"><span class="hs">평가항목</span></p></th>';
+                html += '<th id="thcell" rowspan="2" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; width: 3.5%; text-align: center;"><p class="HStyle0" style="text-align:center;line-height:150%;"><span class="hs">배점</span></p></th>';
+                html += '<th id="thcell" colspan="' + currentCompanyCount + '" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; width: 50%; text-align: center;"><p class="HStyle0" style="text-align:center;line-height:130%;"><span class="hs">제안업체</span></p></th>';
+                html += '<th id="thcell" rowspan="2" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; width: 5%; text-align: center;"><p class="HStyle0" style="text-align:center;line-height:150%;"><span class="hs">비고</span></p></th>';
+                html += '</tr>';
 
-						html += '<td style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt;text-align:center; " name="score" it_seq="' + qualityGroupArray[i][j].item_seq + '" data-comp-seq="' + getCompanyTotal[h].EVAL_COMPANY_SEQ + '"><p class="HStyle0"><span class="hs">' + matchingResultScore + '</span></p></td>';
-					}
-					html += '<td style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt;text-align:center;text-align:center; "><p class="HStyle0"><span class="hs"></span></p></td>';
+                html += '<tr>';
+                /*for (var i = 0; i < currentCompanyCount; i++) {
+					html += '<td id="cell" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center; width : ' + (450 / currentCompanyCount) + 'px">' + String.fromCharCode(65 + t * maxCompaniesPerTable + i) + '</td>';
+				}*/
+                for (var i = 0; i < currentCompanyCount; i++) {
+                    html += '<td id="cell" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center;"><p class="HStyle0" style="text-align:center;line-height:130%;"><span class="hs">' + String.fromCharCode(65 + t * maxCompaniesPerTable + i) + '</span></p></td>';
+                }
+                html += '</tr>';
+                html += '</thead>';
+
+                html += '<tbody>';
+                html += '<th rowspan="' + rowSpan + '" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt;text-align:center;  width:5% !important;">정성<br>평가</th>';
+
+                for (var i = startIndex; i <= endIndex; i++) {
+                    if(i == endIndex && qualityGroupArray[i].eval_type == '정량평가'){
+                        html += '<th style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align:center; width:5% !important;">정량<br>평가</th>';
+                    }
+                    if(qualityGroupArray[i].row_flag) {
+                        html += '<td rowspan="' + qualityGroupArray[i].row_span + '" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; width: 135px;  text-align: center;"><p class="HStyle0"><span class="hs">' + qualityGroupArray[i].item_name + '<br>(' + qualityGroupArray[i].sum_score + '점)</span></p></td>';
+                    }
+
+                    html += '<td style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; width: 265px;"><p class="HStyle0" style="text-align:left;line-height:150%;"><span class="hs">' + qualityGroupArray[i].item_medium_name + '</span></p></td>';
+                    html += '<td style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center;"><p class="HStyle0" style="line-height:150%;"><span class="hs">' + qualityGroupArray[i].score + '</span></p></td>';
+                    for (var h = t * maxCompaniesPerTable; h < t * maxCompaniesPerTable + currentCompanyCount; h++) {
+
+                        var matchingResultScore = '';
+                        for (var k = 0; k < list.length; k++) {
+                            if (list[k].ITEM_SEQ === qualityGroupArray[i].item_seq &&
+                                list[k].EVAL_COMPANY_SEQ === getCompanyTotal[h].EVAL_COMPANY_SEQ) {
+                                matchingResultScore = totalToFixed(list[k].RESULT_SCORE);
+                                break;
+                            }
+                        }
+
+                        html += '<td style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt;text-align:center; " name="score" it_seq="' + qualityGroupArray[i].item_seq + '" data-comp-seq="' + getCompanyTotal[h].EVAL_COMPANY_SEQ + '"><p class="HStyle0"><span class="hs">' + matchingResultScore + '</span></p></td>';
+                    }
+                    html += '<td style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt;text-align:center;text-align:center; "><p class="HStyle0"><span class="hs"></span></p></td>';
+                    html += '</tr>';
+                    html += '<tr>';
+                }
+
+                // 합계 부분
+                html += '<th id="thcell" colspan="3" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt;text-align:center;"><p class="HStyle0"><span class="hs">합계</span></p></th>';
+                html += '<td id= "cell" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt;text-align:center;"><p class="HStyle0"><span class="hs">100</span></p></td>';
+                for (var i = t * maxCompaniesPerTable; i < t * maxCompaniesPerTable + currentCompanyCount; i++) {
+                    var totalScoreSum = totalToFixed(getCompanyTotal[i].real_score);
+                    html += '<td id="cell" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt;text-align:center;"><p class="HStyle0"><span class="hs">' + totalScoreSum + '</span></p></td>';
+                }
+                html += '<td id="cell" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt;text-align:center;"><p class="HStyle0"><span class="hs"></span></p></td>';
+                html += '</tr>';
+
+                // 제안업체 평가의견
+                /*html += '<td  rowspan="' + currentCompanyCount + '" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt;text-align:center; height: 27px; width:5%;"><p class="HStyle0"><span class="hs">평가<br>의견</span></p></td>';
+				for (var i = t * maxCompaniesPerTable; i < t * maxCompaniesPerTable + currentCompanyCount; i++) {
+					html += '<td style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center;"><p class="HStyle0"><span class="hs">' + String.fromCharCode(65 + i) + '</spam></p></td>';
+					html += '<td colspan="' + (currentCompanyCount + 3) + '" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; height: 27px; padding: 1px;"><p class="HStyle0"><span class="hs">' + getCompanyRemarkList[i].remark + '</span></p></td>';
 					html += '</tr>';
 					html += '<tr>';
-				}
-			}
+				}*/
 
-			// 정량평가 부분
-			if(numberOfquantity > 0) {
-				html += '<th rowspan="' + numberOfquantity + '" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align:center; width:5% !important;">정량<br>평가</th>';
-				var quantityGroupArray = [];
-				for (var key in quantitativeGroups) {
-					if (quantitativeGroups.hasOwnProperty(key)) {
-						quantityGroupArray.push(quantitativeGroups[key]);
-					}
-				}
-				//상생평가를 배열의 가장 뒤로 보내기
-				for (var i = 0; i < quantityGroupArray.length; i++) {
-					if (quantityGroupArray[i][0].item_name === "상생기업") {
-						var saengsengItem = quantityGroupArray.splice(i, 1)[0];
-						quantityGroupArray.push(saengsengItem);
-						break;
-					}
-				}
+                html += '</tbody>';
+                html += '</table>';
 
-				for (var i = 0; i < quantityGroupArray.length; i++) {
-					for (var j = 0; j < quantityGroupArray[i].length; j++) {
-						if (quantityGroupArray[i][0].item_name === "상생기업") {
-							html += '<td rowspan="' + quantityGroupArray[i].length + '" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; height: 30px; text-align: center;"><p class="HStyle0"><span class="hs">' + quantityGroupArray[i][j].item_name + '</span></p></td>';
-							html += '<td style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt;"><p class="HStyle0" style = "text-align:left;line-height:150%;"><span class="hs">';
-							html += '상생기업/중소기업/일반기업';
-							html += '</span></p></td>';
-						}else {
-							html += '<td style="border-left:solid #000000 0.3pt;border-right:solid #000000 0.3pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt;"><p class="HStyle0" style="line-height:150%;"><span class="hs">' + quantityGroupArray[i][j].item_medium_name + '</span></p></td>';
-						}
-						html += '<td style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center;"><p class="HStyle0"><span class="hs">' + quantityGroupArray[i][j].score + '</span></p></td>';
-						for (var h = t * maxCompaniesPerTable; h < t * maxCompaniesPerTable + currentCompanyCount; h++) {
+                html += '<div style="margin-top: -50px;">'
+                html += '<span>'+ (t+1) +' - '+ (x+1) +'</span>'
+                html += '</div>'
 
-							var matchingResultScore = '';
-							for (var k = 0; k < list.length; k++) {
-								if (list[k].ITEM_SEQ === quantityGroupArray[i][j].item_seq &&
-										list[k].EVAL_COMPANY_SEQ === getCompanyTotal[h].EVAL_COMPANY_SEQ) {
-									matchingResultScore = totalToFixed(list[k].RESULT_SCORE);
-									break;
-								}
-							}
+                html += '<div class="nameLabel" style="width: 100%; max-width: 100%; text-align: right; margin-bottom: 35px;">';
+                html += '<span>성명 : '+userName+'</span>';
+                /*html += '<span style="margin-right: 20px;"></span>';
+				html += '<img id="signatureImage" alt="서명 이미지" style="height:40px;"/>';
+				html += '</div>';*/
+                html += '<div style="display: inline-block; position: relative;">';
+                html += '<img src="'+ userSign +'" alt="서명 이미지" style="height:40px; position: relative; left: -30px;"/>';
+                html += '<span style="position: absolute; top: 38%; left: 25%; transform: translate(-50% , -20%); font-size: 14px;">(인)</span>';
+                html += '</div>';
+                html += '</div>';
 
-							html += '<td style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt;text-align:center;" name="score" it_seq="' + quantityGroupArray[i][j].item_seq + '" data-comp-seq="' + getCompanyTotal[h].EVAL_COMPANY_SEQ + '"><p class="HStyle0"><span class="hs">' + matchingResultScore + '</span></p></td>';
-						}
-						html += '<td style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt;text-align:center;"><p class="HStyle0"><span class="hs"></span></p></td>';
-						html += '</tr>';
-						html += '<tr>';
-					}
-				}
-			}
+                html += '</div>';
 
-			// 합계 부분
-			html += '<th id="thcell" colspan="3" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt;text-align:center;"><p class="HStyle0"><span class="hs">합계</span></p></th>';
-			html += '<td id= "cell" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt;text-align:center;"><p class="HStyle0"><span class="hs">100</span></p></td>';
-			for (var i = t * maxCompaniesPerTable; i < t * maxCompaniesPerTable + currentCompanyCount; i++) {
-				var totalScoreSum = totalToFixed(getCompanyTotal[i].real_score);
-				html += '<td id="cell" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt;text-align:center;"><p class="HStyle0"><span class="hs">' + totalScoreSum + '</span></p></td>';
-			}
-			html += '<td id="cell" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt;text-align:center;"><p class="HStyle0"><span class="hs"></span></p></td>';
-			html += '</tr>';
+            }
 
-			// 제안업체 평가의견
-			html += '<td  rowspan="' + currentCompanyCount + '" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt;text-align:center; height: 27px; width:5%;"><p class="HStyle0"><span class="hs">평가<br>의견</span></p></td>';
-			for (var i = t * maxCompaniesPerTable; i < t * maxCompaniesPerTable + currentCompanyCount; i++) {
-				html += '<td style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; height: 30px; text-align: center;"><p class="HStyle0"><span class="hs">' + String.fromCharCode(65 + i) + '</spam></p></td>';
-				html += '<td colspan="' + (currentCompanyCount + 3) + '" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; height: 27px; padding: 1px;"><p class="HStyle0"><span class="hs">' + getCompanyRemarkList[i].remark + '</span></p></td>';
-				html += '</tr>';
-				html += '<tr>';
-			}
+            if(groupDivision > 0){
+                firstFlag = false;
+            }
+        }
 
-			html += '</tbody>';
-			html += '</table>';
+        // 제안업체 평가의견
+        html += '<div>'
+	        html += '<div id="remark" class="remark_pdf_page" style="width:100%; max-width: 100%; padding-bottom: 20px; text-align: center; padding-top: 50px;">';
+	        html +=	 '<h4 style="font-size: 20px;">평가의견</h4>';
+	        html += '</div>';
 
+	        for (var t = 0; t < 2; t++) {
+	            var currentCompanyCount = Math.min(11 - t * maxCompaniesPerTable, maxCompaniesPerTable); // 현재 표에 들어갈 제안업체 수
+		        console.log(currentCompanyCount);
+                for (var i = t * maxCompaniesPerTable; i < t * maxCompaniesPerTable + currentCompanyCount; i++) {
+	                    html += '<table class="remark_pdf_page" style="width: 100%; max-width: 100%; margin : 0;">';
+	                    html += '<tbody>';
 
-		}
+	                    html += '<tr>';
+	                    html += '<td style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center; width: 5%"><p class="HStyle0"><span class="hs">' + String.fromCharCode(65 + i) + '</spam></p></td>';
+	                    //html += '<td colspan="' + (currentCompanyCount + 3) + '" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; height: 27px; padding: 1px;"><p class="HStyle0"><span class="hs">' + getCompanyRemarkList[i].remark + '</span></p></td>';
+	                    html += '<td style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; height: 27px; padding: 1px;"><p class="HStyle0"><span class="hs">안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요</span></p></td>';
+	                    html += '</tr>';
 
-		html += '<div id ="nameLabel" style="width: 100%; max-width: 100%; text-align: right; margin-top: -40px; margin-bottom: 35px;">';
-		html += '<span>성명 : '+userName+'</span>';
-		/*html += '<span style="margin-right: 20px;"></span>';
-		html += '<img id="signatureImage" alt="서명 이미지" style="height:40px;"/>';
-		html += '</div>';*/
-        html += '<div style="display: inline-block; position: relative;">';
-        html += '<img id="signatureImage" alt="서명 이미지" style="height:40px; position: relative; left: -30px;"/>';
-        html += '<span style="position: absolute; top: 28%; left: 25%; transform: translate(-50% , -20%); font-size: 14px;">(인)</span>';
+	                    /*for (var t2 = 1; t2 < 11; t2++) {
+	                        html += '<tr>';
+	                        html += '<td style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center; width: 5%"><p class="HStyle0"><span class="hs">' + String.fromCharCode(65 + t2) + '</spam></p></td>';
+	                        html += '<td style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; height: 27px; padding: 1px;"><p class="HStyle0"><span class="hs">안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요</span></p></td>';
+	                        html += '</tr>';
+	                    }*/
+
+	                    html += '</tbody>';
+	                    html += '</table>';
+                }
+            }
         html += '</div>';
-
-
 
 
 		$("#contentsTemp").append(html);
@@ -808,9 +895,6 @@
 
 		<%--	//$("#contentsTemp").hide();--%>
 		<%--})--%>
-
-
-
 
 	}
 
@@ -871,7 +955,7 @@
 <script>
 	_hwpPutData()
 
-	var signatureImage = document.getElementById("signatureImage");
+	var signatureImage = document.getElementsByClassName("signatureImage");
 	if (userSign) {
 		signatureImage.src = userSign;
 	} else {

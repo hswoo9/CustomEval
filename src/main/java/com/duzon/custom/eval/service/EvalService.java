@@ -37,6 +37,11 @@ public interface EvalService {
 	String getEvalJang(Map<String, Object> map);
 
 	String setSignSetpChk(Map<String, Object> map);
+
+	void setCommissionerSign9(Map<String, Object> map);
+
+	String getCommissionerSign9Chk(Map<String, Object> map);
+
 	Map<String, Object> setSignSetp(Map<String, Object> map);
 
 	Map<String, Object> getEvalJangData(Map<String, Object> map);

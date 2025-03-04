@@ -253,4 +253,13 @@ public class EvalDAO extends AbstractDAO{
 	}
 
 
+	public void setCommissionerSign9(Map<String, Object> map) {
+
+		update("eval.setCommissionerSign9", map);
+	}
+
+	public int getCommissionerSign9Cnt(Map<String, Object> map) {
+
+		return (int) selectOne("eval.getCommissionerSign9Cnt", map);
+    }
 }

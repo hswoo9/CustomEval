@@ -58,7 +58,14 @@
 
 	$(document).ready(function() {
 
-
+		$('#loadingPop').kendoWindow({
+			width: "443px",
+			visible: false,
+			modal: true,
+			actions: [],
+			close: false,
+			title: false,
+		}).data("kendoWindow").center();
 
 		var evalId = $("#evalId").val();
 		console.log("EvalId:", evalId);
@@ -85,17 +92,6 @@
 	function signSaveBtn() {
 		if (customConfirm('사전접촉여부는 추후 수정이 불가능 합니다.\n확정하시겠습니까?', 'success').then((value) => {
 
-			var result = true;
-			if ("${userInfo.EVAL_JANG}" == "Y") {
-				result = getCommissionerChk();
-			}
-
-			if (!result) {
-				customAlert("위원장은 모든 평가위원의 사전접촉여부가 확인된 후에 확정이 가능합니다.", "warning").then(() => {
-
-				});
-				return;
-			}
 
 			if (value) {
 				// 체크된 상태가 '있다'인 경우 확인 창을 띄움
@@ -148,39 +144,60 @@
 					signHwpFileData = data;
 				});
 
-				setTimeout(signSave, 600);
+				$('#loadingPop').data("kendoWindow").open();
+				fnSetSign9();
+
+				// setTimeout(signSave, 600);
 			}
 		}));
 	}
 
-	function getCommissionerChk(){
-		var commissionerChk = true;
-
+	function fnSetSign9 (){
 		$.ajax({
-			url: "<c:url value='/eval/getCommissionerChk' />",
+			url: "<c:url value='/eval/setCommissionerSign9' />",
 			data : {
-				committee_seq : '${userInfo.COMMITTEE_SEQ}',
-				commissioner_seq : '${userInfo.COMMISSIONER_SEQ}',
+				commissioner_seq : "${userInfo.COMMISSIONER_SEQ}",
+				committee_seq : "${userInfo.COMMITTEE_SEQ}",
+				step : "9",
 				evalSign: "9",
 			},
 			type : 'POST',
-			dataType : "json",
-			async : false,
-			success: function(result){
-				console.log(result);
-				commissionerChk = result.commissionerChk;
-			}
-		});
+			success: function(rs){
+				if(rs.code == '200'){
 
-		return commissionerChk;
+					timeIn = setInterval(fnSetSignSetpChk, 1000);
+				}
+			}
+		})
+	}
+
+	function fnSetSignSetpChk (){
+		$.ajax({
+			url: "<c:url value='/eval/getCommissionerSign9Chk' />",
+			data : {
+				commissioner_seq : "${userInfo.COMMISSIONER_SEQ}",
+				committee_seq : "${userInfo.COMMITTEE_SEQ}",
+				step : "9",
+				evalSign: "9",
+			},
+			type : 'POST',
+			success: function(result){
+				if(result == 'Y'){
+					clearInterval(timeIn);
+					setTimeout(signSave, 600);
+				}
+			},
+		})
 	}
 
 	function signSave() {
 		var formData = new FormData();
 		formData.append("commissioner_seq", "${userInfo.COMMISSIONER_SEQ}");
+		formData.append("committee_seq", "${userInfo.COMMITTEE_SEQ}");
 		formData.append("step", "9");
 		formData.append("flag", flag);
 		formData.append("signHwpFileData", signHwpFileData);
+		formData.append("jang", '${userInfo.EVAL_JANG}');
 
 		$.ajax({
 			url: "<c:url value='/eval/setSignSetp'/>",
@@ -322,7 +339,18 @@
 		background: #f1f1f1;
 	}
 </style>
-
+<div class="pop_wrap_dir" id="loadingPop" style="width: 443px;">
+	<div class="pop_con">
+		<table class="fwb ac" style="width:100%;">
+			<tr>
+				<td style="border: none;">
+					<span class=""><img src="<c:url value='/resources/Images/ico/loading.gif'/>" alt="" />  &nbsp;&nbsp;&nbsp;사전접촉여부 확인이 진행중입니다.<br>잠시만 기다려주세요.</span>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<!-- //pop_con -->
+</div>
 <div class=WordSection1 style="width: 1400px; height: 1000px;">
 	<div id="signSave" style="width: 100%;">
 		<input type="hidden" onclick="evalAvoidPopup()" style="background-color: #dee4ea; border-color: black; font-weight : bold; color: red; border-width: thin;" value="기피신청">

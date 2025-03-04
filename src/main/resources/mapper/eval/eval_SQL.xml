@@ -27,6 +27,7 @@
         , A.EVAL_SAVE
 		, A.EVAL_AVOID
 		, A.EVAL_AVOID_CHECK_YN
+		, A.SIGN_9_FILE_SEQ
 		, C.NAME
 		, C.BIRTH_DATE
 		, D.BIZ_TYPE_ARRAY
@@ -919,7 +920,8 @@
 		SET
 			SIGN_2_MINUTE1 = NULL,
 			SIGN_2_MINUTE2 = NULL,
-			SIGN_2 = 'N'
+			SIGN_2 = 'N',
+			SIGN_2_FILE_SEQ = NULL
 		WHERE
 			COMMITTEE_SEQ = #{committee_seq}
 	</update>
@@ -1077,5 +1079,29 @@
 		SELECT NOTICE_CONTENT, ACTIVE, NOTICE_ITEM
 		FROM CUST_EPIS.DJ_EVAL_NOTICE
 		WHERE ACTIVE = 'Y';
+	</select>
+
+	<update id="setCommissionerSign9" parameterType="map">
+		/*setCommissionerSign9*/
+		UPDATE
+			CUST_EPIS.DJ_EVAL_COMMISSIONER
+		SET
+			SIGN_9 = 'Y'
+		WHERE COMMISSIONER_SEQ = #{commissioner_seq}
+	</update>
+
+	<select id="getCommissionerSign9Cnt" parameterType="map" resultType="int">
+		/*getCommissionerSign9Cnt*/
+		SELECT
+		    COUNT(*)
+		FROM
+		    CUST_EPIS.DJ_EVAL_COMMISSIONER
+		WHERE
+		    COMMITTEE_SEQ = #{committee_seq}
+		  AND ATTEND_YN = 'Y'
+		  AND EVAL_AVOID = 'N'
+		  AND CONTACT = 'N'
+		  AND ACTIVE = 'Y'
+		  AND SIGN_9 = 'N'
 	</select>
 </mapper>

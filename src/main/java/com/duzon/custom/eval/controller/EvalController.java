@@ -197,7 +197,7 @@ public class EvalController {
 
 				return "/eval/evalView";
 				
-			}else if(map.get("SIGN_9").equals("N") && map.get("SIGN_6").equals("Y")){
+			}else if(( map.get("SIGN_9").equals("N") || ( map.get("SIGN_9").equals("Y") && !map.containsKey("SIGN_9_FILE_SEQ") )) && map.get("SIGN_6").equals("Y")){
 
 				//사전접촉여부 확인
 				List<Map<String, Object>> companyList = evalService.getCompanyList(map);
@@ -486,6 +486,26 @@ public class EvalController {
 		logger.debug("setSignSetpChk");
 
 		return evalService.setSignSetpChk(map);
+	}
+
+	@RequestMapping(value = "/eval/setCommissionerSign9", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> setCommissionerSign9(@RequestParam Map<String, Object> map, HttpServletRequest request) {
+		logger.debug("setCommissionerSign9");
+
+		Map<String, Object> rsMap = new HashMap<>();
+		evalService.setCommissionerSign9(map);
+		rsMap.put("code", 200);
+
+        return rsMap;
+	}
+
+	@RequestMapping(value = "/eval/getCommissionerSign9Chk", method = RequestMethod.POST)
+	@ResponseBody
+	public String getCommissionerSign9Chk(@RequestParam Map<String, Object> map, HttpServletRequest request) {
+		logger.debug("getCommissionerSign9Chk");
+
+        return evalService.getCommissionerSign9Chk(map);
 	}
 
 

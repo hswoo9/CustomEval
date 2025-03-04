@@ -250,7 +250,25 @@ public class EvalServiceImpl implements EvalService {
 		return "notFail";
 	}
 
+	@Override
+	public void setCommissionerSign9(Map<String, Object> map) {
+		//상태값 변경
+		evalDAO.setCommissionerSign9(map);
+	}
 
+	@Override
+	public String getCommissionerSign9Chk(Map<String, Object> map) {
+
+		String status = "Y";
+
+		int sign9Cnt = evalDAO.getCommissionerSign9Cnt(map);
+
+		if(sign9Cnt > 0) {
+			status = "N";
+		}
+
+		return status;
+	}
 
 	@Override
 	public Map<String, Object> setSignSetp(Map<String, Object> map) {
@@ -545,6 +563,13 @@ public class EvalServiceImpl implements EvalService {
 			if (step.equals("9") && map.get("flag").equals("Y")) {
 				// 사전접촉이 있으면 평가비용 5만원으로 변경
 				evalDAO.setEvalPayUpdate(map);
+	 			
+				if(map.get("jang").equals("Y")) {
+					map.put("COMMITTEE_SEQ", map.get("committee_seq"));
+					evalDAO.setEvalJangReSelected(map);
+					evalDAO.setEvalJangCntCn(map);
+					evalDAO.getEvalMinuteChKGroupFailUpd2(map);
+				}
 			} else if (step.equals("4")) {
 				// 수당 개인정보 업데이트
 				evalDAO.setCommDetailUpdate(map);
@@ -755,6 +780,9 @@ public class EvalServiceImpl implements EvalService {
 		evalDAO.setEvalAvoidY(params);
 		if(params.get("EVAL_JANG").equals("Y")){
 			evalDAO.setEvalJangReSelected(params);
+			params.put("committee_seq", params.get("COMMITTEE_SEQ"));
+			evalDAO.setEvalJangCntCn(params);
+			evalDAO.getEvalMinuteChKGroupFailUpd2(params);
 		}
 	}
 

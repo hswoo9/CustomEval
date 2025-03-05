@@ -20,7 +20,7 @@
     #contentsTemp {
         margin-top : 10px;
         max-width: 100%;
-        width: 1000px;
+        width: 1155px;
         height: auto;
         overflow: visible;
     }
@@ -28,7 +28,7 @@
     /*데스크탑 환경*/
     @media (min-width: 1024px) {
         #contentsTemp {
-            width: 1000px;
+            width: 1155px;
             font-size: 13px;
         }
     }
@@ -36,7 +36,7 @@
     /* 패드 환경 (세로 화면, 작은 화면) */
     @media (max-width: 1024px) and (orientation: portrait) {
         #contentsTemp {
-            width: 90%;
+            width: 1155px;
             font-size: 11px;
         }
     }
@@ -108,34 +108,6 @@
 <script type="text/javascript" src="<c:url value='/resources/js/common/sweetalert.min.js'/>"></script>
 
 <script type="text/javascript">
-    function customAlert(msg, icon) {
-        return swal({
-            title: '',
-            text: msg,
-            type: '',
-            icon: icon == '' ? 'success' : icon,
-            closeOnClickOutside : false,
-            button: '확인'
-        })
-    }
-
-    function customConfirm(msg, icon) {
-        return swal({
-            title: '',
-            text: msg,
-            type: '',
-            icon: icon == '' ? 'info' : icon,
-            buttons: {
-                agree: {
-                    text : "예",
-                    value : true
-                },
-                cancel: "아니요"
-            },
-            closeOnClickOutside : false
-        })
-    }
-
     window.onload = function () {
         window.scrollTo(0, 0);
     };
@@ -188,6 +160,7 @@
 
     var signHwpFileData = "";
     function signSaveBtn(){
+        $('#loading_spinner').show();
 
         const width = window.innerWidth;
 
@@ -227,14 +200,10 @@
                 });*/
 
                 processTables(0, tableCount, pdf, imgScaledHeight + 20, () => {
-                    const nameLabel = document.getElementById("nameLabel");
-                    captureNameLabel(nameLabel, pdf, () => {
-                        const pdfBase64 = pdf.output("datauristring");
-                        signHwpFileData = pdfBase64;
+                    const pdfBase64 = pdf.output("datauristring");
+                    signHwpFileData = pdfBase64;
 
-                        // 저장 호출
-                        setTimeout(signSave, 600);
-                    });
+                    setTimeout(signSave, 600);
                 });
 
             });
@@ -267,14 +236,10 @@
                 });*/
 
                 processTables(0, tableCount, pdf, imgScaledHeight + 20, () => {
-                    const nameLabel = document.getElementById("nameLabel");
-                    captureNameLabel(nameLabel, pdf, () => {
-                        const pdfBase64 = pdf.output("datauristring");
-                        signHwpFileData = pdfBase64;
+                    const pdfBase64 = pdf.output("datauristring");
+                    signHwpFileData = pdfBase64;
 
-                        // 저장 호출
-                        setTimeout(signSave, 600);
-                    });
+                    setTimeout(signSave, 600);
                 });
 
             });
@@ -285,48 +250,50 @@
     }
 
     function processTables(index, tableCount, pdf, offsetY, callback) {
-        if (index >= tableCount) {
-            callback();
-            return;
-        }
+        var lists = document.querySelectorAll(".pdf_page");
 
-        const tableId = "contenttable_" + index;
-        const table = document.getElementById(tableId);
+        const promises = Array.from(lists).map((list, i) => {
+            const isLastIteration = (i === lists.length - 1); //마지막 반복
 
-        html2canvas(table, { scale: 2 }).then(canvas => {
-            const imgData = canvas.toDataURL("image/png");
+            return html2canvas(list, { scale: 2 }).then(canvas => {
+                const imgData = canvas.toDataURL("image/png");
 
-            const pdfWidth = pdf.internal.pageSize.getWidth();
-            const pdfHeight = pdf.internal.pageSize.getHeight();
-            const imgWidth = canvas.width * 0.2645;
-            const imgHeight = canvas.height * 0.2645;
+                const pdfWidth = pdf.internal.pageSize.getWidth();
+                const pdfHeight = pdf.internal.pageSize.getHeight();
+                const imgWidth = canvas.width * 0.2645;
+                const imgHeight = canvas.height * 0.2645;
 
-            //캡쳐된 이미지를 0.8배 키워줌
-            const scaleFactor = 0.8;
+                //캡쳐된 이미지를 0.8배 키워줌
+                const scaleFactor = 0.8;
 
-            const scale = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight) * scaleFactor;
-            const imgScaledWidth = imgWidth * scale;
-            const imgScaledHeight = imgHeight * scale;
+                let scale;
+                let imgScaledWidth;
+                let imgScaledHeight;
 
-            const xOffset = (pdfWidth - imgScaledWidth) / 2
+                //const yOffset = 10;
 
+                scale = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight) * scaleFactor;
+                imgScaledWidth = imgWidth * scale;
+                imgScaledHeight = imgHeight * scale;
 
+                const xOffset = (pdfWidth - imgScaledWidth) / 2
 
-            if (index === 0) {
-                offsetY = 30;
-            } else {
-                if (index > 0) {
-                    pdf.addPage(); // 두 번째 테이블부터는 새 페이지에 추가
-                    offsetY = 10;  // 새 페이지는 Y 좌표 초기화
+                if (i === 0) {
+                    offsetY = 30;
+                } else {
+                    if (i > 0) {
+                        pdf.addPage(); // 두 번째 테이블부터는 새 페이지에 추가
+                        offsetY = 10;  // 새 페이지는 Y 좌표 초기화
+                    }
                 }
-            }
 
+                pdf.addImage(imgData, "PNG", xOffset, offsetY, imgScaledWidth, imgScaledHeight);
 
+            });
+        });
 
-            pdf.addImage(imgData, "PNG", xOffset, offsetY, imgScaledWidth, imgScaledHeight);
-
-            // 다음 테이블 처리
-            processTables(index + 1, tableCount, pdf, offsetY, callback);
+        Promise.all(promises).then(() => {
+            callback();
         });
     }
 
@@ -374,7 +341,9 @@
             async : false,
             success : function(data) {
                 if(data.result != "success") {
+                    $('#loading_spinner').hide();
                     customAlert("문서저장시 오류가 발생했습니다.\n시스템관리자한테 문의 하세요.", "error").then(() => {
+
 
                     });
                     return false ;
@@ -383,6 +352,7 @@
                 }
             },
             error : function(request, status, error) {
+                $('#loading_spinner').hide();
                 customAlert("문서저장시 오류가 발생했습니다.\n시스템관리자한테 문의 하세요.", "error").then(() => {
 
                 });
@@ -463,67 +433,103 @@
         var maxCompaniesPerTable = 10; // 표 당 최대 10개의 제안업체
         var tableCount = Math.ceil(companyCount / maxCompaniesPerTable); // 필요한 표의 개수 계산
 
+        //정성평가
+        var qualityGroupArray = [];
+        for (var key in qualitativeGroups) {
+            if (qualitativeGroups.hasOwnProperty(key)) {
+                for(var item in qualitativeGroups[key]){
+                    qualityGroupArray.push(qualitativeGroups[key][item]);
+                }
+                //qualityGroupArray.push(qualitativeGroups[key]);
+            }
+        }
+
+        //정량평가
+        for (var key in quantitativeGroups) {
+            if (quantitativeGroups.hasOwnProperty(key)) {
+                for(var item in quantitativeGroups[key]) {
+                    qualityGroupArray.push(quantitativeGroups[key][item]);
+                }
+            }
+        }
+
         var html = '';
-        html += '<div id="header" style="width:100%; padding-bottom: 20px; text-align: center; padding-top: 50px;">';
+        /*html += '<div id="header" style="width:100%; max-width: 100%; padding-bottom: 20px; text-align: center; padding-top: 50px;">';
         html +=	 '<h4 style="font-size: 20px;">제안서 평가 총괄표</h4>';
         html += '<span style="float: left;">▣ 사업명 : '+userTitle+'</span>';
         html += '<span style="float: right;">평가일자 : '+userDate+'</span>';
         html += '<span style="float: right;"></span>';
-        html +=  '</div>';
-        for (var t = 0; t < tableCount; t++) {
-            var currentCompanyCount = Math.min(companyCount - t * maxCompaniesPerTable, maxCompaniesPerTable);
+        html +=  '</div>';*/
 
-            html += '<table id="contenttable_'+t+'" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; width: 100%; margin: auto; margin-bottom: 50px;">';
+        html += '<div id="header" class="header" style="width: 1155px; max-width: 100%; padding-bottom: 5px; text-align: center; padding-top: 50px;">';
+        html +=   '<h4 style="font-size: 20px;padding-bottom: 15px;">제안서 평가 총괄표</h4>';
+        html +=   '<div style="display: flex; justify-content: space-between; width: 100%;">';
+        html +=     '<span>▣ 사업명 : '+userTitle+'</span>';
+        html +=     '<span>평가일자 : '+userDate+'</span>';
+        html +=   '</div>';
+        html += '</div>';
 
-            html += '<thead>';
-            html += '<tr>';
-            html += '<th id="thcell" rowspan="2" colspan="3" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; width: 43%; text-align: center;"><p class="HStyle0" style="text-align:center;line-height:150%;"><span class="hs">평가항목</span></p></th>';
-            html += '<th id="thcell" rowspan="2" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; width: 5%; text-align: center;"><p class="HStyle0" style="text-align:center;line-height:150%;"><span class="hs">배점</span></p></th>';
-            html += '<th id="thcell" colspan="' + currentCompanyCount + '" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; width: 47%; text-align: center; padding-top: 5px; padding-bottom: 5px"><p class="HStyle0" style="text-align:center;line-height:130%;"><span class="hs">제안업체</span></p></th>';
-            html += '<th id="thcell" rowspan="2" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; width:5%; text-align: center;"><p class="HStyle0" style="text-align:center;line-height:150%;"><span class="hs">비고</span></p></th>';
-            html += '</tr>';
+        var groupLength = qualityGroupArray.length;
+        var groupDivision = Math.trunc(groupLength / 12);
+        var startIndex = 0;
+        var endIndex = 11;
+        var rowSpan = 12;
+        var firstFlag = true;
 
-            html += '<tr>';
-            /*for (var i = 0; i < currentCompanyCount; i++) {
-                html += '<td id="cell" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center; width : ' + (510 / currentCompanyCount) + 'px">' + String.fromCharCode(65 + t * maxCompaniesPerTable + i) + '</td>';
-            }*/
-            for (var i = 0; i < currentCompanyCount; i++) {
-                html += '<td id="cell" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center; "><p class="HStyle0" style="text-align:center;line-height:130%;"><span class="hs">' + String.fromCharCode(65 + t * maxCompaniesPerTable + i) + '</span></p></td>';
-            }
-            html += '</tr>';
-            html += '</thead>';
-
-
-            html += '<tbody>';
-            html += '<th rowspan="' + numberOfquality + '" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; width:5%; text-align: center; margin : 5px;">정성<br>평가</th>';
-
-            //정성평가
-            var qualityGroupArray = [];
-            for (var key in qualitativeGroups) {
-                if (qualitativeGroups.hasOwnProperty(key)) {
-                    qualityGroupArray.push(qualitativeGroups[key]);
-
-                }
+        for(var x = 0; x < groupDivision; x++) {
+            if(x == (groupDivision - 1)){
+                rowSpan--;
             }
 
+            if(!firstFlag){
+                startIndex = 12;
+                endIndex = endIndex + startIndex;
+            }
 
-            for (var i = 0; i < qualityGroupArray.length; i++) {
-                var totalScore = 0;
-                for (var j = 0; j < qualityGroupArray[i].length; j++) {
-                    totalScore += qualityGroupArray[i][j].score;
+            for (var t = 0; t < tableCount; t++) {
+                var currentCompanyCount = Math.min(companyCount - t * maxCompaniesPerTable, maxCompaniesPerTable);
+
+                html += '<div class="pdf_page">'
+                html += '<table id="contenttable_' + t + '" style="width: 100%; max-width: 100%; margin : 0; margin-bottom: 50px;">';
+                html += '<thead>';
+                html += '<tr>';
+                html += '<th id="thcell" rowspan="2" colspan="3" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; width: 43%; text-align: center;"><p class="HStyle0" style="text-align:center;line-height:150%;"><span class="hs">평가항목</span></p></th>';
+                html += '<th id="thcell" rowspan="2" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; width: 3.5%; text-align: center;"><p class="HStyle0" style="text-align:center;line-height:150%;"><span class="hs">배점</span></p></th>';
+                html += '<th id="thcell" colspan="' + currentCompanyCount + '" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; width: 50%; text-align: center; padding-top: 5px; padding-bottom: 5px"><p class="HStyle0" style="text-align:center;line-height:130%;"><span class="hs">제안업체</span></p></th>';
+                html += '<th id="thcell" rowspan="2" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; width:5%; text-align: center;"><p class="HStyle0" style="text-align:center;line-height:150%;"><span class="hs">비고</span></p></th>';
+                html += '</tr>';
+
+                html += '<tr>';
+                /*for (var i = 0; i < currentCompanyCount; i++) {
+                    html += '<td id="cell" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center; width : ' + (510 / currentCompanyCount) + 'px">' + String.fromCharCode(65 + t * maxCompaniesPerTable + i) + '</td>';
+                }*/
+                for (var i = 0; i < currentCompanyCount; i++) {
+                    html += '<td id="cell" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center; "><p class="HStyle0" style="text-align:center;line-height:130%;"><span class="hs">' + String.fromCharCode(65 + t * maxCompaniesPerTable + i) + '</span></p></td>';
                 }
-                html += '<td  rowspan="' + qualityGroupArray[i].length + '" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center; width : 15%; padding-top: 5px; padding-bottom: 5px;"><p class="HStyle0"><span class="hs">' + qualityGroupArray[i][0].item_name + '<br>(' + totalScore + '점)</span></p></td>';
-                for (var j = 0; j < qualityGroupArray[i].length; j++) {
-                    var qualityScore = qksdhffla(qualityGroupArray[i][j].score);
-                    html += '<td  style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; padding-top: 5px; padding-bottom: 5px"><p class="HStyle0" style="text-align:left;line-height:150%;"><span class="hs">' + qualityGroupArray[i][j].item_medium_name + '</span></p></td>';
-                    html += '<td  style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center;"><p class="HStyle0" style="line-height:150%;"><span class="hs">' + qualityScore + '</span></p></td>';
+                html += '</tr>';
+                html += '</thead>';
+
+
+                html += '<tbody>';
+                html += '<th rowspan="' + rowSpan + '" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt;text-align:center; width:3% !important;">정성<br>평가</th>';
+
+                for (var i = startIndex; i <= endIndex; i++) {
+                    if(i == endIndex && qualityGroupArray[i].eval_type == '정량평가'){
+                        html += '<th style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align:center; width:3% !important;">정량<br>평가</th>';
+                    }
+                    if(qualityGroupArray[i].row_flag) {
+                        html += '<td rowspan="' + qualityGroupArray[i].row_span + '" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; width: 135px;  text-align: center;"><p class="HStyle0"><span class="hs">' + qualityGroupArray[i].item_name + '<br>(' + qualityGroupArray[i].sum_score + '점)</span></p></td>';
+                    }
+
+                    html += '<td style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; width: 265px;"><p class="HStyle0" style="text-align:left;line-height:150%;"><span class="hs">' + qualityGroupArray[i].item_medium_name + '</span></p></td>';
+                    html += '<td style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center;"><p class="HStyle0" style="line-height:150%;"><span class="hs">' + qualityGroupArray[i].score + '</span></p></td>';
                     for (var h = t * maxCompaniesPerTable; h < t * maxCompaniesPerTable + currentCompanyCount; h++) {
 
                         var matchingResultScore = '';
                         for (var k = 0; k < list.length; k++) {
-                            if (list[k].item_seq === qualityGroupArray[i][j].item_seq) {
+                            if (list[k].item_seq === qualityGroupArray[i].item_seq) {
 
-                                var itemScoreKey = 'ITME_SCORE_' + qualityGroupArray[i][j].item_seq;
+                                var itemScoreKey = 'ITME_SCORE_' + qualityGroupArray[i].item_seq;
 
                                 //matchingResultScore = list[k].RESULT_SCORE;
                                 for (var key in comList[h]) {
@@ -538,136 +544,83 @@
                             }
                         }
 
-                        html += '<td style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center;" name="score" it_seq="' + qualityGroupArray[i][j].item_seq + '" data-comp-seq="' + comList[h].EVAL_COMPANY_SEQ + '"><p class="HStyle0"><span class="hs">' + matchingResultScore + '</span></p></td>';
+                        html += '<td style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center;" name="score" it_seq="' + qualityGroupArray[i].item_seq + '" data-comp-seq="' + comList[h].EVAL_COMPANY_SEQ + '"><p class="HStyle0"><span class="hs">' + matchingResultScore + '</span></p></td>';
                     }
-                    html += '<td style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center;"><p class="HStyle0"><span class="hs"></span></p></td>';
-                    html += '</tr>'
-                    html += '<tr>'
-                }
-            }
-
-
-            if(numberOfquantity > 0) {
-                html += '<th rowspan="' + numberOfquantity + '" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center;">정량<br>평가</th>';
-                //정량평가
-                var quantityGroupArray = [];
-                for (var key in quantitativeGroups) {
-                    if (quantitativeGroups.hasOwnProperty(key)) {
-                        quantityGroupArray.push(quantitativeGroups[key]);
-                    }
+                    html += '<td style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt;text-align:center;text-align:center; "><p class="HStyle0"><span class="hs"></span></p></td>';
+                    html += '</tr>';
+                    html += '<tr>';
                 }
 
-                //상생평가를 배열의 가장 뒤로 보내기
-                for (var i = 0; i < quantityGroupArray.length; i++) {
-                    if (quantityGroupArray[i][0].item_name === "상생기업") {
-                        var saengsengItem = quantityGroupArray.splice(i, 1)[0];
-                        quantityGroupArray.push(saengsengItem);
-                        break;
-                    }
+                //합계
+                //html += '<tr>';
+                html += '<th id="thcell" colspan="3" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center;"><p class="HStyle0"><span class="hs"></span></p>합 계</span></p></th>';
+                html += '<td id="cell" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center;"><p class="HStyle0"><span class="hs">100</span></p></td>';
+
+                for (var i = t * maxCompaniesPerTable; i < t * maxCompaniesPerTable + currentCompanyCount; i++) {
+                    var totalScore = qksdhffla(comList[i].TOTAL_SUM);
+                    html += '<td id="cell" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center;"><p class="HStyle0"><span class="hs">' + totalScore + '</span></p></td>';
                 }
 
-                for (var i = 0; i < quantityGroupArray.length; i++) {
-                    var totalScore = 0;
-                    for (var j = 0; j < quantityGroupArray[i].length; j++) {
-                        totalScore += quantityGroupArray[i][j].score;
-                    }
-                    html += '<td  rowspan="' + quantityGroupArray[i].length + '" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center; padding-top: 5px; padding-bottom: 5px"><p class="HStyle0"><span class="hs">' + quantityGroupArray[i][0].item_name + '<br>(' + totalScore + '점)</span></p></td>';
-                    for (var j = 0; j < quantityGroupArray[i].length; j++) {
-                        if (quantityGroupArray[i][0].item_name === "상생기업") {
-                            html += '<td  style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; padding-top: 5px; padding-bottom: 5px"><p class="HStyle0" style = "text-align:left;line-height:150%;"><span class="hs">상생기업/중소기업/일반기업</span></p></td>';
-                        } else {
-                            html += '<td  style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; padding-top: 5px; padding-bottom: 5px"><p class="HStyle0" style="line-height:150%;"><span class="hs">' + quantityGroupArray[i][j].item_medium_name + '</span></p></td>';
-                        }
-                        var quantityscore = qksdhffla(quantityGroupArray[i][j].score);
-                        html += '<td  style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center;"><p class="HStyle0"><span class="hs">' + quantityscore + '</span></p></td>';
-                        for (var h = t * maxCompaniesPerTable; h < t * maxCompaniesPerTable + currentCompanyCount; h++) {
+                html += '<td id="cell" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center;"><p class="HStyle0"><span class="hs"></span></p></td>';
+                html += '</tr>';
 
-                            var matchingResultScore = '';
-                            for (var k = 0; k < list.length; k++) {
-                                if (list[k].item_seq === quantityGroupArray[i][j].item_seq) {
-
-                                    var itemScoreKey = 'ITME_SCORE_' + quantityGroupArray[i][j].item_seq;
-
-                                    //matchingResultScore = list[k].RESULT_SCORE;
-                                    for (var key in comList[h]) {
-                                        if (key === itemScoreKey) {
-                                            matchingResultScore = qksdhffla(comList[h][key]);
-                                            break;
-                                        }
-                                    }
-
-
-                                    break;
-                                }
-                            }
-
-                            html += '<td style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center;" name="score" it_seq="' + quantityGroupArray[i][j].item_seq + '" data-comp-seq="' + comList[h].EVAL_COMPANY_SEQ + '"><p class="HStyle0"><span class="hs">' + matchingResultScore + '</span></p></td>';
-                        }
-                        html += '<td style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center;"><p class="HStyle0"><span class="hs"></span></p></td>';
-                        html += '</tr>'
-                        html += '<tr>'
-                    }
+                //환산점수
+                html += '<tr>';
+                html += '<th id="thcell" colspan="4" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center; padding-top: 5px; padding-bottom: 5px"><p class="HStyle0"><span class="hs">환산점수(' + rates + '%)</span></p></th>';
+                for (var i = t * maxCompaniesPerTable; i < t * maxCompaniesPerTable + currentCompanyCount; i++) {
+                    var convertedScore = qksdhffla(comList[i].TOTAL_SUM * (rates / 100));
+                    html += '<td id="cell" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center;"><p class="HStyle0"><span class="hs">' + convertedScore + '</span></p></td>';
                 }
+
+                html += '<td id="cell" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center;"></td>';
+                html += '</tr>';
+
+                //적격판정
+                html += '<tr>';
+                html += '<th id="thcell" colspan="4" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center; padding-top: 5px; padding-bottom: 5px"><p class="HStyle0"><span class="hs">적 격 판 정</span></p></th>';
+                for (var i = t * maxCompaniesPerTable; i < t * maxCompaniesPerTable + currentCompanyCount; i++) {
+                    var eligibility = comList[i].TOTAL_SUM >= 85 ? '적격' : '부적격';
+                    html += '<td id="cell" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center;"><p class="HStyle0"><span class="hs">' + eligibility + '</span></p></td>';
+                }
+
+                html += '<td id="cell" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center;"><p class="HStyle0"><span class="hs"></span></p></td>';
+                html += '</tr>';
+
+                //순위
+                html += '<tr>';
+                html += '<th id="thcell" colspan="4" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center; padding-top: 5px; padding-bottom: 5px"><p class="HStyle0"><span class="hs">순 위</span></p></th>';
+                for (var i = t * maxCompaniesPerTable; i < t * maxCompaniesPerTable + currentCompanyCount; i++) {
+                    html += '<td id="cell" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center;"><p class="HStyle0"><span class="hs">' + comList[i].RANK + '</span></p></td>';
+                }
+
+                html += '<td id="cell" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center;"></td>';
+                html += '</tr>';
+                html += '<tr>';
+                html += '</tbody>';
+                html += '</table>';
+
+                html += '<div style="margin-top: -50px;text-align: right;">'
+                html += '<span>'+ (t+1) +' - '+ (x+1) +'</span>'
+                html += '</div>'
+
+                html += '<div id ="nameLabel" style="width: 100%; max-width: 100%; text-align: right; margin-bottom: 35px;">';
+                html += '<span>성명 : ' + userName + '</span>';
+                /*html += '<span style="margin-right: 20px;"></span>';
+                html += '<img id="signatureImage" alt="서명 이미지" style="height:40px;"/>';
+                html += '</div>';*/
+                html += '<div style="display: inline-block; position: relative;">';
+                html += '<img src="' + userSign + '" alt="서명 이미지" style="height:40px; position: relative; left: -30px;"/>';
+                html += '<span style="position: absolute; top: 38%; left: 25%; transform: translate(-50% , -20%); font-size: 14px;">(인)</span>';
+                html += '</div>';
+                html += '</div>';
+
+                html += '</div>';
             }
 
-            //합계
-            //html += '<tr>';
-            html += '<th id="thcell" colspan="3" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center;"><p class="HStyle0"><span class="hs"></span></p>합&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;계</span></p></th>';
-            html += '<td id="cell" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center;"><p class="HStyle0"><span class="hs">100점</span></p></td>';
-
-            for (var i = t * maxCompaniesPerTable; i < t * maxCompaniesPerTable + currentCompanyCount; i++) {
-                var totalScore = qksdhffla(comList[i].TOTAL_SUM);
-                html += '<td id="cell" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center;"><p class="HStyle0"><span class="hs">' + totalScore + '</span></p></td>';
+            if(groupDivision > 0){
+                firstFlag = false;
             }
-
-            html += '<td id="cell" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center;"><p class="HStyle0"><span class="hs"></span></p></td>';
-            html += '</tr>';
-
-            //환산점수
-            html += '<tr>';
-            html += '<th id="thcell" colspan="4" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center; padding-top: 5px; padding-bottom: 5px"><p class="HStyle0"><span class="hs">환산점수('+ rates +'%)</span></p></th>';
-            for (var i = t * maxCompaniesPerTable; i < t * maxCompaniesPerTable + currentCompanyCount; i++) {
-                var convertedScore = qksdhffla(comList[i].TOTAL_SUM * (rates / 100));
-                html += '<td id="cell" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center;"><p class="HStyle0"><span class="hs">' + convertedScore + '</span></p></td>';
-            }
-
-            html += '<td id="cell" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center;"></td>';
-            html += '</tr>';
-
-            //적격판정
-            html += '<tr>';
-            html += '<th id="thcell" colspan="4" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center; padding-top: 5px; padding-bottom: 5px"><p class="HStyle0"><span class="hs">적 격 판 정</span></p></th>';
-            for (var i = t * maxCompaniesPerTable; i < t * maxCompaniesPerTable + currentCompanyCount; i++) {
-                var eligibility = comList[i].TOTAL_SUM >= 85 ? '적격' : '부적격';
-                html += '<td id="cell" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center;"><p class="HStyle0"><span class="hs">' + eligibility + '</span></p></td>';
-            }
-
-            html += '<td id="cell" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center;"><p class="HStyle0"><span class="hs"></span></p></td>';
-            html += '</tr>';
-
-            //순위
-            html += '<tr>';
-            html += '<th id="thcell" colspan="4" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center; padding-top: 5px; padding-bottom: 5px"><p class="HStyle0"><span class="hs">순&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;위</span></p></th>';
-            for (var i = t * maxCompaniesPerTable; i < t * maxCompaniesPerTable + currentCompanyCount; i++) {
-                html += '<td id="cell" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center;"><p class="HStyle0"><span class="hs">' + comList[i].RANK + '</span></p></td>';
-            }
-
-            html += '<td id="cell" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center;"></td>';
-            html += '</tr>';
-            html += '<tr>';
-            html += '</tbody>';
-            html += '</table>';
         }
-
-        html += '<div id ="nameLabel" style="text-align: right; margin-top: -40px; margin-bottom: 35px;">';
-        html += '<span>성명 : '+userName+'</span>';
-        /*html += '<span style="margin-right: 20px;"></span>';
-        html += '<img id="signatureImage" alt="서명 이미지" style="height:40px;"/>';
-        html += '</div>';*/
-        html += '<div style="display: inline-block; position: relative;">';
-        html += '<img id="signatureImage" alt="서명 이미지" style="height:40px; position: relative; left: -30px;"/>';
-        html += '<span style="position: absolute; top: 28%; left: 25%; transform: translate(-50% , -20%); font-size: 14px;">(인)</span>';
-        html += '</div>';
 
         $("#contentsTemp").append(html);
 
@@ -817,11 +770,11 @@
 <script>
     _hwpPutData()
 
-    var signatureImage = document.getElementById("signatureImage");
+    /*var signatureImage = document.getElementById("signatureImage");
     if (userSign) {
         signatureImage.src = userSign;
     } else {
         signatureImage.alt = "서명 이미지가 없습니다.";
-    }
+    }*/
 </script>
 

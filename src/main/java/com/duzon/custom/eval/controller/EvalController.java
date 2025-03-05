@@ -297,7 +297,7 @@ public class EvalController {
 				List<Map<String, Object>> getCompanyList = evalService.getCompanyList(map);
 //				
 //				//회사
-				model.addAttribute("getCompanyList", getCompanyList);
+				model.addAttribute("getCompanyList", gs.toJson(getCompanyList));
 				System.out.println("********getCompanyList********* : "+ getCompanyList);
 //
 //				//결과
@@ -311,7 +311,7 @@ public class EvalController {
 					resultList.add(evalService.evalResultList(map));
 				}
 //				
-				model.addAttribute("result", resultList);
+				model.addAttribute("result", gs.toJson(resultList));
 				System.out.println("********result********* : "+ resultList);
 				
 				return "/eval/sign/evalSign7";

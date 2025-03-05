@@ -307,6 +307,41 @@
 
          }, 500);  // 0.5초 간격으로 점 추가
      }
+
+    /*아이콘 종류
+		   * success
+		   * warning
+		   * error
+		   * info
+		   * */
+
+    function customAlert(msg, icon) {
+        return swal({
+            title: '',
+            text: msg,
+            type: '',
+            icon: icon == '' ? 'success' : icon,
+            closeOnClickOutside : false,
+            button: '확인'
+        })
+    }
+
+    function customConfirm(msg, icon) {
+        return swal({
+            title: '',
+            text: msg,
+            type: '',
+            icon: icon == '' ? 'info' : icon,
+            buttons: {
+                agree: {
+                    text : "예",
+                    value : true
+                },
+                cancel: "아니요"
+            },
+            closeOnClickOutside : false
+        })
+    }
 </script>
 
 

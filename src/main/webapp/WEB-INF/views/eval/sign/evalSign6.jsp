@@ -103,33 +103,6 @@
 <script type="text/javascript" src="<c:url value='/resources/js/common/sweetalert.min.js'/>"></script>
 
 <script type="text/javascript">
-	function customAlert(msg, icon) {
-		return swal({
-			title: '',
-			text: msg,
-			type: '',
-			icon: icon == '' ? 'success' : icon,
-			closeOnClickOutside : false,
-			button: '확인'
-		})
-	}
-
-	function customConfirm(msg, icon) {
-		return swal({
-			title: '',
-			text: msg,
-			type: '',
-			icon: icon == '' ? 'info' : icon,
-			buttons: {
-				agree: {
-					text : "예",
-					value : true
-				},
-				cancel: "아니요"
-			},
-			closeOnClickOutside : false
-		})
-	}
 	window.onload = function () {
 		window.scrollTo(0, 0);
 	};
@@ -295,15 +268,6 @@
                 imgScaledHeight = imgHeight * scale;
 
                 const xOffset = (pdfWidth - imgScaledWidth) / 2
-
-	            console.log("pdfWidth", pdfWidth);
-	            console.log("pdfHeight", pdfHeight);
-	            console.log("imgWidth", imgWidth);
-	            console.log("imgHeight", imgHeight);
-	            console.log("scale", scale);
-	            console.log("imgScaledWidth", imgScaledWidth);
-	            console.log("imgScaledHeight", imgScaledHeight);
-	            console.log("xOffset", xOffset);
 
                 if (i === 0) {
                     offsetY = 32;
@@ -756,11 +720,11 @@
                 html += '</thead>';
 
                 html += '<tbody>';
-                html += '<th rowspan="' + rowSpan + '" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt;text-align:center;  width:5% !important;">정성<br>평가</th>';
+                html += '<th rowspan="' + rowSpan + '" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt;text-align:center; width:3% !important;">정성<br>평가</th>';
 
                 for (var i = startIndex; i <= endIndex; i++) {
                     if(i == endIndex && qualityGroupArray[i].eval_type == '정량평가'){
-                        html += '<th style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align:center; width:5% !important;">정량<br>평가</th>';
+                        html += '<th style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align:center; width:3% !important;">정량<br>평가</th>';
                     }
                     if(qualityGroupArray[i].row_flag) {
                         html += '<td rowspan="' + qualityGroupArray[i].row_span + '" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; width: 135px;  text-align: center;"><p class="HStyle0"><span class="hs">' + qualityGroupArray[i].item_name + '<br>(' + qualityGroupArray[i].sum_score + '점)</span></p></td>';
@@ -808,7 +772,7 @@
                 html += '</tbody>';
                 html += '</table>';
 
-                html += '<div style="margin-top: -50px;">'
+                html += '<div style="margin-top: -50px;text-align: right;">'
                 html += '<span>'+ (t+1) +' - '+ (x+1) +'</span>'
                 html += '</div>'
 
@@ -839,24 +803,15 @@
 	        html += '</div>';
 
 	        for (var t = 0; t < 2; t++) {
-	            var currentCompanyCount = Math.min(11 - t * maxCompaniesPerTable, maxCompaniesPerTable); // 현재 표에 들어갈 제안업체 수
-		        console.log(currentCompanyCount);
+	            var currentCompanyCount = Math.min(companyCount - t * maxCompaniesPerTable, maxCompaniesPerTable); // 현재 표에 들어갈 제안업체 수
                 for (var i = t * maxCompaniesPerTable; i < t * maxCompaniesPerTable + currentCompanyCount; i++) {
 	                    html += '<table class="remark_pdf_page" style="width: 100%; max-width: 100%; margin : 0;">';
 	                    html += '<tbody>';
 
 	                    html += '<tr>';
 	                    html += '<td style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center; width: 5%"><p class="HStyle0"><span class="hs">' + String.fromCharCode(65 + i) + '</spam></p></td>';
-	                    //html += '<td colspan="' + (currentCompanyCount + 3) + '" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; height: 27px; padding: 1px;"><p class="HStyle0"><span class="hs">' + getCompanyRemarkList[i].remark + '</span></p></td>';
-	                    html += '<td style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; height: 27px; padding: 1px;"><p class="HStyle0"><span class="hs">안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요</span></p></td>';
+	                    html += '<td colspan="' + (currentCompanyCount + 3) + '" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; height: 27px; padding: 1px;"><p class="HStyle0"><span class="hs">' + getCompanyRemarkList[i].remark + '</span></p></td>';
 	                    html += '</tr>';
-
-	                    /*for (var t2 = 1; t2 < 11; t2++) {
-	                        html += '<tr>';
-	                        html += '<td style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center; width: 5%"><p class="HStyle0"><span class="hs">' + String.fromCharCode(65 + t2) + '</spam></p></td>';
-	                        html += '<td style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; height: 27px; padding: 1px;"><p class="HStyle0"><span class="hs">안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요</span></p></td>';
-	                        html += '</tr>';
-	                    }*/
 
 	                    html += '</tbody>';
 	                    html += '</table>';
@@ -865,7 +820,7 @@
         html += '</div>';
 
 
-		$("#contentsTemp").append(html);
+        $("#contentsTemp").append(html);
 		$("#signSave").show();
 
 

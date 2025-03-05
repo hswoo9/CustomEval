@@ -20,12 +20,12 @@
 
 
 <style>
-    @media (pointer:coarse) {
+    /*@media (pointer:coarse) {
         .th {
             background-color : #8c8c8c !important;
             color : white !important;
         }
-    }
+    }*/
 	html, body {
 		overflow-y: scroll !important;
 		scrollbar-width: auto !important;
@@ -47,14 +47,14 @@
 	#contentsTemp {
 		margin-top : 10px;
 		max-width: 100%;
-		width: 1000px;
+		width: 1155px;
 		height: auto;
 		overflow: visible;
 	}
 	/*데스크탑 환경*/
 	@media (min-width: 1024px) {
 		#contentsTemp {
-			width: 1000px;
+			width: 1155px;
 			font-size: 13px;
 		}
 	}
@@ -62,7 +62,7 @@
 	/* 패드 환경 (세로 화면, 작은 화면) */
 	@media (max-width: 1024px) and (orientation: portrait) {
 		#contentsTemp {
-			width: 90%;
+            width: 1155px;
 			font-size: 11px;
 		}
 	}
@@ -70,354 +70,132 @@
 	/*모바일 환경(최소 화면 크기)*/
 	@media (max-width: 768px) {
 		#contentsTemp {
-			width: 100%;
+            width: 100%;
 			font-size: 11px;
 		}
 	}
 
-	table {
-		font-family:"한양중고딕","한컴돋움",sans-serif;
-	}
+    #thcell {
+        background-color : #8c8c8c;
+        color : white;
+        padding:1.4pt 1.4pt 1.4pt 1.4pt !important;
+    }
 
-	th {
-		font-weight: normal !important;
-	}
+    #cell {
+        background-color : #8c8c8c;
+        color : white;
+        padding:1.4pt 1.4pt 1.4pt 1.4pt !important;
+    }
 
+    table {
+        font-family:"한양중고딕","한컴돋움",sans-serif;
+        border-collapse: collapse !important;
+    }
+
+    th {
+        font-weight: normal !important;
+    }
+
+    span.hs {
+        font-family:"한양중고딕","한컴돋움",sans-serif;
+    }
 </style>
 <script type="text/javascript" src="<c:url value='/resources/js/common/sweetalert.min.js'/>"></script>
 
+<script>
+    window.onload = function () {
+        window.scrollTo(0, 0);
+    };
 
-<script type="text/javascript">
-	function customAlert(msg, icon) {
-		return swal({
-			title: '',
-			text: msg,
-			type: '',
-			icon: icon == '' ? 'success' : icon,
-			closeOnClickOutside : false,
-			button: '확인'
-		})
-	}
-
-	function customConfirm(msg, icon) {
-		return swal({
-			title: '',
-			text: msg,
-			type: '',
-			icon: icon == '' ? 'info' : icon,
-			buttons: {
-				agree: {
-					text : "예",
-					value : true
-				},
-				cancel: "아니요"
-			},
-			closeOnClickOutside : false
-		})
-	}
-	window.onload = function () {
-		window.scrollTo(0, 0);
-	};
-
-	$(function(){
-		$('.infoTbody').rowspan2(1); //rowspan2 - rowspan 순으로 실행시켜야 원하는 모양으로 나타남.
-		/*customAlert('"제안평가위원장은 \"제안서 평가 총괄표\" 및\n\"업체별 제안서 평가집계표\"에 이상이 없는지\n정확히 확인하여 주시기 바라며,\n저장버튼 클릭후에는 수정이 불가능 합니다"', 'success').then(() => {
+    $(function(){
+        //$('.infoTbody').rowspan2(1); //rowspan2 - rowspan 순으로 실행시켜야 원하는 모양으로 나타남.
+        /*customAlert('"제안평가위원장은 \"제안서 평가 총괄표\" 및\n\"업체별 제안서 평가집계표\"에 이상이 없는지\n정확히 확인하여 주시기 바라며,\n저장버튼 클릭후에는 수정이 불가능 합니다"', 'success').then(() => {
 
 		});*/
-  		$('.infoTbody').rowspan(0);
-  		//$("#contentsTemp").hide();
-	});
+        //$('.infoTbody').rowspan(0);
+        //$("#contentsTemp").hide();
+    });
 
-	window.onload = function() {
-		history.pushState(null, null, window.location.href);
-		history.pushState(null, null, window.location.href);
+    window.onload = function() {
+        history.pushState(null, null, window.location.href);
+        history.pushState(null, null, window.location.href);
 
-		window.addEventListener('popstate', function () {
-			history.pushState(null, null, window.location.href);
-		});
-	};
-
-
-	
-	$.fn.rowspan = function(colIdx, isStats) {       
-		return this.each(function(){      
-			var that;     
-			$('tr', this).each(function(row) {      
-				$('td:eq('+colIdx+')', this).filter(':visible').each(function(col) {
-					
-					if ($(this).html() == $(that).html()
-						&& (!isStats 
-								|| isStats && $(this).prev().html() == $(that).prev().html()
-								)
-						) {            
-						rowspan = $(that).attr("rowspan") || 1;
-						rowspan = Number(rowspan)+1;
-
-						$(that).attr("rowspan",rowspan);
-						
-						// do your action for the colspan cell here            
-						//$(this).hide();
-						
-						$(this).remove(); 
-						// do your action for the old cell here
-						
-					} else {            
-						that = this;         
-					}          
-					
-					// set the that if not already set
-					that = (that == null) ? this : that;      
-				});     
-			});    
-		});  
-	};
-	
-	$.fn.rowspan2 = function(colIdx, isStats) {       
-		return this.each(function(){      
-			var that;     
-			$('tr', this).each(function(row) {      
-				$('td:eq('+colIdx+')', this).filter(':visible').each(function(col) {
-					
-					if ($(this).html() == $(that).html()
-						&& (!isStats 
-								|| isStats && $(this).prev().html() == $(that).prev().html()
-								)
-						) {            
-						rowspan = $(that).attr("rowspan") || 1;
-						rowspan = Number(rowspan)+1;
-
-						$(that).attr("rowspan",rowspan);
-						
-						// do your action for the colspan cell here            
-						//$(this).hide();
-						
-						$(this).remove(); 
-						// do your action for the old cell here
-						
-					} else {            
-						that = this;         
-					}          
-					
-					// set the that if not already set
-					that = (that == null) ? this : that;      
-				});     
-			});    
-		});  
-	};
-	var signHwpFileData = "";
-	var signHwpFileDataList = [];
-	const totalDivs = ${getCompanyList.size()};
-	let processedDivs = 0;
-
-	function signSaveBtn() {
-        $('#loading_spinner').show();
-
-		const divPrefix = "temp_";
-		signHwpFileDataList = [];
-		processedDivs = 0; // Reset processedDivs
-
-		for (let i = 1; i <= totalDivs; i++) {
-			const divId = divPrefix + i;
-			const element = document.getElementById(divId);
-			console.log("divId : ", divId);
+        window.addEventListener('popstate', function () {
+            history.pushState(null, null, window.location.href);
+        });
+    };
 
 
-			if (element) {
-				const scaleFactor = window.devicePixelRatio || 2;
 
-				// 각 temp_i에 대해 header와 contenttable_j 처리
-				const contentTables = [];
-				const contentTableCount = element.getElementsByClassName("infoTbody").length; // temp_i 내의 contenttable 개수
+    $.fn.rowspan = function(colIdx, isStats) {
+        return this.each(function(){
+            var that;
+            $('tr', this).each(function(row) {
+                $('td:eq('+colIdx+')', this).filter(':visible').each(function(col) {
 
-				// header 추가
-				const headerId = "header_"+i;
-				const header = document.getElementById(headerId); // temp_i의 header
+                    if ($(this).html() == $(that).html()
+                        && (!isStats
+                            || isStats && $(this).prev().html() == $(that).prev().html()
+                        )
+                    ) {
+                        rowspan = $(that).attr("rowspan") || 1;
+                        rowspan = Number(rowspan)+1;
 
-				const pdf = new jsPDF("l", "mm", "a4");
+                        $(that).attr("rowspan",rowspan);
 
-				// header를 첫 페이지에 추가
-				if (header) {
-					html2canvas(header, { scale: scaleFactor }).then(canvas => {
-						const imgData = canvas.toDataURL("image/png");
-						const pdfWidth = pdf.internal.pageSize.getWidth();
-						const pdfHeight = pdf.internal.pageSize.getHeight();
-						const imgWidth = canvas.width * 0.2645;
-						const imgHeight = canvas.height * 0.2645;
+                        // do your action for the colspan cell here
+                        //$(this).hide();
 
+                        $(this).remove();
+                        // do your action for the old cell here
 
-						const scale = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight) * 0.8;
-						const imgScaledWidth = imgWidth * scale;
-						const imgScaledHeight = imgHeight * scale;
-						const xOffset = (pdfWidth - imgScaledWidth) / 2;
-						const yOffset = 0.5;
+                    } else {
+                        that = this;
+                    }
 
-						// 첫 번째 페이지에 header 추가
-						pdf.addImage(imgData, "PNG", xOffset, yOffset, imgScaledWidth, imgScaledHeight);
-					});
-				}
+                    // set the that if not already set
+                    that = (that == null) ? this : that;
+                });
+            });
+        });
+    };
 
-				// 각 contenttable_j 처리
+    $.fn.rowspan2 = function(colIdx, isStats) {
+        return this.each(function(){
+            var that;
+            $('tr', this).each(function(row) {
+                $('td:eq('+colIdx+')', this).filter(':visible').each(function(col) {
 
-				for (let j = 1; j <= contentTableCount; j++) {
-					const contentTableId = "contenttable_" + i + "_" + j;
-					const contentTable = document.getElementById(contentTableId); // 예: contenttable_1_1
-					if (contentTable) {
-						contentTables.push(contentTable);
-					}
-				}
+                    if ($(this).html() == $(that).html()
+                        && (!isStats
+                            || isStats && $(this).prev().html() == $(that).prev().html()
+                        )
+                    ) {
+                        rowspan = $(that).attr("rowspan") || 1;
+                        rowspan = Number(rowspan)+1;
 
-				// contentTable을 페이지마다 추가
-				contentTables.forEach((contentTable, index) => {
-					html2canvas(contentTable, { scale: scaleFactor }).then(canvas => {
-						const imgData = canvas.toDataURL("image/png");
-						const pdfWidth = pdf.internal.pageSize.getWidth();
-						const pdfHeight = pdf.internal.pageSize.getHeight();
-						const imgWidth = canvas.width * 0.2645;
-						const imgHeight = canvas.height * 0.2645;
+                        $(that).attr("rowspan",rowspan);
 
-						const scale = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight) * 0.8;
-						const imgScaledWidth = imgWidth * scale;
-						const imgScaledHeight = imgHeight * scale;
-						const xOffset = (pdfWidth - imgScaledWidth) / 2;
-						var yOffset = 10;
+                        // do your action for the colspan cell here
+                        //$(this).hide();
 
-						if (index === 0) {
-							yOffset = 20;
-						} else {
-							if (index > 0) {
-								pdf.addPage(); // 두 번째 테이블부터는 새 페이지에 추가
-								yOffset = 10;  // 새 페이지는 Y 좌표 초기화
-							}
-						}
+                        $(this).remove();
+                        // do your action for the old cell here
 
-						pdf.addImage(imgData, "PNG", xOffset, yOffset, imgScaledWidth, imgScaledHeight);
+                    } else {
+                        that = this;
+                    }
 
-						// 마지막 contentTable의 경우에만 signHwpFileDataList에 추가
-
-						if (index === contentTables.length - 1) {
-							signHwpFileDataList.push(pdf.output("datauristring").split(",")[1]);
-							processedDivs++;
-							if (processedDivs === totalDivs) {
-								signSave();
-							}
-						}
-					});
-				});
-			} else {
-				processedDivs++;
-			}
-		}
-	}
-
-	function signSave(){
-		var formData = new FormData();
-		formData.append("commissioner_seq", "${userInfo.COMMISSIONER_SEQ}");
-		formData.append("step", "7");
-
-		//console.log("signHwpFileDataList 확인:", signHwpFileDataList);
-
-		for (let j = 0; j < signHwpFileDataList.length; j++) {
-
-			const data = signHwpFileDataList[j];  // 현재 index에 해당하는 데이터
-
-			formData.append("signHwpFileData_"+(j + 1), data);
-		}
-
-		//console.log("FormData 내용 확인:");
-		/*for (let pair of formData.entries()) {
-			console.log(pair[0], ":", pair[1]); // 키와 값 확인
-		}*/
-
-		$.ajax({
-			url : "<c:url value='/eval/setSignSetp'/>",
-			type : "POST",
-			data : formData,
-			dataType : "json",
-			contentType: false,
-			processData: false,
-			async : false,
-			success : function(data) {
-				if(data.result != "success") {
-                    $('#loading_spinner').hide();
-					alert("문서저장시 오류가 발생했습니다. 시스템관리자한테 문의 하세요.");
-					return false ;
-				} else {
-					location.reload();
-				}
-			},
-			error : function(request, status, error) {
-                $('#loading_spinner').hide();
-				alert("문서저장시 오류가 발생했습니다. 시스템관리자한테 문의 하세요.");
-				return false ;
-			}
-		})
-	}
-
-	function setSign(imgData){
-		_hwpPutImage("sign", "C:\\SignData\\Temp.png");
-	}
-
-	/** TODO. 한글뷰어 수정중 */
-	function hwpView(){
-		//로컬 보안 이슈
-		// _pHwpCtrl.RegisterModule("FilePathCheckDLL", "FilePathCheckerModuleExample");
-		// var hwpPath = "http://"+_g_serverName+":"+_g_serverPort+_g_contextPath_+"/common/getHwpFile?fileNm=step8";
-		// _pHwpCtrl.Open(hwpPath,"HWP");
-		// _pHwpCtrl.EditMode = 0;
-
-		var serverPath = "";
-		var hostname = window.location.hostname;
-		if(hostname.indexOf("localhost") > -1 || hostname.indexOf("127.0.0.1") > -1 || hostname.indexOf("1.233.95.140") > -1){
-			serverPath = "http://1.233.95.140:58090/";
-		}else{
-			serverPath = "http://one.epis.or.kr/"
-		}
-
-		// var hwpPath = serverPath + "/upload/evalForm/step8.hwp";
-		// _hwpOpen(hwpPath, "HWP");
-        //
-		// _pHwpCtrl.EditMode = 0;
-		// _pHwpCtrl.SetToolBar(1, "TOOLBAR_MENU");
-		// _pHwpCtrl.SetToolBar(1, "TOOLBAR_STANDARD");
-		// _pHwpCtrl.ShowRibbon(false);
-		// _pHwpCtrl.ShowCaret(false);
-		// _pHwpCtrl.ShowStatusBar(false);
-		// _pHwpCtrl.SetFieldViewOption(1);
-	}
-
-	function _hwpPutData(){
-		_pHwpCtrl.MoveToField("contents", true, true, true);
-		_pHwpCtrl.PutFieldText("contents", "\n");
-		
-		_pHwpCtrl.SetTextFile($('#contentsTemp').html(), "HTML", "insertfile", function(){
-
-		var name = "";
-
-		if("${userInfo.EVAL_BLIND_YN}" == "N"){
-			name = "${userInfo.NAME }";
-		}else{
-			name = "${fn:substring(userInfo.NAME, 0, 1)}**";
-		}
-		if(_pHwpCtrl.FieldExist("name" )) {
-			_pHwpCtrl.PutFieldText("name", name);
-		}
-
-		_hwpPutSignImg("sign", "${userInfo.SIGN_DIR }");
-
-		$("#signSave").show();
-	})
-	};
-
-	function reloadBtn(){
-		location.reload();
-	}
-
-	function evalAvoidPopup(){
-		window.open(_g_contextPath_ + "/eval/evalAvoidPopup", 'evalAvoidPop', 'menubar=0,resizable=1,scrollbars=1,status=no,toolbar=no,width=1000,height=280,left=650,top=250');
-	}
+                    // set the that if not already set
+                    that = (that == null) ? this : that;
+                });
+            });
+        });
+    };
 </script>
 
-<div style="width: 75%;margin: 0 auto;">
+
+<div style="width: 100%;">
 	<div id="signSave" style="">
 		<input type="hidden" onclick="evalAvoidPopup()" style="background-color: #dee4ea; border-color: black; font-weight : bold; color: red; border-width: thin;" value="기피신청">
 		<input type="button" onclick="signSaveBtn();" style="float:right; margin-left : 10px; background-color: #dee4ea; border-color: black; border-width: thin;" value="다음">
@@ -429,402 +207,573 @@
 	</div>
 	-->
 	<div id="contentsTemp" >
-
-		<c:set var="userCount" value="${result[0].list.size()}" />
-		<c:set var="colListCount" value="${result[0].colList.size()}"/>
-
-		<%
-			int userCount = (Integer) pageContext.getAttribute("userCount");
-			int maxUserCount = 9;
-			int tableCount = (int) Math.ceil((double) userCount / maxUserCount);
-			int endTableCount = (tableCount-1);
-
-			pageContext.setAttribute("tableCount", tableCount);
-			pageContext.setAttribute("endTableCount", endTableCount);
-
-			int colListCount = (Integer) pageContext.getAttribute("colListCount");
-
-			ArrayList<Integer> colIndics = new ArrayList<Integer>();
-			for(int j = 0; j<colListCount; j++){
-				colIndics.add(j);
-			}
-			pageContext.setAttribute("colIndics",colIndics);
-		%>
-
-
-		<c:forEach items="${getCompanyList }" var="companyList" varStatus="mainSt">
-
-		<div id="temp_${mainSt.index + 1}" style="page-break-after: always;">
-
-			<div id="header_${mainSt.index + 1}" class="header" style="width:100%; padding-bottom: 35px; text-align: center; padding-top: 50px;">
-				<h4 style="font-size: 20px;">업체별 제안서 평가집계표_${companyList.display_title}</h4>
-			</div>
-
-			<c:forEach var="t" begin="0" end="${endTableCount}" varStatus="tableMainSt">
-
-
-
-				<%
-					int currentIndex = Integer.parseInt(pageContext.getAttribute("t").toString());
-
-					int startIndex = currentIndex * maxUserCount;
-					int currentUserCount = Math.min(userCount - startIndex, maxUserCount);
-					int adjustedUserCount = currentUserCount + 4;
-
-
-					pageContext.setAttribute("currentUserCount", currentUserCount);
-					pageContext.setAttribute("adjustedUserCount", adjustedUserCount);
-
-					ArrayList<Integer> indices = new ArrayList<Integer>();
-					for (int i = 0; i < currentUserCount; i++) {
-						indices.add(startIndex + i);
-					}
-					pageContext.setAttribute("indices", indices);
-				%>
-
-				<%--<ul>
-					<c:forEach var="index" items="${indices}">
-						<SPAN STYLE='font-family:"한양중고딕,한컴돋움";'>${index}</SPAN>
-					</c:forEach>
-				</ul>--%>
-
-
-			<%--</c:forEach>--%>
-
-			<TABLE id="contenttable_${mainSt.index + 1}_${tableMainSt.index + 1}" class="infoTbody" style="margin:0;">
-				<TR>
-					<TD colspan="3" valign="bottom" style='width:250px; height:28px;'>
-						<P CLASS=HStyle0 STYLE='line-height:180%;'>▣ 제안업체명 :
-							<SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>${companyList.display_title}</SPAN>
-						</P>
-					</TD>
-					<TD colspan="<%= adjustedUserCount %>" valign="bottom" style='height:28px;'>
-						<P CLASS=HStyle0 STYLE='text-align:right;line-height:180%;'>평가일자 :${nowDate} </P>
-					</TD>
-				</TR>
-				<TR>
-					<TD class="th" rowspan="2" colspan="3" valign="middle" style='width:350px;height:74px;border-left:solid #000000 0.9pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt;background-color : #8c8c8c;color:white;'>
-						<P CLASS=HStyle0 STYLE='text-align:center;line-height:150%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움"; font-size:11px;'>평가항목</SPAN></P>
-					</TD>
-					<TD class="th" rowspan="2" valign="middle" style='width:40px;height:74px;border-left:solid #000000 0.9pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt;background-color : #8c8c8c;color:white;'>
-						<P CLASS=HStyle0 STYLE='text-align:center;line-height:150%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움";'>배점</SPAN></P>
-					</TD>
-					<TD class="th" colspan="<%= currentUserCount %>" valign="middle" style='width : 450px; height:28px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt;background-color : #8c8c8c;color:white;'>
-						<P CLASS=HStyle0 STYLE='text-align:center;line-height:130%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움";'>평가위원</SPAN></P>
-					</TD>
-					<TD class="th" rowspan="2" valign="middle" style='width:60px;height:74px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt;background-color : #8c8c8c;color:white;'>
-						<P CLASS=HStyle0 STYLE='text-align:center;line-height:150%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움";'>합계</SPAN></P>
-					</TD>
-					<TD class="th" rowspan="2" valign="middle" style='width:60px;height:74px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.9pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt;background-color : #8c8c8c;color:white;'>
-						<P CLASS=HStyle0 STYLE='text-align:center;line-height:150%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움";'>평균</SPAN></P>
-					</TD>
-					<TD class="th" rowspan="2" valign="middle" style='width:40px;height:74px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.9pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt;background-color : #8c8c8c;color:white;'>
-						<P CLASS=HStyle0 STYLE='text-align:center;line-height:150%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움";'>비고</SPAN></P>
-					</TD>
-				</TR>
-				<!-- 평가위원 이름 -->
-				<TR>
-					<%--<c:forEach items="${result[0].list }" var="userList">--%>
-					<c:forEach var="index" items="${indices}">
-						<TD valign="middle" style='width:<%= 450 / currentUserCount %>px;height:46px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;background-color : #8c8c8c;color:white;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
-							<P CLASS=HStyle0 STYLE='text-align:center;line-height:130%;'>
-								<c:choose>
-									<c:when test="${userInfo.EVAL_BLIND_YN eq 'Y'}">
-										<SPAN STYLE='font-family:"한양중고딕,한컴돋움";'>${fn:substring(result[0].list[index].NAME, 0, 1)}**</SPAN>
-									</c:when>
-									<c:otherwise>
-										<SPAN STYLE='font-family:"한양중고딕,한컴돋움";'>${result[0].list[index].NAME }</SPAN>
-									</c:otherwise>
-								</c:choose>
-							</P>
-						</TD>
-					</c:forEach>
-				</TR>
-				<!-- 점수 (아이템)-->
-				<%--<c:forEach items="${result[0].colList }" var="itemList" varStatus="colst">--%>
-				<c:forEach var="colIndex" items="${colIndics}">
-					<%--<c:set var="sss" value="ITME_SCORE_${itemList.item_seq }" />
-					<c:set var="sss2" value="ITME_SUM_SCORE_${itemList.item_seq }" />
-					<c:set var="sss3" value="${itemList.score}" />
-					<c:set var="sss4" value="${itemList.item_name }" />--%>
-					<c:set var="sss" value="ITME_SCORE_${result[0].colList[colIndex].item_seq }" />
-					<c:set var="sss2" value="ITME_SUM_SCORE_${result[0].colList[colIndex].item_seq }" />
-					<c:set var="sss3" value="${result[0].colList[colIndex].score}" />
-					<c:set var="sss4" value="${result[0].colList[colIndex].item_name }" />
-					<TR>
-						<TD class="th ${result[0].colList[colIndex].eval_type}"  valign="middle" style='width:25px;height:30px;border-left:solid #000000 0.9pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt;text-align:center; '>
-
-							${result[0].colList[colIndex].eval_type }<!-- 평가타입 -->
-
-						</TD>
-
-						<c:choose>
-							<c:when test="${result[0].colList[colIndex].item_name == '상생기업'}">
-								<TD class="${result[0].colList[colIndex].eval_type}" valign="middle" name="item_name" style='width:100px;height:30px;border-left:solid #000000 0.9pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt;text-align:center;'>
-									${result[0].colList[colIndex].item_name}<br>(5점) <!-- 대분류 -->
-								</TD>
-							</c:when>
-							<c:otherwise>
-								<c:set var="rowSpan" value="${not empty result[0].colList[colIndex].row_span ? result[0].colList[colIndex].row_span : 1}" />
-
-								<c:choose>
-									<c:when test='${rowSpan ne 1 && result[0].colList[colIndex].row_flag eq 1}'>
-										<TD rowspan="${rowSpanSet}" class="${result[0].colList[colIndex].eval_type}" valign="middle" name="item_name" style='width:100px;height:30px;border-left:solid #000000 0.9pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt;text-align:center;'>
-												${result[0].colList[colIndex].item_name}<br>(${result[0].colList[colIndex].sum_score}점) <!-- 대분류 -->
-										</TD>
-									</c:when>
-									<c:otherwise>
-										<TD class="${result[0].colList[colIndex].eval_type}" valign="middle" name="item_name" style='width:100px;height:30px;border-left:solid #000000 0.9pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt;text-align:center;'>
-												${result[0].colList[colIndex].item_name}<br>(${result[0].colList[colIndex].sum_score}점) <!-- 대분류 -->
-										</TD>
-									</c:otherwise>
-								</c:choose>
-							</c:otherwise>
-						</c:choose>
-
-						<%--<TD class=${result[0].colList[colIndex].eval_type } valign="middle" name="item_name" style='width:100px;height:30px;border-left:solid #000000 0.9pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt;text-align:center;'>
-							<c:choose>
-								<c:when test="${result[0].colList[colIndex].item_name == '상생기업'}">
-									${result[0].colList[colIndex].item_name }<br>(5점) <!-- 대분류 -->
-								</c:when>
-								<c:otherwise>
-									${result[0].colList[colIndex].item_name }<br>(${result[0].colList[colIndex].big_item_sum_score }점) <!-- 대분류 -->
-								</c:otherwise>
-							</c:choose>
-						</TD>--%>
-
-						<TD valign="middle"  style='width:225px;height:30px;border-left:solid #000000 0.9pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
-							<P CLASS=HStyle0 STYLE='text-align:left;line-height:150%;'>
-								<c:choose>
-									<c:when test="${result[0].colList[colIndex].item_name == '상생기업'}">
-									<SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>
-									상생기업/중소기업/일반기업
-									</SPAN>
-									</c:when>
-									<c:otherwise>
-										<SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>${result[0].colList[colIndex].item_medium_name }</SPAN>
-									</c:otherwise>
-								</c:choose>
-							</P>
-						</TD>
-						<TD valign="middle" name="item_score" style='height:30px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
-							<P CLASS=HStyle0 STYLE='text-align:center;line-height:150%;'>
-								<SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>
-									<c:choose>
-										<c:when test="${result[0].colList[colIndex].score == null || result[0].colList[colIndex].score == 0}">
-											-
-										</c:when>
-										<c:otherwise>
-											<fmt:formatNumber value="${result[0].colList[colIndex].score}" pattern=".####"/>
-										</c:otherwise>
-									</c:choose>
-								</SPAN>
-							</P>
-						</TD>
-						<%--<c:set var="scoreIndex" value="${result[mainSt.index].list.size() }"/>--%>
-						<%
-							int begin = currentIndex * maxUserCount;
-							int end = begin + currentUserCount -1;
-
-							pageContext.setAttribute("begin", begin);
-							pageContext.setAttribute("end", end);
-						%>
-
-
-
-						<c:set var="maxValue" value="0" />
-						<c:set var="minValue" value="999" />
-						<c:set var="maxValueStruck" value="false" />
-						<c:set var="minValueStruck" value="false" />
-
-						<c:if test="${userCount > 5}">
-
-						<c:forEach items="${result[mainSt.index].list }" var="userScoreList">
-
-								<fmt:parseNumber var="scoreAsNumber" value="${userScoreList.get(sss)}" type="number" />
-								<c:if test="${scoreAsNumber > maxValue}">
-									<c:set var="maxValue" value="${scoreAsNumber}" />
-								</c:if>
-								<c:if test="${scoreAsNumber < minValue}">
-									<c:set var="minValue" value="${scoreAsNumber}" />
-								</c:if>
-
-						</c:forEach>
-
-						</c:if>
-
-						<c:forEach items="${result[mainSt.index].list }" var="userList" varStatus="st" begin="${begin}" end="${end}">
-
-							<TD valign="middle" name="user_score" style='height:30px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
-								<P CLASS=HStyle0 STYLE='text-align:center;line-height:150%;'>
-									<SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>
-										<c:choose>
-											<c:when test="${userList[sss] == null || userList[sss] == 0}">
-												-
-											</c:when>
-
-											<c:otherwise>
-												<c:choose>
-													<c:when test="${userList.get(sss) == maxValue && maxValueStruck == 'false' && userCount > 5}">
-														<!-- 최대값에 취소선 적용 -->
-														<strike><fmt:formatNumber value="${userList.get(sss)}" pattern=".####"/></strike>
-														<c:set var="maxValueStruck" value="true" />
-													</c:when>
-													<c:when test="${userList.get(sss) == minValue && minValueStruck == 'false' && userCount > 5}">
-														<!-- 최소값에 취소선 적용 -->
-														<strike><fmt:formatNumber value="${userList.get(sss)}" pattern=".####"/></strike>
-														<c:set var="minValueStruck" value="true" />
-													</c:when>
-
-													<c:otherwise>
-														<fmt:formatNumber value="${userList.get(sss)}" pattern=".####"/>
-													</c:otherwise>
-
-												</c:choose>
-											</c:otherwise>
-
-
-										</c:choose>
-									</SPAN>
-								</P>
-							</TD>
-						</c:forEach>
-
-						<TD valign="middle" name="item_sum_score" style='height:30px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.9pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
-							<P CLASS=HStyle0 STYLE='text-align:center;'>
-								<SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>
-									<c:choose>
-										<c:when test="${result[mainSt.index].sumList[mainSt.index][sss2] == null || result[mainSt.index].sumList[mainSt.index][sss2] == 0}">
-											-
-										</c:when>
-										<c:otherwise>
-											<fmt:formatNumber value="${result[mainSt.index].sumList[mainSt.index][sss2]}" pattern=".####"/>
-										</c:otherwise>
-									</c:choose>
-								</SPAN>
-							</P>
-						</TD>
-
-						<TD valign="middle" name="item_average" style='height:30px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.9pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
-							<P CLASS=HStyle0 STYLE='text-align:center;'>
-								<SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>
-									<c:choose>
-										<c:when test="${result[mainSt.index].sumList[mainSt.index][sss] == null || result[mainSt.index].sumList[mainSt.index][sss] == 0}">
-											-
-										</c:when>
-										<c:otherwise>
-											<fmt:formatNumber value="${result[mainSt.index].sumList[mainSt.index][sss]}" pattern=".####"/>
-										</c:otherwise>
-									</c:choose>
-								</SPAN>
-							</P>
-						</TD>
-
-						<TD valign="middle" name="item_average" style='height:30px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.9pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
-							<P CLASS=HStyle0 STYLE='text-align:center;'>
-								<SPAN STYLE='font-family:"한양중고딕,한컴돋움"'> - </SPAN>
-							</P>
-						</TD>
-					</TR>
-				</c:forEach>
-				<!-- 합계 -->
-				<%
-					int begin = currentIndex * maxUserCount;
-					int end = begin + currentUserCount -1;
-
-					pageContext.setAttribute("begin", begin);
-					pageContext.setAttribute("end", end);
-				%>
-				<TR>
-					<TD class="th" colspan="3" valign="middle" style='height:33px;border-left:solid #000000 0.9pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.9pt;padding:1.4pt 1.4pt 1.4pt 1.4pt;background-color : #8c8c8c;color:white;'>
-						<P CLASS="HStyle0" STYLE='text-align:center;line-height:150%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>합&nbsp; 계</SPAN></P>
-					</TD>
-					<TD colspan="1" valign="middle" style='height:33px;border-left:solid #000000 0.9pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.9pt;background-color : #8c8c8c;color:white;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
-						<P CLASS=HStyle0 STYLE='text-align:center;line-height:150%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>100점</SPAN></P>
-					</TD>
-					<c:forEach items="${result[mainSt.index].list}" var="userList" begin="${begin}" end="${end}"  >
-						<TD valign="middle" style='height:33px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.9pt;background-color : #8c8c8c;color:white;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
-							<P CLASS=HStyle0 STYLE='text-align:center;line-height:150%;'>
-								<SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>
-									<c:choose>
-										<c:when test="${userList.scoreSum == null}">
-											-
-										</c:when>
-										<c:when test="${userList.scoreSum == 0}">
-											-
-										</c:when>
-										<c:otherwise>
-											<fmt:formatNumber value="${userList.scoreSum}" pattern=".####"/>
-										</c:otherwise>
-									</c:choose>
-								</SPAN>
-							</P>
-						</TD>
-					</c:forEach>
-					<TD valign="middle" style='height:33px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.9pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.9pt;background-color : #8c8c8c;color:white;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
-						<P CLASS=HStyle0 STYLE='text-align:center;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움"'><fmt:formatNumber value="${result[mainSt.index].sumList[mainSt.index].TOTAL_ITEM_SUM}" pattern=".####"/></SPAN></P>
-					</TD>
-					<TD valign="middle" style='height:33px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.9pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.9pt;background-color : #8c8c8c;color:white;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
-						<P CLASS=HStyle0 STYLE='text-align:center;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움"'><fmt:formatNumber value="${result[mainSt.index].sumList[mainSt.index].TOTAL_SUM}" pattern=".####"/></SPAN></P>
-					</TD>
-					<TD valign="middle" style='height:33px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.9pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.9pt;background-color : #8c8c8c;color:white;padding:1.4pt 1.4pt 1.4pt 1.4pt'>
-						<P CLASS=HStyle0 STYLE='text-align:center;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움"'> - </SPAN></P>
-					</TD>
-				</TR>
-				<TR>
-					<TD colspan="7" valign="bottom" style='height:28px;'>
-						<P CLASS=HStyle0 STYLE='line-height:180%;'>* 평가위원이 5인을 초과하는 경우 세부평가항목별 점수의 최고‧최저 점수를 제외</P>
-					</TD>
-				</TR>
-				<TR>
-					<TD colspan="4" valign="bottom" style='height:28px;'>
-						<P CLASS=HStyle0 STYLE='text-align:left;line-height:180%;'>** 소수점 다섯째 자리에서 반올림</P>
-					</TD>
-				</TR>
-				<TR>
-					<TD colspan="8" valign="bottom" style='height:28px;'>
-						<P CLASS=HStyle0 STYLE='text-align: right; line-height:180%;display: inline-block;margin-left:80%;'>
-							<SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>성명 : ${userInfo.NAME}</SPAN>
-							<DIV style="display: inline-block; position: relative; width: 0;">
-								<IMG id="signatureImage" src="${userInfo.SIGN_DIR}"alt="서명 이미지" style="height:40px; position: relative; left: -45px;"/>
-								<SPAN style="position: absolute; top: 21%; font-size: 14px;padding-left: 15px;">(인)</SPAN>
-							</DIV>
-<%--							<IMG id="signatureImage" src="${userInfo.SIGN_DIR}" alt="서명 이미지" style="height:40px;"/>--%>
-						</P>
-
-							<%--<p class="HStyle0" style="text-align: right; line-height:180%; width: 100%; margin: 0;">
-								<span style="font-family:'한양중고딕', '한컴돋움';">성명 : ${userInfo.NAME}</span>
-								<span style="display: inline-block; position: relative; vertical-align: middle; margin-left: 10px;">
-							        <img id="signatureImage" src="${userInfo.SIGN_DIR}" alt="서명 이미지" style="height: 40px; vertical-align: middle; position: relative; left: -40px;">
-							        <span style="position: absolute; top: 50%; left: 20%; transform: translate(-50%, -50%); font-size: 14px;">
-							            (인)
-							        </span>
-                                </span>
-							</p>--%>
-					</TD>
-				</TR>
-			</TABLE>
-
-			</c:forEach>
-		<hr style="width : 100%; text-align:center;"/>
-		</div>
-		</c:forEach>
-
+		
 	</div>
 
 <%--	<div id="_pHwpCtrl" style="height: 100%;border: 1px solid lightgray;/* display : none; */"></div>--%>
 </div>
 
-<script>
+<script type="text/javascript">
 
-	var userSign = "${userInfo.SIGN_DIR}" || "";
+    var signHwpFileData = "";
+    var signHwpFileDataList = [];
+    var getCompanyList = ${getCompanyList};
+    var userDate = "${nowDate}";
+    var userSign = "${userInfo.SIGN_DIR}" || "";
+
+    const totalDivs = getCompanyList.length;
+    let processedDivs = 0;
+
+    var result = JSON.parse('${result}');
+    var getCompanyList = JSON.parse('${getCompanyList}');
+
+    var userCount = result[0].list.length;
+    var maxUserCount = 11;
+    var tableCount = Math.ceil(userCount / maxUserCount);
+    var endTableCount = tableCount - 1;
+
+    var colListCount = result[0].colList.length;
+
+    var colIndics = [];
+    for (var j = 0; j < colListCount; j++) {
+        colIndics.push(j);
+    }
+
+    var colListLength = colIndics.length;
+    var colListDivision = Math.floor(colListLength / 12);
+
+    function signSaveBtn() {
+        $('#loading_spinner').show();
+
+        const divPrefix = "temp_";
+        signHwpFileDataList = [];
+        processedDivs = 0; // Reset processedDivs
+
+        for (let i = 1; i <= totalDivs; i++) {
+            const divId = divPrefix + i;
+            const element = document.getElementById(divId);
+            console.log("divId : ", divId);
+
+            if (element) {
+                const scaleFactor = 2;
+
+                // 각 temp_i에 대해 header와 contenttable_j 처리
+                const contentTables = [];
+                const contentTableCount = element.getElementsByClassName("infoTbody").length; // temp_i 내의 contenttable 개수
+
+                // header 추가
+                const headerId = "header_"+i;
+                const header = document.getElementById(headerId); // temp_i의 header
+
+                const pdf = new jsPDF("l", "mm", "a4");
+
+                // header를 첫 페이지에 추가
+                if (header) {
+                    html2canvas(header, { scale: scaleFactor }).then(canvas => {
+                        const imgData = canvas.toDataURL("image/png");
+                        const imgWidth = canvas.width * 0.2645;
+                        const imgHeight = canvas.height * 0.2645;
+                        const pdfWidth = pdf.internal.pageSize.getWidth();
+                        const pdfHeight = pdf.internal.pageSize.getHeight();
+                        const scaleFactor = 0.8;
+
+
+                        const scale = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight) * scaleFactor;
+                        const imgScaledWidth = imgWidth * scale;
+                        const imgScaledHeight = imgHeight * scale;
+                        const xOffset = (pdfWidth - imgScaledWidth) / 2;
+                        //const xOffset = 10;
+                        const yOffset = 0.5;
+
+                        // 첫 번째 페이지에 header 추가
+                        pdf.addImage(imgData, "PNG", xOffset, yOffset, imgScaledWidth, imgScaledHeight);
+                    });
+                }
+
+                // 각 contenttable_j 처리
+
+                for (let j = 1; j <= contentTableCount; j++) {
+                    for(let k = 0; k <= colListDivision; k++) {
+                        const contentTableId = "contenttable_" + i + "_" + j + "_" + k;
+                        const contentTable = document.getElementById(contentTableId); // 예: contenttable_1_1
+                        if (contentTable) {
+                            contentTables.push(contentTable);
+                        }
+                    }
+                }
+
+                // contentTable을 페이지마다 추가
+                contentTables.forEach((contentTable, index) => {
+                    html2canvas(contentTable, { scale: scaleFactor }).then(canvas => {
+                        const imgData = canvas.toDataURL("image/png");
+                        const pdfWidth = pdf.internal.pageSize.getWidth();
+                        const pdfHeight = pdf.internal.pageSize.getHeight();
+                        const imgWidth = canvas.width * 0.2645;
+                        const imgHeight = canvas.height * 0.2645;
+                        const scaleFactor = 0.8;
+
+                        const scale = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight) * scaleFactor;
+                        const imgScaledWidth = imgWidth * scale;
+                        const imgScaledHeight = imgHeight * scale;
+
+                        const xOffset = (pdfWidth - imgScaledWidth) / 2;
+                        var yOffset = 10;
+
+                        if (index === 0) {
+                            yOffset = 24;
+                        } else {
+                            if (index > 0) {
+                                pdf.addPage(); // 두 번째 테이블부터는 새 페이지에 추가
+                                yOffset = 10;  // 새 페이지는 Y 좌표 초기화
+                            }
+                        }
+
+                        pdf.addImage(imgData, "PNG", xOffset, yOffset, imgScaledWidth, imgScaledHeight);
+
+                        if (index === contentTables.length - 1) {
+                            signHwpFileDataList.push(pdf.output("datauristring").split(",")[1]);
+                            processedDivs++;
+
+                            if (processedDivs === totalDivs) {
+                                /*pdf.save("test.pdf");
+								$('#loading_spinner').hide();
+	                            return;*/
+                                setTimeout(signSave, 600);
+                            }
+                        }
+                    });
+                });
+            } else {
+                processedDivs++;
+            }
+        }
+    }
+
+    function signSave(){
+        var formData = new FormData();
+        formData.append("commissioner_seq", "${userInfo.COMMISSIONER_SEQ}");
+        formData.append("step", "7");
+
+        //console.log("signHwpFileDataList 확인:", signHwpFileDataList);
+
+        for (let j = 0; j < signHwpFileDataList.length; j++) {
+
+            const data = signHwpFileDataList[j];  // 현재 index에 해당하는 데이터
+
+            formData.append("signHwpFileData_"+(j + 1), data);
+        }
+
+        //console.log("FormData 내용 확인:");
+        /*for (let pair of formData.entries()) {
+			console.log(pair[0], ":", pair[1]); // 키와 값 확인
+		}*/
+
+        $.ajax({
+            url : "<c:url value='/eval/setSignSetp'/>",
+            type : "POST",
+            data : formData,
+            dataType : "json",
+            contentType: false,
+            processData: false,
+            async : false,
+            success : function(data) {
+                if(data.result != "success") {
+                    $('#loading_spinner').hide();
+                    alert("문서저장시 오류가 발생했습니다. 시스템관리자한테 문의 하세요.");
+                    return false ;
+                } else {
+                    location.reload();
+                }
+            },
+            error : function(request, status, error) {
+                $('#loading_spinner').hide();
+                alert("문서저장시 오류가 발생했습니다. 시스템관리자한테 문의 하세요.");
+                return false ;
+            }
+        })
+    }
+
+    function setSign(imgData){
+        _hwpPutImage("sign", "C:\\SignData\\Temp.png");
+    }
+
+    /** TODO. 한글뷰어 수정중 */
+    function hwpView(){
+        //로컬 보안 이슈
+        // _pHwpCtrl.RegisterModule("FilePathCheckDLL", "FilePathCheckerModuleExample");
+        // var hwpPath = "http://"+_g_serverName+":"+_g_serverPort+_g_contextPath_+"/common/getHwpFile?fileNm=step8";
+        // _pHwpCtrl.Open(hwpPath,"HWP");
+        // _pHwpCtrl.EditMode = 0;
+
+        var serverPath = "";
+        var hostname = window.location.hostname;
+        if(hostname.indexOf("localhost") > -1 || hostname.indexOf("127.0.0.1") > -1 || hostname.indexOf("1.233.95.140") > -1){
+            serverPath = "http://1.233.95.140:58090/";
+        }else{
+            serverPath = "http://one.epis.or.kr/"
+        }
+
+        // var hwpPath = serverPath + "/upload/evalForm/step8.hwp";
+        // _hwpOpen(hwpPath, "HWP");
+        //
+        // _pHwpCtrl.EditMode = 0;
+        // _pHwpCtrl.SetToolBar(1, "TOOLBAR_MENU");
+        // _pHwpCtrl.SetToolBar(1, "TOOLBAR_STANDARD");
+        // _pHwpCtrl.ShowRibbon(false);
+        // _pHwpCtrl.ShowCaret(false);
+        // _pHwpCtrl.ShowStatusBar(false);
+        // _pHwpCtrl.SetFieldViewOption(1);
+    }
+
+    /*function _hwpPutData(){
+        _pHwpCtrl.MoveToField("contents", true, true, true);
+        _pHwpCtrl.PutFieldText("contents", "\n");
+
+        _pHwpCtrl.SetTextFile($('#contentsTemp').html(), "HTML", "insertfile", function(){
+
+            var name = "";
+
+            if("${userInfo.EVAL_BLIND_YN}" == "N"){
+                name = "${userInfo.NAME }";
+            }else{
+                name = "${fn:substring(userInfo.NAME, 0, 1)}**";
+            }
+            if(_pHwpCtrl.FieldExist("name" )) {
+                _pHwpCtrl.PutFieldText("name", name);
+            }
+
+            _hwpPutSignImg("sign", "${userInfo.SIGN_DIR }");
+
+            $("#signSave").show();
+        })
+    };*/
+
+    function _hwpPutData(){
+
+        var html = '';
+        for (var x = 0; x < getCompanyList.length; x++) {
+            var companyList = getCompanyList[x];
+
+            html += '<div id="temp_' + (x + 1) + '" style="page-break-after: always;">';
+
+
+
+            // 평가자(사용자) 페이지별 테이블 생성
+            for (var t = 0; t <= endTableCount; t++) {
+                var currentIndex = t;
+
+				var userStartIndex = currentIndex * maxUserCount;
+                var currentUserCount = Math.min(userCount - userStartIndex, maxUserCount);
+                var adjustedUserCount = currentUserCount + 4;
+
+                // 평가위원 점수 셀들 – 현재 페이지의 평가위원(인덱스: begin ~ end)
+                var begin = userStartIndex;
+                var end = begin + currentUserCount - 1;
+
+                // 현재 페이지의 평가위원 인덱스 배열 생성
+                var indices = [];
+                for (var i = 0; i < currentUserCount; i++) {
+                    indices.push(begin + i);
+                }
+
+                //var colIndicsLength = colIndics.length;
+
+                var startIndex = 0;
+                var endIndex = 11;
+                var rowSpan = 12;
+                var firstFlag = true;
+
+                for (var y = 0; y < colListDivision; y++) {
+                    if(y == (colListDivision - 1)){
+                        rowSpan--;
+                    }
+
+                    if (!firstFlag) {
+                        startIndex = 12;
+                        endIndex = endIndex + startIndex;
+                    }
+
+                    if (firstFlag) {
+                        // html += '<tr>';
+                        // // html +=   '<td colspan="3" valign="bottom" style="">';
+                        // // html +=     '<p class="HStyle0" style="line-height:180%;">▣ 제안업체명 : <span class="hs">' + companyList.display_title + '</span></p>';
+                        // // html +=   '</td>';
+                        // html +=   '<td colspan="' + (3 + adjustedUserCount) + '" valign="bottom" style="">';
+                        // html += '<p style="text-align: left;">▣ 제안업체명 : ' + companyList.display_title + '</p>';
+                        // html += '<p style="display: flex; justify-content: space-between;">';
+                        // html += '<span>평가일자 : '+userDate+'</span>';
+                        // html +=	'</p>';
+                        // html +=   '</td>';
+                        // html += '</tr>';
+
+                        html += '<div id="header_' + (x + 1) + '" class="header" style="width: 1155px; max-width: 100%; padding-bottom: 5px; text-align: center; padding-top: 50px;">';
+                        html +=   '<h4 style="font-size: 20px;padding-bottom: 15px;">업체별 제안서 평가집계표_' + companyList.display_title + '</h4>';
+                        html +=   '<div style="display: flex; justify-content: space-between; width: 100%;">';
+                        html +=     '<span>▣ 제안업체명 : ' + companyList.display_title + '</span>';
+                        html +=     '<span>평가일자 : ' + userDate + '</span>';
+                        html +=   '</div>';
+                        html += '</div>';
+
+
+                    }
+
+                    html += '<table id="contenttable_' + (x + 1) + '_' + (t + 1) + '_' + y + '" class="infoTbody" style="margin:0;width:1155px;">';
+
+
+
+                    // 평가항목, 배점, 평가위원, 합계, 평균, 비고 헤더 행
+                    html += '<tr>';
+                    html +=   '<td id="thcell" rowspan="2" colspan="3" valign="middle" style="width:34.5%;border:solid 0.4pt #000000;padding:1.4pt;background-color:#8c8c8c;color:white;">';
+                    html +=     '<p class="HStyle0" style="text-align:center;line-height:150%;"><span class="hs">평가항목</span></p>';
+                    html +=   '</td>';
+                    html +=   '<td id="thcell" rowspan="2" valign="middle" style="width: 3.5%;border:solid 0.4pt #000000;padding:1.4pt;background-color:#8c8c8c;color:white;">';
+                    html +=     '<p class="HStyle0" style="text-align:center;line-height:150%;"><span class="hs">배점</span></p>';
+                    html +=   '</td>';
+                    html +=   '<td id="thcell" colspan="' + currentUserCount + '" valign="middle" style="width:51%;border:solid 0.4pt #000000;padding:1.4pt;background-color:#8c8c8c;color:white;">';
+                    html +=     '<p class="HStyle0" style="text-align:center;line-height:130%;"><span class="hs">평가위원</span></p>';
+                    html +=   '</td>';
+                    html +=   '<td id="thcell" rowspan="2" valign="middle" style="width: 3%;border:solid 0.4pt #000000;padding:1.4pt;background-color:#8c8c8c;color:white;">';
+                    html +=     '<p class="HStyle0" style="text-align:center;line-height:150%;"><span class="hs">합계</span></p>';
+                    html +=   '</td>';
+                    html +=   '<td id="thcell" rowspan="2" valign="middle" style="width: 3%;border:solid 0.4pt #000000;padding:1.4pt;background-color:#8c8c8c;color:white;">';
+                    html +=     '<p class="HStyle0" style="text-align:center;line-height:150%;"><span class="hs">평균</span></p>';
+                    html +=   '</td>';
+                    html +=   '<td id="thcell" rowspan="2" valign="middle" style="width: 2%;border:solid 0.4pt #000000;padding:1.4pt;background-color:#8c8c8c;color:white;">';
+                    html +=     '<p class="HStyle0" style="text-align:center;line-height:150%;"><span class="hs">비고</span></p>';
+                    html +=   '</td>';
+                    html += '</tr>';
+
+                    // 평가위원 이름 행
+                    html += '<tr>';
+                    for (var k = 0; k < indices.length; k++) {
+                        var evaluatorName = result[0].list[indices[k]].NAME;
+                        if ('${userInfo.EVAL_BLIND_YN}' == 'Y') {
+                            evaluatorName = evaluatorName.charAt(0) + '**';
+                        }
+                        html += '<td valign="middle" style="width:' + (450 / currentUserCount) + 'px;border:solid 0.4pt #000000;padding:1.4pt;background-color:#8c8c8c;color:white;">';
+                        html +=   '<p class="HStyle0" style="text-align:center;line-height:130%;">' + evaluatorName + '</p>';
+                        html += '</td>';
+                    }
+                    html += '</tr>';
+
+
+                    html += '<tr>';
+                    // 평가타입
+                    html += '<td rowspan="' + rowSpan + '" class="th 정성평가" valign="middle" style="width:3%;border:solid 0.4pt #000000;padding:1.4pt;text-align:center;">정성<br>평가</td>';
+
+                    // 평가항목별 점수 행
+                    for (var col = startIndex; col <= endIndex; col++) {
+                        var colItem = result[0].colList[col];
+
+                        var sss = 'ITME_SCORE_' + colItem.item_seq;
+                        var sss2 = 'ITME_SUM_SCORE_' + colItem.item_seq;
+                        var sss3 = colItem.score;
+                        var sss3 = colItem.item_name;
+
+                        // 평가항목(대분류)
+                        if (colItem.item_name === '상생기업') {
+                            html += '<th class="th 정량평가" valign="middle" style="width:3%;border:solid 0.4pt #000000;padding:1.4pt;text-align:center;">정량<br>평가</th>';
+                            html += '<td class="' + colItem.eval_type + '" valign="middle" name="item_name" style="border:solid 0.4pt #000000;padding:1.4pt;text-align:center;"><span class="hs">';
+                            html +=   colItem.item_name + '<br>(5점)';
+                            html += '</span></td>';
+                        } else {
+                            if(colItem.row_span != 1 && colItem.row_flag == 1) {
+                                html += '<td rowspan="' + colItem.row_span + '" class="' + colItem.eval_type + '" valign="middle" name="item_name" style="width:161px;border:solid 0.4pt #000000;padding:1.4pt;text-align:center;"><span class="hs">';
+                                html +=   colItem.item_name + '<br>(' + colItem.sum_score + '점)';
+                                html += '</span></td>';
+                            }else if(colItem.row_span == 1 && colItem.row_flag == 1){
+                                html += '<td class="' + colItem.eval_type + '" valign="middle" name="item_name" style="width:161px;border:solid 0.4pt #000000;padding:1.4pt;text-align:center;"><span class="hs">';
+                                html +=   colItem.item_name + '<br>(' + colItem.sum_score + '점)';
+                                html += '</span></td>';
+                            }
+                        }
+
+                        // 평가항목 세부 설명 셀
+                        html += '<td valign="middle" style="width:265px;border:solid 0.4pt #000000;padding:1.4pt;">';
+                        if (colItem.item_name === '상생기업') {
+                            html += '<p class="HStyle0" style="text-align:left;line-height:150%;"><span class="hs">상생기업/중소기업/일반기업</span></p>';
+                        } else {
+                            html += '<p class="HStyle0" style="text-align:left;line-height:150%;"><span class="hs">' + colItem.item_medium_name + '</span></p>';
+                        }
+                        html += '</td>';
+
+                        // 배점 셀
+                        html += '<td valign="middle" name="item_score" style="border:solid 0.4pt #000000;padding:1.4pt;">';
+                        html +=   '<p class="HStyle0" style="text-align:center;line-height:150%;">';
+                        if (!colItem.score || colItem.score === 0) {
+                            html += '<span class="hs">-</span>';
+                        } else {
+                            html += '<span class="hs">' + totalToFixed(colItem.score) + '</span>';
+                        }
+                        html +=   '</p>';
+                        html += '</td>';
+
+                        // 최대/최소 값 산출 (평가위원이 5명 초과인 경우)
+                        var maxValue = 0, minValue = 999;
+                        var maxValueStruck = false, minValueStruck = false;
+                        if (userCount > 5) {
+                            for (var u = 0; u < result[x].list.length; u++) {
+                                var scoreAsNumber = Number(result[x].list[u][sss]);
+                                if (scoreAsNumber > maxValue) { maxValue = scoreAsNumber; }
+                                if (scoreAsNumber < minValue) { minValue = scoreAsNumber; }
+                            }
+                        }
+                        for (var u = begin; u <= end; u++) {
+                            html += '<td valign="middle" name="user_score" style="border:solid 0.4pt #000000;padding:1.4pt;">';
+                            html +=   '<p class="HStyle0" style="text-align:center;line-height:150%;">';
+                            var scoreVal = result[x].list[u][sss];
+                            if (!scoreVal || scoreVal == 0) {
+                                html += '<span class="hs">-</span>';
+                            } else {
+                                scoreVal = Number(scoreVal);
+                                if (userCount > 5) {
+                                    if (scoreVal === maxValue && !maxValueStruck) {
+                                        html += '<strike>' + totalToFixed(scoreVal) + '</strike>';
+                                        maxValueStruck = true;
+                                    } else if (scoreVal === minValue && !minValueStruck) {
+                                        html += '<strike>' + totalToFixed(scoreVal) + '</strike>';
+                                        minValueStruck = true;
+                                    } else {
+                                        html += totalToFixed(scoreVal);
+                                    }
+                                } else {
+                                    html += totalToFixed(scoreVal);
+                                }
+                            }
+                            html +=   '</p>';
+                            html += '</td>';
+                        }
+
+                        // 합계 셀 (개별 항목 합계)
+                        html += '<td valign="middle" name="item_sum_score" style="border:solid 0.4pt #000000;padding:1.4pt;">';
+                        html +=   '<p class="HStyle0" style="text-align:center;">';
+                        var itemSumScore = result[x].sumList[x][sss2];
+                        if (!itemSumScore || itemSumScore == 0) {
+                            html += '<span class="hs">-</span>';
+                        } else {
+                            html += totalToFixed(itemSumScore);
+                        }
+                        html +=   '</p>';
+                        html += '</td>';
+
+                        // 평균 셀
+                        html += '<td valign="middle" name="item_average" style="border:solid 0.4pt #000000;padding:1.4pt;">';
+                        html +=   '<p class="HStyle0" style="text-align:center;">';
+                        var itemAverage = result[x].sumList[x][sss];
+                        if (!itemAverage || itemAverage == 0) {
+                            html += '<span class="hs">-</span>';
+                        } else {
+                            html += totalToFixed(itemAverage);
+                        }
+                        html +=   '</p>';
+                        html += '</td>';
+
+                        // 비고 셀 (항상 '-' 출력)
+                        html += '<td valign="middle" name="item_average" style="border:solid 0.4pt #000000;padding:1.4pt;">';
+                        html +=   '<p class="HStyle0" style="text-align:center;">';
+                        html +=     '<span class="hs"> - </span>';
+                        html +=   '</p>';
+                        html += '</td>';
+
+                        html += '</tr>';
+                    } // end for (컬럼 반복)
+
+                    // 합계 행 (마지막 행)
+                    html += '<tr>';
+                    html +=   '<td id="thcell" colspan="3" valign="middle" style="border:solid 0.4pt #000000;padding:1.4pt;background-color:#8c8c8c;color:white;">';
+                    html +=     '<p class="HStyle0" style="text-align:center;line-height:150%;"><span class="hs">합&nbsp; 계</span></p>';
+                    html +=   '</td>';
+                    html +=   '<td colspan="1" valign="middle" style="border:solid 0.4pt #000000;background-color:#8c8c8c;color:white;padding:1.4pt;">';
+                    html +=     '<p class="HStyle0" style="text-align:center;line-height:150%;"><span class="hs">100</span></p>';
+                    html +=   '</td>';
+
+                    for (var u = begin; u <= end; u++) {
+                        html += '<td valign="middle" style="border:solid 0.4pt #000000;background-color:#8c8c8c;color:white;padding:1.4pt;">';
+                        html +=   '<p id="cell" class="HStyle0" style="text-align:center;line-height:150%;">';
+                        var scoreSum = result[x].list[u].scoreSum;
+                        if (scoreSum == null || scoreSum == 0) {
+                            html += '<span class="hs">-</span>';
+                        } else {
+                            html += totalToFixed(scoreSum);
+                        }
+                        html +=   '</p>';
+                        html += '</td>';
+                    }
+                    html += '<td valign="middle" style="border:solid 0.4pt #000000;background-color:#8c8c8c;color:white;padding:1.4pt;">';
+                    html +=   '<p class="HStyle0" style="text-align:center;"><span class="hs">' + totalToFixed(result[x].sumList[x].TOTAL_ITEM_SUM) + '</span></p>';
+                    html += '</td>';
+                    html += '<td valign="middle" style="border:solid 0.4pt #000000;background-color:#8c8c8c;color:white;padding:1.4pt;">';
+                    html +=   '<p class="HStyle0" style="text-align:center;"><span class="hs">' + totalToFixed(result[x].sumList[x].TOTAL_SUM) + '</span></p>';
+                    html += '</td>';
+                    html += '<td valign="middle" style="border:solid 0.4pt #000000;background-color:#8c8c8c;color:white;padding:1.4pt;">';
+                    html +=   '<p class="HStyle0" style="text-align:center;"><span class="hs"> - </span></p>';
+                    html += '</td>';
+                    html += '</tr>';
+
+                    // 하단 주석/서명 영역
+                    html += '<tr>';
+                    html +=   '<td colspan="8" valign="bottom" style="height:28px;">';
+                    html +=     '<p class="HStyle0" style="width:105%;max-width:1155px;display:inline-block;margin:0;line-height:180%;">';
+                    html +=       '<span>* 평가위원이 5인을 초과하는 경우 세부평가항목별 점수의 최고‧최저 점수를 제외</span>';
+                    html +=       '<span style="float:right">'+ (x+1) +' - '+ (y+1) +'</span>';
+                    html +=     '</p>';
+                    html +=     '<p class="HStyle0" style="line-height:180%;">** 소수점 다섯째 자리에서 반올림</p>';
+                    html +=     '<div style="float:right;display:inline-block;position:relative;text-align:right;margin-bottom: 35px;">';
+                    html +=       '<img src="'+ userSign +'" = alt="서명 이미지" style="height:40px;position:relative;left:-30px;"/>';
+                    html +=       '<span style="position:absolute;top:38%;left:25%;transform:translate(-50%,-20%);font-size:14px;">(인)</span>';
+                    html +=     '</div>';
+                    html +=   '</td>';
+                    html += '</tr>';
+
+                    html += '</table>';
+
+                    firstFlag = false;
+                } // end for (col 그룹 반복)
+            } // end for (평가위원 반복)
+
+            html += '<hr style="width:100%;text-align:center;"/>';
+            html += '</div>';
+        } // end for (업체별 반복)
+
+        $("#contentsTemp").append(html);
+        $("#signSave").show();
+
+
+    }
+
+    function reloadBtn(){
+        location.reload();
+    }
+
+    //반올림
+    function totalToFixed(v){
+        var txt = 0;
+        if(v % 1 == 0) {
+            txt = v;
+        }else{
+            txt = v.toFixed(4);
+            for (var i = 0; i < 4; i++) {
+                txt = txt.replace(/0$/g, '');
+            }
+        }
+        return String(txt);
+    }
+
+    function evalAvoidPopup(){
+        window.open(_g_contextPath_ + "/eval/evalAvoidPopup", 'evalAvoidPop', 'menubar=0,resizable=1,scrollbars=1,status=no,toolbar=no,width=1000,height=280,left=650,top=250');
+    }
+</script>
+
+
+<script>
+    _hwpPutData()
+
 	/*var signatureImage = document.getElementById("signatureImage");
 	if (userSign) {
 		signatureImage.src = userSign;
 	} else {
 		signatureImage.alt = "서명 이미지가 없습니다.";
 	}*/
-
 
 
 </script>

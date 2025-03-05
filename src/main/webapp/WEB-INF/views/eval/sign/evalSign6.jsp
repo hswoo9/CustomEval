@@ -122,7 +122,13 @@
 	var userTitle = "${userInfo.TITLE}" || "";
 	var userDate = "${nowDate}";
 	var userName = "${userInfo.NAME}" || "";
+
 	var userSign = "${userInfo.SIGN_DIR}" || "";
+    var baseURL = window.location.origin;
+    if (baseURL.includes("http://one.epis.or.kr")) {
+        userSign = userSign.replace("http://10.10.10.114", "http://one.epis.or.kr");
+    }
+
 	var getCompanyRemarkList = JSON.parse('${getCompanyRemarkList}');
 	var itemList = JSON.parse('${itemList}');
 	var getCompanyTotal = JSON.parse('${companyTotal}');
@@ -679,12 +685,23 @@
 		html +=	'</p>';
 		html += '</div>';
 
+        console.log(qualityGroupArray);
+
         var groupLength = qualityGroupArray.length;
         var groupDivision = Math.trunc(groupLength / 12);
         var startIndex = 0;
         var endIndex = 11;
         var rowSpan = 12;
         var firstFlag = true;
+
+        if(groupDivision == 0){
+            groupDivision = 1;
+        }
+
+        if(groupLength < 13){
+            endIndex = (groupLength - 1);
+            rowSpan = groupLength;
+        }
 
         for(var x = 0; x < groupDivision; x++) {
             if(x == (groupDivision - 1)){
@@ -908,7 +925,7 @@
 
 
 <script>
-	_hwpPutData()
+	_hwpPutData();
 
 	var signatureImage = document.getElementsByClassName("signatureImage");
 	if (userSign) {

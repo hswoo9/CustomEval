@@ -117,7 +117,13 @@
     var userTitle = "${userInfo.TITLE}" || "";
     var userDate = "${nowDate}";
     var userName = "${userInfo.NAME}" || "";
+
     var userSign = "${userInfo.SIGN_DIR}" || "";
+    var baseURL = window.location.origin;
+    if (baseURL.includes("http://one.epis.or.kr")) {
+        userSign = userSign.replace("http://10.10.10.114", "http://one.epis.or.kr");
+    }
+
     var qualitativeGroups = JSON.parse('${qualitativeGroups}');
     var quantitativeGroups = JSON.parse('${quantitativeGroups}');
     var comList = result.list;
@@ -476,6 +482,15 @@
         var rowSpan = 12;
         var firstFlag = true;
 
+        if(groupDivision == 0){
+            groupDivision = 1;
+        }
+
+        if(groupLength < 13){
+            endIndex = (groupLength - 1);
+            rowSpan = groupLength;
+        }
+
         for(var x = 0; x < groupDivision; x++) {
             if(x == (groupDivision - 1)){
                 rowSpan--;
@@ -603,7 +618,7 @@
                 html += '<span>'+ (t+1) +' - '+ (x+1) +'</span>'
                 html += '</div>'
 
-                html += '<div id ="nameLabel" style="width: 100%; max-width: 100%; text-align: right; margin-bottom: 35px;">';
+                html += '<div style="width: 100%; max-width: 100%; text-align: right; margin-bottom: 35px;">';
                 html += '<span>성명 : ' + userName + '</span>';
                 /*html += '<span style="margin-right: 20px;"></span>';
                 html += '<img id="signatureImage" alt="서명 이미지" style="height:40px;"/>';
@@ -768,7 +783,7 @@
 </div>
 
 <script>
-    _hwpPutData()
+    _hwpPutData();
 
     /*var signatureImage = document.getElementById("signatureImage");
     if (userSign) {

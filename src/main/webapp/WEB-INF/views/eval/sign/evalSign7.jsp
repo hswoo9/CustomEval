@@ -219,7 +219,12 @@
     var signHwpFileDataList = [];
     var getCompanyList = ${getCompanyList};
     var userDate = "${nowDate}";
+
     var userSign = "${userInfo.SIGN_DIR}" || "";
+    var baseURL = window.location.origin;
+    if (baseURL.includes("http://one.epis.or.kr")) {
+        userSign = userSign.replace("http://10.10.10.114", "http://one.epis.or.kr");
+    }
 
     const totalDivs = getCompanyList.length;
     let processedDivs = 0;
@@ -240,7 +245,7 @@
     }
 
     var colListLength = colIndics.length;
-    var colListDivision = Math.floor(colListLength / 12);
+    var colListDivision = Math.floor(colListLength / 12) == 0 ? 1 : Math.floor(colListLength / 12);
 
     function signSaveBtn() {
         $('#loading_spinner').show();
@@ -456,8 +461,6 @@
 
             html += '<div id="temp_' + (x + 1) + '" style="page-break-after: always;">';
 
-
-
             // 평가자(사용자) 페이지별 테이블 생성
             for (var t = 0; t <= endTableCount; t++) {
                 var currentIndex = t;
@@ -482,6 +485,11 @@
                 var endIndex = 11;
                 var rowSpan = 12;
                 var firstFlag = true;
+
+                if(colListLength < 13){
+                    endIndex = (colListLength - 1);
+                    rowSpan = colListLength;
+                }
 
                 for (var y = 0; y < colListDivision; y++) {
                     if(y == (colListDivision - 1)){
@@ -719,7 +727,7 @@
                     html +=     '</p>';
                     html +=     '<p class="HStyle0" style="line-height:180%;">** 소수점 다섯째 자리에서 반올림</p>';
                     html +=     '<div style="float:right;display:inline-block;position:relative;text-align:right;margin-bottom: 35px;">';
-                    html +=       '<img src="'+ userSign +'" = alt="서명 이미지" style="height:40px;position:relative;left:-30px;"/>';
+                    html +=       '<img src="'+ userSign +'" alt="서명 이미지" style="height:40px;position:relative;left:-30px;"/>';
                     html +=       '<span style="position:absolute;top:38%;left:25%;transform:translate(-50%,-20%);font-size:14px;">(인)</span>';
                     html +=     '</div>';
                     html +=   '</td>';
@@ -768,12 +776,12 @@
 <script>
     _hwpPutData()
 
-	/*var signatureImage = document.getElementById("signatureImage");
+	var signatureImage = document.getElementsByClassName("signatureImage");
 	if (userSign) {
 		signatureImage.src = userSign;
 	} else {
 		signatureImage.alt = "서명 이미지가 없습니다.";
-	}*/
+	}
 
 
 </script>

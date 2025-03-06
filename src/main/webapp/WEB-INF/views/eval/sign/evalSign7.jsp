@@ -720,7 +720,7 @@
 
                     // 하단 주석/서명 영역
                     html += '<tr>';
-                    html +=   '<td colspan="8" valign="bottom" style="height:28px;">';
+                    html +=   '<td colspan="'+ (userCount + 7) +'" valign="bottom" style="height:28px;">';
                     html +=     '<p class="HStyle0" style="width:105%;max-width:1155px;display:inline-block;margin:0;line-height:180%;">';
                     html +=       '<span>* 평가위원이 5인을 초과하는 경우 세부평가항목별 점수의 최고‧최저 점수를 제외</span>';
                     html +=       '<span style="float:right">'+ (x+1) +' - '+ (y+1) +'</span>';

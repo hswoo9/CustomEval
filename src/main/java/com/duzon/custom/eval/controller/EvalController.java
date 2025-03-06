@@ -99,14 +99,19 @@ public class EvalController {
 					//기피자가 평가위원 수의 2/3 됐을때 평가수당확인창으로 바로 이동
 					List<Map<String, Object>> list = commonService.getBankCode();
 					model.addAttribute("bankList", list);
-					model.addAttribute("avoidFailMessage", "과반수의 평가위원이 기피신청을 하였으므로,\\n평가를 진행할 수 없습니다.");
+					model.addAttribute("avoidFailMessage", "제안평가위원회 운영 정족 수(3분의 2 이상) 미달로 평가가 종료됩니다.");
+
+					if(map.get("EVAL_AVOID").equals("Y") && map.get("EVAL_AVOID_CHECK_YN").equals("N") && !map.get("CONTACT").equals("Y")) {
+						model.addAttribute("avoidFlag", true);
+					}
+
 					return "/eval/sign/evalSign4";
 				} else {
 					//평가수당 확인했으면 종료하기
 					logger.info("pageInfo ===== /");
 					HttpSession session = request.getSession();
 					session.invalidate();
-					fm.put("message", "과반수의 평가위원이 기피신청을 하였으므로,\\n평가를 진행할 수 없습니다.");
+					fm.put("message", "제안평가위원회 운영 정족 수(3분의 2 이상) 미달로 평가가 종료됩니다.");
 					return "redirect:/";
 				}
 			}
@@ -212,14 +217,14 @@ public class EvalController {
 					//기피자가 평가위원 수의 2/3 됐을때 평가수당확인창으로 바로 이동
 					List<Map<String, Object>> list = commonService.getBankCode();
 					model.addAttribute("bankList", list);
-					model.addAttribute("avoidFailMessage", "과반수의 평가위원이 기피신청을 하였으므로,\\n평가를 진행할 수 없습니다.");
+					model.addAttribute("avoidFailMessage", "제안평가위원회 운영 정족 수(3분의 2 이상) 미달로 평가가 종료됩니다.");
 					return "/eval/sign/evalSign4";
 				} else {
 					//평가수당 확인했으면 종료하기
 					logger.info("pageInfo ===== /");
 					HttpSession session = request.getSession();
 					session.invalidate();
-					fm.put("message", "과반수의 평가위원이 기피신청을 하였으므로,\\n평가를 진행할 수 없습니다.");
+					fm.put("message", "제안평가위원회 운영 정족 수(3분의 2 이상) 미달로 평가가 종료됩니다.");
 					return "/eval/sign/evalSign11";
 				}
 

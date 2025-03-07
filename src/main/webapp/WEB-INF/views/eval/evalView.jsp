@@ -478,20 +478,26 @@
 		  		$('.listTable').rowspan(0);
 				//$("#dataTbody").html(html);
 
-				document.querySelectorAll('.comReMarkInput').forEach(function(textarea, index) {
-					textarea.addEventListener('input', function() {
-						// 한글, 숫자, 영어, 공백만 허용
-						var sanitizedValue = this.value.replace(/[^a-zA-Z0-9ㄱ-ㅎㅏ-ㅣ가-힣\s]/g, '');
-						this.value = sanitizedValue;
+                document.querySelectorAll('.comReMarkInput').forEach(function(textarea, index) {
+                    textarea.addEventListener('input', function() {
+                        // \ ' " 만 제외하고 모든 문자 허용
+                        var sanitizedValue = this.value.replace(/[\\'"]/g, '');
 
-						// 텍스트 길이 업데이트
-						var textLength = this.value.length;
-						document.getElementById('txtCnt_' + index).innerText = textLength;
-					});
-				});
+                        // 최대 글자 수 제한 (400자)
+                        if (sanitizedValue.length > 400) {
+                            alert('입력 가능한 최대 글자 수는 400자입니다.');
+                            sanitizedValue = sanitizedValue.substring(0, 400); // 초과된 글자 삭제
+                        }
 
+                        this.value = sanitizedValue;
 
-			}
+                        // 텍스트 길이 업데이트
+                        var textLength = this.value.length;
+                        document.getElementById('txtCnt_' + index).innerText = textLength;
+                    });
+                });
+
+            }
 
 		});
 

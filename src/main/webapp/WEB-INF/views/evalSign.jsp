@@ -77,18 +77,26 @@
         $("#remove").on("click", function() {
             ctx.clearRect(0, 0, canvas[0].width, canvas[0].height);
             drawing = []; // 그림 저장 배열 초기화
+
+            drawDottedGuide();  // 점선 가이드 추가
         });
 
         // 캔버스 사이즈 조정 함수
         function canvasResize() {
             canvas[0].height = div.height();
             canvas[0].width = div.width();
+
+            ctx.clearRect(0, 0, canvas[0].width, canvas[0].height);
+
+            drawDottedGuide();  // 점선 가이드 추가
             redraw(); // 사이즈 조정 시 그림 다시 그리기
         }
 
         // 그림 다시 그리기 함수
         function redraw() {
             ctx.clearRect(0, 0, canvas[0].width, canvas[0].height);
+            drawDottedGuide();  // 점선 가이드 추가
+
             drawing.forEach((pos, index) => {
                 if (index === 0) {
                     ctx.beginPath();
@@ -135,6 +143,32 @@
             }
         }
 
+        function drawDottedGuide() {
+            ctx.strokeStyle = "rgba(0, 0, 0, 0.5)"; // 점선 색 (연한 회색)
+            ctx.lineWidth = 2;
+            ctx.setLineDash([10, 5]); // 점선 스타일 (10px 선, 5px 공백)
+
+            let padding = 20; // 점선과 경계 사이 여백
+            let guideWidth = canvas[0].width / 2.5;  // 🛠 기존의 반만큼 너비 조정
+            let guideHeight = canvas[0].height * 0.5; // 🛠 기존보다 0.5배 더 높게
+            let guideX = (canvas[0].width - guideWidth) / 2; // 중앙 정렬
+            let guideY = (canvas[0].height - guideHeight) / 2; // 세로 중앙 정렬
+
+            // 🛠 점선 사각형 그리기 (서명 크기 유도)
+            ctx.beginPath();
+            ctx.rect(guideX, guideY, guideWidth, guideHeight);
+            ctx.stroke();
+            ctx.setLineDash([]); // 원래 스타일로 복귀
+
+            // 🛠 가이드 문구 추가 (점선 안에 가득 차게)
+            ctx.font = "20px Arial";
+            ctx.fillStyle = "rgba(0, 0, 0, 0.5)"; // 흐린 회색
+            ctx.textAlign = "center";
+            ctx.fillText("여기에 서명하세요", canvas[0].width / 2, guideY + guideHeight / 2 +5);
+        }
+
+
+
         return {
             init: function() {
                 // 캔버스 사이즈 조절 이벤트
@@ -146,9 +180,30 @@
 
                 // 저장 버튼 클릭 시
                 $("#save").on("click", function() {
-                    const $canvas = document.getElementById('canvas');
-                    let imgDataUrl = $canvas.toDataURL('image/png');
-                    imgDataUrl = imgDataUrl.replace('data:image/png;base64,', '');
+                    const tempCanvas = document.createElement("canvas");
+                    const tempCtx = tempCanvas.getContext("2d");
+
+                    tempCanvas.width = canvas[0].width;
+                    tempCanvas.height = canvas[0].height;
+
+                    tempCtx.drawImage(canvas[0], 0, 0);
+
+                    tempCtx.setLineDash([]); // 점선 스타일 제거
+                    tempCtx.clearRect(0, 0, canvas[0].width, canvas[0].height); // 전체 초기화
+                    drawing.forEach((pos, index) => {  // 서명만 다시 그리기
+                        if (index === 0) {
+                            tempCtx.beginPath();
+                            tempCtx.moveTo(pos.X, pos.Y);
+                            tempCtx.lineWidth = thickness;
+                        } else {
+                            tempCtx.lineTo(pos.X, pos.Y);
+                            tempCtx.lineWidth = thickness;
+                            tempCtx.stroke();
+                        }
+                    });
+                    tempCtx.closePath();
+
+                    let imgDataUrl = tempCanvas.toDataURL('image/png').replace('data:image/png;base64,', '');
 
                     const formdata = new FormData();
                     formdata.append("sign", imgDataUrl);

@@ -346,7 +346,7 @@
 		<table class="fwb ac" style="width:100%;">
 			<tr>
 				<td style="border: none;">
-					<span class=""><img src="<c:url value='/resources/Images/ico/loading.gif'/>" alt="" />  &nbsp;&nbsp;&nbsp;사전접촉여부 확인이 진행중입니다.<br>잠시만 기다려주세요.</span>
+					<span class=""><img src="<c:url value='/resources/Images/ico/loading.gif'/>" alt="" />  &nbsp;&nbsp;&nbsp;사전접촉여부를 확인하지 않은 분이 계십니다.<br>잠시만 기다려주세요.</span>
 				</td>
 			</tr>
 		</table>

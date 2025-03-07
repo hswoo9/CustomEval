@@ -384,16 +384,20 @@
             success : function(data) {
                 if(data.result != "success") {
                     $('#loading_spinner').hide();
-                    alert("문서저장시 오류가 발생했습니다. 시스템관리자한테 문의 하세요.");
-                    return false ;
+                    location.reload();
+                    /*alert("문서저장시 오류가 발생했습니다. 시스템관리자한테 문의 하세요.");
+                    return false ;*/
                 } else {
                     location.reload();
                 }
+
+                location.reload();
             },
             error : function(request, status, error) {
                 $('#loading_spinner').hide();
-                alert("문서저장시 오류가 발생했습니다. 시스템관리자한테 문의 하세요.");
-                return false ;
+                location.reload();
+                /*alert("문서저장시 오류가 발생했습니다. 시스템관리자한테 문의 하세요.");
+                return false ;*/
             }
         })
     }

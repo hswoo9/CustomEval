@@ -151,9 +151,8 @@
                     <th class="text-center th-color">평가년도</th>
                     <td>
                         <input type="text" id="startDay" style="width: 25%;">
-                        ~
-                        <input type="text" id="endDay" style="width: 25%;">
-                        <button type="button" class="k-button k-button-solid-light" onclick="evalSearchListPopup.fn_gridReload();" style="margin-left: 36%;">
+                        <input type="hidden" id="endDay" >
+                        <button type="button" class="k-button k-button-solid-light" onclick="evalSearchListPopup.fn_gridReload();" style="margin-left: 61%;">
                             <span class="k-icon k-i-search k-button-icon"></span>
                             <span class="k-button-text">조회</span>
                         </button>
@@ -193,7 +192,7 @@
             }
         });
 
-        $("#endDay").kendoDatePicker({
+        /*$("#endDay").kendoDatePicker({
             depth: "month",
             start: "month",
             culture : "ko-KR",
@@ -208,6 +207,6 @@
                     $("#startDay").val($("#endDay").val());
                 }
             }
-        });
+        });*/
     </script>
 </body>

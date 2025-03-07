@@ -5,7 +5,7 @@ var evalSearchListPopup = {
 
     fn_defaultScript: function() {
         this.fn_makerGrid();
-        $("#startDay, #endDay").kendoTextBox();
+        $("#startDay").kendoTextBox();
     },
 
     fn_makerGrid: function() {
@@ -20,7 +20,8 @@ var evalSearchListPopup = {
                 },
                 parameterMap: function(data, operation) {
                     data.startDay = $("#startDay").val();
-                    data.endDay = $("#endDay").val();
+                    data.endDay = $("#startDay").val();
+                    //data.endDay = $("#endDay").val();
                     return data;
                 }
             },

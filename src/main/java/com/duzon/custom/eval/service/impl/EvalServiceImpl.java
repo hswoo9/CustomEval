@@ -361,6 +361,10 @@ public class EvalServiceImpl implements EvalService {
 				fileName = "평가위원장 가산금 지급 확인서_" + evalId;
 				originFileExt = "hwp";
 				break;
+			case "999":
+				fileName = "기피신청서_" + evalId;
+				originFileExt = "pdf";
+				break;
 			default:
 				fileName = "기타";
 				originFileExt = "hwp";// Default case for safety
@@ -377,7 +381,7 @@ public class EvalServiceImpl implements EvalService {
 			url = "/nas1/upload/cust_eval/";
 		}
 
-		if("6".equals(step) || "8".equals(step)){
+		if("6".equals(step) || "8".equals(step) || "999".equals(step)){
 			if (!EgovStringUtil.nullConvert(map.get("signHwpFileData")).equals("")) {
 				try {
 					String originFileName = fileName;

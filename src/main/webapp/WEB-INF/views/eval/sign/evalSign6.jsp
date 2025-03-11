@@ -185,6 +185,10 @@
 					return;
 				}
 
+                if(fn_evalJangAvoidChk()){
+                    location.reload();
+                }
+
                 $('#loading_spinner').show();
 
 				const width = window.innerWidth;
@@ -689,8 +693,6 @@
 		html +=	'</p>';
 		html += '</div>';
 
-        console.log(qualityGroupArray);
-
         var groupLength = qualityGroupArray.length;
         var groupDivision = Math.trunc(groupLength / 12);
         var startIndex = 0;
@@ -909,6 +911,19 @@
 		window.open(_g_contextPath_ + "/eval/evalAvoidPopup", 'evalAvoidPop', 'menubar=0,resizable=1,scrollbars=1,status=no,toolbar=no,width=1000,height=280,left=650,top=250');
 	}
 
+    function fn_evalJangAvoidChk(){
+        var flag;
+
+        $.ajax({
+			url: "<c:url value='/eval/evalJangAvoidChk' />",
+			type : 'POST',
+			success: function(rs){
+                flag = rs.javaAvoidFlag;
+			}
+        });
+
+        return flag;
+    }
 </script>
 <div style="width: 80%;margin: 0 auto;">
 	<div id="signSave">

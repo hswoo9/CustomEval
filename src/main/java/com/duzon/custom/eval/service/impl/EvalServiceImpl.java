@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -361,10 +362,6 @@ public class EvalServiceImpl implements EvalService {
 				fileName = "평가위원장 가산금 지급 확인서_" + evalId;
 				originFileExt = "hwp";
 				break;
-			case "999":
-				fileName = "기피신청서_" + evalId;
-				originFileExt = "pdf";
-				break;
 			default:
 				fileName = "기타";
 				originFileExt = "hwp";// Default case for safety
@@ -381,7 +378,7 @@ public class EvalServiceImpl implements EvalService {
 			url = "/nas1/upload/cust_eval/";
 		}
 
-		if("6".equals(step) || "8".equals(step) || "999".equals(step)){
+		if("6".equals(step) || "8".equals(step)){
 			if (!EgovStringUtil.nullConvert(map.get("signHwpFileData")).equals("")) {
 				try {
 					String originFileName = fileName;
@@ -780,14 +777,102 @@ public class EvalServiceImpl implements EvalService {
 	}
 
 	@Override
-	public void setEvalAvoidY(Map<String, Object> params) {
-		evalDAO.setEvalAvoidY(params);
-		if(params.get("EVAL_JANG").equals("Y")){
-			evalDAO.setEvalJangReSelected(params);
-			params.put("committee_seq", params.get("COMMITTEE_SEQ"));
-			evalDAO.setEvalJangCntCn(params);
-			evalDAO.getEvalMinuteChKGroupFailUpd2(params);
+	public Map<String, Object> setEvalAvoidY(Map<String, Object> map) {
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+
+		Map<String, Object> comSeq = new HashMap<String, Object>();
+		comSeq.put("commissioner_seq", map.get("commissioner_seq"));
+		String evalId = evalDAO.getCommissionerSeqEvalId(comSeq);
+		List<Map<String, Object>> duplIdList = evalDAO.getDuplId(comSeq);
+
+		if (duplIdList != null && !duplIdList.isEmpty()) {
+			Map<String, Integer> nameCountMap = new HashMap<>();
+
+			// 이름 중복 여부 확인
+			for (Map<String, Object> item : duplIdList) {
+				String currentEvalId = String.valueOf(item.get("EVAL_ID"));
+				nameCountMap.put(currentEvalId, nameCountMap.getOrDefault(currentEvalId, 0) + 1);
+			}
+
+			for (Map<String, Object> item : duplIdList) {
+				String commissionerSeq = String.valueOf(item.get("COMMISSIONER_SEQ"));
+				String currentEvalId = String.valueOf(item.get("EVAL_ID"));
+				String evalPhone = String.valueOf(item.get("EVAL_PHONE"));
+
+				if (nameCountMap.get(currentEvalId) > 1 &&
+						currentEvalId.equals(evalId) &&
+						commissionerSeq.equals(String.valueOf(comSeq.get("commissioner_seq")))) {
+					evalId = currentEvalId + "(" + evalPhone.substring(evalPhone.length() - 4) + ")";
+					break;
+				}
+			}
 		}
+
+		String fileName = "기피신청서_" + evalId;
+		String originFileExt = "pdf";
+
+		// file 저장
+		map.put("attch_file_seq", fileName);
+
+		String url = "/home/upload/cust_eval/";
+		HttpServletRequest servletRequest = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+
+		if(servletRequest.getServerName().contains("10.10.10.114") || servletRequest.getServerName().contains("one.epis.or.kr")) {
+			url = "/nas1/upload/cust_eval/";
+		}
+
+		if (!EgovStringUtil.nullConvert(map.get("signHwpFileData")).equals("")) {
+			try {
+				String originFileName = fileName;
+
+				String fileStr = EgovStringUtil.nullConvert(map.get("signHwpFileData"));
+
+				if (fileStr.startsWith("data:") && fileStr.contains("base64,")) {
+					fileStr = fileStr.substring(fileStr.indexOf("base64,") + "base64,".length());
+				}
+
+				File file = File.createTempFile(originFileName, "." + originFileExt);
+
+				if ("hwp".equals(originFileExt)) {
+					FileOutputStream lFileOutputStream = new FileOutputStream(file);
+					// Base64 디코딩이 필요없다면, 그냥 fileStr을 UTF-8로 저장
+					lFileOutputStream.write(fileStr.getBytes("UTF-8"));
+					lFileOutputStream.close();
+				} else if ("pdf".equals(originFileExt)) {
+					fileStr = fileStr.replaceAll("[\\n\\r]", "");
+					byte[] decodedBytes = Base64.getDecoder().decode(fileStr); // Base64 디코딩
+					FileOutputStream lFileOutputStream = new FileOutputStream(file);
+					lFileOutputStream.write(decodedBytes);
+					lFileOutputStream.close();
+				}
+
+				String serverFilePath = url + map.get("commissioner_seq").toString() + "/pdf/";
+				File newPath = new File(serverFilePath);
+				if (!newPath.exists()) {
+					newPath.mkdirs();
+				}
+
+				Path path = Paths.get(serverFilePath + fileName + "." + originFileExt);
+				Files.copy(new FileInputStream(file), path, new CopyOption[]{StandardCopyOption.REPLACE_EXISTING});
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}else{
+			returnMap.put("result", "fail");
+			return returnMap;
+		}
+
+		evalDAO.setEvalAvoidY(map);
+		if(map.get("EVAL_JANG").equals("Y")){
+			evalDAO.setEvalJangReSelected(map);
+			map.put("committee_seq", map.get("COMMITTEE_SEQ"));
+			evalDAO.setEvalJangCntCn(map);
+			evalDAO.getEvalMinuteChKGroupFailUpd2(map);
+		}
+
+		returnMap.put("result", "success");
+		return returnMap;
 	}
 
 	@Override

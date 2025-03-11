@@ -66,7 +66,7 @@ public interface EvalService {
 	 * 기피신청
 	 * @param params
 	 */
-	void setEvalAvoidY(Map<String, Object> params);
+	Map<String, Object> setEvalAvoidY(Map<String, Object> params);
 
 	Map<String, Object> getEvalCommittee(Map<String, Object> params);
 

@@ -47,10 +47,12 @@ public class EvalController {
 
 	@RequestMapping(value = "/eval/evalAvoid", method = RequestMethod.POST)
 	@ResponseBody
-	public void evalAvoid(@RequestParam Map<String, Object> params, HttpServletRequest request){
+	public Map<String, Object> evalAvoid(@RequestParam Map<String, Object> params, HttpServletRequest request){
 		Map<String, Object> map = evalService.getEvalchk((Map<String, Object>) request.getSession().getAttribute("evalLoginVO"));
 		map.put("eval_avoid_txt", params.get("eval_avoid_txt"));
-		evalService.setEvalAvoidY(map);
+		map.put("commissioner_seq", params.get("commissioner_seq"));
+		map.put("signHwpFileData", params.get("signHwpFileData"));
+		return evalService.setEvalAvoidY(map);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -631,7 +633,9 @@ public class EvalController {
 	}
 
 	@RequestMapping(value = "/eval/evalAvoidPopup", method = RequestMethod.GET)
-	public String evalAvoidPopup() {
+	public String evalAvoidPopup(HttpServletRequest request, Model model) {
+		Map<String, Object> map = evalService.getEvalchk((Map<String, Object>) request.getSession().getAttribute("evalLoginVO"));
+		model.addAttribute("userInfo", map);
 		return "/eval/popup/evalAvoidPopup";
 	}
 
@@ -721,6 +725,24 @@ public class EvalController {
 		System.out.println("*****seqMap*****"+seqMap);
 
 		evalService.setEvalJangReSelected(seqMap);
+	}
+
+	@RequestMapping(value = "/eval/evalJangAvoidChk", method = RequestMethod.GET)
+	public String evalJangAvoidChk(HttpServletRequest request, Model model) {
+		Map<String, Object> map = (Map<String, Object>) request.getSession().getAttribute("evalLoginVO");
+		map = evalService.getEvalchk(map);
+
+		boolean javaAvoidFlag = false;
+
+		if(map != null && map.size() > 0 ){
+			if(map.get("JANG").equals("N")){
+				javaAvoidFlag = true;
+			}
+		}
+
+		model.addAttribute("javaAvoidFlag", javaAvoidFlag);
+
+		return "jsonView";
 	}
 
 }

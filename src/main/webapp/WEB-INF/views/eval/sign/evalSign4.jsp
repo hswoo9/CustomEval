@@ -258,6 +258,18 @@
 		var ssn1 = $('#num1').val() || '';
 		var ssn2 = $('#num2').val() || '';
 
+        var jangHtml = '';
+
+        if('${userInfo.EVAL_JANG}' === 'Y'){
+            var evaluationJangFee = parseInt($('#evaluationJangFee').val().replace(/,/g, '') || '0', 10);
+            totalFee = totalFee + evaluationJangFee;
+
+            jangHtml += '<tr>';
+            jangHtml += '<td class="header" style="text-align: center">위원장 수당</td>';
+            jangHtml += '<td colspan="3" class="data" id="evaluationJangFeeCell" style="padding-left: 172px;"></td>';
+            jangHtml += "</tr>";
+        }
+
 		// 테이블 HTML 생성
 		var tableHtml = `
         <!--<table border="1" cellspacing="0" cellpadding="0" style='width:580px; border-collapse:collapse; padding-left: 30%;'>
@@ -341,8 +353,9 @@
           <td class="data" id="evaluationFeeCell" style="text-align: right"></td>
           <td class="header" style="text-align: center" >교통비</td>
           <td class="data" id="transportFeeCell" style="text-align: right"></td>
-        </tr>
-        <tr>
+        </tr>` +
+            jangHtml
+        + `<tr>
           <td class="header" colspan="2" style="text-align: center">총 합계</td>
           <td class="data total-amount" colspan="2" id="totalFeeCell" style="text-align: right"></td>
         </tr>
@@ -359,11 +372,14 @@
 
 			// 각 셀에 값 삽입
 			document.getElementById('evaluationFeeCell').innerHTML = evaluationFee.toLocaleString() + ' 원';
+            if('${userInfo.EVAL_JANG}' === 'Y') {
+                document.getElementById('evaluationJangFeeCell').innerHTML = evaluationJangFee.toLocaleString() + ' 원';
+            }
 			document.getElementById('transportFeeCell').innerHTML = transportFee.toLocaleString() + ' 원';
 			document.getElementById('totalFeeCell').innerHTML = totalFee.toLocaleString() + ' 원';
 			document.getElementById('deptCell').innerHTML = dept;
 			document.getElementById('oNameCell').innerHTML = oName;
-			document.getElementById('addrCell').innerHTML = addr;
+			document.getElementById('addrCell').innerHTML = $("#addrFix").val() + " " + addr;
 			document.getElementById('bankName').innerHTML = bankName;
 			document.getElementById('bankNo').innerHTML = bankNo;
 			document.getElementById('ssn').innerHTML = ssn1 + '-' + ssn2;
@@ -481,6 +497,7 @@
 		//var ob4 = $('#bank_name option:checked').text();
 		var ob5 = $('#bank_no').val();
 		var ob6 = $('#addr').val();
+		var ob6_2 = $('#addrFix').val();
 		var ob7 = $('#oName').val();
 		/*var ob7 = $('#oName').val();*/
         // 평가비 처리 (input value)
@@ -490,6 +507,12 @@
         // 합계 계산
         var ob10 = parseInt(ob8) + parseInt(ob9);
 
+        if('${userInfo.EVAL_JANG}' === 'Y'){
+			var ob8_2 = document.getElementById("evaluationJangFee").value.replace(/[^0-9]/g, '') || "0";
+			ob10 = parseInt(ob10) + parseInt(ob8_2);
+
+            _hwpPutText("eval_jang_pay", numberWithCommas(ob8_2) + '원');
+        }
 
         _hwpPutText("title1", title1);
 		_hwpPutText("dept", ob2);
@@ -502,7 +525,7 @@
         _hwpPutText("eval_pay", numberWithCommas(ob8) + '원');
 		_hwpPutText("trans_pay", numberWithCommas(ob9) + '원');
 		_hwpPutText("total_pay", numberWithCommas(ob10.toString()) + '원');
-		_hwpPutText("addr", ob6);
+		_hwpPutText("addr", ob6_2 + " " +ob6);
 		_hwpPutText("num", ob1);
 		//_hwpPutText("bank_name", ob4);
 		_hwpPutText("bank_name", ob3);
@@ -584,7 +607,11 @@
 		var hwpPath = "http://1.233.95.140:58090/upload/evalForm/step5.hwp";
         var originPath = window.location.origin;
 
-        hwpPath = originPath + "/upload/evalForm/step5.hwp";
+        if('${userInfo.EVAL_JANG}' == 'Y'){
+            hwpPath = originPath + "/upload/evalForm/step5_jang.hwp";
+        }else {
+            hwpPath = originPath + "/upload/evalForm/step5.hwp";
+        }
 
 		_hwpOpen(hwpPath, "HWP");
 
@@ -788,53 +815,99 @@
 	<P CLASS=HStyle0 STYLE='text-align:center;line-height:180%;'></P>
 
 	<TABLE border="1" cellspacing="0" cellpadding="0" style='width:580px; border-collapse:collapse;border:none;'>
-		<TR>
-			<TD valign="middle" bgcolor="#e5e5ff"  style='width:186px;height:31px;border-left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 1.1pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
-				<P CLASS=HStyle0 STYLE='text-align:center;'><SPAN STYLE='font-size:12.0pt;font-family:"한양중고딕,한컴돋움";font-weight:bold;line-height:160%'>평 가 비</SPAN></P>
-			</TD>
-			<TD valign="middle" bgcolor="#e5e5ff"  style='width:186px;height:31px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 1.1pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
-				<P CLASS=HStyle0 STYLE='text-align:center;'><SPAN STYLE='font-size:12.0pt;font-family:"한양중고딕,한컴돋움";font-weight:bold;line-height:160%'>교 통 비</SPAN></P>
-			</TD>
-			<TD valign="middle" bgcolor="#e5e5ff"  style='width:186px;height:31px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 1.1pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
-				<P CLASS=HStyle0 STYLE='text-align:center;'><SPAN STYLE='font-size:12.0pt;font-family:"한양중고딕,한컴돋움";font-weight:bold;line-height:160%'>합 계</SPAN></P>
-			</TD>
-			<%--<TD valign="middle" bgcolor="#e5e5ff"  style='width:186px;height:31px;border-left:solid #000000 0.4pt;border-right:solid #000000 1.1pt;border-top:solid #000000 1.1pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
-            <P CLASS=HStyle0 STYLE='text-align:center;'><SPAN STYLE='font-size:12.0pt;font-family:"한양중고딕,한컴돋움";font-weight:bold;line-height:160%'>합&nbsp;&nbsp; 계</SPAN></P>
-            </TD>--%>
-		</TR>
-		<TR>
-			<TD valign="middle" style='width:186px;height:31px;border-left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt; text-align: right;'>
-				<c:choose>
-					<c:when test="${avoidFlag}">
-						<input type="text" id="evaluationFee" style="width: 90%; text-align: right; box-sizing: border-box; padding-right: 5px;" placeholder="평가비를 입력하세요." value="50,000" oninput="updateTotal()" />
-					</c:when>
-					<c:otherwise>
-						<input type="text" id="evaluationFee" style="width: 90%; text-align: right; box-sizing: border-box; padding-right: 5px;" placeholder="평가비를 입력하세요." value="<fmt:formatNumber value='${userInfo.ALLOWANCE}' type='number' groupingUsed='true' />" oninput="updateTotal()" />
-					</c:otherwise>
-				</c:choose>
-				<SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>원</SPAN>
-			</TD>
+		<c:choose>
+			<c:when test="${userInfo.EVAL_JANG eq 'Y'}">
+				<TR>
+					<TD valign="middle" bgcolor="#e5e5ff"  style='width:180px;height:31px;border-left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 1.1pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
+						<P CLASS=HStyle0 STYLE='text-align:center;'><SPAN STYLE='font-size:12.0pt;font-family:"한양중고딕,한컴돋움";font-weight:bold;line-height:160%'>평 가 비</SPAN></P>
+					</TD>
+					<TD valign="middle" bgcolor="#e5e5ff"  style='width:180px;height:31px;border-left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 1.1pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
+						<P CLASS=HStyle0 STYLE='text-align:center;'><SPAN STYLE='font-size:12.0pt;font-family:"한양중고딕,한컴돋움";font-weight:bold;line-height:160%'>위 원 장 수 당</SPAN></P>
+					</TD>
+					<TD valign="middle" bgcolor="#e5e5ff"  style='width:204px;height:31px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 1.1pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
+						<P CLASS=HStyle0 STYLE='text-align:center;'><SPAN STYLE='font-size:12.0pt;font-family:"한양중고딕,한컴돋움";font-weight:bold;line-height:160%'>교 통 비</SPAN></P>
+					</TD>
+					<TD valign="middle" bgcolor="#e5e5ff"  style='width:180px;height:31px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 1.1pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
+						<P CLASS=HStyle0 STYLE='text-align:center;'><SPAN STYLE='font-size:12.0pt;font-family:"한양중고딕,한컴돋움";font-weight:bold;line-height:160%'>합 계</SPAN></P>
+					</TD>
+				</TR>
+				<TR>
+					<TD valign="middle" style='width:186px;height:31px;border-left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt; text-align: right;'>
+						<input type="text" id="evaluationFee" style="width: 70%; text-align: right; box-sizing: border-box; padding-right: 5px;" placeholder="평가비를 입력하세요." value="<fmt:formatNumber value='${userInfo.ALLOWANCE}' type='number' groupingUsed='true' />" oninput="updateTotal()" />
+						<SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>원</SPAN>
+					</TD>
 
-			<TD valign="middle" style='width:186px;height:31px;border-left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt; text-align: right;'>
-				<select id="region" style="width: 110px; margin-right: 5px;" onchange="updateTransportFee()">
-					<option value="------">회사주소지 선택</option>
-					<option value="서울/경기">서울/경기</option>
-					<option value="강원영동">강원(영동)</option>
-					<option value="강원영서">강원(영서)</option>
-					<option value="대전/충청">대전/충청</option>
-					<option value="전북">전북</option>
-					<option value="광주/전남">광주/전남</option>
-					<option value="대구/경북">대구/경북</option>
-					<option value="부산/경남">부산/경남</option>
-					<option value="제주">제주</option>
-				</select>
-				<span id="transportFee" style="width: 35%; text-align: right; box-sizing: border-box; border: none;">0 원</span>
-			</TD>
+					<TD valign="middle" style='width:186px;height:31px;border-left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt; text-align: right;'>
+						<input type="text" id="evaluationJangFee" style="width: 70%; text-align: right; box-sizing: border-box; padding-right: 5px;" placeholder="평가비를 입력하세요." value="50,000" oninput="updateTotal()" />
+						<SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>원</SPAN>
+					</TD>
 
-			<TD valign="middle" style='width:186px;height:31px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt; text-align: right;'>
-				<span id="totalFee" style="width: 90%; text-align: right; box-sizing: border-box;">0 원</span>
-			</TD>
-		</TR>
+					<TD valign="middle" style='width:186px;height:31px;border-left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt; text-align: right;'>
+						<select id="region" style="width: 100px; margin-right: 5px;" onchange="updateTransportFee()">
+							<option value="------">회사주소지 선택</option>
+							<option value="서울/경기">서울/경기</option>
+							<option value="강원영동">강원(영동)</option>
+							<option value="강원영서">강원(영서)</option>
+							<option value="대전/충청">대전/충청</option>
+							<option value="전북">전북</option>
+							<option value="광주/전남">광주/전남</option>
+							<option value="대구/경북">대구/경북</option>
+							<option value="부산/경남">부산/경남</option>
+							<option value="제주">제주</option>
+						</select>
+						<span id="transportFee" style="width: 35%; text-align: right; box-sizing: border-box; border: none;">0 원</span>
+					</TD>
+
+					<TD valign="middle" style='width:186px;height:31px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt; text-align: right;'>
+						<span id="totalFee" style="width: 90%; text-align: right; box-sizing: border-box;">0 원</span>
+					</TD>
+				</TR>
+			</c:when>
+			<c:otherwise>
+				<TR>
+					<TD valign="middle" bgcolor="#e5e5ff"  style='width:186px;height:31px;border-left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 1.1pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
+						<P CLASS=HStyle0 STYLE='text-align:center;'><SPAN STYLE='font-size:12.0pt;font-family:"한양중고딕,한컴돋움";font-weight:bold;line-height:160%'>평 가 비</SPAN></P>
+					</TD>
+					<TD valign="middle" bgcolor="#e5e5ff"  style='width:186px;height:31px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 1.1pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
+						<P CLASS=HStyle0 STYLE='text-align:center;'><SPAN STYLE='font-size:12.0pt;font-family:"한양중고딕,한컴돋움";font-weight:bold;line-height:160%'>교 통 비</SPAN></P>
+					</TD>
+					<TD valign="middle" bgcolor="#e5e5ff"  style='width:186px;height:31px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 1.1pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
+						<P CLASS=HStyle0 STYLE='text-align:center;'><SPAN STYLE='font-size:12.0pt;font-family:"한양중고딕,한컴돋움";font-weight:bold;line-height:160%'>합 계</SPAN></P>
+					</TD>
+				</TR>
+				<TR>
+					<TD valign="middle" style='width:186px;height:31px;border-left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt; text-align: right;'>
+						<c:choose>
+							<c:when test="${avoidFlag}">
+								<input type="text" id="evaluationFee" style="width: 90%; text-align: right; box-sizing: border-box; padding-right: 5px;" placeholder="평가비를 입력하세요." value="50,000" oninput="updateTotal()" />
+							</c:when>
+							<c:otherwise>
+								<input type="text" id="evaluationFee" style="width: 90%; text-align: right; box-sizing: border-box; padding-right: 5px;" placeholder="평가비를 입력하세요." value="<fmt:formatNumber value='${userInfo.ALLOWANCE}' type='number' groupingUsed='true' />" oninput="updateTotal()" />
+							</c:otherwise>
+						</c:choose>
+						<SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>원</SPAN>
+					</TD>
+					<TD valign="middle" style='width:186px;height:31px;border-left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt; text-align: right;'>
+						<select id="region" style="width: 110px; margin-right: 5px;" onchange="updateTransportFee()">
+							<option value="------">회사주소지 선택</option>
+							<option value="서울/경기">서울/경기</option>
+							<option value="강원영동">강원(영동)</option>
+							<option value="강원영서">강원(영서)</option>
+							<option value="대전/충청">대전/충청</option>
+							<option value="전북">전북</option>
+							<option value="광주/전남">광주/전남</option>
+							<option value="대구/경북">대구/경북</option>
+							<option value="부산/경남">부산/경남</option>
+							<option value="제주">제주</option>
+						</select>
+						<span id="transportFee" style="width: 35%; text-align: right; box-sizing: border-box; border: none;">0 원</span>
+					</TD>
+					<TD valign="middle" style='width:186px;height:31px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt; text-align: right;'>
+						<span id="totalFee" style="width: 90%; text-align: right; box-sizing: border-box;">0 원</span>
+					</TD>
+				</TR>
+			</c:otherwise>
+		</c:choose>
 	</TABLE></P>
 	<P CLASS=HStyle0 STYLE='margin-top:5.0pt;text-align:center;line-height:130%;'></P>
 
@@ -873,7 +946,8 @@
 			</TD>
 			<TD colspan="4" valign="middle" style='width:417px;height:22px;border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
 
-				<input type="text" style="width: 198px;" id="addr" value="" placeholder="그 외 주소 입력">
+				<input type="text" style="width: 70px;" id="addrFix" disabled>
+				<input type="text" style="width: 199px; margin-left: 5px;" id="addr" value="" placeholder="전체 주소 입력">
 			</TD>
 		</TR>
 		<TR>
@@ -991,6 +1065,11 @@
 		var region = document.getElementById("region").value;
 		var transportFee = 0;
 
+        var regionSelect = document.getElementById("region");
+        var selectedOption = regionSelect.options[regionSelect.selectedIndex].text;
+
+        $("#addrFix").val(selectedOption);
+
 		if (region === "제주") {
 			transportFee = 100000;
 		} else if (region === "대전/충청" || region === "------") {
@@ -1006,6 +1085,7 @@
 	function updateTotal() {
 		var dept = document.getElementById("dept").value;
 		var evaluationFeeInput = document.getElementById("evaluationFee");
+		var evaluationJangFeeInput = document.getElementById("evaluationJangFee");
 		var transportFeeSpan = document.getElementById("transportFee");
 		var totalFeeSpan = document.getElementById("totalFee");
 
@@ -1017,7 +1097,9 @@
 		} else {
 			var evaluationFee = parseInt(evaluationFeeInput.value.replace(/,/g, '') || 0);
 			var transportFee = parseInt(transportFeeSpan.innerText.replace(/[^0-9]/g, '') || 0);
-			var totalFee = evaluationFee + transportFee;
+            var additionalFee = ("${userInfo.EVAL_JANG}" === "Y") ? parseInt(evaluationJangFeeInput.value.replace(/,/g, '') || 0) : 0;
+
+            var totalFee = evaluationFee + transportFee + additionalFee;
 
 			totalFeeSpan.innerText = totalFee.toLocaleString() + ' 원';
 		}

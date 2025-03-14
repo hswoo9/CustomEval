@@ -150,8 +150,7 @@
                 <tr>
                     <th class="text-center th-color">평가년도</th>
                     <td>
-                        <input type="text" id="startDay" style="width: 25%;">
-                        <input type="hidden" id="endDay" >
+                        <input type="text" id="startDay" style="width: 25%;" disabled>
                         <button type="button" class="k-button k-button-solid-light" onclick="evalSearchListPopup.fn_gridReload();" style="margin-left: 61%;">
                             <span class="k-icon k-i-search k-button-icon"></span>
                             <span class="k-button-text">조회</span>
@@ -182,31 +181,14 @@
             //value : new Date().getFullYear() + "-01-01",
             value : new Date(),
             change : function(){
-                var sDt;
+                /*var sDt;
                 var nDt;
                 sDt = new Date($("#startDay").val());
                 nDt = new Date($("#endDay").val());
                 if(sDt > nDt){
                     $("#endDay").val($("#startDay").val());
-                }
+                }*/
             }
         });
-
-        /*$("#endDay").kendoDatePicker({
-            depth: "month",
-            start: "month",
-            culture : "ko-KR",
-            format : "yyyy-MM-dd",
-            value : new Date(), // 현재 날짜로 설정
-            change : function(){
-                var sDt;
-                var nDt;
-                sDt = new Date($("#startDay").val());
-                nDt = new Date($("#endDay").val());
-                if(sDt > nDt){
-                    $("#startDay").val($("#endDay").val());
-                }
-            }
-        });*/
     </script>
 </body>

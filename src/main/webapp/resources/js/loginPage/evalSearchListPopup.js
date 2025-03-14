@@ -20,8 +20,6 @@ var evalSearchListPopup = {
                 },
                 parameterMap: function(data, operation) {
                     data.startDay = $("#startDay").val();
-                    data.endDay = $("#startDay").val();
-                    //data.endDay = $("#endDay").val();
                     return data;
                 }
             },

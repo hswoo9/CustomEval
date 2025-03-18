@@ -196,12 +196,12 @@
 			return;
 		}
 
-		if (/\d/.test($('#dept').val())) {
+		/*if (/\d/.test($('#dept').val())) {
 			customAlert('소속에 숫자를 입력할 수 없습니다.', 'warning').then(() => {
 
 			});
 			return;
-		}
+		}*/
 
 /*		if (/\d/.test($('#bank_name').val())) {
 			alert('은행명에 숫자를 입력할 수 없습니다.');

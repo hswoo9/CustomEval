@@ -323,11 +323,11 @@ public class EvalServiceImpl implements EvalService {
 				originFileExt = "hwp";
 				break;
 			case "2":
-				fileName = "평가위원별 사전의결사항";
+				fileName = "평가위원 사전의결사항_" + evalId;
 				originFileExt = "hwp";
 				break;
 			case "2_jang":
-				fileName = "평가위원 사전의결사항";
+				fileName = "평가위원장 사전의결사항_" + evalId;
 				originFileExt = "hwp";
 				break;
 			case "3":

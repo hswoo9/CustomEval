@@ -795,9 +795,9 @@
                 html += '</tbody>';
                 html += '</table>';
 
-                html += '<div style="margin-top: -50px;text-align: right;">'
+                /*html += '<div style="margin-top: -50px;text-align: right;">'
                 html += '<span>'+ (t+1) +' - '+ (x+1) +'</span>'
-                html += '</div>'
+                html += '</div>'*/
 
                 html += '<div class="nameLabel" style="width: 100%; max-width: 100%; text-align: right; margin-bottom: 35px;">';
                 html += '<span>성명 : '+userName+'</span>';

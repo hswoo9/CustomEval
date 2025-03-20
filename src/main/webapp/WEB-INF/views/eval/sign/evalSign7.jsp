@@ -727,7 +727,7 @@
                     html +=   '<td colspan="'+ (userCount + 7) +'" valign="bottom" style="height:28px;">';
                     html +=     '<p class="HStyle0" style="width:105%;max-width:1155px;display:inline-block;margin:0;line-height:180%;">';
                     html +=       '<span>* 평가위원이 5인을 초과하는 경우 세부평가항목별 점수의 최고‧최저 점수를 제외</span>';
-                    html +=       '<span style="float:right">'+ (x+1) +' - '+ (y+1) +'</span>';
+                    // html +=       '<span style="float:right">'+ (x+1) +' - '+ (y+1) +'</span>';
                     html +=     '</p>';
                     html +=     '<p class="HStyle0" style="line-height:180%;">** 소수점 다섯째 자리에서 반올림</p>';
                     html +=     '<div style="float:right;display:inline-block;position:relative;text-align:right;margin-bottom: 35px;">';

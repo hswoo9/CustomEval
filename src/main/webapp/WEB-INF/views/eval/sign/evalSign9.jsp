@@ -301,6 +301,9 @@
 			$(e).closest("tr").find("input[name='contactor[]']").attr("disabled", "disabled");
 			$(e).closest("tr").find("input[name='inputDate[]']").data("kendoDatePicker").enable(false);
 			$(e).closest("tr").find("input[name='contents[]']").attr("disabled", "disabled");
+
+            $(e).closest("tr").find("input[name='contactor[]']").val('');
+            $(e).closest("tr").find("input[name='contents[]']").val('');
 		}else{
 			$(e).closest("tr").find("input[name='contactor[]']").removeAttr("disabled");
 			$(e).closest("tr").find("input[name='inputDate[]']").data("kendoDatePicker").enable(true);

@@ -204,7 +204,26 @@
 			$('#saveButton').show();
 		}
 
-	});
+        let touchStartY = 0;
+
+        window.addEventListener('touchstart', function (e) {
+            if (e.touches.length === 1) {
+                touchStartY = e.touches[0].clientY;
+            }
+        }, { passive: false });
+
+        window.addEventListener('touchmove', function (e) {
+            const currentY = e.touches[0].clientY;
+            const deltaY = currentY - touchStartY;
+
+            // 조건 개선: 스크롤이 맨 위 + 사용자가 확실히 아래로 당길 때만 막기
+            if (window.scrollY <= 1 && deltaY > 30) {
+                e.preventDefault(); // 새로고침 제스처 방지
+            }
+        }, { passive: false });
+
+
+    });
 
 	var totalLstLen = ${itemList.size()};
 

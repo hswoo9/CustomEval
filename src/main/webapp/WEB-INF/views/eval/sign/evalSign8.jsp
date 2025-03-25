@@ -14,6 +14,7 @@
 <script type="text/javascript" src="<c:url value='/resources/js/es6-promise.auto.js' />"></script>
 <script type="text/javascript" src="<c:url value='/resources/js/jspdf.min.js' />"></script>
 <script type="text/javascript" src="<c:url value='/resources/js/jquery-latest.min.js' />"></script>
+<script type="text/javascript" src ="<c:url value='/resources/js/big.js' />"></script>
 
 
 <style>
@@ -528,6 +529,7 @@
                 html += '<tbody>';
                 html += '<th rowspan="' + rowSpan + '" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt;text-align:center; width:3% !important;">정성<br>평가</th>';
 
+                var totalSumMap = {};
                 for (var i = startIndex; i <= endIndex; i++) {
                     if(i == endIndex && qualityGroupArray[i].eval_type == '정량평가'){
                         html += '<th style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align:center; width:3% !important;">정량<br>평가</th>';
@@ -539,8 +541,8 @@
                     html += '<td style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; width: 265px;"><p class="HStyle0" style="text-align:left;line-height:150%;"><span class="hs">' + qualityGroupArray[i].item_medium_name + '</span></p></td>';
                     html += '<td style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center;"><p class="HStyle0" style="line-height:150%;"><span class="hs">' + qualityGroupArray[i].score + '</span></p></td>';
                     for (var h = t * maxCompaniesPerTable; h < t * maxCompaniesPerTable + currentCompanyCount; h++) {
-
                         var matchingResultScore = '';
+
                         for (var k = 0; k < list.length; k++) {
                             if (list[k].item_seq === qualityGroupArray[i].item_seq) {
 
@@ -559,6 +561,12 @@
                             }
                         }
 
+                        if (!totalSumMap['company' + h]) {
+                            totalSumMap['company' + h] = new Big(0);
+                        }
+
+                        totalSumMap['company' + h] = totalSumMap['company' + h].plus(new Big(Number(matchingResultScore)));
+
                         html += '<td style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center;" name="score" it_seq="' + qualityGroupArray[i].item_seq + '" data-comp-seq="' + comList[h].EVAL_COMPANY_SEQ + '"><p class="HStyle0"><span class="hs">' + matchingResultScore + '</span></p></td>';
                     }
                     html += '<td style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt;text-align:center;text-align:center; "><p class="HStyle0"><span class="hs"></span></p></td>';
@@ -572,7 +580,8 @@
                 html += '<td id="cell" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center;"><p class="HStyle0"><span class="hs">100</span></p></td>';
 
                 for (var i = t * maxCompaniesPerTable; i < t * maxCompaniesPerTable + currentCompanyCount; i++) {
-                    var totalScore = qksdhffla(comList[i].TOTAL_SUM);
+                    //var totalScore = qksdhffla(comList[i].TOTAL_SUM);
+                    var totalScore = totalSumMap['company'+i];
                     html += '<td id="cell" style="border-left:solid #000000 0.1pt;border-right:solid #000000 0.1pt;border-top:solid #000000 0.1pt;border-bottom:solid #000000 0.1pt;padding:1.4pt 1.4pt 1.4pt 1.4pt; text-align: center;"><p class="HStyle0"><span class="hs">' + totalScore + '</span></p></td>';
                 }
 

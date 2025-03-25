@@ -171,7 +171,7 @@
 	var signHwpFileData = "";
 
 	function signSaveBtn() {
-		customConfirm('평가확정 이후에는 점수를 수정하실 수 없습니다.\n그래도 확정하시겠습니까?', 'warning').then((willConfirm) => {
+		customConfirm('평가 확정 이후에는 점수를 수정하실 수 없습니다.\n그래도 확정하시겠습니까?', 'warning').then((willConfirm) => {
 			if (willConfirm) {
 				var result = true;
 				if ("${userInfo.EVAL_JANG}" == "Y") {
@@ -190,6 +190,10 @@
                 }
 
                 $('#loading_spinner').show();
+
+                let signTimeout = setTimeout(() => {
+                    location.reload();
+                }, 20000);
 
 				const width = window.innerWidth;
 				const header = document.getElementById("header");
@@ -223,6 +227,8 @@
                         captureRemark(pdf, () => {
 							const pdfBase64 = pdf.output("datauristring");
 							signHwpFileData = pdfBase64;
+
+                            clearTimeout(signTimeout);
 
 	                        //pdf.save("test.pdf");
 	                        //$('#loading_spinner').hide();
@@ -928,7 +934,7 @@
 <div style="width: 80%;margin: 0 auto;">
 	<div id="signSave">
 		<input type="button" onclick="evalAvoidPopup()" style="background-color: #dee4ea; border-color: black; font-weight : bold; color: red; border-width: thin;" value="기피신청">
-		<input type="button" onclick="signSaveBtn();" style="float:right; background-color: #dee4ea; border-color: black; border-width: thin; margin-left: 5px;" value="평가확정">
+		<input type="button" onclick="signSaveBtn();" style="float:right; background-color: #dee4ea; border-color: black; border-width: thin; margin-left: 5px;" value="평가 확정">
 		<input type="button" onclick="evalModBtn();" style="float:right; background-color: #dee4ea; border-color: black; border-width: thin;" value="평가 수정">
 	</div>
 	<%--<div style="width:100%; padding-bottom: 35px; text-align: center; padding-top: 50px;">

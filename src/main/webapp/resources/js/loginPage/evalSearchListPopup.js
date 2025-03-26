@@ -78,7 +78,7 @@ var evalSearchListPopup = {
                     width:"90px;",
                 },
                 {
-                    field: "OPR_EMP_NAME_1",
+                    field: "MANAGER_NAME",
                     title: "담당자",
                     width:"75px;",
                 },

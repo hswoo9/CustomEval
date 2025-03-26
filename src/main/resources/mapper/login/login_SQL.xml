@@ -16,7 +16,7 @@
 	</select>
 
 	<select id="getEvalSearchList" parameterType="map" resultType="java.util.HashMap">
-		SELECT A.COMMITTEE_SEQ, A.TITLE, A.REQ_DEPT_NAME, A.OPR_EMP_NAME_1, A.EVAL_E_DATE, A.STEP
+		SELECT A.COMMITTEE_SEQ, A.TITLE, A.REQ_DEPT_NAME, A.MANAGER_NAME, A.EVAL_E_DATE, A.STEP
 		FROM cust_epis.dj_eval_committee A
 		WHERE 1=1
 		<if test="startDay != null and startDay != ''">

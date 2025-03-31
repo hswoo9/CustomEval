@@ -150,6 +150,15 @@
 		<%--		}--%>
 		<%--	}--%>
 		<%--});--%>
+
+	function nonInputBtn(){
+        _hwpPutText("sign_2_minute1", "0");
+        _hwpPutText("sign_2_minute2", "0");
+
+		signSaveBtn();
+	}
+
+
 	function signSaveBtn() {
 		var comboBox = _pHwpCtrl.GetFieldText("sign_2_minute1");
 		var comboBox1 = _pHwpCtrl.GetFieldText("sign_2_minute2");
@@ -430,6 +439,11 @@
 					<option>${minute}</option>
 				</c:forEach>
 			</select>
+
+			<input type="button" onclick="nonInputBtn();"
+			       style="margin-left:23px; background-color: #dee4ea; border-color: black; border-width: thin;
+              font-size:14px; padding:0; height:30px; width:60px; cursor:pointer; text-align: center;"
+			       value="미입력">
 
 			<input type="button" onclick="signSaveBtn();"
 				   style="margin-left:23px; background-color: #dee4ea; border-color: black; border-width: thin;

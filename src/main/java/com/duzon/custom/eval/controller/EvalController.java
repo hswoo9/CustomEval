@@ -745,4 +745,22 @@ public class EvalController {
 		return "jsonView";
 	}
 
+	@RequestMapping("/eval/evalStopCheck")
+	@ResponseBody
+	public boolean evalStopCheck(HttpServletRequest request, Model model) {
+		Map<String, Object> map = (Map<String, Object>) request.getSession().getAttribute("evalLoginVO");
+		map = evalService.getEvalStepCheck(map);
+
+		boolean stopFlag = false;
+
+		if(map != null && map.size() > 0) {
+			if (map.containsKey("STEP")) {
+				if("X".equals(map.get("STEP"))) {
+					stopFlag = true;
+				}
+			}
+		}
+
+		return stopFlag;
+	}
 }

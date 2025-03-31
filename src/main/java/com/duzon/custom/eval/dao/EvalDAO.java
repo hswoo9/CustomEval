@@ -262,4 +262,8 @@ public class EvalDAO extends AbstractDAO{
 
 		return (int) selectOne("eval.getCommissionerSign9Cnt", map);
     }
+
+	public Map<String, Object> getEvalStepCheck(Map<String, Object> map) {
+		return (Map<String, Object>) selectOne("eval.getEvalStepCheck", map);
+	}
 }

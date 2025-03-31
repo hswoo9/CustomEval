@@ -149,8 +149,8 @@
             ctx.setLineDash([10, 5]); // 점선 스타일 (10px 선, 5px 공백)
 
             let padding = 20; // 점선과 경계 사이 여백
-            let guideWidth = canvas[0].width / 2.5;  // 🛠 기존의 반만큼 너비 조정
-            let guideHeight = canvas[0].height * 0.5; // 🛠 기존보다 0.5배 더 높게
+            let guideWidth = canvas[0].width / 2.2;  // 🛠 기존의 반만큼 너비 조정
+            let guideHeight = canvas[0].height * 0.7; // 🛠 기존보다 0.5배 더 높게
             let guideX = (canvas[0].width - guideWidth) / 2; // 중앙 정렬
             let guideY = (canvas[0].height - guideHeight) / 2; // 세로 중앙 정렬
 

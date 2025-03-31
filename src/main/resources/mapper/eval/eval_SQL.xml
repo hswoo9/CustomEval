@@ -1104,4 +1104,14 @@
 		  AND ACTIVE = 'Y'
 		  AND SIGN_9 = 'N'
 	</select>
+
+	<select id="getEvalStepCheck" parameterType="map" resultType="map">
+		/*getEvalStepCheck*/
+		SELECT
+		    STEP
+		FROM
+		    CUST_EPIS.DJ_EVAL_COMMITTEE
+		WHERE
+		    COMMITTEE_SEQ = #{committeeSeq}
+	</select>
 </mapper>

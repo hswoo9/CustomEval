@@ -71,6 +71,7 @@ $(function(){
                    <fieldset>
                        <div style="position: relative;">
                            <input type="text" class="inp engfix" id="commtitle" name="title" placeholder="평가제목 입력" value="" readonly>
+                           <input type="hidden" id="committeeSeq" name="committeeSeq" value="" />
                                <button type="button"
                                        class="k-button k-button-md k-button-solid k-button-solid-base"
                                        onclick="evalSearchPopup()"

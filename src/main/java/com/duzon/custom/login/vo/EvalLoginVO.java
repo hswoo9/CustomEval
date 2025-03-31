@@ -14,6 +14,7 @@ public class EvalLoginVO {
 	private String title;
 	private String phone;
 	private boolean evalFlag;
+	private String committeeSeq;
 
 	public String getPhone() { return phone;}
 
@@ -55,10 +56,12 @@ public class EvalLoginVO {
 		this.evalFlag = evalFlag;
 	}
 
-	
-	
-	
-	
-	
-	
+
+    public String getCommitteeSeq() {
+        return committeeSeq;
+    }
+
+    public void setCommitteeSeq(String committeeSeq) {
+        this.committeeSeq = committeeSeq;
+    }
 }

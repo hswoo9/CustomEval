@@ -86,5 +86,5 @@ public interface EvalService {
 	void setEvalJangReSelected(Map<String, Object> map);
 
 
-
+	Map<String, Object> getEvalStepCheck(Map<String, Object> map);
 }

@@ -106,6 +106,8 @@ var evalSearchListPopup = {
         var selectedTitles = [];
         var selectedValues = [];
 
+        var committeeSeq = $("[name='checkbox']:checked").val();
+
         $("input[name='checkbox']:checked").each(function () {
             selectedValues.push($(this).val()); // 선택된 항목의 값
             selectedTitles.push($(this).closest("tr").find("td[data-title]").text()); // 선택된 항목의 제목
@@ -123,6 +125,7 @@ var evalSearchListPopup = {
 
 
         window.opener.document.getElementById("commtitle").value = selectedTitles[0];
+        window.opener.document.getElementById("committeeSeq").value = committeeSeq;
 
         // 팝업창 닫기
         window.close();

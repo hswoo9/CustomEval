@@ -1395,4 +1395,9 @@ public class EvalServiceImpl implements EvalService {
 	public void setEvalJangReSelected(Map<String,Object> map){
 		evalDAO.setEvalJangReSelected(map);
 	}
+
+	@Override
+	public Map<String, Object> getEvalStepCheck(Map<String, Object> map) {
+		return evalDAO.getEvalStepCheck(map);
+	}
 }

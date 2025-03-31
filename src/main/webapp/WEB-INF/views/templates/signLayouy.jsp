@@ -36,6 +36,8 @@
 	<script type="text/javascript" src="<c:url value='/resources/js/kendoui/kendo.all.min.js'/>"></script>
 	<script type="text/javascript" src="<c:url value='/resources/js/kendoui/cultures/kendo.culture.ko-KR.min.js'/>"></script>
 
+	<script type="text/javascript" src="<c:url value='/resources/js/common/sweetalert.min.js'/>"></script>
+
 	<script type="text/javascript" src="${hwpUrl}js/hwpctrlapp/utils/util.js"></script>
 	<script type="text/javascript" src="${hwpUrl}js/webhwpctrl.js"></script>
 	<script type="text/javascript" src="<c:url value='/resources/js/hancom/hwpCtrlApp.js'/>"></script>
@@ -72,6 +74,31 @@
 			});
 
 			window.onresize = function () {resize()};
+
+            let stopCheckNotified = false;
+            setInterval(function() {
+                if (stopCheckNotified) return;
+
+                fetch(_g_contextPath_ + '/eval/evalStopCheck', {
+                    method: 'GET',
+                    credentials: 'same-origin'
+                })
+                    .then(res => res.json())
+                    .then(result => {
+                        if (result === true) {
+                            stopCheckNotified = true;
+
+                            // 메시지 표시
+                            customAlert("관리자에 의해 평가가 중단되었습니다.\n10초 후 로그인 페이지로 이동됩니다.", "warning");
+
+                            // 10초 후 메인으로 이동
+                            setTimeout(() => {
+                                window.location.href = _g_contextPath_ + '/';
+                            }, 10000);
+                        }
+                    })
+                    .catch(err => console.error('중단 체크 오류', err));
+            }, 10000);
 
 			</script>
 <!-- 		</div> -->

@@ -65,7 +65,8 @@ public class LoginController {
         /*map.put("evalPw", evalLoginVO.getPw());*/
 		map.put("phone", evalLoginVO.getPhone());
 		map.put("evalTitle", evalLoginVO.getTitle());
-		
+		map.put("committeeSeq", evalLoginVO.getCommitteeSeq());
+
 		//로그인처리
 		if(cnt > 0){
 			map.put("flag", true);

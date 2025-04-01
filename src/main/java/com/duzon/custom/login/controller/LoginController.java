@@ -71,12 +71,13 @@ public class LoginController {
 		if(cnt > 0){
 			map.put("flag", true);
 			session.setAttribute("id", evalLoginVO.getId());
+			session.setMaxInactiveInterval(-1); // 세션 무제한 유지
 		}else{
 			map.put("flag", false);
 		}
 		
 		session.setAttribute("evalLoginVO", map);
-		
+
 		return "redirect:/eval/notice";
 	}
 

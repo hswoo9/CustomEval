@@ -489,7 +489,7 @@
 			alert('주소를 입력해 주세요.');
 			return
 		}*/
-		var title1 = "「${userInfo.TITLE } 사업」평가수당 지급 확인서";
+		var title1 = "「${userInfo.TITLE }」평가수당 지급 확인서";
 
 		var ob1 = $('#num1').val() + '-' + $('#num2').val();
 		var ob2 = $('#dept').val();
@@ -627,9 +627,9 @@
 
 	function _hwpPutData() {
 		// 내용
-		var title1 = "「${userInfo.TITLE } 사업」평가수당 지급 확인서";
+		var title1 = "「${userInfo.TITLE }」평가수당 지급 확인서";
 		var title2 = " ◈ (수집·이용목적)「${userInfo.TITLE }」제안 평가비 지급 증빙";
-		var title3 = " ◈ (고유식별정보 수집·이용목적)「${userInfo.TITLE } 사업」제안 평가비 지급 증빙을 위한 실명 확인";
+		var title3 = " ◈ (고유식별정보 수집·이용목적)「${userInfo.TITLE }」제안 평가비 지급 증빙을 위한 실명 확인";
 		var oName = $('#oName').val();
 		var bank_name = "${userInfo.BANK_NAME }";
         var eval_pay = parseInt(document.getElementById("evaluationFee").value.replace(/,/g, ''), 10) || 0; // 평가비 숫자 변환
@@ -805,7 +805,7 @@
 		<TR>
 			<TD valign="middle" bgcolor="#ffffff"  style='width:580px;height:70px;border-left:none;border-right:none;border-top:none;border-bottom:double #000000 2.0pt;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
 				<P CLASS="HStyle0" STYLE="text-align:center;">
-					 <SPAN STYLE="font-size:17.0pt;font-weight:bold;line-height:160%">「${userInfo.TITLE} 사업」</SPAN><br>
+					 <SPAN STYLE="font-size:17.0pt;font-weight:bold;line-height:160%">「${userInfo.TITLE}」</SPAN><br>
 					 <SPAN STYLE="font-size:17.0pt;font-weight:bold;line-height:160%">평가수당 지급 확인서</SPAN>
 				</P>
 			</TD>
@@ -1047,7 +1047,7 @@
 		<TR>
 			<TD colspan="3" valign="middle" style='width:563px;height:142px;border-left:dotted #000000 0.9pt;border-right:dotted #000000 0.9pt;border-top:none;border-bottom:dotted #000000 0.9pt;padding:2.8pt 2.8pt 2.8pt 2.8pt'>
 				<P CLASS=HStyle0 STYLE='margin-top:10.0pt;margin-bottom:2.8pt;line-height:130%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움"'>★ </SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움";font-weight:bold'>고유식별정보 수집·이용</SPAN></P>
-				<P CLASS=HStyle0 STYLE='margin-left:29.5pt;margin-right:5.0pt;margin-top:4.0pt;text-indent:-29.5pt;line-height:130%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:5%'>&nbsp;◈ </SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:-2%'>(고유식별정보 수집·이용목적)「${userInfo.TITLE} 사업」제안 평가비 지급 증빙을 위한 실명 확인</SPAN></P>
+				<P CLASS=HStyle0 STYLE='margin-left:29.5pt;margin-right:5.0pt;margin-top:4.0pt;text-indent:-29.5pt;line-height:130%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:5%'>&nbsp;◈ </SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:-2%'>(고유식별정보 수집·이용목적)「${userInfo.TITLE}」제안 평가비 지급 증빙을 위한 실명 확인</SPAN></P>
 				<P CLASS=HStyle0 STYLE='margin-left:29.5pt;margin-right:5.0pt;margin-top:4.0pt;text-indent:-29.5pt;line-height:130%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:5%'>&nbsp;◈ </SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:-2%'>(수집 고유식별정보) 주민등록번호</SPAN></P>
 				<P CLASS=HStyle0 STYLE='margin-left:29.5pt;margin-right:5.0pt;margin-top:4.0pt;text-indent:-29.5pt;line-height:130%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:5%'>&nbsp;◈ </SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:-2%'>(보유·이용기간) 지출문서 보존기한 완료시까지</SPAN></P>
 				<P CLASS=HStyle0 STYLE='margin-left:29.5pt;margin-right:5.0pt;margin-top:4.0pt;text-indent:-29.5pt;line-height:130%;'><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:-2%'>&nbsp;&nbsp; </SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:1%'>* </SPAN><SPAN STYLE='font-family:"한양중고딕,한컴돋움";letter-spacing:-1%'>근거: 금융실명거래및비밀보장에관한법률, 공공기록물관리에관한법률 등</SPAN></P>

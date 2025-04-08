@@ -375,8 +375,8 @@
             if('${userInfo.EVAL_JANG}' === 'Y') {
                 document.getElementById('evaluationJangFeeCell').innerHTML = evaluationJangFee.toLocaleString() + ' 원';
             }
-			document.getElementById('transportFeeCell').innerHTML = isNaN(transportFee.toLocaleString()) ? '-' : transportFee.toLocaleString() + ' 원';
-			document.getElementById('totalFeeCell').innerHTML = isNaN(totalFee.toLocaleString()) ? '-' : totalFee.toLocaleString()  + ' 원';
+			document.getElementById('transportFeeCell').innerHTML = isNaN(transportFee) ? '-' : transportFee.toLocaleString() + ' 원';
+			document.getElementById('totalFeeCell').innerHTML = isNaN(totalFee) ? '-' : totalFee.toLocaleString()  + ' 원';
 			document.getElementById('deptCell').innerHTML = dept;
 			document.getElementById('oNameCell').innerHTML = oName;
 			document.getElementById('addrCell').innerHTML = $("#addrFix").val() + " " + addr;

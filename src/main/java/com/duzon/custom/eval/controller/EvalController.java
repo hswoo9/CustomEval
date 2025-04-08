@@ -99,8 +99,8 @@ public class EvalController {
 				if(map.get("SIGN_4").equals("N")) {
 					logger.info("pageInfo ===== /eval/sign/evalSign4");
 					//기피자가 평가위원 수의 2/3 됐을때 평가수당확인창으로 바로 이동
-					List<Map<String, Object>> list = commonService.getBankCode();
-					model.addAttribute("bankList", list);
+					//List<Map<String, Object>> list = commonService.getBankCode();
+					//model.addAttribute("bankList", list);
 					model.addAttribute("avoidFailMessage", "제안평가위원회 운영 정족 수(3분의 2 이상) 미달로 평가가 종료됩니다.");
 
 					if(map.get("EVAL_AVOID").equals("Y") && map.get("EVAL_AVOID_CHECK_YN").equals("N") && !map.get("CONTACT").equals("Y")) {
@@ -179,8 +179,8 @@ public class EvalController {
 					logger.info("pageInfo ===== /eval/sign/evalSign4");
 
 					//평가수당확인
-					List<Map<String, Object>> list = commonService.getBankCode();
-					model.addAttribute("bankList", list);
+					//List<Map<String, Object>> list = commonService.getBankCode();
+					//model.addAttribute("bankList", list);
 					return "/eval/sign/evalSign4";
 				} else {
 					logger.info("pageInfo ===== /");
@@ -217,8 +217,8 @@ public class EvalController {
 				if(map.get("SIGN_4").equals("N")) {
 					logger.info("pageInfo ===== /eval/sign/evalSign4");
 					//기피자가 평가위원 수의 2/3 됐을때 평가수당확인창으로 바로 이동
-					List<Map<String, Object>> list = commonService.getBankCode();
-					model.addAttribute("bankList", list);
+					//List<Map<String, Object>> list = commonService.getBankCode();
+					//model.addAttribute("bankList", list);
 					model.addAttribute("avoidFailMessage", "제안평가위원회 운영 정족 수(3분의 2 이상) 미달로 평가가 종료됩니다.");
 					return "/eval/sign/evalSign4";
 				} else {
@@ -389,8 +389,8 @@ public class EvalController {
 
 				//평가수당확인
 				
-				List<Map<String, Object>> list = commonService.getBankCode();
-				model.addAttribute("bankList", list);
+				//List<Map<String, Object>> list = commonService.getBankCode();
+				//model.addAttribute("bankList", list);
 				
 				return "/eval/sign/evalSign4";
 				

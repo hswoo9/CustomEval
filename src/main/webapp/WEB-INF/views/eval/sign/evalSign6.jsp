@@ -191,91 +191,74 @@
 
                 $('#loading_spinner').show();
 
-                let signTimeout = setTimeout(() => {
-                    location.reload();
-                }, 20000);
-
-				const width = window.innerWidth;
-				const header = document.getElementById("header");
-
-				console.log("width", width);
+				var width = window.innerWidth;
+				var header = document.getElementById("header");
 
 				var companyCount = getCompanyTotal.length;
 				var maxCompaniesPerTable = 10; // 표 당 최대 10개의 제안업체
 				var tableCount = Math.ceil(companyCount / maxCompaniesPerTable); // 필요한 표의 개수 계산
 
-				const pdf = new jsPDF("l", "mm", "a4");
-				const pdfWidth = pdf.internal.pageSize.getWidth();
-				const pdfHeight = pdf.internal.pageSize.getHeight();
+                var pdf = new jsPDF("l", "mm", "a4");
+                var pdfWidth = pdf.internal.pageSize.getWidth();
+                var pdfHeight = pdf.internal.pageSize.getHeight();
 
-				html2canvas(header, { scale: 2 }).then(headerCanvas => {
-					const imgData = headerCanvas.toDataURL("image/png");
-					const imgWidth = headerCanvas.width * 0.2645;
-					const imgHeight = headerCanvas.height * 0.2645;
-					const scaleFactor = 0.8;
+                try{
+					html2canvas(header, { scale: 2 }).then(headerCanvas => {
+	                    var imgData = headerCanvas.toDataURL("image/png");
+	                    var imgWidth = headerCanvas.width * 0.2645;
+	                    var imgHeight = headerCanvas.height * 0.2645;
+	                    var scaleFactor = 0.8;
 
-					const scale = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight) * scaleFactor;
-					const imgScaledWidth = imgWidth * scale;
-					const imgScaledHeight = imgHeight * scale;
+	                    var scale = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight) * scaleFactor;
+	                    var imgScaledWidth = imgWidth * scale;
+	                    var imgScaledHeight = imgHeight * scale;
 
-					const xOffset = (pdfWidth - imgScaledWidth) / 2
-					const yOffset = 0.5;
+	                    var xOffset = (pdfWidth - imgScaledWidth) / 2
+	                    var yOffset = 0.5;
 
-					pdf.addImage(imgData, "PNG", xOffset, yOffset, imgScaledWidth, imgScaledHeight);
+						pdf.addImage(imgData, "PNG", xOffset, yOffset, imgScaledWidth, imgScaledHeight);
 
-					processTables(0, tableCount, pdf, imgScaledHeight + 20, () => {
-                        captureRemark(pdf, () => {
-							const pdfBase64 = pdf.output("datauristring");
-							signHwpFileData = pdfBase64;
+						processTables(0, tableCount, pdf, imgScaledHeight + 20, () => {
+	                        captureRemark(pdf, () => {
+	                            var pdfBase64 = pdf.output("datauristring");
+								signHwpFileData = pdfBase64;
 
-                            clearTimeout(signTimeout);
-
-	                        //pdf.save("test.pdf");
-	                        //$('#loading_spinner').hide();
-	                        // 저장 호출
-	                        setTimeout(signSave, 600);
+		                        //pdf.save("test.pdf");
+		                        //$('#loading_spinner').hide();
+		                        // 저장 호출
+		                        setTimeout(signSave, 1000);
+							});
 						});
 					});
-
-					/*processTables(0, tableCount, pdf, imgScaledHeight + 20, () => {
-						const nameLabel = document.getElementById("nameLabel");
-						captureNameLabel(nameLabel, pdf, () => {
-							const pdfBase64 = pdf.output("datauristring");
-							signHwpFileData = pdfBase64;
-
-                            pdf.save("test.pdf");
-                            $('#loading_spinner').hide();
-                            // 저장 호출
-                            //setTimeout(signSave, 600);
-						});
-					});*/
-
-				});
+                } catch(e){
+                    location.reload();
+                }
 			}
 		});
+
 	}
 
 
 	function processTables(index, tableCount, pdf, offsetY, callback) {
         var lists = document.querySelectorAll(".pdf_page");
 
-        const promises = Array.from(lists).map((list, i) => {
-            const isLastIteration = (i === lists.length - 1); //마지막 반복
+        var promises = Array.from(lists).map((list, i) => {
+            var isLastIteration = (i === lists.length - 1); //마지막 반복
 
             return html2canvas(list, { scale: 2 }).then(canvas => {
-                const imgData = canvas.toDataURL("image/png");
+                var imgData = canvas.toDataURL("image/png");
 
-                const pdfWidth = pdf.internal.pageSize.getWidth();
-                const pdfHeight = pdf.internal.pageSize.getHeight();
-                const imgWidth = canvas.width * 0.2645;
-                const imgHeight = canvas.height * 0.2645;
+                var pdfWidth = pdf.internal.pageSize.getWidth();
+                var pdfHeight = pdf.internal.pageSize.getHeight();
+                var imgWidth = canvas.width * 0.2645;
+                var imgHeight = canvas.height * 0.2645;
 
                 //캡쳐된 이미지를 0.8배 키워줌
                 const scaleFactor = 0.8;
 
-                let scale;
-                let imgScaledWidth;
-                let imgScaledHeight;
+                var scale;
+                var imgScaledWidth;
+                var imgScaledHeight;
 
                 //const yOffset = 10;
 
@@ -283,7 +266,7 @@
                 imgScaledWidth = imgWidth * scale;
                 imgScaledHeight = imgHeight * scale;
 
-                const xOffset = (pdfWidth - imgScaledWidth) / 2
+                var xOffset = (pdfWidth - imgScaledWidth) / 2
 
                 if (i === 0) {
                     offsetY = 32;
@@ -301,6 +284,9 @@
 
         Promise.all(promises).then(() => {
             callback();
+        }).catch((error) => {
+            console.log(error);
+            //location.reload();
         });
 
 	}
@@ -333,82 +319,85 @@
         var lists = document.querySelectorAll(".remark_pdf_page");
         var nameLabel = document.querySelectorAll(".nameLabel")[0];
 
-        let signImgData = null;
-        let signImgWidth;
-        let signImgHeight;
+        var signImgData = null;
+        var signImgWidth;
+        var signImgHeight;
 
 
         html2canvas(nameLabel, {scale: 2}).then(canvas => {
             signImgData = canvas.toDataURL("image/png");
 
-            const imgWidth = canvas.width * 0.2645;
-            const imgHeight = canvas.height * 0.2645;
+            var imgWidth = canvas.width * 0.2645;
+            var imgHeight = canvas.height * 0.2645;
 
-            const pdfWidth = pdf.internal.pageSize.getWidth();
-            const pdfHeight = pdf.internal.pageSize.getHeight();
-            const scaleFactor = 0.8;
+            var pdfWidth = pdf.internal.pageSize.getWidth();
+            var pdfHeight = pdf.internal.pageSize.getHeight();
+            var scaleFactor = 0.8;
 
-            const scale = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight) * scaleFactor;
+            var scale = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight) * scaleFactor;
             signImgWidth = imgWidth * scale;
             signImgHeight = imgHeight * scale;
+
+            processRemarkList();
         });
 
-        let yOffset;
-        let previousImageHeight = 0;
+        async function processRemarkList() {
+            try {
+                var yOffset = 0.5;
+                var previousImageHeight = 0;
 
-        const promises = Array.from(lists).map((list, i) => {
-            return html2canvas(list, {scale: 2}).then(canvas => {
-                const isLastIteration = (i === lists.length - 1); //마지막 반복
+                for (let i = 0; i < lists.length; i++) {
+                    var canvas = await html2canvas(lists[i], {scale: 2});
 
-                const imgData = canvas.toDataURL("image/png");
+                    var isLastIteration = (i === lists.length - 1);
+                    var imgData = canvas.toDataURL("image/png");
 
-                const pdfWidth = pdf.internal.pageSize.getWidth();
-                const pdfHeight = pdf.internal.pageSize.getHeight();
-                const imgWidth = canvas.width * 0.2645;
-                const imgHeight = canvas.height * 0.2645;
+                    var pdfWidth = pdf.internal.pageSize.getWidth();
+                    var pdfHeight = pdf.internal.pageSize.getHeight();
+                    var imgWidth = canvas.width * 0.2645;
+                    var imgHeight = canvas.height * 0.2645;
 
-                const scaleFactor = 0.8;
+                    var scaleFactor = 0.8;
+                    var scale = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight) * scaleFactor;
+                    var imgScaledWidth = imgWidth * scale;
+                    var imgScaledHeight = imgHeight * scale;
 
-                const scale = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight) * scaleFactor;
-                const imgScaledWidth = imgWidth * scale;
-                const imgScaledHeight = imgHeight * scale;
+                    var xOffset = (pdfWidth - imgScaledWidth) / 2;
 
-                const xOffset = (pdfWidth - imgScaledWidth) / 2;
-
-                if (i === 0) {
-                    pdf.addPage();
-                    yOffset = 0.5;
-                } else {
-                    if (i > 0) {
-                        //pdf.addPage(); // 두 번째 테이블부터는 새 페이지에 추가
+                    if (i === 0) {
+                        pdf.addPage();
+                        yOffset = 0.5;
+                    } else {
                         yOffset += previousImageHeight;
                     }
-                }
 
-                if ((yOffset + 30) + imgScaledHeight > pdfHeight) {
-                    if (signImgData) {
-                        pdf.addImage(signImgData, "PNG", xOffset, yOffset + 5, signImgWidth, signImgHeight); //서명
+                    if ((yOffset + 30) + imgScaledHeight > pdfHeight) {
+                        if (signImgData) {
+                            pdf.addImage(signImgData, "PNG", xOffset, yOffset + 5, signImgWidth, signImgHeight);
+                        }
+
+                        pdf.addPage();
+                        yOffset = 20;
                     }
 
-                    pdf.addPage();
-                    yOffset = 20;
+                    pdf.addImage(imgData, "PNG", xOffset, yOffset, imgScaledWidth, imgScaledHeight);
+
+                    if (isLastIteration && signImgData) {
+                        pdf.addImage(signImgData, "PNG", xOffset, yOffset + imgScaledHeight + 5, signImgWidth, signImgHeight);
+                    }
+
+                    previousImageHeight = imgScaledHeight;
                 }
 
-                pdf.addImage(imgData, "PNG", xOffset, yOffset, imgScaledWidth, imgScaledHeight);
+            } catch (error) {
+                console.log(error);
+                //location.reload();
+            } finally {
+                callback();
+            }
+        }
 
-                if (isLastIteration && signImgData) {
-                    pdf.addImage(signImgData, "PNG", xOffset, yOffset + imgScaledHeight + 5, signImgWidth, signImgHeight);
-                }
-
-                previousImageHeight = imgScaledHeight;
-            });
-        });
-
-        Promise.all(promises).then(() => {
-            callback();
-        });
 	}
-
 
 	function signSave(){
 		var formData = new FormData();

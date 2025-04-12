@@ -76,8 +76,19 @@
 			window.onresize = function () {resize()};
 
             let stopCheckNotified = false;
-            setInterval(function() {
+            let pollCount = 0;
+
+            const MAX_POLL_COUNT = 30;
+
+            const intervalId = setInterval(function() {
                 if (stopCheckNotified) return;
+
+                if (pollCount >= MAX_POLL_COUNT) {
+                    clearInterval(intervalId);
+                    return;
+                }
+
+				pollCount++;
 
                 fetch(_g_contextPath_ + '/eval/evalStopCheck', {
                     method: 'GET',
@@ -98,7 +109,7 @@
                         }
                     })
                     .catch(err => console.error('중단 체크 오류', err));
-            }, 10000);
+            }, 30000);
 
 			</script>
 <!-- 		</div> -->

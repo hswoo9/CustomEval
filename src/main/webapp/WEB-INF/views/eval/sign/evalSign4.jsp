@@ -871,7 +871,12 @@
 			<c:otherwise>
 				<TR>
 					<TD valign="middle" bgcolor="#e5e5ff"  style='width:186px;height:31px;border-left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 1.1pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
-						<P CLASS=HStyle0 STYLE='text-align:center;'><SPAN STYLE='font-size:12.0pt;font-family:"한양중고딕,한컴돋움";font-weight:bold;line-height:160%'>평 가 비</SPAN></P>
+						<P CLASS=HStyle0 STYLE='text-align:center;'><SPAN STYLE='font-size:12.0pt;font-family:"한양중고딕,한컴돋움";font-weight:bold;line-height:160%'>평 가 비</SPAN>
+							<label for="unreceivedYn" style="cursor: pointer;">
+								<input type="checkbox" id="unreceivedYn" name="unreceivedYn" value="N" onchange="updateTotal()">
+								<span>미수령</span>
+							</label>
+						</P>
 					</TD>
 					<TD valign="middle" bgcolor="#e5e5ff"  style='width:186px;height:31px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 1.1pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
 						<P CLASS=HStyle0 STYLE='text-align:center;'><SPAN STYLE='font-size:12.0pt;font-family:"한양중고딕,한컴돋움";font-weight:bold;line-height:160%'>교 통 비</SPAN></P>
@@ -1097,18 +1102,25 @@
 
         if (unreceivedYn) {
             evaluationFeeInput.value = "0";
-            evaluationJangFeeInput.value = "0";
             transportFeeSpan.innerText = "0";
             totalFeeSpan.innerText = "0 원";
 
             // 입력 필드 비활성화
             evaluationFeeInput.disabled = true;
-            evaluationJangFeeInput.disabled = true;
+
+            if("${userInfo.EVAL_JANG}" === "Y"){
+                evaluationJangFeeInput.value = "0";
+                evaluationJangFeeInput.disabled = true;
+            }
+
             return;
         }
 
         evaluationFeeInput.disabled = false;
-        evaluationJangFeeInput.disabled = false;
+
+        if("${userInfo.EVAL_JANG}" === "Y"){
+            evaluationJangFeeInput.disabled = false;
+        }
 
 		// 소속에 따라 값 변경
 		if (dept === "농림수산식품교육문화정보원" || dept === "농정원") {

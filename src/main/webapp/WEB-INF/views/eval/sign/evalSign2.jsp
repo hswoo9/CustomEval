@@ -48,6 +48,8 @@
 </div>
 <script type="text/javascript" src="<c:url value='/resources/js/common/sweetalert.min.js'/>"></script>
 <script type="text/javascript">
+	var timeIn;
+
 	function customAlert(msg, icon) {
 		return swal({
 			title: '',
@@ -206,11 +208,11 @@
 					// alert("입력하지 않은 평가위원이 있습니다.");
 					// return;
 				}else if(result == "groupFail"){
+                    clearInterval(timeIn);
+                    fnSetSignSetpChk2();
 					customAlert("다른 값을 입력한 평가위원이 있습니다.\n데이터가 초기화됩니다.", "warning")
 							.then(() => {
-								clearInterval(timeIn);
 								location.reload();
-								fnSetSignSetpChk2();
 							});
 				}else if(result == 'notFail'){
 					_pHwpCtrl.GetTextFile("HWPML2X", "", function(data) {

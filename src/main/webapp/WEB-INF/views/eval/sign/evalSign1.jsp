@@ -141,8 +141,8 @@
 
 	function _hwpPutData(){
 		//내용
-		var title1 = "본인은 ${userInfo.EVAL_S_DATE3} ~ ${userInfo.EVAL_E_DATE3}까지「${userInfo.TITLE }사업 」의 평가(심사)위원 위촉을 확인하며 다음 사항을 준수할 것을 서약합니다.";
-		var title2 = "1. 본인은 「${userInfo.TITLE }」의 평가(심사)를 함에 있어 모든 보안사항을 철저히 이행할 것입니다.";
+		var title1 = "본인은 ${userInfo.EVAL_S_DATE3} ~ ${userInfo.EVAL_E_DATE3}까지「${userInfo.TITLE }사업 」의\r\n평가(심사)위원 위촉을 확인하며 다음 사항을 준수할 것을 서약합니다.";
+		var title2 = "1. 본인은 「${userInfo.TITLE }」의 평가(심사)를 함에 있어 모든 보안사항을 철저히\r\n   이행할 것입니다.";
 
 		var date = "${nowDate}";
 

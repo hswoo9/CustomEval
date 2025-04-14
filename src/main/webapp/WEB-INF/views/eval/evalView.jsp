@@ -58,9 +58,11 @@
 	html, body {
 		overflow-y: scroll !important;
 		scrollbar-width: auto !important;
-		-ms-overflow-style: scrollbar !important; }
+		-ms-overflow-style: scrollbar !important;
+        overscroll-behavior: none; /* 크롬/안드로이드에서 새로고침 방지 */
+	}
 
-	::-webkit-scrollbar {
+    ::-webkit-scrollbar {
 		width: 8px;
 	}
 
@@ -145,6 +147,13 @@
 
 	</div>
 
+	<div class="right_div hkBtnCont" style="height:70px;">
+		<div class="controll_btn p10">
+			<button type="button" class="evalButton" id="saveButton" style="width: 120px; float: right; margin-left:10px; background-color: #dee4ea; border-color: black; border-width: thin;" onclick="saveBtn();">다음</button>
+
+		</div>
+	</div>
+
 	<%--<div class="left_div" style="padding-top: 50px;">
 		<p class="tit_p mt5 mb10" style="font-size: 20px;">평가의견</p>
 	</div>
@@ -204,7 +213,7 @@
 			$('#saveButton').show();
 		}
 
-        let touchStartY = 0;
+        /*let touchStartY = 0;
 
         window.addEventListener('touchstart', function (e) {
             if (e.touches.length === 1) {
@@ -220,9 +229,7 @@
             if (window.scrollY <= 1 && deltaY > 30) {
                 e.preventDefault(); // 새로고침 제스처 방지
             }
-        }, { passive: false });
-
-
+        }, { passive: false });*/
     });
 
 	var totalLstLen = ${itemList.size()};

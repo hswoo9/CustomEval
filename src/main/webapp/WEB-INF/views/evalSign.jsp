@@ -164,7 +164,17 @@
             ctx.font = "20px Arial";
             ctx.fillStyle = "rgba(0, 0, 0, 0.5)"; // 흐린 회색
             ctx.textAlign = "center";
-            ctx.fillText("여기에 서명하세요", canvas[0].width / 2, guideY + guideHeight / 2 +5);
+
+            const text = "여기에 서명하세요\n(가이드라인 안에 꽉 채워 서명해 주세요)";
+            const lines = text.split('\n');
+
+            const x = canvas[0].width / 2;
+            const y = guideY + guideHeight / 2 + 5;
+            const lineHeight = 24; // 줄 간격 (폰트크기보다 약간 크게)
+
+            lines.forEach((line, i) => {
+                ctx.fillText(line, x, y + i * lineHeight);
+            });
         }
 
 

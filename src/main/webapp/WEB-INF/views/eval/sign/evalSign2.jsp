@@ -156,6 +156,7 @@
 	function nonInputBtn(){
         _hwpPutText("sign_2_minute1", "0");
         _hwpPutText("sign_2_minute2", "0");
+        _hwpPutText("etc", " ");
 
 		signSaveBtn();
 	}
@@ -405,8 +406,28 @@
 	}
 
 
+    function etcInputBtn() {
+        document.getElementById("etcModal").style.display = "block";
+    }
 
-	function minuteChange(e){
+    function etcInputClean() {
+        $("#etc").val("");
+        _hwpPutText("etc", " ");
+        closeModal();
+    }
+
+    function closeModal() {
+        document.getElementById("etcModal").style.display = "none";
+    }
+
+    function etcInput() {
+        const value = document.getElementById("etc").value;
+        _hwpPutText("etc", value);
+        closeModal();
+    }
+
+
+    function minuteChange(e){
 		if($(e).attr("id") == "minute1"){
 			_hwpPutText("sign_2_minute1", $(e).val());
 		}else{
@@ -442,6 +463,11 @@
 				</c:forEach>
 			</select>
 
+			<input type="button" onclick="etcInputBtn();"
+			       style="margin-left:23px; background-color: #dee4ea; border-color: black; border-width: thin;
+              font-size:14px; padding:0; height:30px; width:80px; cursor:pointer; text-align: center;"
+			       value="추가 입력">
+
 			<input type="button" onclick="nonInputBtn();"
 			       style="margin-left:23px; background-color: #dee4ea; border-color: black; border-width: thin;
               font-size:14px; padding:0; height:30px; width:60px; cursor:pointer; text-align: center;"
@@ -457,5 +483,17 @@
 	<div id="_pHwpCtrl" style="height: 100%;border: 1px solid lightgray;"></div>
 
 </div>
+<div id="etcModal" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%);
+	background-color:white; border:1px solid #888; z-index:9999; padding:20px; box-shadow: 2px 2px 10px rgba(0,0,0,0.2);">
+	<label for="etc">추가 입력:</label>
+	<input type="text" id="etc" style="width:400px; margin:10px 0; padding: 5px;">
+	<br>
+	<div style="text-align: center;">
+		<button style="width: 50px;height: 25px;" onclick="etcInput()">입력</button>
+		<button style="width: 50px;height: 25px; margin-left:5px;" onclick="etcInputClean()">지우기</button>
+		<button style="width: 50px;height: 25px; margin-left:5px;" onclick="closeModal()">닫기</button>
+	</div>
+</div>
+
 <%--<object classid="CLSID:1DEAD10F-9EBF-4599-8F00-92714483A9C9" codebase="<c:url value='/resources/activex/NEOSLauncher.cab'></c:url>#version=1,0,0,4" id="uploader"  style="display:none;" >--%>
 <%--</object>--%>

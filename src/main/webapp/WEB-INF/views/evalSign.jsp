@@ -139,6 +139,7 @@
                 case "touchcancel":
                     drawble = false;
                     ctx.closePath();
+                    ctx.beginPath();
                     break;
             }
         }

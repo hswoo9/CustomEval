@@ -321,6 +321,8 @@
 <style>
 	table tr th,td {border: 1px; border-style: solid; text-align: center; height: 40px; }
 
+    th, td{font-size: 15px;}
+
     @media (pointer:coarse) {
         .WordSection1 { width: 1100px !important;}
         .hkTitle { width: 1100px !important;}

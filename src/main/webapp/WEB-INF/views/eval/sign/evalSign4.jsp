@@ -229,6 +229,13 @@
 			return;
 		}
 
+        if(!$('#addrFix').val()){
+			customAlert('회사 주소지를 선택해 주세요.', 'warning').then(() => {
+
+            });
+            return;
+        }
+
 		/*alert("작성하신 평가수당을 확인 하시고 확정/수정 버튼을 눌러주시기 바랍니다.")*/
 
 		createSummaryTable();
@@ -1078,6 +1085,10 @@
         var regionSelect = document.getElementById("region");
         var selectedOption = regionSelect.options[regionSelect.selectedIndex].text;
 
+        if(region == '------') {
+			selectedOption = '';
+        }
+
         $("#addrFix").val(selectedOption);
 
 		if (region === "제주") {
@@ -1124,9 +1135,9 @@
 
 		// 소속에 따라 값 변경
 		if (dept === "농림수산식품교육문화정보원" || dept === "농정원") {
-			evaluationFeeInput.value = "-";
-			transportFeeSpan.innerText = "-";
-			totalFeeSpan.innerText = "-";
+			evaluationFeeInput.value = "0";
+			transportFeeSpan.innerText = "0";
+			totalFeeSpan.innerText = "0";
 		} else {
 			var evaluationFee = parseInt(evaluationFeeInput.value.replace(/,/g, '') || 0);
 			var transportFee = parseInt(transportFeeSpan.innerText.replace(/[^0-9]/g, '') || 0);

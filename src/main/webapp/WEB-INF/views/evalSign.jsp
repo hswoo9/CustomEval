@@ -121,6 +121,8 @@
                     ctx.beginPath();
                     ctx.moveTo(pos.X, pos.Y);
                     ctx.lineWidth = thickness;
+
+                    drawing.push(null);
                     drawing.push(pos);
                     break;
                 case "mousemove":
@@ -139,7 +141,6 @@
                 case "touchcancel":
                     drawble = false;
                     ctx.closePath();
-                    ctx.beginPath();
                     break;
             }
         }
@@ -178,8 +179,6 @@
             });
         }
 
-
-
         return {
             init: function() {
                 // 캔버스 사이즈 조절 이벤트
@@ -201,7 +200,8 @@
 
                     tempCtx.setLineDash([]); // 점선 스타일 제거
                     tempCtx.clearRect(0, 0, canvas[0].width, canvas[0].height); // 전체 초기화
-                    drawing.forEach((pos, index) => {  // 서명만 다시 그리기
+
+                    /*drawing.forEach((pos, index) => {  // 서명만 다시 그리기
                         if (index === 0) {
                             tempCtx.beginPath();
                             tempCtx.moveTo(pos.X, pos.Y);
@@ -211,10 +211,30 @@
                             tempCtx.lineWidth = thickness;
                             tempCtx.stroke();
                         }
+                    });*/
+
+                    var isNewLine = true;
+                    drawing.forEach(pos => {
+                        if (pos === null) {
+                            isNewLine = true;
+                        } else {
+                            if (isNewLine) {
+                                tempCtx.beginPath();
+                                tempCtx.moveTo(pos.X, pos.Y);
+                                tempCtx.lineWidth = thickness;
+                                isNewLine = false;
+                            } else {
+                                tempCtx.lineTo(pos.X, pos.Y);
+                                tempCtx.lineWidth = thickness;
+                                tempCtx.stroke();
+                            }
+                        }
                     });
+
                     tempCtx.closePath();
 
                     let imgDataUrl = tempCanvas.toDataURL('image/png').replace('data:image/png;base64,', '');
+                    //let imgDataUrl = canvas[0].toDataURL('image/png').replace('data:image/png;base64,', '');
 
                     const formdata = new FormData();
                     formdata.append("sign", imgDataUrl);

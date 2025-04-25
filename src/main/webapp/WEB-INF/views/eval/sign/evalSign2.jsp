@@ -422,7 +422,7 @@
 
     function etcInput() {
         const value = document.getElementById("etc").value;
-        _hwpPutText("etc", value);
+        _hwpPutText("etc", "기타사항: " + value);
         closeModal();
     }
 

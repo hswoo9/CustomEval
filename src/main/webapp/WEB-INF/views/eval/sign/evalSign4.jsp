@@ -837,7 +837,11 @@
 						<P CLASS=HStyle0 STYLE='text-align:center;'><SPAN STYLE='font-size:12.0pt;font-family:"한양중고딕,한컴돋움";font-weight:bold;line-height:160%'>위 원 장 수 당</SPAN></P>
 					</TD>
 					<TD valign="middle" bgcolor="#e5e5ff"  style='width:204px;height:31px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 1.1pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
-						<P CLASS=HStyle0 STYLE='text-align:center;'><SPAN STYLE='font-size:12.0pt;font-family:"한양중고딕,한컴돋움";font-weight:bold;line-height:160%'>교 통 비</SPAN></P>
+						<P CLASS=HStyle0 STYLE='text-align:center;'><SPAN STYLE='font-size:12.0pt;font-family:"한양중고딕,한컴돋움";font-weight:bold;line-height:160%'>교 통 비</SPAN>
+							<label for="unreceivedYn2" style="cursor: pointer;">
+								<input type="checkbox" id="unreceivedYn2" name="unreceivedYn2" value="N" onchange="updateTransportFee()">
+								<span>미수령</span>
+							</label></P>
 					</TD>
 					<TD valign="middle" bgcolor="#e5e5ff"  style='width:180px;height:31px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 1.1pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
 						<P CLASS=HStyle0 STYLE='text-align:center;'><SPAN STYLE='font-size:12.0pt;font-family:"한양중고딕,한컴돋움";font-weight:bold;line-height:160%'>합 계</SPAN></P>
@@ -886,7 +890,11 @@
 						</P>
 					</TD>
 					<TD valign="middle" bgcolor="#e5e5ff"  style='width:186px;height:31px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 1.1pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
-						<P CLASS=HStyle0 STYLE='text-align:center;'><SPAN STYLE='font-size:12.0pt;font-family:"한양중고딕,한컴돋움";font-weight:bold;line-height:160%'>교 통 비</SPAN></P>
+						<P CLASS=HStyle0 STYLE='text-align:center;'><SPAN STYLE='font-size:12.0pt;font-family:"한양중고딕,한컴돋움";font-weight:bold;line-height:160%'>교 통 비</SPAN>
+							<label for="unreceivedYn2" style="cursor: pointer;">
+								<input type="checkbox" id="unreceivedYn2" name="unreceivedYn2" value="N" onchange="updateTransportFee()">
+								<span>미수령</span>
+							</label></P>
 					</TD>
 					<TD valign="middle" bgcolor="#e5e5ff"  style='width:186px;height:31px;border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 1.1pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
 						<P CLASS=HStyle0 STYLE='text-align:center;'><SPAN STYLE='font-size:12.0pt;font-family:"한양중고딕,한컴돋움";font-weight:bold;line-height:160%'>합 계</SPAN></P>
@@ -936,7 +944,7 @@
 				<P CLASS=HStyle34 STYLE='margin-top:3.0pt;line-height:160%;'><SPAN STYLE='font-size:11.0pt;font-family:"휴먼명조";line-height:160%'>○ 소 속 : </SPAN></P>
 			</TD>
 			<TD colspan="4" valign="middle" style='width:417px;height:22px;border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
-				<input type="text" style="width: 275px;" id="dept" value="${userInfo.ORG_NAME }">
+				<input type="text" style="width: 275px;" id="dept" value="${userInfo.ORG_NAME }" autocomplete="off">
 			</TD>
 		</TR>
 		<TR>
@@ -952,9 +960,9 @@
 				<P CLASS=HStyle34 STYLE='margin-top:3.0pt;line-height:160%;'><SPAN STYLE='font-size:11.0pt;font-family:"휴먼명조";line-height:160%'>○ 주민등록번호 : </SPAN></P>
 			</TD>
 			<TD colspan="4" valign="middle" style='width:417px;height:22px;border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
-				<input type="text" style="width: 100px;" id="num1" maxlength="6" placeholder="6자리" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
+				<input type="text" style="width: 100px;" id="num1" maxlength="6" placeholder="6자리" oninput="this.value = this.value.replace(/[^0-9]/g, '');" autocomplete="off">
 				<span>-</span>
-				<input type="text" style="width: 100px;" id="num2" maxlength="7" placeholder="7자리" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
+				<input type="text" style="width: 100px;" id="num2" maxlength="7" placeholder="7자리" oninput="this.value = this.value.replace(/[^0-9]/g, '');" autocomplete="off">
 			</TD>
 		</TR>
 		<TR>
@@ -964,7 +972,7 @@
 			<TD colspan="4" valign="middle" style='width:417px;height:22px;border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
 
 				<input type="text" style="width: 70px;" id="addrFix" disabled>
-				<input type="text" style="width: 199px; margin-left: 5px;" id="addr" value="" placeholder="전체 주소 입력">
+				<input type="text" style="width: 199px; margin-left: 5px;" id="addr" value="" placeholder="전체 주소 입력" autocomplete="off">
 			</TD>
 		</TR>
 		<TR>
@@ -972,7 +980,7 @@
 				<P CLASS=HStyle34 STYLE='margin-top:3.0pt;line-height:160%;'><SPAN STYLE='font-size:11.0pt;font-family:"휴먼명조";line-height:160%'>○ 은행명 :</SPAN></P>
 			</TD>
 			<TD colspan="5" valign="middle" style='width:417px;height:22px;border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
-				<input type="text" style="width: 275px;" id="bank_name" value="">
+				<input type="text" style="width: 275px;" id="bank_name" value="" autocomplete="off">
 				<%--<select id="bank_name">
                     <c:forEach items="${bankList }" var="list">
                         <option value="${list.BANK_CD }" ${userInfo.BANK_NAME == list.BANK_CD ? 'selected="selected"' : '' } >${list.BANK_NM }</option>
@@ -985,7 +993,7 @@
 				<P CLASS=HStyle34 STYLE='margin-top:3.0pt;line-height:160%;'><SPAN STYLE='font-size:11.0pt;font-family:"휴먼명조";line-height:160%'>○ 계좌번호 : </SPAN></P>
 			</TD>
 			<TD colspan="5" valign="middle" style='width:417px;height:22px;border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
-				<input type="text" style="width: 275px;" id="bank_no" value="">
+				<input type="text" style="width: 275px;" id="bank_no" value="" autocomplete="off">
 			</TD>
 		</TR>
 		<%--<TR>
@@ -1085,19 +1093,25 @@
         var regionSelect = document.getElementById("region");
         var selectedOption = regionSelect.options[regionSelect.selectedIndex].text;
 
+        var unreceivedYn2 = document.getElementById("unreceivedYn2").checked; // 교통비 미수령 체크 여부
+
         if(region == '------') {
 			selectedOption = '';
         }
 
         $("#addrFix").val(selectedOption);
 
-		if (region === "제주") {
-			transportFee = 100000;
-		} else if (region === "대전/충청" || region === "------") {
-			transportFee = 0;
-		} else {
-			transportFee = 50000;
-		}
+        if(unreceivedYn2){
+            transportFee = 0;
+        }else {
+            if (region === "제주") {
+                transportFee = 100000;
+            } else if (region === "대전/충청" || region === "------") {
+                transportFee = 0;
+            } else {
+                transportFee = 50000;
+            }
+        }
 
 		document.getElementById("transportFee").innerText = transportFee.toLocaleString() + ' 원';
 		updateTotal();
@@ -1109,7 +1123,18 @@
 		var evaluationJangFeeInput = document.getElementById("evaluationJangFee");
 		var transportFeeSpan = document.getElementById("transportFee");
 		var totalFeeSpan = document.getElementById("totalFee");
-        var unreceivedYn = document.getElementById("unreceivedYn").checked; // 미수령 체크 여부
+        var unreceivedYn = document.getElementById("unreceivedYn").checked; // 평가비 미수령 체크 여부
+        var unreceivedYn2 = document.getElementById("unreceivedYn2").checked; // 교통비 미수령 체크 여부
+        var allowance = '${userInfo.ALLOWANCE}';
+
+        var diffFee = parseInt(allowance.replace(/,/g, '') || 0);
+        var diffFee2 = parseInt(evaluationFeeInput.value.replace(/,/g, '') || 0);
+
+        if(diffFee > diffFee2) {
+	        alert("설정된 평가수당보다 높은 값을 입력할 수 없습니다.");
+            evaluationFeeInput.value = diffFee.toLocaleString();
+            return false;
+        }
 
         if (unreceivedYn) {
             evaluationFeeInput.value = "0";
@@ -1125,6 +1150,10 @@
             }
 
             return;
+        }
+
+        if(unreceivedYn2) {
+            transportFeeSpan.innerText = "0";
         }
 
         evaluationFeeInput.disabled = false;

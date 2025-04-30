@@ -210,7 +210,7 @@
 					// return;
 				}else if(result == "groupFail"){
                     clearInterval(timeIn);
-                    fnSetSignSetpChk2();
+                    //fnSetSignSetpChk2();
 					customAlert("다른 값을 입력한 평가위원이 있습니다.\n데이터가 초기화됩니다.", "warning")
 							.then(() => {
 								location.reload();
@@ -463,10 +463,12 @@
 				</c:forEach>
 			</select>
 
-			<input type="button" onclick="etcInputBtn();"
-			       style="margin-left:23px; background-color: #dee4ea; border-color: black; border-width: thin;
-              font-size:14px; padding:0; height:30px; width:80px; cursor:pointer; text-align: center;"
-			       value="추가 입력">
+			<c:if test="${userInfo.EVAL_JANG eq 'Y'}">
+				<input type="button" onclick="etcInputBtn();"
+				       style="margin-left:23px; background-color: #dee4ea; border-color: black; border-width: thin;
+	              font-size:14px; padding:0; height:30px; width:80px; cursor:pointer; text-align: center;"
+				       value="추가 입력">
+			</c:if>
 
 			<input type="button" onclick="nonInputBtn();"
 			       style="margin-left:23px; background-color: #dee4ea; border-color: black; border-width: thin;

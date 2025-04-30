@@ -216,11 +216,12 @@
 								location.reload();
 							});
 				}else if(result == 'notFail'){
+                    clearInterval(timeIn);
+
 					_pHwpCtrl.GetTextFile("HWPML2X", "", function(data) {
 						signHwpFileData = data;
+                        setTimeout(signSave, 600);
 					})
-
-					setTimeout(signSave, 600);
 				}
 			}
 		})
@@ -269,15 +270,6 @@
 			processData: false,
 			async : false,
 			success : function(data) {
-				/*if(data.result != "success") {
-					alert("문서저장시 오류가 발생했습니다. 시스템관리자한테 문의 하세요.");
-					return false ;
-				} else {
-					clearInterval(timeIn);
-					location.reload();
-				}*/
-
-                clearInterval(timeIn);
                 location.reload();
 			}
 		})

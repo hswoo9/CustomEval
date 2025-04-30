@@ -71,6 +71,11 @@
                     _pHwpCtrl = BuildWebHwpCtrl("_pHwpCtrl", "http://10.10.10.112:8080/webhwpctrl/", function () {hwpView();});
                 }
 				window.onresize();
+
+                history.pushState(null, null, location.href);
+                window.onpopstate = function (event) {
+                    history.forward();
+                };
 			});
 
 			window.onresize = function () {resize()};

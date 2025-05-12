@@ -159,8 +159,7 @@
 				commissioner_seq : "${userInfo.COMMISSIONER_SEQ}",
 				committee_seq : "${userInfo.COMMITTEE_SEQ}",
 				step : "9",
-				evalSign: "9",
-				final_yn: "Y"
+				evalSign: "9"
 			},
 			type : 'POST',
 			success: function(rs){
@@ -199,6 +198,10 @@
 		formData.append("flag", flag);
 		formData.append("signHwpFileData", signHwpFileData);
 		formData.append("jang", '${userInfo.EVAL_JANG}');
+
+        if('${userInfo.EVAL_JANG}' != "Y"){
+            formData.append("final_yn", "Y");
+        }
 
 		$.ajax({
 			url: "<c:url value='/eval/setSignSetp'/>",

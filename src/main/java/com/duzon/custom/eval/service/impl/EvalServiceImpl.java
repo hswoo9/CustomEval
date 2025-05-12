@@ -244,7 +244,7 @@ public class EvalServiceImpl implements EvalService {
 				return returnStr;
 			} else {
 				if (minute1Group != 1 || minute1Group2 != 1) {
-					evalDAO.getEvalMinuteChKGroupFailUpd2(map);
+					//evalDAO.getEvalMinuteChKGroupFailUpd2(map);
 					returnStr = "groupFail";
 					return returnStr;
 				}else{

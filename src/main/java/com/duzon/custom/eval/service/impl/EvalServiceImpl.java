@@ -591,6 +591,8 @@ public class EvalServiceImpl implements EvalService {
 
 				map.put("evalCm", coms2.get("eval_cm"));
 				evalDAO.setJangEvalPayUpdate(map);
+			} else if (map.containsKey("final_yn")){
+				evalDAO.setEvalJangConfirm(map);
 			}
 
 			returnMap.put("result", "success");
@@ -1293,7 +1295,8 @@ public class EvalServiceImpl implements EvalService {
 		List<Map<String, Object>> commissionerList = evalDAO.getCommissionerChk2(params);
 
 		for(Map<String, Object> commissioner : commissionerList){
-			if(commissioner.get("eval_save").equals("N") || commissioner.get("sign_4").equals("N")){
+			//if(commissioner.get("eval_save").equals("N") || commissioner.get("sign_4").equals("N")){
+			if(commissioner.get("eval_save").equals("N") || commissioner.get("final_yn").equals("N")){
 				returnBoolean = false;
 			}
 		}

@@ -94,6 +94,8 @@ public class EvalController {
 		model.addAttribute("userInfo", map);
 
 		if(map != null && map.size() > 0 ){
+			HttpSession session = request.getSession();
+
 			Map<String, Object> avoidChkMap = evalService.getEvalAvoidFailChk(map);
 			if(avoidChkMap.get("avoidFailChk").equals("AVOID_OVER_FAIL")){
 				if(map.get("SIGN_4").equals("N")) {
@@ -107,11 +109,12 @@ public class EvalController {
 						model.addAttribute("avoidFlag", true);
 					}
 
-					return "/eval/sign/evalSign4";
+					//return "/eval/sign/evalSign4";
+					session.invalidate();
+					return "/eval/sign/evalSign11";
 				} else {
 					//평가수당 확인했으면 종료하기
 					logger.info("pageInfo ===== /");
-					HttpSession session = request.getSession();
 					session.invalidate();
 					fm.put("message", "제안평가위원회 운영 정족 수(3분의 2 이상) 미달로 평가가 종료됩니다.");
 					return "redirect:/";
@@ -125,14 +128,21 @@ public class EvalController {
 				if(!map.get("CONTACT").equals("Y")){
 					model.addAttribute("avoidFlag", true);
 				}
-				return "/eval/sign/evalSign4";
+				//return "/eval/sign/evalSign4";
+				session.invalidate();
+				return "/eval/sign/evalSign11";
 			}else if(map.get("EVAL_AVOID").equals("Y") && map.get("EVAL_AVOID_CHECK_YN").equals("Y")){
 				logger.info("pageInfo ===== /eval/sign/evalSign10");
 
-				HttpSession session = request.getSession();
 				session.invalidate();
 				fm.put("message", "\"평가위원님의 제안 평가가\\n정상적으로 제출 되었습니다.\"\\n수고 하셨습니다.");
 				//기피신청자 평가수당 지급 확인서 확인 후 세션 풀림
+				return "/eval/sign/evalSign11";
+			}
+
+			if(map.get("FINAL_YN").equals("Y")){
+				session.invalidate();
+				fm.put("message", "\"평가위원님의 제안 평가가\\n정상적으로 제출 되었습니다.\"\\n수고 하셨습니다.");
 				return "/eval/sign/evalSign11";
 			}
 
@@ -181,12 +191,13 @@ public class EvalController {
 					//평가수당확인
 					//List<Map<String, Object>> list = commonService.getBankCode();
 					//model.addAttribute("bankList", list);
-					return "/eval/sign/evalSign4";
+					//return "/eval/sign/evalSign4";
+					session.invalidate();
+					return "/eval/sign/evalSign11";
 				} else {
 					logger.info("pageInfo ===== /");
 
 					//평가수당 확인했으면 종료하기
-					HttpSession session = request.getSession();
 					session.invalidate();
 					fm.put("message", "평가가 종료되었습니다.");
 					return "/eval/sign/evalSign11";
@@ -220,11 +231,12 @@ public class EvalController {
 					//List<Map<String, Object>> list = commonService.getBankCode();
 					//model.addAttribute("bankList", list);
 					model.addAttribute("avoidFailMessage", "제안평가위원회 운영 정족 수(3분의 2 이상) 미달로 평가가 종료됩니다.");
-					return "/eval/sign/evalSign4";
+					//return "/eval/sign/evalSign4";
+					session.invalidate();
+					return "/eval/sign/evalSign11";
 				} else {
 					//평가수당 확인했으면 종료하기
 					logger.info("pageInfo ===== /");
-					HttpSession session = request.getSession();
 					session.invalidate();
 					fm.put("message", "제안평가위원회 운영 정족 수(3분의 2 이상) 미달로 평가가 종료됩니다.");
 					return "/eval/sign/evalSign11";
@@ -402,7 +414,6 @@ public class EvalController {
 			}else{
 				logger.info("pageInfo ===== /");
 
-				HttpSession session = request.getSession();
 				session.invalidate();
 				fm.put("message", "\"평가위원님의 제안 평가가\\n정상적으로 제출 되었습니다.\"\\n수고 하셨습니다.");
 				return "/eval/sign/evalSign11";

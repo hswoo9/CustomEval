@@ -167,6 +167,21 @@
 
     var signHwpFileData = "";
     function signSaveBtn(){
+
+        var checkFlag = true;
+        console.log("초기 checkFlag 값:", checkFlag);
+
+        checkFlag = getCommissionerChk2();
+        console.log("getCommissionerChk2() 호출 후 checkFlag 값:", checkFlag);
+
+        if (!checkFlag) {
+            customAlert("평가가 진행 중입니다. \n위원장은 모든 평가위원의 평가가 종료 된 후에 저장이 가능합니다.", "warning").then(() => {
+                console.log("Alert closed, returning from function.");
+            });
+            return;
+        }
+
+
         $('#loading_spinner').show();
 
         const width = window.innerWidth;
@@ -336,6 +351,7 @@
         formData.append("purc_req_id", "${userInfo.PURC_REQ_ID}");
         formData.append("proba", rates);
         formData.append("step", "8");
+        formData.append("final_yn", "Y");
         formData.append("signHwpFileData", signHwpFileData);
 
         $.ajax({
@@ -771,8 +787,28 @@
         window.open(_g_contextPath_ + "/eval/evalAvoidPopup", 'evalAvoidPop', 'menubar=0,resizable=1,scrollbars=1,status=no,toolbar=no,width=1000,height=280,left=650,top=250');
     }
 
-
-
+    function getCommissionerChk2() {
+        var commissionerChk = true;
+        $.ajax({
+            url: "<c:url value='/eval/getCommissionerChk2' />",
+            data: {
+                committee_seq: '${userInfo.COMMITTEE_SEQ}',
+                commissioner_seq: '${userInfo.COMMISSIONER_SEQ}'
+            },
+            type: 'POST',
+            dataType: "json",
+            async: false,
+            success: function(result) {
+                console.log("AJAX 결과:", result);
+                commissionerChk = result.commissionerChk;
+            },
+            error: function(xhr, status, error) {
+                console.error("AJAX 오류:", status, error);
+                commissionerChk = false;
+            }
+        });
+        return commissionerChk;
+    }
 </script>
 <div style="width: 80%;margin: 0 auto;">
     <%--<div id="signSave" style="float:right">--%>

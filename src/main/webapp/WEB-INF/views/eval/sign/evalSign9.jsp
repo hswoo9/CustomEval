@@ -160,6 +160,7 @@
 				committee_seq : "${userInfo.COMMITTEE_SEQ}",
 				step : "9",
 				evalSign: "9",
+				final_yn: "Y"
 			},
 			type : 'POST',
 			success: function(rs){

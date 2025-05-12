@@ -170,9 +170,16 @@ public class EvalController {
 
 			}else if(map.get("SIGN_5").equals("N")){
 				logger.info("pageInfo ===== /eval/sign/evalSign5");
-				//개인정보 동의서
-				return "/eval/sign/evalSign5";
-				
+
+				if(!"-".equals(map.get("SIGN_2_MINUTE1")) && !"-".equals(map.get("SIGN_2_MINUTE2"))) {
+					//개인정보 동의서
+					return "/eval/sign/evalSign5";
+				}else{
+					String jangName = evalService.getCommitteeJangName(map);
+					model.addAttribute("jangName", jangName);
+					return "/eval/sign/evalSign2";
+				}
+
 			}/*else if(map.get("SIGN_3").equals("N")){
 				logger.info("pageInfo ===== /eval/sign/evalSign3");
 

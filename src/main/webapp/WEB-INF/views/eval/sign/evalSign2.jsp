@@ -210,7 +210,7 @@
 					// return;
 				}else if(result == "groupFail"){
                     clearInterval(timeIn);
-                    //fnSetSignSetpChk2();
+                    fnSetSignSetpChk2();
 					customAlert("다른 값을 입력한 평가위원이 있습니다.\n데이터가 초기화됩니다.", "warning")
 							.then(() => {
 								location.reload();

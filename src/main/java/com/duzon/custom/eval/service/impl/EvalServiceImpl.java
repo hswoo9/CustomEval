@@ -231,24 +231,31 @@ public class EvalServiceImpl implements EvalService {
 		//상태값 변경
 		evalDAO.setSignSetp(map);
 
+		String returnStr = "nullFail";
 		if(stpe.equals("2")){
 			Map<String, Object> commissionerMinteList = evalDAO.getEvalCommissionerEvalMinuteChk(map);
 
-			int total = Integer.parseInt(commissionerMinteList.get("TOTAL_COMMISSIONER").toString());
-			int minute1 = Integer.parseInt(commissionerMinteList.get("MINUTE1_IS_NULL_TOTAL").toString());
-			int minute1Group = Integer.parseInt(commissionerMinteList.get("MINUTE1_GROUP").toString());
-			int minute1Group2 = Integer.parseInt(commissionerMinteList.get("MINUTE1_GROUP2").toString());
+			int total = Integer.parseInt(commissionerMinteList.get("TOTAL_COMMISSIONER").toString()); //총 평가위원 수
+			int minute1 = Integer.parseInt(commissionerMinteList.get("MINUTE1_IS_NULL_TOTAL").toString()); //시간 선택한 평가위원 수
+			int minute1Group = Integer.parseInt(commissionerMinteList.get("MINUTE1_GROUP").toString()); //입력값 1
+			int minute1Group2 = Integer.parseInt(commissionerMinteList.get("MINUTE1_GROUP2").toString()); //입력값 2
+
 			if (total != minute1) {
-				return "nullFail"; 
-			} else if (minute1Group != 1 || minute1Group2 != 1) { 
-				evalDAO.getEvalMinuteChKGroupFailUpd2(map);
-				return "groupFail";
+				return returnStr;
+			} else {
+				if (minute1Group != 1 || minute1Group2 != 1) {
+					evalDAO.getEvalMinuteChKGroupFailUpd2(map);
+					returnStr = "groupFail";
+					return returnStr;
+				}else{
+					returnStr = "notFail";
+				}
 			}
 		}else if (stpe.equals("99")){
 			evalDAO.getEvalMinuteChKGroupFailUpd2(map);
 		}
 
-		return "notFail";
+		return returnStr;
 	}
 
 	@Override

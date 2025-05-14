@@ -168,7 +168,7 @@
     var signHwpFileData = "";
     function signSaveBtn(){
 
-        var checkFlag = true;
+        /*var checkFlag = true;
         console.log("초기 checkFlag 값:", checkFlag);
 
         checkFlag = getCommissionerChk2();
@@ -179,7 +179,7 @@
                 console.log("Alert closed, returning from function.");
             });
             return;
-        }
+        }*/
 
 
         $('#loading_spinner').show();
@@ -351,7 +351,7 @@
         formData.append("purc_req_id", "${userInfo.PURC_REQ_ID}");
         formData.append("proba", rates);
         formData.append("step", "8");
-        formData.append("final_yn", "Y");
+        //formData.append("final_yn", "Y");
         formData.append("signHwpFileData", signHwpFileData);
 
         $.ajax({

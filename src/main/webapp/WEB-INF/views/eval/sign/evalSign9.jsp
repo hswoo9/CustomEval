@@ -199,9 +199,9 @@
 		formData.append("signHwpFileData", signHwpFileData);
 		formData.append("jang", '${userInfo.EVAL_JANG}');
 
-        if('${userInfo.EVAL_JANG}' != "Y"){
+        /*if('${userInfo.EVAL_JANG}' != "Y"){
             formData.append("final_yn", "Y");
-        }
+        }*/
 
 		$.ajax({
 			url: "<c:url value='/eval/setSignSetp'/>",

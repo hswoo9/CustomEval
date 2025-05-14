@@ -347,9 +347,6 @@
 			<if test='col_nm == "sign_4" and col_file == "sign_4_file_seq"'>
 				,EVAL_AVOID_CHECK_YN = 'Y'
 			</if>
-		    <if test='final_yn != null'>
-				,FINAL_YN = 'Y'
-			</if>
 		WHERE COMMISSIONER_SEQ = #{commissioner_seq}
 	</update>
 

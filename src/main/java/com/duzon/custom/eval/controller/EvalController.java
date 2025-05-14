@@ -109,9 +109,9 @@ public class EvalController {
 						model.addAttribute("avoidFlag", true);
 					}
 
-					//return "/eval/sign/evalSign4";
-					session.invalidate();
-					return "/eval/sign/evalSign11";
+					return "/eval/sign/evalSign4";
+					/*session.invalidate();
+					return "/eval/sign/evalSign11";*/
 				} else {
 					//평가수당 확인했으면 종료하기
 					logger.info("pageInfo ===== /");
@@ -128,9 +128,9 @@ public class EvalController {
 				if(!map.get("CONTACT").equals("Y")){
 					model.addAttribute("avoidFlag", true);
 				}
-				//return "/eval/sign/evalSign4";
-				session.invalidate();
-				return "/eval/sign/evalSign11";
+				return "/eval/sign/evalSign4";
+				/*session.invalidate();
+				return "/eval/sign/evalSign11";*/
 			}else if(map.get("EVAL_AVOID").equals("Y") && map.get("EVAL_AVOID_CHECK_YN").equals("Y")){
 				logger.info("pageInfo ===== /eval/sign/evalSign10");
 
@@ -140,11 +140,11 @@ public class EvalController {
 				return "/eval/sign/evalSign11";
 			}
 
-			if(map.get("FINAL_YN").equals("Y")){
+			/*if(map.get("FINAL_YN").equals("Y")){
 				session.invalidate();
 				fm.put("message", "\"평가위원님의 제안 평가가\\n정상적으로 제출 되었습니다.\"\\n수고 하셨습니다.");
 				return "/eval/sign/evalSign11";
-			}
+			}*/
 
 			if(map.get("SIGN_1").equals("N")){
 				logger.info("pageInfo ===== /eval/sign/evalSign1");
@@ -198,9 +198,9 @@ public class EvalController {
 					//평가수당확인
 					//List<Map<String, Object>> list = commonService.getBankCode();
 					//model.addAttribute("bankList", list);
-					//return "/eval/sign/evalSign4";
-					session.invalidate();
-					return "/eval/sign/evalSign11";
+					return "/eval/sign/evalSign4";
+					/*session.invalidate();
+					return "/eval/sign/evalSign11";*/
 				} else {
 					logger.info("pageInfo ===== /");
 
@@ -238,9 +238,9 @@ public class EvalController {
 					//List<Map<String, Object>> list = commonService.getBankCode();
 					//model.addAttribute("bankList", list);
 					model.addAttribute("avoidFailMessage", "제안평가위원회 운영 정족 수(3분의 2 이상) 미달로 평가가 종료됩니다.");
-					//return "/eval/sign/evalSign4";
-					session.invalidate();
-					return "/eval/sign/evalSign11";
+					return "/eval/sign/evalSign4";
+					/*session.invalidate();
+					return "/eval/sign/evalSign11";*/
 				} else {
 					//평가수당 확인했으면 종료하기
 					logger.info("pageInfo ===== /");

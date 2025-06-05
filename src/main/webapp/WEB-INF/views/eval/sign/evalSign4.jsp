@@ -153,6 +153,8 @@
 				OnDisconnectDevice();
 			}
 		};
+
+        updateTotal();
 	});
 
 	/*	function fileDownChk(){
@@ -175,12 +177,29 @@
 			let numericValue = this.value.replace(/[^\d]/g, '');
 			this.value = numberWithCommas(numericValue);
 		});
+        $('#evaluationJangFee').on('input', function() {
+			let numericValue = this.value.replace(/[^\d]/g, '');
+			this.value = numberWithCommas(numericValue);
+		});
 	});
 
 	function showModifyConfirmButtons() {
 		var p1 = $('#num1').val();
 		var p2 = $('#num2').val();
 		var flag = isKorJumin(p1, p2);
+
+        var unreceivedYn = document.getElementById("unreceivedYn").checked; // 평가비 미수령 체크 여부
+        var unreceivedYn2 = document.getElementById("unreceivedYn2").checked; // 교통비 미수령 체크 여부
+
+        var evaluationFeeInput = document.getElementById("evaluationFee");
+        var evaluationJangFeeInput = document.getElementById("evaluationJangFee");
+        var transportFeeSpan = document.getElementById("transportFee");
+
+        var evaluationFee = parseInt(evaluationFeeInput.value.replace(/,/g, '') || 0);
+        var transportFee = parseInt(transportFeeSpan.innerText.replace(/[^0-9]/g, '') || 0);
+        var additionalFee = ("${userInfo.EVAL_JANG}" === "Y") ? parseInt(evaluationJangFeeInput.value.replace(/,/g, '') || 0) : 0;
+
+        var totalFee = evaluationFee + transportFee + additionalFee;
 
 		if (p1.length == 0 || p2.length == 0) {
 			customAlert('주민등록 번호를 입력해 주세요.', 'warning').then(() => {
@@ -234,6 +253,15 @@
 
             });
             return;
+        }
+
+        if(totalFee > 0){
+            if(!$('#bank_name').val() || !$('#bank_no').val()){
+                customAlert('은행명 및 계좌번호를 입력해 주세요.', 'warning').then(() => {
+
+                });
+                return;
+            }
         }
 
 		/*alert("작성하신 평가수당을 확인 하시고 확정/수정 버튼을 눌러주시기 바랍니다.")*/
@@ -1130,12 +1158,6 @@
         var diffFee = parseInt(allowance.replace(/,/g, '') || 0);
         var diffFee2 = parseInt(evaluationFeeInput.value.replace(/,/g, '') || 0);
 
-        if(diffFee > diffFee2) {
-	        alert("설정된 평가수당보다 높은 값을 입력할 수 없습니다.");
-            evaluationFeeInput.value = diffFee.toLocaleString();
-            return false;
-        }
-
         if (unreceivedYn) {
             evaluationFeeInput.value = "0";
             transportFeeSpan.innerText = "0";
@@ -1150,6 +1172,11 @@
             }
 
             return;
+        }else{
+            if(diffFee < diffFee2) {
+                alert("설정된 평가수당보다 높은 값을 입력할 수 없습니다.");
+                evaluationFeeInput.value = diffFee.toLocaleString();
+            }
         }
 
         if(unreceivedYn2) {
